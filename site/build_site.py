@@ -444,7 +444,6 @@ def cabecalho(ativo=""):
       {item("index.html", "Home", "home")}
       {item("index.html#semestres", "Semestres", "semestres")}
       <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre">{ICONES["indice"]}<span>Índice</span></a>
-      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema">{ICONES["lua"]}{ICONES["sol"]}</button>
     </nav>
   </div>
 </header>"""
@@ -546,7 +545,7 @@ def gerar_index():
     # cards das disciplinas em andamento/recentes
     cards = "".join(f"""
       <a class="card" href="{nome_pagina_disc(d)}">
-        <div class="topo-card">{ico_disc(d)}{anel_nota(d.get("nota"))}</div>
+        <div class="topo-card">{ico_disc(d)}</div>
         <h3>{e(d["nome"])}</h3>
         <span class="sub">Semestre {d["semestre"]} · {e(d["codigo"])}</span>
         <p>{e(d["descricao"])}</p>
@@ -577,7 +576,6 @@ def gerar_index():
       <div class="stat"><b>{len(discs)}</b><span>disciplinas documentadas</span></div>
       <div class="stat"><b>{n_aulas}</b><span>aulas resumidas</span></div>
       <div class="stat"><b>{n_labs}</b><span>laboratórios práticos</span></div>
-      <div class="stat"><b>{media_notas()}</b><span>média das notas finais</span></div>
     </div>
   </div>
 </section>
@@ -637,7 +635,7 @@ def gerar_semestre(s):
     pct = round(100 * feitas / len(discs))
     cards = "".join(f"""
       <a class="card" href="{nome_pagina_disc(d)}">
-        <div class="topo-card">{ico_disc(d)}{anel_nota(d.get("nota"))}</div>
+        <div class="topo-card">{ico_disc(d)}</div>
         <h3>{e(d["nome"])}</h3>
         <span class="sub">Disciplina {d["ordem"]} · {e(d["codigo"])} · {len(d["aulas"])} aulas</span>
         <p>{e(d["descricao"])}</p>
@@ -720,7 +718,6 @@ def gerar_doc(d, slug, titulo, arquivo, eyebrow, anterior=None, proximo=None, ex
     <h1>{e(titulo)}</h1>
     <div class="meta">
       <a class="chip" href="{nome_pagina_disc(d)}">{ICONES["voltar"]} Voltar à disciplina</a>
-      <a class="chip" href="{url_repo(arquivo)}">{ICONES["pdf"]} Arquivo de origem</a>
     </div>
   </div>
 </section>
@@ -796,7 +793,7 @@ def gerar_disciplina(d):
         <a class="btn contorno" href="{url_repo(d["pasta"])}">{ICONES["pasta"]} Pasta no repositório</a>
       </div>
     </div>
-    <div class="hero-disc">{ico_disc(d, grande=True)}{anel_nota(d.get("nota"), grande=True)}</div>
+    <div class="hero-disc">{ico_disc(d, grande=True)}</div>
   </div>
 </section>
 
