@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4 · AED (revisão) e self-service analytics · Aprendizado de Máquina Não Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d3.html">Aprendizado de Máquina Não Supervisionado</a> <span>›</span> <span>Aula 4 · AED (revisão) e self-service analytics</span></nav>
+    <span class="eyebrow">Aula 4 · Aprendizado de Máquina Não Supervisionado</span>
+    <h1>Aula 4 · AED (revisão) e self-service analytics</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d3.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/1_Resumos_das_aulas/AULA_04_RESUMO_AED_SELF_SERVICE.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-4--análise-exploratória-de-dados-revisão-e-self-service-analytics">AULA 4 — ANÁLISE EXPLORATÓRIA DE DADOS (REVISÃO) E SELF-SERVICE ANALYTICS</a></li><li class="n2"><a href="#aprendizado-de-máquina-não-supervisionado-262ggr6044a--graduação-em-ia-fmu">APRENDIZADO DE MÁQUINA NÃO SUPERVISIONADO (262GGR6044A) — Graduação em IA, FMU</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-aed-em-modo-revisão-o-que-é-novo-nesta-unidade">3. AED em modo revisão: o que é novo nesta unidade</a></li><li class="n3"><a href="#31-o-que-se-repete-não-registrado-de-novo">3.1 O que se repete (não registrado de novo)</a></li><li class="n3"><a href="#32-detalhes-do-capítulo-com-pouca-ou-nenhuma-presença-no-registro-anterior-material-acadêmico">3.2 Detalhes do capítulo com pouca ou nenhuma presença no registro anterior (material acadêmico)</a></li><li class="n3"><a href="#33-infográfico-técnicas-de-tratamento-de-valores-ausentes-material-acadêmico">3.3 Infográfico: técnicas de tratamento de valores ausentes (material acadêmico)</a></li><li class="n3"><a href="#34-falha-de-edição-no-infográfico-observação">3.4 Falha de edição no infográfico (observação)</a></li><li class="n3"><a href="#35-imagine-que-complementação">3.5 Imagine que... (complementação)</a></li><li class="n3"><a href="#36-material-prático-imputação-em-python-complementação-testado">3.6 Material prático: imputação em Python (complementação, testado)</a></li><li class="n2"><a href="#4-self-service-analytics-conceito-e-importância">4. Self-service analytics: conceito e importância</a></li><li class="n3"><a href="#41-contexto-volume-de-dados-material-acadêmico">4.1 Contexto: volume de dados (material acadêmico)</a></li><li class="n3"><a href="#42-análise-de-dados-e-autoatendimento-material-acadêmico">4.2 Análise de dados e autoatendimento (material acadêmico)</a></li><li class="n3"><a href="#43-vantagens-benefícios-e-desafios-material-acadêmico">4.3 Vantagens, benefícios e desafios (material acadêmico)</a></li><li class="n2"><a href="#5-níveis-de-autoatendimento-material-acadêmico-alpar-e-schulz-2016">5. Níveis de autoatendimento (material acadêmico: Alpar e Schulz, 2016)</a></li><li class="n3"><a href="#51-quando-usar-cada-nível-complementação">5.1 Quando usar cada nível (complementação)</a></li><li class="n2"><a href="#6-estratégias-em-self-service-analytics-material-acadêmico-halper-2020">6. Estratégias em self-service analytics (material acadêmico: Halper, 2020)</a></li><li class="n2"><a href="#7-bi-tradicional--self-service-bi-material-acadêmico-infográfico">7. BI tradicional × Self-service BI (material acadêmico: infográfico)</a></li><li class="n3"><a href="#71-quando-usar-cada-abordagem-complementação">7.1 Quando usar cada abordagem (complementação)</a></li><li class="n2"><a href="#8-ferramentas-citadas-no-material-material-acadêmico">8. Ferramentas citadas no material (material acadêmico)</a></li><li class="n2"><a href="#9-análise-crítica-observações-da-dani-e-leitura-do-material">9. Análise crítica: observações da Dani e leitura do material</a></li><li class="n2"><a href="#10-complementação-onde-fica-a-transformação-etl--elt-e-arquitetura-típica">10. Complementação: onde fica a transformação (ETL × ELT) e arquitetura típica</a></li><li class="n3"><a href="#101-etl--elt">10.1 ETL × ELT</a></li><li class="n3"><a href="#102-arquitetura-típica-de-self-service-com-governança">10.2 Arquitetura típica de self-service com governança</a></li><li class="n3"><a href="#103-salvaguardas-para-reduzir-o-risco-checklist">10.3 Salvaguardas para reduzir o risco (checklist)</a></li><li class="n2"><a href="#11-cenários-de-vida-real-imagine-que-complementação">11. Cenários de vida real: &quot;Imagine que...&quot; (complementação)</a></li><li class="n2"><a href="#12-anexos">12. Anexos</a></li><li class="n3"><a href="#anexo-a-vídeo-análise-de-dados-em-python-material-do-professor-não-assistido">Anexo A: Vídeo &quot;Análise de dados em Python&quot; (material do professor, não assistido)</a></li><li class="n3"><a href="#anexo-b-anaconda-em-uma-página-complementação-não-deriva-do-vídeo">Anexo B: Anaconda em uma página (complementação, não deriva do vídeo)</a></li><li class="n3"><a href="#anexo-c-links-do-material-não-acessados">Anexo C: Links do material (não acessados)</a></li><li class="n2"><a href="#13-atividade-4-a4-gabarito">13. Atividade 4 (A4): gabarito</a></li><li class="n2"><a href="#14-referências-e-conexões-com-outros-conteúdos">14. Referências e Conexões com Outros Conteúdos</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-4--análise-exploratória-de-dados-revisão-e-self-service-analytics">AULA 4 — ANÁLISE EXPLORATÓRIA DE DADOS (REVISÃO) E SELF-SERVICE ANALYTICS</h1></div>
+<section class="bloco"><h2 id="aprendizado-de-máquina-não-supervisionado-262ggr6044a--graduação-em-ia-fmu">APRENDIZADO DE MÁQUINA NÃO SUPERVISIONADO (262GGR6044A) — Graduação em IA, FMU</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Não Supervisionado (262GGR6044A)<br />
+<strong>Aula:</strong> 4 — &quot;Unidade 4&quot;<br />
+<strong>Livros-base:</strong></p>
+<ul>
+<li><em>Preparação e Análise Exploratória de Dados</em> — Rafael Gastão Coimbra Ferreira, capítulo &quot;Análise exploratória de dados&quot; (SAGAH).</li>
+<li><em>Analytics para Big Data</em> — Juliane Adelia Soares, capítulo &quot;Self-service analytics&quot; (SAGAH).</li>
+</ul>
+<p><strong>Objetivos de aprendizagem da Unidade:</strong></p>
+<ul>
+<li>Definir o processo de análise exploratória de dados.</li>
+<li>Descrever as etapas da análise exploratória.</li>
+<li>Reconhecer a importância da análise exploratória.</li>
+<li>Reconhecer o papel do autoatendimento na análise de dados.</li>
+<li>Aplicar técnicas de busca de insights.</li>
+<li>Apontar estratégias de autoatendimento.</li>
+</ul>
+<p><strong>Como ler este arquivo:</strong> o conteúdo está separado em três tipos, sempre identificados:</p>
+<ul>
+<li><strong>Material acadêmico:</strong> o que consta nos capítulos, infográficos e atividade da unidade.</li>
+<li><strong>Observações da Dani:</strong> suas interpretações e dúvidas.</li>
+<li><strong>Complementação:</strong> explicações, exemplos e cuidados acrescentados para estudo. <strong>Não são do livro nem do professor.</strong></li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p>A Unidade 4 tem dois blocos:</p>
+<ol>
+<li><strong>Análise exploratória de dados (AED):</strong> é <strong>o mesmo capítulo</strong> já estudado na Aula 4 de <em>Aquisição e Preparação de Dados</em> (262GGR6046A). Por isso aparece aqui <strong>em modo revisão</strong>: o conteúdo completo está em <code>AULA_4_ANALISE_EXPLORATORIA_COMPLETO.md</code> e no notebook daquela disciplina. Esta aula registra só o que é <strong>novo</strong> (seção 3).</li>
+<li><strong>Self-service analytics (análise de autoatendimento):</strong> conteúdo novo e foco da aula. Trata de como usuários de negócio analisam dados com autonomia, sem depender de uma equipe de TI, e dos desafios e estratégias para isso funcionar (seções 4 a 6).</li>
+</ol>
+<p><strong>Ligação entre os blocos:</strong> a AED garante a qualidade dos dados para qualquer análise. No autoatendimento, esse cuidado sai das mãos de especialistas e passa a depender de usuários de negócio e de governança. É por isso que a qualidade de dados reaparece como estratégia central do capítulo de self-service.</p>
+</section>
+<section class="bloco"><h2 id="3-aed-em-modo-revisão-o-que-é-novo-nesta-unidade">3. AED em modo revisão: o que é novo nesta unidade</h2>
+<h3 id="31-o-que-se-repete-não-registrado-de-novo">3.1 O que se repete (não registrado de novo)</h3>
+<p>Pirâmide dados → informação → conhecimento → sabedoria; AED × estatística clássica e bayesiana; classificação das variáveis (discreta, contínua, nominal, ordinal); etapas (coleta, organização, tratamento, análise, apresentação e interpretação); missing values; outliers; normalização; análise univariada, multivariada e correlação; tabular × gráfica; qualidade de dados em projetos de ML.<br />
+<strong>Ver:</strong> <code>AULA_4_ANALISE_EXPLORATORIA_COMPLETO.md</code> (disciplina anterior).</p>
+<h3 id="32-detalhes-do-capítulo-com-pouca-ou-nenhuma-presença-no-registro-anterior-material-acadêmico">3.2 Detalhes do capítulo com pouca ou nenhuma presença no registro anterior <em>(material acadêmico)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Detalhe</th>
+<th>O que o capítulo diz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Exemplo do KNN</strong></td>
+<td>Em uma variável &quot;sexo&quot; com valores M, F e <strong>10</strong>, o valor 10 está fora da escala. Se não for corrigido, o algoritmo (KNN) não acha boa relação nos dados e o resultado no treino é ruim</td>
+</tr>
+<tr>
+<td><strong>Análise separada só com outliers</strong></td>
+<td>Abordagem útil para investigar casos extremos, com exemplos do capítulo: desempregados que sempre pedem seguro-desemprego, alunos que só tiram nota máxima, empresas com alto lucro em tempo de alta inflação, fraudes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-infográfico-técnicas-de-tratamento-de-valores-ausentes-material-acadêmico">3.3 Infográfico: técnicas de tratamento de valores ausentes <em>(material acadêmico)</em></h3>
+<p>O infográfico &quot;Tratamento de dados na AED&quot; apresenta duas saídas para dados ausentes:</p>
+<ol>
+<li><strong>Recorrer ao processo que gera a informação</strong> e tentar recuperá-la.</li>
+<li><strong>Substituir por um valor (imputation)</strong>, com cinco formas:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Como funciona (infográfico)</th>
+<th>Quando usar <em>(complementação)</em></th>
+<th>Exemplo teórico</th>
+<th>Exemplo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Educated guessing</strong></td>
+<td>Infere o valor ausente pelo padrão existente nos dados. Pouco utilizada</td>
+<td>Quando há conhecimento de especialista e poucos casos</td>
+<td>Idade ausente inferida pelo ano de formatura</td>
+<td>Um analista que conhece o cliente completa o campo &quot;porte da empresa&quot;</td>
+</tr>
+<tr>
+<td><strong>Average imputation</strong></td>
+<td>Usa a média da coluna (das observações com valor)</td>
+<td>Variável numérica, poucos ausentes, sem muitos outliers (com outliers, a <strong>mediana</strong> é mais segura)</td>
+<td>Renda ausente = média das rendas</td>
+<td>Pesquisa de satisfação com nota de 0 a 10 faltando em 3% das linhas</td>
+</tr>
+<tr>
+<td><strong>Common-point imputation</strong></td>
+<td>Valores ausentes viram valores padrão ou os que mais se repetem</td>
+<td>Variáveis <strong>categóricas</strong> (moda)</td>
+<td>Estado civil ausente = &quot;casado&quot; (o mais frequente)</td>
+<td>Campo &quot;forma de pagamento&quot; vazio recebe a forma mais usada</td>
+</tr>
+<tr>
+<td><strong>Regression substitution</strong></td>
+<td>Modelo de regressão múltipla estima o valor ausente</td>
+<td>Quando a variável tem forte relação com outras</td>
+<td>Peso ausente estimado pela altura e idade</td>
+<td>Preço de imóvel ausente estimado por área, quartos e bairro</td>
+</tr>
+<tr>
+<td><strong>Multiple imputation</strong></td>
+<td>Estende a regressão, identificando correlações com os valores ausentes</td>
+<td>Quando a ausência é relevante e se quer refletir a incerteza da imputação</td>
+<td>Várias versões preenchidas da base, analisadas em conjunto</td>
+<td>Pesquisa de saúde com muitas respostas em branco</td>
+</tr>
+</tbody>
+</table>
+<p>Além da imputação, o capítulo cita a opção de <strong>descartar</strong> o registro com valor ausente e o exemplo da <strong>repetição do último valor</strong> (útil em séries ao longo do tempo).</p>
+<p><strong>Quando cada opção pesa (complementação):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Tendência de escolha</th>
+<th>Cuidado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Poucos ausentes, aleatórios</td>
+<td>Descartar ou imputar com média/mediana</td>
+<td>Descartar muito reduz a amostra</td>
+</tr>
+<tr>
+<td>Muitos ausentes numa coluna</td>
+<td>Avaliar remover a coluna ou imputar por modelo</td>
+<td>Imputar por média reduz a variância e pode enviesar</td>
+</tr>
+<tr>
+<td>Categórica</td>
+<td>Moda ou categoria &quot;não informado&quot;</td>
+<td>&quot;Não informado&quot; pode ser informação por si só</td>
+</tr>
+<tr>
+<td>Série temporal</td>
+<td>Repetir o último valor ou interpolar</td>
+<td>Longos períodos sem leitura distorcem a série</td>
+</tr>
+<tr>
+<td>Ausência com motivo (ex.: pessoa constrangida em informar renda)</td>
+<td>Investigar o motivo antes de imputar</td>
+<td>A ausência pode estar ligada ao próprio valor</td>
+</tr>
+</tbody>
+</table>
+<h3 id="34-falha-de-edição-no-infográfico-observação">3.4 Falha de edição no infográfico <em>(observação)</em></h3>
+<p>Sob o título <strong>&quot;Tratamento de outliers&quot;</strong>, o infográfico traz o texto sobre pessoas que se sentem constrangidas e não respondem determinadas questões, e sobre &quot;preencher a informação faltante&quot;. Esse texto trata de <strong>valores ausentes</strong>, não de outliers. A definição de outlier (&quot;valor atípico, grande afastamento dos demais&quot;) aparece no mesmo bloco, mas misturada com isso.</p>
+<h3 id="35-imagine-que-complementação">3.5 Imagine que... <em>(complementação)</em></h3>
+<ul>
+<li><strong>Imagine que</strong> você tem uma pesquisa com a coluna <em>renda</em> ausente em 30% das linhas, porque muitas pessoas não quiseram informar.</li>
+<li><strong>Será tratado por</strong> análise do motivo da ausência e, se for razoável imputar, mediana ou regressão (com uma coluna indicadora &quot;renda ausente&quot;).</li>
+<li><strong>Porque</strong> descartar 30% da amostra empobrece a análise, e imputar a média apaga o fato de que a ausência pode estar ligada ao próprio valor (quem tem renda muito alta ou muito baixa evita responder).</li>
+</ul>
+<h3 id="36-material-prático-imputação-em-python-complementação-testado">3.6 Material prático: imputação em Python <em>(complementação, testado)</em></h3>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.impute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleImputer</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"renda"</span><span class="p">:</span>        <span class="p">[</span><span class="mi">3200</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">4100</span><span class="p">,</span> <span class="mi">2800</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">5200</span><span class="p">],</span>
+    <span class="s2">"estado_civil"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"casado"</span><span class="p">,</span> <span class="s2">"solteiro"</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"casado"</span><span class="p">,</span> <span class="s2">"casado"</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
+    <span class="s2">"temp_c"</span><span class="p">:</span>       <span class="p">[</span><span class="mf">21.5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mf">22.1</span><span class="p">,</span> <span class="mf">22.4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>                  <span class="c1"># quantos ausentes por coluna</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># % de ausentes por coluna</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"renda"</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">"renda"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"renda"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>         <span class="c1"># numérica: mediana (robusta a outliers)</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"estado_civil"</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">"estado_civil"</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"estado_civil"</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># categórica: moda</span>
+<span class="n">d</span><span class="p">[</span><span class="s2">"temp_c"</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s2">"temp_c"</span><span class="p">]</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>                           <span class="c1"># série: repete o último valor</span>
+
+<span class="c1"># Equivalente com scikit-learn (útil dentro de Pipeline, evitando vazamento de dados):</span>
+<span class="n">num</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">"median"</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"renda"</span><span class="p">]])</span>
+<span class="n">cat</span> <span class="o">=</span> <span class="n">SimpleImputer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">"most_frequent"</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"estado_civil"</span><span class="p">]])</span>
+</pre></div>
+</code></pre>
+<p>Resultado do teste: <code>renda</code> ausente vira 3650 (mediana), <code>estado_civil</code> ausente vira &quot;casado&quot; e <code>temp_c</code> repete 21,5 e 22,4.</p>
+<p><strong>Regra de ouro:</strong> em projetos supervisionados, ajuste o imputador <strong>só no treino</strong> e apenas aplique no teste (como na PCA da Aula 3).</p>
+</section>
+<section class="bloco"><h2 id="4-self-service-analytics-conceito-e-importância">4. Self-service analytics: conceito e importância</h2>
+<h3 id="41-contexto-volume-de-dados-material-acadêmico">4.1 Contexto: volume de dados <em>(material acadêmico)</em></h3>
+<p>O capítulo cita o relatório <em>Data Never Sleeps 9.0</em> (DOMO, 2021), com a estimativa de dados gerados <strong>por minuto em 2020</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Plataforma</th>
+<th>Volume por minuto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Facebook</td>
+<td>cerca de 240 mil fotos compartilhadas</td>
+</tr>
+<tr>
+<td>Twitter</td>
+<td>cerca de 575 mil tweets</td>
+</tr>
+<tr>
+<td>Instagram</td>
+<td>cerca de 65 mil fotos</td>
+</tr>
+<tr>
+<td>YouTube</td>
+<td>cerca de 694 mil horas de vídeo</td>
+</tr>
+<tr>
+<td>Netflix</td>
+<td>cerca de 452 mil horas assistidas</td>
+</tr>
+<tr>
+<td>TikTok</td>
+<td>cerca de 167 milhões de vídeos assistidos</td>
+</tr>
+</tbody>
+</table>
+<p>Essas coleções são <strong>big data</strong>: volume, velocidade e variedade tão grandes que dificultam armazenar, gerenciar, processar e analisar com bancos e ferramentas tradicionais (Bahga e Madisetti, 2019).</p>
+<h3 id="42-análise-de-dados-e-autoatendimento-material-acadêmico">4.2 Análise de dados e autoatendimento <em>(material acadêmico)</em></h3>
+<ul>
+<li><strong>Análise de dados (data analytics)</strong>, segundo Zhang (2017): definir metas e as perguntas que os dados devem responder → coletar → inspecionar → interpretar, separando os &quot;bits úteis&quot; para apoiar a decisão, descobrir tendências e <strong>confirmar ou refutar ideias</strong> existentes.</li>
+<li><strong>Self-service analytics (análise de autoatendimento):</strong> ferramentas <strong>prontas para uso</strong>, com as quais usuários finais interagem e configuram, <strong>filtrando, classificando, analisando e visualizando</strong> dados <strong>sem envolver</strong> TI ou especialistas em análise (Myers e Kogan, 2021).</li>
+<li><strong>Mudança de paradigma:</strong> de plataformas <strong>governadas e centradas em TI</strong> para plataformas <strong>descentralizadas</strong>, em que o usuário de negócio lida com recursos analíticos de autoatendimento e descoberta de dados.</li>
+<li>Segundo Daradkeh e Al-Dwairi (2017), é uma inovação que torna os usuários mais autossuficientes, estende o alcance das ferramentas de analytics e libera a TI para recursos mais avançados. O capítulo cita a <strong>redução de cerca de 47% nas solicitações de atendimento</strong>.</li>
+</ul>
+<p><strong>Motivadores para adotar (Daradkeh e Al-Dwairi, 2017):</strong></p>
+<ol>
+<li>Necessidade de constantes mudanças nos negócios.</li>
+<li>Incapacidade da TI de atender novos requisitos de forma imediata.</li>
+<li>Necessidade de organizações mais analíticas.</li>
+<li>Acesso lento às informações.</li>
+</ol>
+<h3 id="43-vantagens-benefícios-e-desafios-material-acadêmico">4.3 Vantagens, benefícios e desafios <em>(material acadêmico)</em></h3>
+<p><strong>Quatro vantagens (Imhoff e White, 2011):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vantagem</th>
+<th>Ideia central</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resultados simples de interpretar</strong></td>
+<td>Ambiente simples para descobrir, acessar e compartilhar; painéis personalizáveis; definições de negócio claras; linhagem de dados rastreada e documentada</td>
+</tr>
+<tr>
+<td><strong>Ferramentas fáceis de usar</strong></td>
+<td>Usuários acessam informações, escolhem relatórios e criam análises sozinhos, sem depender de TI</td>
+</tr>
+<tr>
+<td><strong>Soluções de data warehouse mais rápidas</strong></td>
+<td>Implantação alternativa (ex.: SaaS) para reduzir custos, melhorar o <em>time-to-value</em> e dar desempenho e escalabilidade</td>
+</tr>
+<tr>
+<td><strong>Fácil acesso à fonte de dados</strong></td>
+<td>Nem tudo precisa estar no DW. Dados externos (meteorológicos, geográficos, demográficos) e de vários tipos (estruturados, não estruturados, semiestruturados) integrados sem suporte da TI</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sete benefícios (Castro, 2016):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Benefício</th>
+<th>Ideia central</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Usuários orientam suas próprias análises</td>
+<td>Acesso simplificado a várias fontes, em tempo real, de várias perspectivas</td>
+</tr>
+<tr>
+<td>Liberação das equipes de TI</td>
+<td>TI deixa de gerar relatórios sob demanda e foca prioridades de maior valor</td>
+</tr>
+<tr>
+<td>Análises mais coerentes e ágeis</td>
+<td>Dados integrados e atualizados criam uma &quot;<strong>versão única da verdade</strong>&quot;</td>
+</tr>
+<tr>
+<td>Navegação pelos relatórios</td>
+<td>Aprofundar detalhes, filtrar por período, isolar problemas e oportunidades</td>
+</tr>
+<tr>
+<td>Redução da &quot;fadiga decisória&quot;</td>
+<td>Painéis-resumo convertem informação em ação rápida</td>
+</tr>
+<tr>
+<td>Redução de custos</td>
+<td>Menos especialistas; SaaS troca investimento inicial por assinatura mensal e escala conforme os usuários</td>
+</tr>
+<tr>
+<td>Alteração da cultura empresarial</td>
+<td>De reativa para preventiva/proativa; melhor percepção de custos reais e de preços</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Três desafios (Castro, 2016):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Desafio</th>
+<th>O que pode acontecer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resultados analíticos imprecisos</strong></td>
+<td>Fontes e formatos variados, conjuntos incompletos ou erros não corrigidos; usuários trabalhando com <strong>versões diferentes dos mesmos dados</strong> ou preparando-os de formas distintas, gerando informação inconsistente</td>
+</tr>
+<tr>
+<td><strong>Segurança de dados e privacidade</strong></td>
+<td>Amplo acesso sem política forte permite acesso indevido a dados confidenciais e violação de regulamentos de privacidade</td>
+</tr>
+<tr>
+<td><strong>Implementações não controladas</strong></td>
+<td>Sem monitoramento centralizado e supervisão especializada, o ambiente fica desordenado: dados inconsistentes, ferramentas diferentes e custos excessivos</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="5-níveis-de-autoatendimento-material-acadêmico-alpar-e-schulz-2016">5. Níveis de autoatendimento <em>(material acadêmico: Alpar e Schulz, 2016)</em></h2>
+<p>O autoatendimento varia conforme a tarefa. Na Figura 1 do capítulo, <strong>quanto maior a autossuficiência do usuário, maior a necessidade de conhecimento</strong> (e de suporte do sistema).</p>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>O que o usuário faz</th>
+<th>Quem prepara</th>
+<th>Limite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Uso de informações</strong></td>
+<td>Acessa relatórios existentes ou só define parâmetros; relatórios e painéis que permitem &quot;<strong>perfurar em qualquer lugar</strong>&quot; (drill: do agregado ao detalhe por caminhos predefinidos)</td>
+<td>Especialistas de BI</td>
+<td>Adequado a usuários casuais e a insights básicos; pouco flexível para percepções individuais profundas; restrito ao que o BI preparou</td>
+</tr>
+<tr>
+<td><strong>2. Criação de informações</strong></td>
+<td>Acessa dados no nível <strong>desagregado</strong> mais baixo e cria relatórios e visualizações; faz análises avançadas (preditivas, mineração de texto) com funções analíticas prontas</td>
+<td>Ferramentas criam visualizações virtuais sem exigir SQL</td>
+<td>Risco de selecionar dados com trechos incorretos ou agregados, por não entender a relação dos dados por trás</td>
+</tr>
+<tr>
+<td><strong>3. Criação de recursos de informação</strong></td>
+<td>Usa <strong>novas fontes sem pré-processamento</strong> e as combina temporariamente com dados corporativos; monta <strong>mashups</strong> (arrastar e soltar componentes reutilizáveis num painel)</td>
+<td>Componentes preparados pela TI</td>
+<td>Exige mais conhecimento e é onde o risco de inconsistência cresce</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ajuste usuário-ferramenta:</strong> depende das <strong>tarefas</strong>, <strong>demandas de informação</strong>, <strong>habilidades de computador</strong> e <strong>habilidades analíticas</strong>. Usuários de uma mesma função podem ter necessidades e habilidades diferentes, então não precisam ser agrupados só por função.</p>
+<h3 id="51-quando-usar-cada-nível-complementação">5.1 Quando usar cada nível <em>(complementação)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Nível</th>
+<th>Quando usar</th>
+<th>Exemplo teórico</th>
+<th>Exemplo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Perfil casual; perguntas já previstas pelo BI</td>
+<td>Consultar o painel de vendas do mês e filtrar por região</td>
+<td>Gerente abre o painel oficial de indicadores e filtra por unidade</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Perfil com noção de dados; perguntas não previstas, sobre dados já estruturados</td>
+<td>Cruzar vendas com campanhas no nível de pedido</td>
+<td>Analista de marketing cria um relatório novo sobre a base de pedidos sem pedir à TI</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Perfil avançado e governança madura; exploração com fontes novas</td>
+<td>Combinar a base corporativa com dados externos de clima</td>
+<td>Área comercial junta metas (planilha) com vendas corporativas num painel</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="6-estratégias-em-self-service-analytics-material-acadêmico-halper-2020">6. Estratégias em self-service analytics <em>(material acadêmico: Halper, 2020)</em></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Estratégia</th>
+<th>O que o capítulo diz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Foco na gestão de mudança</strong></td>
+<td>Criar mentalidade orientada a dados leva tempo (evangelização, treinamento). Duas abordagens: ter um <strong>defensor de peso</strong> (executivo com orçamento e influência) e achar <strong>métricas que importam</strong> para cada função</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Ferramentas modernas de BI</strong></td>
+<td>Insights mais rápidos, sem codificar. Recursos: <strong>consumerização</strong> (foco no usuário final), colaboração, linguagem natural e <strong>inteligência aumentada</strong> (sugestões de visualização, insights automáticos). <strong>O treinamento continua sendo necessário</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Alfabetização em dados</strong></td>
+<td>Pensamento crítico com dados, fundamentos de estatística (média, mediana) e <strong>comunicação com dados</strong> (narrativa, público-alvo, boas visualizações)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Garantia de dados confiáveis</strong></td>
+<td>Parceria entre negócio e TI; <strong>camada de modelagem semântica</strong> (visão virtualizada das fontes, sem replicar); qualidade (precisos, oportunos e razoáveis: padronização, desduplicação, verificação de discrepantes e ausentes, consistência); <strong>metadados</strong> e <strong>catálogo de dados</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Equilíbrio entre autoatendimento e governança</strong></td>
+<td>Governança = políticas, regras e responsabilidades. Responsabilidade <strong>compartilhada</strong> entre negócio e TI, sem regras demais nem de menos: controle de acesso, padronização de termos, coordenação, métricas de qualidade, regras de compartilhamento, segurança e privacidade</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fechamento do capítulo:</strong> para evitar os desafios, cada organização deve partir de uma <strong>estratégia de BI bem planejada</strong>: arquitetura sólida, padrões de tecnologia, governança, programas de treinamento e política de governança de dados.</p>
+</section>
+<section class="bloco"><h2 id="7-bi-tradicional--self-service-bi-material-acadêmico-infográfico">7. BI tradicional × Self-service BI <em>(material acadêmico: infográfico)</em></h2>
+<table>
+<thead>
+<tr>
+<th>Dimensão</th>
+<th>BI tradicional</th>
+<th>Self-service BI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Configuração de TI</strong></td>
+<td>Envolvimento constante de especialistas de TI e dados; vários componentes, cada um exigindo especialistas</td>
+<td>TI usada só na implementação; menos pessoal especializado para manter</td>
+</tr>
+<tr>
+<td><strong>Agilidade</strong></td>
+<td>Acesso restrito à TI e a especialistas; oportunidades presas em ciclos de consultas e relatórios de <strong>uma semana a um mês</strong></td>
+<td>Análises, relatórios e insights <strong>em tempo real</strong> pelos usuários; testam tendências e correlações, modelando dados</td>
+</tr>
+<tr>
+<td><strong>Dados</strong></td>
+<td>Deve <strong>estruturar</strong> os dados antes de usá-los</td>
+<td>Dados de várias fontes e <strong>vários formatos</strong></td>
+</tr>
+<tr>
+<td><strong>Comunicação</strong></td>
+<td>Responde o que já aconteceu ou está acontecendo; recursos limitados de relatórios sob demanda</td>
+<td>Relatórios preditivos e prescritivos, além dos históricos; vários recursos sob demanda</td>
+</tr>
+<tr>
+<td><strong>Gestão de dados</strong></td>
+<td>Equipe especializada garante limpeza, armazenamento e segurança, além da governança</td>
+<td><strong>Exige política de governança</strong> para limpeza, armazenamento, modelagem e privilégios de acesso</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusão do infográfico:</strong> o self-service oferece mais vantagens e facilidades, mas no tradicional a <strong>qualidade dos dados é mais controlada</strong>. O <strong>recomendado é usar as duas soluções em conjunto</strong>: BI tradicional para o passado e o presente; self-service para perguntas em tempo real e sobre o futuro.</p>
+<h3 id="71-quando-usar-cada-abordagem-complementação">7.1 Quando usar cada abordagem <em>(complementação)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Tendência</th>
+<th>Exemplo teórico</th>
+<th>Exemplo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Números <strong>oficiais</strong>, auditados ou regulatórios</td>
+<td>BI tradicional (centralizado)</td>
+<td>Balanço e relatórios regulatórios</td>
+<td>Indicador financeiro enviado à diretoria ou a órgãos externos</td>
+</tr>
+<tr>
+<td>Exploração rápida, perguntas novas e departamentais</td>
+<td>Self-service</td>
+<td>&quot;Por que as vendas caíram na região Sul?&quot;</td>
+<td>Time comercial investiga uma queda sem abrir chamado</td>
+</tr>
+<tr>
+<td>Prototipar uma visão para depois oficializar</td>
+<td>Self-service, depois promover ao BI</td>
+<td>Painel piloto de uma área</td>
+<td>Protótipo de painel validado e depois assumido pela TI</td>
+</tr>
+<tr>
+<td>Modelos preditivos críticos</td>
+<td>Ciência de dados com apoio de TI</td>
+<td>Modelo de risco de crédito</td>
+<td>Modelo de churn em produção</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>O infográfico afirma que o self-service responde perguntas &quot;sobre o futuro&quot;. Isso depende da ferramenta e da competência do usuário. Ferramentas oferecem recursos preditivos, mas <strong>interpretá-los e validá-los</strong> exige conhecimento estatístico (ligação com a estratégia 3, alfabetização em dados).</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="8-ferramentas-citadas-no-material-material-acadêmico">8. Ferramentas citadas no material <em>(material acadêmico)</em></h2>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>Onde aparece</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Alteryx</strong></td>
+<td>&quot;Saiba mais&quot;: live com especialista, descrita como ferramenta de análise de dados self-service que gera insights visuais analíticos</td>
+</tr>
+<tr>
+<td><strong>Microsoft Power BI Desktop</strong></td>
+<td>&quot;Saiba mais&quot;: artigo que usa uma solução de BI self-service com dados do Facebook para apoiar decisões</td>
+</tr>
+<tr>
+<td><strong>Tableau, Power BI, Sisense e QlikView</strong></td>
+<td>&quot;Saiba mais&quot;: artigo que compara as quatro ferramentas para ajudar a escolher a que atende melhor cada negócio</td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>Dica do Professor</strong> (vídeo) apresenta &quot;algumas das principais ferramentas de self-service analytics&quot;. <strong>Não acessei o vídeo</strong> (ver seção 12).</p>
+</section>
+<section class="bloco"><h2 id="9-análise-crítica-observações-da-dani-e-leitura-do-material">9. Análise crítica: observações da Dani e leitura do material</h2>
+<blockquote>
+<p>Esta seção registra o que a Dani pensa e confronta com o capítulo. Cada linha identifica a origem.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Observação da Dani</th>
+<th>O que o capítulo diz</th>
+<th>Complementação / ponto de atenção</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>O modelo parece ser um <strong>data lake</strong> com as áreas de negócio estruturando as próprias análises, sem alta dependência da TI e <strong>sem ETL, executando um ELT</strong></td>
+<td><strong>Não menciona data lake nem ELT.</strong> Fala de data warehouse, camada de modelagem semântica, catálogo de dados e mashups. O nível 3 (novas fontes sem pré-processamento) é o que mais se aproxima</td>
+<td>Self-service define <strong>quem</strong> analisa, não <strong>onde</strong> os dados ficam: funciona sobre DW, lake ou camada semântica. A transformação <strong>não desaparece</strong>: muda de lugar e de mãos (seção 10)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Isso gera um <strong>desafio de governança de dados</strong></td>
+<td>Confirma: é desafio (imprecisão, segurança, implementação não controlada) e é a <strong>estratégia 5</strong>; as estratégias 4 e 5 tratam de dados confiáveis e governança</td>
+<td>A governança é pré-condição, não complemento</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ser capacitado em uma ferramenta como Power BI <strong>não faz de alguém um analista de dados</strong> e algumas ineficiências são propagadas</td>
+<td>Reconhece em parte: &quot;o treinamento não é dispensável&quot;, alfabetização em dados (estratégia 3) e o risco de usuários selecionarem dados incorretos ou agregados. Mas também afirma que o modelo <strong>&quot;abole a necessidade de vasta mão de obra especializada&quot;</strong> e reduz custos</td>
+<td><strong>Tensão interna do capítulo:</strong> a estratégia 4 (dados confiáveis) depende justamente de especialistas e de TI. Ferramenta fácil não equivale a competência analítica</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Análise em cima de <strong>planilha Excel gerada manualmente é ponto de risco alto</strong></td>
+<td>Coerente com o desafio de &quot;versões diferentes dos mesmos dados&quot; e com o benefício da &quot;versão única da verdade&quot;</td>
+<td>Faltam <strong>linhagem, versionamento, validação e reprodutibilidade</strong>. Planilha manual como fonte é o caso típico de nível 3 sem governança</td>
+</tr>
+<tr>
+<td>5</td>
+<td>A teoria é <strong>problemática em empresas grandes</strong>, com gestão já definida e, segundo a Dani, de gerações X e Y</td>
+<td>A estratégia 1 trata da cultura: defensor executivo e métricas relevantes. O capítulo não faz recorte por geração</td>
+<td>O ponto de fundo (preparo da liderança para decidir com dados) é legítimo. Como argumento, é mais sólido formular por <strong>papel e letramento em dados</strong> (verificáveis) do que por geração (generalização difícil de sustentar)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>O capítulo é otimista demais</td>
+<td>—</td>
+<td>Fontes majoritariamente de <strong>literatura de mercado</strong> (TDWI) e uma dissertação; a cifra de 47% vem de <strong>um único estudo (2017)</strong>, e não foi verificada aqui</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dúvidas em aberto (Dani):</strong></p>
+<ul>
+<li>Em um ambiente real, onde termina o autoatendimento seguro e começa o &quot;ETL informal&quot;?</li>
+<li>Que critérios definem quando uma análise feita por usuário de negócio deve ser promovida a um indicador oficial?</li>
+</ul>
+<p><em>(Respostas parciais estão nas seções 10 e 11.)</em></p>
+</section>
+<section class="bloco"><h2 id="10-complementação-onde-fica-a-transformação-etl--elt-e-arquitetura-típica">10. Complementação: onde fica a transformação (ETL × ELT) e arquitetura típica</h2>
+<blockquote>
+<p>Seção de complementação. O capítulo não trata de ELT.</p>
+</blockquote>
+<h3 id="101-etl--elt">10.1 ETL × ELT</h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>ETL</th>
+<th>ELT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Onde transforma</strong></td>
+<td>Antes de carregar, em uma área intermediária (staging)</td>
+<td>Depois de carregar, dentro do destino (DW, lake ou lakehouse)</td>
+</tr>
+<tr>
+<td><strong>Dado bruto</strong></td>
+<td>Em geral não fica disponível no destino</td>
+<td>Fica guardado e disponível</td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong></td>
+<td>Regras estáveis, dados estruturados, governança forte, destino com pouca capacidade de processamento</td>
+<td>Grandes volumes e dados variados, necessidade de reprocessar, destino com muita capacidade</td>
+</tr>
+<tr>
+<td><strong>Exemplo teórico</strong></td>
+<td>Carga noturna de vendas para um DW dimensional, já limpa e padronizada (Aula 2 da disciplina anterior)</td>
+<td>Carregar logs e arquivos brutos em um lake e transformar sob demanda</td>
+</tr>
+<tr>
+<td><strong>Exemplo real</strong></td>
+<td>Consolidação financeira mensal com regras contábeis</td>
+<td>Telemetria de aplicações guardada bruta e preparada para cada análise</td>
+</tr>
+<tr>
+<td><strong>Relação com self-service</strong></td>
+<td>Entrega dados prontos, com menos liberdade</td>
+<td>Dá mais liberdade de exploração, mas <strong>exige curadoria</strong> para que cada usuário não transforme do seu jeito</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ponto-chave para a dúvida 1 da Dani:</strong> em ambos os casos alguém <strong>precisa transformar</strong>. A diferença é <strong>quando</strong> e <strong>quem</strong>. No self-service sem governança, o usuário transforma na própria ferramenta (por exemplo, no Power Query ou em planilhas), criando um <strong>ETL informal</strong> (&quot;<em>shadow</em> ETL&quot;), sem padrão, documentação ou reprodutibilidade. Isso conecta com a observação da disciplina anterior de que cerca de 80% de um projeto de ETL é a definição das regras de transformação, que é uma análise gerencial e não técnica.</p>
+<h3 id="102-arquitetura-típica-de-self-service-com-governança">10.2 Arquitetura típica de self-service com governança</h3>
+<pre><code><div class="highlight"><pre><span></span>Fontes (sistemas, planilhas, APIs, arquivos)
+        │
+        ▼
+Ingestão  →  Armazenamento (DW / data lake / lakehouse)
+        │
+        ▼
+Camada semântica certificada (métricas e definições únicas) + Catálogo de dados e metadados
+        │
+        ▼
+Ferramentas de autoatendimento (painéis, relatórios, exploração)
+        │
+        ▼
+Usuários de negócio ── supervisionados por ── Governança (acesso, qualidade, linhagem, treinamento)
+</pre></div>
+</code></pre>
+<p>Corresponde às estratégias 4 e 5 do capítulo: camada de modelagem semântica, metadados, catálogo e governança compartilhada.</p>
+<h3 id="103-salvaguardas-para-reduzir-o-risco-checklist">10.3 Salvaguardas para reduzir o risco <em>(checklist)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Salvaguarda</th>
+<th>Risco que reduz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conjuntos de dados <strong>certificados</strong> como fonte oficial</td>
+<td>Versões diferentes dos mesmos dados</td>
+</tr>
+<tr>
+<td>Métricas definidas <strong>uma única vez</strong> na camada semântica</td>
+<td>Dois painéis com faturamento diferente</td>
+</tr>
+<tr>
+<td><strong>Linhagem</strong> e catálogo (de onde veio, quem criou, quando)</td>
+<td>Análise sem rastreabilidade</td>
+</tr>
+<tr>
+<td>Controle de acesso e classificação de dados sensíveis</td>
+<td>Exposição de dados confidenciais e violação de privacidade</td>
+</tr>
+<tr>
+<td>Versionamento e revisão de painéis críticos</td>
+<td>Erros propagados e decisões com número errado</td>
+</tr>
+<tr>
+<td>Treinamento <strong>por nível</strong> de autoatendimento (seção 5)</td>
+<td>Usuário operando acima da própria competência</td>
+</tr>
+<tr>
+<td>Processo para <strong>promover</strong> uma análise de área a indicador oficial</td>
+<td>Indicador &quot;paralelo&quot; virando referência sem validação</td>
+</tr>
+<tr>
+<td>Proibir fonte manual sem registro para números oficiais</td>
+<td>Planilha manual como base de decisão</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="11-cenários-de-vida-real-imagine-que-complementação">11. Cenários de vida real: &quot;Imagine que...&quot; <em>(complementação)</em></h2>
+<p><strong>1. Fila na TI</strong></p>
+<ul>
+<li><strong>Imagine que</strong> o financeiro precisa de um relatório de vendas por região para amanhã e a fila de relatórios da TI está em três semanas.</li>
+<li><strong>Será analisado por</strong> self-service nível 1 ou 2, sobre um conjunto de dados certificado.</li>
+<li><strong>Porque</strong> o ganho de agilidade é o principal motivador do modelo e, com a fonte certificada, o risco de inconsistência fica baixo.</li>
+</ul>
+<p><strong>2. Planilha de metas + base corporativa</strong></p>
+<ul>
+<li><strong>Imagine que</strong> a área comercial quer juntar sua planilha própria de metas com as vendas da base corporativa.</li>
+<li><strong>Será analisado por</strong> nível 3 (mashup), <strong>com a planilha registrada como fonte</strong> e revisão do painel antes de circular.</li>
+<li><strong>Porque</strong> é o nível de maior flexibilidade e também o de maior risco de versões divergentes (desafio 1 do capítulo). A planilha manual sem registro é o ponto de risco apontado na seção 9.</li>
+</ul>
+<p><strong>3. Dois painéis, dois números</strong></p>
+<ul>
+<li><strong>Imagine que</strong> a diretoria recebe dois painéis com faturamentos diferentes para o mesmo mês.</li>
+<li><strong>Será resolvido por</strong> métricas padronizadas numa camada semântica e um catálogo que indique a fonte oficial.</li>
+<li><strong>Porque</strong> cada área aplicou filtros e regras próprias aos mesmos dados, exatamente o desafio de &quot;resultados analíticos imprecisos&quot;.</li>
+</ul>
+<p><strong>4. Antes de adotar a ferramenta</strong></p>
+<ul>
+<li><strong>Imagine que</strong> uma empresa grande quer liberar uma ferramenta de BI de autoatendimento a todos os gerentes.</li>
+<li><strong>Será conduzido por</strong> gestão de mudança (patrocinador executivo, métricas relevantes), treinamento por perfil e governança definida <strong>antes</strong> da liberação.</li>
+<li><strong>Porque</strong> a ferramenta fácil, sozinha, não gera competência analítica (estratégias 1, 3 e 5).</li>
+</ul>
+<p><strong>5. Aplicação profissional (sugestão, não é conteúdo da aula)</strong></p>
+<ul>
+<li><strong>Imagine que</strong> a gestão de demandas e portfólio quer acompanhar tempo de ciclo, envelhecimento (aging) e status das demandas, com dados vindos de ferramentas como Azure DevOps ou Jira Align.</li>
+<li><strong>Será analisado por</strong> um conjunto de dados certificado (definições únicas de &quot;demanda concluída&quot; e &quot;tempo de ciclo&quot;) e painéis de autoatendimento nos níveis 1 e 2 para as áreas, com o nível 3 restrito a quem tem treinamento.</li>
+<li><strong>Porque</strong> os indicadores de portfólio sustentam decisões executivas: um número divergente entre painéis compromete a governança que o próprio modelo deveria apoiar.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="12-anexos">12. Anexos</h2>
+<h3 id="anexo-a-vídeo-análise-de-dados-em-python-material-do-professor-não-assistido">Anexo A: Vídeo &quot;Análise de dados em Python&quot; <em>(material do professor, não assistido)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Informação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Link</td>
+<td>https://www.youtube.com/embed/W_Bz7M91R1Q</td>
+</tr>
+<tr>
+<td>Descrição na plataforma</td>
+<td>&quot;Aprenda como realizar a análise de dados usando o frame da Anaconda, que permite programar em Python em Linguagem R.&quot;</td>
+</tr>
+<tr>
+<td>Onde aparece</td>
+<td>&quot;Saiba mais&quot; da AED (Aula 4). O mesmo vídeo já consta no notebook da disciplina anterior</td>
+</tr>
+<tr>
+<td>Status</td>
+<td><strong>Não assistido por mim</strong> (acesso bloqueado neste ambiente). O conteúdo abaixo não deriva do vídeo</td>
+</tr>
+<tr>
+<td>Observação da Dani</td>
+<td>Considerou o conteúdo interessante e quer registrá-lo como anexo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Atenção a uma divergência:</strong> o notebook anterior descreve o vídeo como prática com Pandas, NumPy e Matplotlib. Essa descrição foi escrita sem assistir ao vídeo e não coincide com o texto da plataforma (Anaconda). Vale ajustar assim que o conteúdo for conferido.</p>
+<p><strong>Se quiser aprofundar:</strong> envie a transcrição ou suas notas do vídeo que eu incorporo ao anexo.</p>
+<h3 id="anexo-b-anaconda-em-uma-página-complementação-não-deriva-do-vídeo">Anexo B: Anaconda em uma página <em>(complementação, não deriva do vídeo)</em></h3>
+<p>O <strong>Anaconda</strong> é uma distribuição de Python e R para ciência de dados. Reúne o interpretador, o gerenciador de pacotes e ambientes <strong>conda</strong>, o <strong>Jupyter</strong> e muitas bibliotecas científicas já instaladas (como NumPy e Pandas). A frase da plataforma (&quot;Python em Linguagem R&quot;) provavelmente se refere à possibilidade de trabalhar com as duas linguagens no mesmo ambiente.</p>
+<table>
+<thead>
+<tr>
+<th>Opção</th>
+<th>Quando usar</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Anaconda / conda</strong></td>
+<td>Quer tudo pronto, usa Python e R, ou depende de bibliotecas científicas com dependências nativas difíceis de instalar</td>
+<td>Estudar ciência de dados com Jupyter, Pandas e scikit-learn sem montar o ambiente à mão</td>
+</tr>
+<tr>
+<td><strong>venv + pip</strong> (usado no how-to da Aula 3)</td>
+<td>Projetos leves, ambiente mínimo, integração simples com o VS Code</td>
+<td>O pacote <code>aula03_vscode/</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Cuidado em uso corporativo:</strong> os termos de licença do Anaconda podem exigir licença paga para uso em empresas. Confira os termos atuais antes de instalar em ambiente de trabalho. Há alternativas, como <code>venv</code> e canais comunitários do conda.</p>
+</blockquote>
+<h3 id="anexo-c-links-do-material-não-acessados">Anexo C: Links do material (não acessados)</h3>
+<table>
+<thead>
+<tr>
+<th>Material</th>
+<th>Link (conforme o PDF)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dica do Professor, AED (vídeo)</td>
+<td><code>fast.player.liquidplatform.com/pApiv2/embed/cee29914fad5b594d8f5918df1e801fd/aa7477e89ad9a349713e602cacc1a8df</code></td>
+</tr>
+<tr>
+<td>Prof. Álvaro Caldas: estatística e AED (vídeo)</td>
+<td>https://www.youtube.com/embed/84JiM5UYswk</td>
+</tr>
+<tr>
+<td>Dica do Professor, self-service (vídeo)</td>
+<td><code>fast.player.liquidplatform.com/pApiv2/embed/cee29914fad5b594d8f5918df1e801fd/007aa3f45a4b491a72c827cf787a4bfe</code></td>
+</tr>
+<tr>
+<td>Alteryx: live com especialista (vídeo)</td>
+<td>https://www.youtube.com/embed/cCN5SpedEdI</td>
+</tr>
+<tr>
+<td>Power BI Desktop com dados de mídia social (artigo)</td>
+<td>http://periodicos.faex.edu.br/index.php/e-Locucao/article/view/212/164</td>
+</tr>
+<tr>
+<td>Avaliação de ferramentas de BI para visualização (artigo)</td>
+<td>https://www.researchgate.net/profile/Isabel-Pedrosa/publication/344723939_Evaluation_and_Analysis_of_Business_Intelligence_Data_Visualization_Tools/links/6065a3f1299bf1252e1d857e/Evaluation-and-Analysis-of-Business-Intelligence-Data-Visualization-Tools.pdf</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="13-atividade-4-a4-gabarito">13. Atividade 4 (A4): gabarito</h2>
+<blockquote>
+<p>A plataforma não mostra o gabarito. As questões desta A4 são <strong>equivalentes</strong> às da Aula 4 de <em>Aquisição e Preparação de Dados</em> (mesmos temas; o registro anterior guardou os enunciados de forma resumida, então a redação pode variar), e o registro de lá indica as respostas abaixo. <strong>Confirme na plataforma antes de reaproveitar:</strong> um trecho de chat daquela disciplina menciona &quot;8/10&quot;, enquanto o notebook e a memória registram 5/5.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Q</th>
+<th>Tema</th>
+<th>Resposta</th>
+<th>Justificativa (capítulo)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Principal etapa da análise: organizar, resumir, calcular e visualizar</td>
+<td><strong>A) Análise exploratória de dados</strong></td>
+<td>Definição de Stankevix citada no capítulo</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Valores de compra com grande afastamento da série (fraude em cartão)</td>
+<td><strong>B) Outliers</strong></td>
+<td>Valor que foge do padrão. Em fraude, o outlier é exatamente o que se busca</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Fatos que ocorrem de forma sincronizada (pão e satisfação)</td>
+<td><strong>C) Correlação</strong></td>
+<td>Dois acontecimentos, não necessariamente causais, que tendem a ocorrer juntos</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Opção que sugere um tipo de apresentação</td>
+<td><strong>D) Gráfico</strong></td>
+<td>O capítulo cita duas formas: tabular e gráfica</td>
+</tr>
+<tr>
+<td>5</td>
+<td>O que saber para escolher a técnica de imputação</td>
+<td><strong>E) O tipo do dado faltante</strong></td>
+<td>&quot;As técnicas de imputação dependem do tipo de dado faltante&quot;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pegadinhas:</strong></p>
+<ul>
+<li><strong>Q4:</strong> &quot;Infográfico&quot; (E) aparece como alternativa, mas o capítulo só reconhece duas formas de apresentação (tabular e gráfica). Resposta pelo texto: <strong>Gráfico</strong>.</li>
+<li><strong>Q5:</strong> &quot;O motivo do dado faltante&quot; (B) parece razoável e, na prática, o motivo também importa (seção 3.3). Mas a resposta que o capítulo sustenta é o <strong>tipo</strong> do dado faltante.</li>
+<li><strong>Q2:</strong> a alternativa E traz um ponto e vírgula no lugar do ponto final (&quot;Quantitativo;&quot;), erro de edição sem efeito sobre a resposta.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="14-referências-e-conexões-com-outros-conteúdos">14. Referências e Conexões com Outros Conteúdos</h2>
+<p><strong>Referências do capítulo de AED:</strong></p>
+<ul>
+<li>BONAT, W. H.; KRAINSKI, E. T.; MAYER, F. P. <em>Introdução à análise exploratória de dados.</em> Material de aula, UFPR, 2020.</li>
+<li>CAPÍTULO 1: análise exploratória de dados. [S. l., 2011].</li>
+<li>MEDRI, W. <em>Análise exploratória de dados.</em> Londrina: UEL, 2011.</li>
+<li>NAVIDI, W. <em>Probabilidade e estatística para ciências exatas.</em> Porto Alegre: AMGH, 2012.</li>
+<li>NUNES, C. E. <em>Aula3 Carlos: dado, informação, conhecimento e sabedoria.</em> 2015.</li>
+<li>STANKEVIX, G. <em>Análise exploratória de dados.</em> [S. l.], 2020.</li>
+<li>Leituras recomendadas: MACHADO, F. N. R. <em>Projeto de data warehouse: uma visão multidimensional.</em> São Paulo: Érica, 2000; VIALI, L. <em>Série estatística multivariada: introdução.</em> [199-?].</li>
+</ul>
+<p><strong>Referências do capítulo de self-service analytics:</strong></p>
+<ul>
+<li>ALPAR, P.; SCHULZ, M. <em>Self-service business intelligence.</em> Marburg: Springer, 2016.</li>
+<li>BAHGA, A.; MADISETTI, V. <em>Big data analytics: a hands-on approach.</em> 2019.</li>
+<li>CASTRO, J. M. L. T. <em>Tendências de business intelligence: SSBI como foco principal de estudo.</em> Dissertação, NOVA Information Management School, Lisboa, 2016.</li>
+<li>DARADKEH, M.; AL-DWAIRI, R. M. Self-service business intelligence adoption in business enterprises. <em>International Journal of Enterprise Information System</em>, v. 13, n. 3, p. 65–85, 2017.</li>
+<li>DOMO. <em>Data never sleeps 9.0.</em> 2021.</li>
+<li>HALPER, F. <em>Five strategies for creating a culture of self-service for analytics and business intelligence.</em> TDWI, 2020.</li>
+<li>IMHOFF, C.; WHITE, C. <em>Self-service business intelligence: empowering users to generate insights.</em> TDWI, 2011.</li>
+<li>MYERS, N. E.; KOGAN, G. <em>Self-service data analytics and governance for managers.</em> Wiley, 2021.</li>
+<li>ZHANG, A. <em>Data analytics: practical guide to leveraging the power of algorithms, data science, data mining, statistics, big data and predictive analysis to improve business, work, and life.</em> 2017.</li>
+</ul>
+<blockquote>
+<p>As referências acima são as listadas nos capítulos. Esta aula não consultou as fontes originais.</p>
+</blockquote>
+<p><strong>Conexões com a disciplina anterior (Aquisição e Preparação de Dados — 262GGR6046A):</strong></p>
+<ul>
+<li><strong>Aula 4 (AED):</strong> é o mesmo capítulo; esta aula só acrescenta o infográfico de imputação e detalhes pontuais (seção 3).</li>
+<li><strong>Aula 2 (ETL):</strong> a seção 10 retoma ETL, staging, DW e OLAP, e os contrasta com ELT e self-service.</li>
+<li><strong>Aula 1 (dados abertos e conectados), conexão sugerida:</strong> catálogo de dados, metadados e camada semântica se aproximam das ideias de dados conectados (identificação e vínculo entre fontes).</li>
+<li><strong>Aula 3 (normalização):</strong> a padronização de termos e de escala é parte das técnicas de qualidade de dados da estratégia 4.</li>
+</ul>
+<p><strong>Conexões internas à disciplina (Aprendizado Não Supervisionado):</strong></p>
+<ul>
+<li><strong>Aula 1:</strong> big data (5 Vs) e qualidade de dados; o self-service é uma resposta organizacional ao volume e à variedade.</li>
+<li><strong>Aula 2:</strong> os gráficos multivariados (heatmap, scatter, densidade) são os recursos que as ferramentas de autoatendimento oferecem ao usuário.</li>
+<li><strong>Aula 3:</strong> outliers, imputação e padronização antecedem a PCA; sem dados confiáveis, a redução de dimensionalidade herda os erros.</li>
+</ul>
+<p><strong>Conexões com Aprendizado Supervisionado:</strong></p>
+<ul>
+<li><strong>Aula 1 (pré-processamento) e Aula 2 (BPM):</strong> painéis e indicadores de desempenho são o produto típico do autoatendimento, e a qualidade dos dados continua sendo pré-condição para o aprendizado de máquina.</li>
+</ul>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d3-aula-03.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 3</a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d3.html">← Aprendizado de Máquina Não Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

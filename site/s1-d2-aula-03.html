@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 3 · Classificação de textos: introdução ao aprendizado supervisionado · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 3 · Classificação de textos: introdução ao aprendizado supervisionado</span></nav>
+    <span class="eyebrow">Aula 3 · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 3 · Classificação de textos: introdução ao aprendizado supervisionado</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_03_RESUMO_CLASSIFICACAO_DE_TEXTOS.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-3--classificação-de-textos-introdução-ao-aprendizado-supervisionado">AULA 3 — CLASSIFICAÇÃO DE TEXTOS: INTRODUÇÃO AO APRENDIZADO SUPERVISIONADO</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</a></li><li class="n3"><a href="#31-classificações-de-aprendizado-de-máquina">3.1 Classificações de aprendizado de máquina</a></li><li class="n3"><a href="#32-técnicas-citadas">3.2 Técnicas citadas</a></li><li class="n3"><a href="#33-árvore-de-decisão">3.3 Árvore de decisão</a></li><li class="n3"><a href="#34-terminologia-de-dados-baranauskas-e-monard-2000-e-demais-autores-do-capítulo">3.4 Terminologia de dados (Baranauskas e Monard, 2000, e demais autores do capítulo)</a></li><li class="n3"><a href="#35-aplicações-de-ml-para-classificação-de-textos">3.5 Aplicações de ML para classificação de textos</a></li><li class="n3"><a href="#36-elementos-da-solução-o-pipeline-de-classificação-de-texto">3.6 Elementos da solução: o pipeline de classificação de texto</a></li><li class="n3"><a href="#37-superfície-de-decisão-e-algoritmos">3.7 Superfície de decisão e algoritmos</a></li><li class="n3"><a href="#38-expressões-regulares-conceito-citado-antes-do-pré-processamento">3.8 Expressões regulares (conceito citado antes do pré-processamento)</a></li><li class="n3"><a href="#39-pré-processamento-e-limpeza-do-texto">3.9 Pré-processamento e limpeza do texto</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</a></li><li class="n3"><a href="#41-árvore-de-decisão--esperar-ou-não-por-uma-mesa-figura-1-russell-e-norvig-2013-p-812">4.1 Árvore de decisão — esperar ou não por uma mesa (Figura 1; Russell e Norvig, 2013, p. 812)</a></li><li class="n3"><a href="#42-tokenização">4.2 Tokenização</a></li><li class="n3"><a href="#43-processamento-básico-de-um-texto-figura-6-adaptada-de-travizan-neto-2017">4.3 Processamento básico de um texto (Figura 6; adaptada de Travizan Neto, 2017)</a></li><li class="n3"><a href="#44-análise-de-sentimento-aplicada-a-programas-do-governo-federal-figura-2-oliveira-et-al-2019-p-245246">4.4 Análise de sentimento aplicada a programas do Governo Federal (Figura 2; Oliveira et al., 2019, p. 245–246)</a></li><li class="n3"><a href="#45-exemplo-histórico-quadro-saiba-mais">4.5 Exemplo histórico (quadro &quot;Saiba mais&quot;)</a></li><li class="n2"><a href="#5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</a></li><li class="n3"><a href="#pontos-de-atenção-no-texto-base-identificados-na-análise-não-são-observações-da-aluna">Pontos de atenção no texto-base (identificados na análise; não são observações da aluna)</a></li><li class="n2"><a href="#6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</a></li><li class="n3"><a href="#referência-principal">Referência principal</a></li><li class="n3"><a href="#referências-citadas-no-capítulo">Referências citadas no capítulo</a></li><li class="n3"><a href="#conexões-com-outras-aulas-e-disciplinas">Conexões com outras aulas e disciplinas</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-3--classificação-de-textos-introdução-ao-aprendizado-supervisionado">AULA 3 — CLASSIFICAÇÃO DE TEXTOS: INTRODUÇÃO AO APRENDIZADO SUPERVISIONADO</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Supervisionado (262GGR4728A)<br />
+<strong>Aula:</strong> 3 — Classificação de textos — introdução ao aprendizado supervisionado<br />
+<strong>Fonte:</strong> <em>Processamento de Linguagem Natural</em> — Michel Bernardo Fernandes da Silva, SAGAH (Soluções Educacionais Integradas), capítulo &quot;Classificação de textos — introdução ao aprendizado supervisionado&quot;</p>
+<h3 id="objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</h3>
+<ul>
+<li>Definir a área de <em>machine learning</em>.</li>
+<li>Descrever exemplos de aplicações de <em>machine learning</em> para classificação de textos.</li>
+<li>Identificar os elementos que compõem as soluções de classificação de textos.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p>O capítulo apresenta o <em>machine learning</em> (aprendizado de máquina) e seus tipos, mostra aplicações na <strong>classificação de textos</strong> (empresas comerciais, governo, Direito, Ciências Sociais, Medicina) e detalha os <strong>elementos e etapas</strong> de uma solução de classificação de textos (o <em>pipeline</em>).</p>
+<p>Definições-base usadas no capítulo:</p>
+<ul>
+<li><strong>SAS Institute (2019):</strong> aprendizado de máquina é &quot;um método de análise de dados que possibilita criar modelos analíticos automaticamente&quot;.</li>
+<li><strong>Russell e Norvig (2013, p. 5):</strong> a Inteligência Artificial é o estudo de agentes que recebem percepções do ambiente e executam ações; o <em>machine learning</em> é uma vertente específica da IA que treina máquinas para aprender com dados.</li>
+</ul>
+<p>Premissa central: sistemas podem <strong>aprender com dados, identificar padrões e tomar decisões com mínima interferência humana</strong>.</p>
+<p>Segundo Russell e Norvig (2013), o projeto de um elemento de aprendizagem é influenciado por três questões:</p>
+<ol>
+<li>os componentes do elemento de desempenho que devem ser aprendidos;</li>
+<li>a representação a ser utilizada para os componentes;</li>
+<li>a realimentação (<em>feedback</em>) disponibilizada para aprender esses componentes.</li>
+</ol>
+<p><strong>Posição na disciplina:</strong> a Aula 1 apresentou o AM de forma geral; a Aula 3 aprofunda o lado <strong>supervisionado</strong> aplicado a <strong>texto</strong> (PLN), conectando os tipos de aprendizado, o vocabulário de dados (atributo, instância, rótulo, dataset) e o pipeline de uma solução real.</p>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</h2>
+<h3 id="31-classificações-de-aprendizado-de-máquina">3.1 Classificações de aprendizado de máquina</h3>
+<p>A classificação mais frequente divide o AM em <strong>supervisionado, não supervisionado e por reforço</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Aprendizado supervisionado</strong></th>
+<th><strong>Aprendizado não supervisionado</strong></th>
+<th><strong>Aprendizado por reforço</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>O que é</strong></td>
+<td>Existe um conjunto pré-definido de <strong>pares entrada/saída</strong>; as entradas são atributos dos objetos a reconhecer. O treinamento usa esses dados e o programa precisa tomar decisões precisas quando recebe novos dados.</td>
+<td>O programa busca <strong>padrões e relações</strong> em um conjunto de dados, recebendo <strong>somente os dados de entrada</strong>; os padrões de saída são aprendidos pelo próprio sistema.</td>
+<td>O agente de aprendizagem adquire conhecimento sobre seu processo a partir do <strong>reforço ou da recompensa</strong>; também contempla o subproblema de entender como o ambiente funciona.</td>
+</tr>
+<tr>
+<td><strong>Quando utilizar</strong> †</td>
+<td>Quando há dados <strong>já rotulados</strong> e o objetivo é prever o rótulo (ou valor) de novos dados.</td>
+<td>Quando <strong>não há rótulos prévios</strong> e o objetivo é descobrir estrutura nos dados (ex.: agrupar por semelhança).</td>
+<td>Quando um agente <strong>interage com um ambiente</strong> e aprende a partir de recompensas/penalidades, e não de exemplos rotulados.</td>
+</tr>
+<tr>
+<td><strong>Exemplos</strong></td>
+<td>Posts do Facebook ou tweets marcados como positivos, neutros e negativos para criar um classificador de <strong>análise de sentimento</strong>. Técnicas: redes neurais artificiais com treinamento supervisionado, árvores de decisão.</td>
+<td><strong>Agrupamento automático de e-mails</strong> recebidos por um funcionário, por temas semelhantes, sem conhecimento prévio sobre os dados de entrada.</td>
+<td>Uma <strong>multa de trânsito</strong> indica ao agente que seu comportamento foi inadequado.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>† <strong>Linha &quot;Quando utilizar&quot;:</strong> o capítulo <strong>não traz um critério explícito</strong> de &quot;quando utilizar&quot; cada tipo. O conteúdo dessa linha foi <strong>derivado das definições do próprio capítulo</strong> (presença/ausência de rótulos, presença de recompensa). Tratar como síntese de estudo, não como citação do livro.</p>
+</blockquote>
+<p><strong>Observação do capítulo:</strong> em geral, um sistema de aprendizado dispõe de um conjunto de dados de treinamento <strong>classificados manualmente</strong>, com base nos quais aprende a classificar esses dados e <strong>novos dados ainda não observados</strong> (característica do supervisionado).</p>
+<h3 id="32-técnicas-citadas">3.2 Técnicas citadas</h3>
+<ul>
+<li><strong>Supervisionado:</strong> redes neurais artificiais com treinamento supervisionado; árvores de decisão (<em>decision tree</em>).</li>
+<li><strong>Aprendizagem profunda (<em>deep learning</em>):</strong> categoria de algoritmos de ML que usa <strong>redes neurais artificiais</strong> para gerar modelos; bem-sucedida em reconhecimento de imagem; as redes são inspiradas nas redes neurais biológicas (rede de nós interconectados) e usadas, em geral, quando o volume de entrada é muito grande, o que torna abordagens convencionais inadequadas.</li>
+</ul>
+<h3 id="33-árvore-de-decisão">3.3 Árvore de decisão</h3>
+<ul>
+<li>Chega à decisão por meio de uma <strong>sequência de testes</strong>.</li>
+<li><strong>Nó interno</strong> = teste do valor de um atributo de entrada <em>Aᵢ</em>.</li>
+<li><strong>Ramificações</strong> = valores possíveis do atributo (<em>Aᵢ = vᵢₖ</em>).</li>
+<li><strong>Nó folha</strong> = valor retornado pela função.</li>
+<li>Os exemplos são processados a partir da <strong>raiz</strong>, seguindo a ramificação apropriada até alcançar uma folha.</li>
+</ul>
+<h3 id="34-terminologia-de-dados-baranauskas-e-monard-2000-e-demais-autores-do-capítulo">3.4 Terminologia de dados (Baranauskas e Monard, 2000, e demais autores do capítulo)</h3>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição no capítulo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><strong>Inducer</strong></em> (programa de aprendizagem)</td>
+<td>Tem como objetivo gerar um bom <strong>classificador</strong> para um conjunto de instâncias já classificadas; o classificador é usado para prever o rótulo de instâncias não rotuladas.</td>
+</tr>
+<tr>
+<td><strong>Atributo / <em>feature</em></strong></td>
+<td>Descrição ou característica de um aspecto da instância. Atributos podem ser <strong>nominais</strong> (ex.: cor, país de nascimento) ou <strong>contínuos</strong> (ex.: altura, peso — números reais). <em>Features</em> são usadas como <strong>preditores</strong> ou <strong>variáveis independentes</strong>, correspondendo às <strong>colunas</strong> da base.</td>
+</tr>
+<tr>
+<td><strong>Instância</strong></td>
+<td>Lista fixa de valores de atributos; descreve a entidade tratada (ex.: dados médicos sobre uma doença).</td>
+</tr>
+<tr>
+<td><strong>Classe / rótulo</strong></td>
+<td>Característica especial do aprendizado supervisionado que descreve o fenômeno de interesse, a tarefa de aprendizado e a realização de predições com base nele.</td>
+</tr>
+<tr>
+<td><em><strong>Dataset</strong></em></td>
+<td>Coleção de instâncias <strong>classificadas (rotuladas)</strong>. Os rótulos podem ser um conjunto <strong>discreto</strong> de classes (<strong>classificação</strong>) ou <strong>valores reais</strong> (<strong>regressão</strong>).</td>
+</tr>
+</tbody>
+</table>
+<p>Dado um conjunto de instâncias de treino, o programa gera um classificador que, para uma nova instância, poderá prever com precisão o rótulo dela.</p>
+<h3 id="35-aplicações-de-ml-para-classificação-de-textos">3.5 Aplicações de ML para classificação de textos</h3>
+<p>Contexto: as primeiras técnicas de classificação de texto foram usadas majoritariamente em <strong>sistemas de recuperação da informação</strong>. Hoje há aplicações em Medicina, Ciências Sociais, Psicologia, Engenharia e Direito. A maioria das tarefas de <strong>PLN</strong> com ML é tratada como <strong>problema de classificação</strong> (associar uma etiqueta a cada palavra do texto), com aprendizado induzido por um <strong><em>corpus</em> de treino</strong> com exemplos corretamente classificados. O conhecimento adquirido é representado por <strong>probabilidades contextuais</strong> ou <strong>regras de transformação</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Aplicação</th>
+<th>Descrição no capítulo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Recuperação de informações</strong></td>
+<td>Localizar dados em documentos não estruturados que atendem a uma necessidade de informação; baseia-se em criar estruturas de índices. Ex.: Google (consulta e tradução entre idiomas).</td>
+</tr>
+<tr>
+<td><em><strong>Chatbots</strong></em></td>
+<td>Robôs de atendimento em <em>chats</em> de sites/mídias sociais; precisam ser carregados de <strong>intenções</strong> e integrados a bases de dados; o contexto de operação faz parte da etapa de treino. Um chatbot baseado em PLN interpreta a mensagem e não segue um fluxo-padrão fixo.</td>
+</tr>
+<tr>
+<td><strong>Filtragem de informações</strong></td>
+<td>Seleção da informação relevante e retirada da irrelevante. Ex.: identificar <em>spam</em>; detector de <em><strong>fake news</strong></em> (usa características de escrita, como palavras e classes gramaticais mais frequentes; o texto deve ter pelo menos 100 palavras, pois o sistema foi treinado para isso).</td>
+</tr>
+<tr>
+<td><strong>Análise de sentimentos (mineração de opiniões)</strong></td>
+<td>Identifica o conteúdo de opinião e determina sentimento/atitude/percepção sobre produto, serviço, marca ou assunto; normalmente polarizada em <strong>positivo, negativo e neutro</strong>.</td>
+</tr>
+<tr>
+<td><strong>Sistemas de recomendação</strong></td>
+<td>Sugerem itens com base no perfil de interesse do usuário e na descrição do item (ex.: <em>streaming</em>: o que assistimos, notas dadas, o que pessoas com mesmos interesses assistiram, informações do filme, horário, plataforma).</td>
+</tr>
+<tr>
+<td><strong>Sumarização de documentos</strong></td>
+<td>Resume documentos, podendo empregar palavras e frases inexistentes no original (ex.: determinar o assunto de um e-mail).</td>
+</tr>
+<tr>
+<td><strong>Marketing e mídias sociais</strong></td>
+<td>Empresas usam mineração de opiniões (Facebook, Twitter, Reclame Aqui) para aumentar vendas e lucros; há ferramentas de monitoramento em tempo real, também aplicáveis em instâncias governamentais.</td>
+</tr>
+<tr>
+<td><strong>Ciências sociais</strong></td>
+<td>Entender comportamento humano por mineração da linguagem (notas informais, SMS, WhatsApp, mídias sociais); foco na <strong>frequência de palavras</strong> ou em características do dicionário <strong><em>linguistic inquiry word count</em> (LIWC)</strong>.</td>
+</tr>
+<tr>
+<td><strong>Saúde</strong></td>
+<td>Informação médica é em geral desestruturada, com termos ambíguos e erros; aplicações: codificação da <strong>CID</strong> (Classificação Internacional de Doenças), desenvolvimento do <em><strong>MeSH</strong></em> (<em>Medical Subject Headings</em>, da National Library of Medicine) e <strong>ontologia genética</strong> (<em>gene ontology</em>, GO).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36-elementos-da-solução-o-pipeline-de-classificação-de-texto">3.6 Elementos da solução: o <em>pipeline</em> de classificação de texto</h3>
+<p>Segundo Kowsari <em>et al.</em> (2019), a maioria dos sistemas de classificação de texto se decompõe em <strong>quatro fases</strong>:</p>
+<ol>
+<li><strong>Extração de recursos</strong> (<em>features</em>)</li>
+<li><strong>Redução de dimensão</strong> (etapa <strong>opcional</strong> do pipeline)</li>
+<li><strong>Seleção do classificador</strong></li>
+<li><strong>Avaliação</strong></li>
+</ol>
+<pre><code><div class="highlight"><pre><span></span><span class="n">Texto</span><span class="w"> </span><span class="n">bruto</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Extração</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">features</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="p">[</span><span class="n">Redução</span><span class="w"> </span><span class="n">dimensional</span><span class="p">]</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Classificação</span><span class="w"> </span><span class="p">(</span><span class="n">modelo</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">aprendizado</span><span class="p">)</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Avaliação</span>
+<span class="w">                                       </span><span class="p">(</span><span class="n">opcional</span><span class="p">)</span><span class="w">                                                  </span><span class="err">•</span><span class="w"> </span><span class="n">predição</span><span class="w"> </span><span class="n">da</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">teste</span>
+<span class="w">                                                                                                   </span><span class="err">•</span><span class="w"> </span><span class="n">avaliação</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">modelo</span>
+</pre></div>
+</code></pre>
+<p><em>(Figura 3 do capítulo, adaptada de Kowsari et al., 2019)</em></p>
+<ul>
+<li><strong>Entrada:</strong> conjunto de texto bruto, na forma D = {X₁, X₂, ..., X_N}, onde cada Xᵢ é um documento ou segmento de texto com <em>s</em> sentenças, cada sentença com palavras <em>w_s</em> de letras <em>l_w</em>. Cada ponto é rotulado com um valor de classe de um conjunto de <em>k</em> valores discretos.</li>
+<li><strong>Extração de recursos:</strong> converte texto <strong>desestruturado</strong> em um <strong>espaço de características estruturadas</strong>, necessário para a modelagem matemática do classificador. Antes, os dados passam por tratamento para omitir caracteres e palavras desnecessários.</li>
+<li><strong>Redução de dimensão:</strong> justificada porque conjuntos de textos têm muitas palavras únicas, o que pode tornar o pré-processamento lento e custoso em memória.</li>
+<li><strong>Seleção do classificador:</strong> &quot;o passo mais significativo na categorização&quot; — exige compreensão conceitual de cada algoritmo. Citados: <strong>Naive Bayes, Rocchio, <em>Ensemble</em> do tipo <em>Bagging</em>, <em>Boosting</em>, regressão logística</strong>.</li>
+<li><strong>Avaliação:</strong> divide-se em <strong>previsão do conjunto de teste</strong> e <strong>avaliação do modelo</strong>; é fundamental entender o desempenho do modelo.</li>
+</ul>
+<p><strong>Níveis de escopo</strong> da classificação de texto:</p>
+<ul>
+<li><strong>Documento</strong> — categorias relevantes para o documento completo;</li>
+<li><strong>Parágrafo</strong> — para um único parágrafo ou parte do documento;</li>
+<li><strong>Sentença</strong> — categorias de sentenças únicas ou parte de um parágrafo;</li>
+<li><strong>Frase</strong> — categorias de frases dentro de uma sentença.</li>
+</ul>
+<h3 id="37-superfície-de-decisão-e-algoritmos">3.7 Superfície de decisão e algoritmos</h3>
+<ul>
+<li><strong>Hiperplano de separação:</strong> forma clássica de gerar uma superfície de decisão; pode ser perpendicular ou não ao eixo (Figura 4: (a) hiperplano perpendicular, (b) não perpendicular).</li>
+<li><strong>KNN (<em>K-Nearest Neighbors</em>, k-ésimo vizinho mais próximo):</strong> usado quando as classes <strong>não</strong> podem ser separadas por forma geométrica. Define-se um número <em>k</em> de vizinhos; o novo exemplo recebe a <strong>classe mais presente entre os <em>k</em> vizinhos mais próximos</strong> (Figura 5: três classes, cinco vizinhos).</li>
+<li><strong>Naive Bayes:</strong> classificador <strong>probabilístico</strong> muito usado em ML, baseado no teorema de Bayes (Thomas Bayes, 1702–1761); segundo o capítulo, &quot;desconsidera a correlação entre as variáveis&quot;.</li>
+</ul>
+<h3 id="38-expressões-regulares-conceito-citado-antes-do-pré-processamento">3.8 Expressões regulares (conceito citado antes do pré-processamento)</h3>
+<p>No capítulo, as <strong>expressões regulares (RE)</strong> aparecem como &quot;um conceito importante nesse contexto&quot;, <strong>antes</strong> do subtítulo &quot;Pré-processamento e limpeza do texto&quot;. O texto <strong>não as apresenta como uma etapa do pré-processamento</strong>.</p>
+<ul>
+<li>Notação padronizada para caracterizar cadeias de caracteres (<em>strings</em>), aplicável a qualquer sequência de caracteres alfanuméricos (letras, números, espaços, pontuações, tabulações). O espaço é um caractere como os demais.</li>
+<li>Uma expressão regular de pesquisa precisa de um <strong>padrão</strong> a pesquisar e de um <em><strong>corpus</strong></em> (conjunto de textos escritos e registros orais de uma língua, usado como base de pesquisa e análise).</li>
+<li>Um <strong>autômato de estados finitos</strong> é a estrutura matemática usada para implementar expressões regulares, uma das ferramentas mais significativas da linguística computacional.</li>
+</ul>
+<h3 id="39-pré-processamento-e-limpeza-do-texto">3.9 Pré-processamento e limpeza do texto</h3>
+<p>Motivo: conjuntos de dados contêm palavras desnecessárias, erros ortográficos e gírias; em algoritmos estatísticos/probabilísticos, ruído e características desnecessárias prejudicam o desempenho (Jurafsky e Martin, [2020]).</p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tokenização</strong></td>
+<td>Quebra fluxos de texto em palavras, frases, símbolos ou outros elementos significativos chamados <em><strong>tokens</strong></em>.</td>
+</tr>
+<tr>
+<td><strong>Remoção de <em>stopwords</em></strong></td>
+<td>Remove palavras sem informação relevante para classificação (ex.: &quot;um/uma&quot;, &quot;sobre&quot;, &quot;acima&quot;, &quot;através&quot;, &quot;depois&quot;, &quot;novamente&quot;, &quot;para&quot;).</td>
+</tr>
+<tr>
+<td><strong>Remoção de pontuação e caracteres especiais</strong></td>
+<td>Importantes para a compreensão humana, mas podem atrapalhar o algoritmo.</td>
+</tr>
+<tr>
+<td><strong>Padronização de maiúsculas/minúsculas</strong></td>
+<td>Transformar tudo em minúsculas é abordagem comum, mas pode gerar problemas: o pronome &quot;ti&quot; e a sigla &quot;TI&quot; (Tecnologia de Informação) passam a ter a mesma representação.</td>
+</tr>
+<tr>
+<td><strong>Correção de erros de digitação (<em>typos</em>)</strong></td>
+<td>Etapa <strong>opcional</strong>; comum em textos de mídias sociais (Twitter, Facebook).</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</h2>
+<h3 id="41-árvore-de-decisão--esperar-ou-não-por-uma-mesa-figura-1-russell-e-norvig-2013-p-812">4.1 Árvore de decisão — esperar ou não por uma mesa (Figura 1; Russell e Norvig, 2013, p. 812)</h3>
+<p>Objetivo: aprender uma função para o predicado <strong>VaiEsperar</strong>. Exemplo do capítulo: uma situação com <em>Clientes = Cheio</em> e <em>EsperaEstimada = 0-10</em> é classificada como <strong>positiva</strong> (esperaremos por uma mesa). Atributos usados na árvore: Clientes, EsperaEstimada, Alternativa, Reserva, Sex/Sáb, Bar, Faminto, Chovendo.</p>
+<h3 id="42-tokenização">4.2 Tokenização</h3>
+<p>Frase: <em>&quot;Depois de ir ao parque, ela decidiu fazer compras no mercado.&quot;</em><br />
+<em>Tokens:</em> {&quot;Depois&quot; &quot;de&quot; &quot;ir&quot; &quot;ao&quot; &quot;parque&quot; &quot;ela&quot; &quot;decidiu&quot; &quot;fazer&quot; &quot;compras&quot; &quot;no&quot; &quot;mercado&quot;}</p>
+<h3 id="43-processamento-básico-de-um-texto-figura-6-adaptada-de-travizan-neto-2017">4.3 Processamento básico de um texto (Figura 6; adaptada de Travizan Neto, 2017)</h3>
+<p><code>&quot;O carro.&quot;</code> → (remoção de <em>stopwords</em>) → <code>&quot; carro.&quot;</code> → (remoção de pontuação) → <code>&quot; carro&quot;</code></p>
+<h3 id="44-análise-de-sentimento-aplicada-a-programas-do-governo-federal-figura-2-oliveira-et-al-2019-p-245246">4.4 Análise de sentimento aplicada a programas do Governo Federal (Figura 2; Oliveira <em>et al.</em>, 2019, p. 245–246)</h3>
+<p>Foram avaliados <em>tweets</em> sobre Bolsa Família, Minha Casa Minha Vida, Mais Médicos e Pronatec. Categorias de polaridade: positivo, negativo, neutro e <strong>falso-positivo</strong> (tweet irônico que parece positivo, mas não é).</p>
+<table>
+<thead>
+<tr>
+<th>Programa</th>
+<th>Positivo</th>
+<th>Neutro</th>
+<th>Negativo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pronatec</td>
+<td>69%</td>
+<td>16%</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>Minha Casa, Minha Vida</td>
+<td>49%</td>
+<td>12%</td>
+<td>39%</td>
+</tr>
+<tr>
+<td>Mais Médicos</td>
+<td>41%</td>
+<td>5%</td>
+<td>54%</td>
+</tr>
+<tr>
+<td>Bolsa Família</td>
+<td>35%</td>
+<td>7%</td>
+<td>58%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-exemplo-histórico-quadro-saiba-mais">4.5 Exemplo histórico (quadro &quot;Saiba mais&quot;)</h3>
+<p>Nos primeiros sistemas de tradução automática (década de 1950, russo→inglês), a frase <em>&quot;The spirit is willing, but the flesh is weak&quot;</em> voltou como <em>&quot;The vodka is good, but the meat is rotten&quot;</em> — ilustra as limitações iniciais da tradução automática. (Um projeto da CIA investiu milhões de dólares em um software de tradução russo→inglês.)</p>
+<p><strong>Material prático em código:</strong> o capítulo não apresenta código. Não foi criado arquivo prático complementar para esta aula.</p>
+</section>
+<section class="bloco"><h2 id="5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</h2>
+<p><em>(Espaço reservado — nenhuma observação registrada até o momento para esta aula.)</em></p>
+<h3 id="pontos-de-atenção-no-texto-base-identificados-na-análise-não-são-observações-da-aluna">Pontos de atenção no texto-base (identificados na análise; não são observações da aluna)</h3>
+<ol>
+<li><strong>Referência de figura possivelmente trocada:</strong> o texto diz que cada ponto é rotulado com um valor de classe de <em>k</em> valores discretos &quot;(Figura 4)&quot;, mas a Figura 4 mostra <strong>superfícies de decisão (hiperplanos)</strong>, não a estrutura de rótulos.</li>
+<li><strong>Posição de uma frase:</strong> &quot;um sistema de aprendizado dispõe de um conjunto de dados de treinamento classificados manualmente...&quot; aparece logo após o parágrafo do <strong>não supervisionado</strong>, mas descreve o <strong>supervisionado</strong>. Pode confundir na leitura.</li>
+<li><strong>Fases x figura:</strong> o texto lista <strong>quatro fases</strong> (incluindo redução de dimensão), mas também diz que a redução é <strong>opcional</strong>; a Figura 3 mostra a redução tracejada (opcional). Não é contradição, mas vale reter que o pipeline mínimo é extração → classificação → avaliação.</li>
+<li><strong>Tipos de aprendizado:</strong> este capítulo apresenta <strong>três</strong> tipos (supervisionado, não supervisionado, por reforço) e <strong>não menciona o semissupervisionado</strong>, que aparece no capítulo da Aula 1.</li>
+<li><strong>Complementação (fora do capítulo):</strong> a frase de que o Naive Bayes &quot;desconsidera a correlação entre as variáveis&quot; é uma simplificação; tecnicamente, ele <strong>assume independência condicional entre as <em>features</em></strong> dada a classe. Registrar como nota de estudo, sem atribuir ao autor do capítulo.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</h2>
+<h3 id="referência-principal">Referência principal</h3>
+<p>SILVA, Michel Bernardo Fernandes da. <strong>Processamento de Linguagem Natural</strong> — capítulo &quot;Classificação de textos — introdução ao aprendizado supervisionado&quot;. SAGAH.</p>
+<h3 id="referências-citadas-no-capítulo">Referências citadas no capítulo</h3>
+<ul>
+<li>BARANAUSKAS, J. A.; MONARD, M. C. <em>Reviewing some Machine Learning Concepts and Methods.</em> São Carlos: ICMC-USP, 2000. (Relatórios Técnicos do ICMC-USP, 102).</li>
+<li>JURAFSKY, D. S.; MARTIN, J. H. <em>Speech and language processing.</em> 3. ed. Upper Saddle River: Prentice Hall, [2020].</li>
+<li>KOWSARI, K. <em>et al.</em> Text Classification Algorithms: A Survey. <em>Information</em>, v. 10, n. 150, p. 1–68, 2019.</li>
+<li>OLIVEIRA, D. J. S. <em>et al.</em> A aplicação da técnica de análise de sentimento em mídias sociais como instrumento para as práticas da gestão social em nível governamental. <em>Revista de Administração Pública</em>, v. 53, n. 1, p. 235–251, 2019.</li>
+<li>RODRIGUES, N. <em>Ebook: Guia sobre Chatbots – Seu negócio ainda vai ter um.</em> Cedro Technologies, 2017.</li>
+<li>RUSSELL, S.; NORVIG, P. <em>Inteligência artificial.</em> 3. ed. Rio de Janeiro: Elsevier, 2013.</li>
+<li>SAS INSTITUTE. <em>Machine Learning: O que é e qual sua importância.</em> 2019.</li>
+<li>TRAVIZAN NETO, A. <em>Classificação de traços de personalidade através de Linguagem Natural aplicada a ambientes virtuais de aprendizagem.</em> TCC, UFU, 2017.</li>
+</ul>
+<h3 id="conexões-com-outras-aulas-e-disciplinas">Conexões com outras aulas e disciplinas</h3>
+<ul>
+<li><strong>Aula 1 (Aprendizado de Máquina):</strong> retoma supervisionado/não supervisionado/reforço; <strong>classificação</strong> (rótulos discretos) e <strong>regressão</strong> (valores reais) aparecem nas duas aulas; KNN, Naive Bayes, árvores de decisão, regressão logística e redes neurais já haviam sido listados no Quadro 2 da Aula 1.</li>
+<li><strong>Atividade 1 (Mineração de Dados):</strong> o capítulo usa &quot;mineração de opiniões&quot; e &quot;mineração de textos&quot; como aplicações do ML, o que dialoga com a distinção ML x mineração de dados discutida na atividade.</li>
+<li><strong>Atividade A2 / Aula de pré-processamento:</strong> ruído, redução dimensional e limpeza de dados reaparecem aqui no contexto de texto (<em>stopwords</em>, pontuação, <em>typos</em>, redução de dimensão opcional).</li>
+<li><strong>Aquisição e Preparação de Dados:</strong> tokenização, remoção de ruído e padronização são a versão textual da limpeza/transformação vistas em ETL e AED.</li>
+<li><strong>Aprendizado Não Supervisionado:</strong> o exemplo de agrupamento automático de e-mails conecta diretamente com essa disciplina.</li>
+</ul>
+<hr />
+<p><strong>Status:</strong> Aula 3 documentada.</p>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d2-aula-02.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 2</a><a class="btn cheio" href="s1-d2-aula-04.html">Aula 4 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

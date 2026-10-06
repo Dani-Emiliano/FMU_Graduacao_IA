@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 1 · Aprendizado de máquina (Machine Learning) · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 1 · Aprendizado de máquina (Machine Learning)</span></nav>
+    <span class="eyebrow">Aula 1 · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 1 · Aprendizado de máquina (Machine Learning)</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_01_RESUMO_APRENDIZADO_DE_MAQUINA.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-1--aprendizado-de-máquina-machine-learning">AULA 1 — APRENDIZADO DE MÁQUINA (MACHINE LEARNING)</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</a></li><li class="n3"><a href="#31-definição-de-aprendizado-de-máquina">3.1 Definição de Aprendizado de Máquina</a></li><li class="n3"><a href="#32-quadro-1--conceitos-do-aprendizado-de-máquina">3.2 Quadro 1 — Conceitos do Aprendizado de Máquina</a></li><li class="n3"><a href="#33-caracterização-dos-dados">3.3 Caracterização dos Dados</a></li><li class="n3"><a href="#34-exploração-dos-dados">3.4 Exploração dos Dados</a></li><li class="n3"><a href="#35-pré-processamento-de-dados">3.5 Pré-processamento de Dados</a></li><li class="n3"><a href="#36-tipos-de-aprendizado-de-máquina">3.6 Tipos de Aprendizado de Máquina</a></li><li class="n3"><a href="#37-hierarquia-do-aprendizado-indutivo-figura-2-carvalho-et-al-2011-p-6">3.7 Hierarquia do Aprendizado Indutivo (Figura 2, Carvalho et al., 2011, p. 6)</a></li><li class="n3"><a href="#38-algoritmo-hipótese-e-viés">3.8 Algoritmo, Hipótese e Viés</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</a></li><li class="n3"><a href="#41-quadro-2--algoritmos-de-aprendizado-de-máquina">4.1 Quadro 2 — Algoritmos de Aprendizado de Máquina</a></li><li class="n3"><a href="#42-figura-1--diferentes-vieses-de-representação-exemplo-do-capítulo">4.2 Figura 1 — Diferentes Vieses de Representação (exemplo do capítulo)</a></li><li class="n3"><a href="#43-aplicações-citadas-no-capítulo">4.3 Aplicações Citadas no Capítulo</a></li><li class="n2"><a href="#5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</a></li><li class="n2"><a href="#6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</a></li><li class="n3"><a href="#referência-principal">Referência principal</a></li><li class="n3"><a href="#referências-citadas-no-capítulo">Referências citadas no capítulo</a></li><li class="n3"><a href="#leituras-recomendadas-citadas-no-capítulo">Leituras recomendadas (citadas no capítulo)</a></li><li class="n3"><a href="#conexões-com-outras-disciplinas-da-grade">Conexões com outras disciplinas da grade</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-1--aprendizado-de-máquina-machine-learning">AULA 1 — APRENDIZADO DE MÁQUINA (MACHINE LEARNING)</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Supervisionado<br />
+<strong>Aula:</strong> 1 — Aprendizado de Máquina (Machine Learning)<br />
+<strong>Fonte:</strong> <em>Introdução a Big Data e Internet das Coisas (IoT)</em> — Izabelly Soares de Morais, SAGAH (Soluções Educacionais Integradas), capítulo &quot;Aprendizado de máquina (Machine Learning)&quot;<br />
+<strong>Formato de avaliação:</strong> Atividade dissertativa (não há questões objetivas nesta aula)</p>
+<h3 id="objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</h3>
+<ul>
+<li>Definir aprendizado de máquina.</li>
+<li>Descrever algoritmos de aprendizado de máquina.</li>
+<li>Listar aplicações de aprendizado de máquina.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p>O capítulo introduz o aprendizado de máquina (AM) como a junção entre recursos computacionais, inteligência artificial e dados, com sistemas capazes não apenas de memorizar dados, mas de observá-los e explorá-los para evoluir suas habilidades por meio da prática.</p>
+<p>A autora situa o AM dentro de um ecossistema conceitual maior:</p>
+<ul>
+<li><strong>Inteligência Artificial</strong> → fornece conhecimento às máquinas por meio de dados.</li>
+<li><strong>Aprendizado de Máquina</strong> → técnicas computacionais para encontrar <strong>padrões ocultos</strong> em dados (Amaral, 2016).</li>
+<li><strong>Mineração de Dados</strong> → aplicação desses algoritmos em grandes conjuntos de dados para extrair informação e conhecimento (distinção importante: AM busca reconhecer padrões; mineração de dados aplica esses padrões em larga escala).</li>
+<li><strong>Big Data</strong> → fornece o volume de dados necessário para que o AM tenha &quot;ativo suficiente&quot;.</li>
+</ul>
+<p>Esta aula é conceitualmente anterior/complementar à disciplina anterior (Aquisição e Preparação de Dados): ali o foco era ETL, qualidade e normalização de dados; aqui o foco passa a ser <strong>como esses dados tratados alimentam algoritmos que aprendem</strong>.</p>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</h2>
+<h3 id="31-definição-de-aprendizado-de-máquina">3.1 Definição de Aprendizado de Máquina</h3>
+<blockquote>
+<p>&quot;Aprendizado de máquina computacional (AM) é a aplicação de técnicas computacionais com o objetivo de encontrar padrões ocultos em dados.&quot; (Amaral, 2016)</p>
+</blockquote>
+<p>Segundo Coppin (2010), na maioria dos problemas de aprendizado a tarefa é <strong>aprender a classificar entradas</strong> de acordo com um conjunto finito (ou infinito) de classificações. O sistema recebe um <strong>conjunto de dados de treinamento</strong> já classificado manualmente e tenta aprender a partir dele como classificar tanto esses dados quanto novos dados ainda não observados.</p>
+<h3 id="32-quadro-1--conceitos-do-aprendizado-de-máquina">3.2 Quadro 1 — Conceitos do Aprendizado de Máquina</h3>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Treinamento</strong></td>
+<td>Uso de algoritmos e inserção de dados para que a máquina adquira os conhecimentos necessários para desempenhar suas funções</td>
+</tr>
+<tr>
+<td><strong>Indução</strong></td>
+<td>Processo de busca da melhor hipótese — a melhor resposta/solução para determinada situação</td>
+</tr>
+<tr>
+<td><strong>Regras</strong></td>
+<td>Limitam as possibilidades do algoritmo de aprendizado</td>
+</tr>
+<tr>
+<td><strong>Hipóteses</strong></td>
+<td>Possíveis conclusões/respostas predeterminadas, provadas ou não ao final</td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-caracterização-dos-dados">3.3 Caracterização dos Dados</h3>
+<p><strong>Tipo do dado:</strong></p>
+<ul>
+<li><strong>Quantitativo</strong> (numérico)</li>
+<li><strong>Qualitativo</strong>, subdividido em:
+<ul>
+<li><strong>Simbólico</strong> — facilmente compreendido por humanos</li>
+<li><strong>Categórico</strong> — valores em conjunto finito</li>
+</ul>
+</li>
+</ul>
+<p><strong>Escalas (definem quais operações são possíveis com os valores de cada atributo):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Escala</th>
+<th>Característica</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nominal</strong></td>
+<td>Valores com nomes diferentes, pouca informação</td>
+<td>RG, CPF</td>
+</tr>
+<tr>
+<td><strong>Ordinal</strong></td>
+<td>Relacionada à ordem das categorias</td>
+<td>Frio/quente</td>
+</tr>
+<tr>
+<td><strong>Intervalar</strong></td>
+<td>Números que variam dentro de um intervalo</td>
+<td>Temperatura entre 10–15 °C</td>
+</tr>
+<tr>
+<td><strong>Racional</strong></td>
+<td>Traz mais informação sobre o atributo</td>
+<td>Nº de vezes que um aluno cursou a disciplina</td>
+</tr>
+</tbody>
+</table>
+<p>Dados também podem ser <strong>contínuos</strong> (valor indefinido dentro de um intervalo) ou <strong>discretos</strong> (valores definidos).</p>
+<h3 id="34-exploração-dos-dados">3.4 Exploração dos Dados</h3>
+<ul>
+<li><strong>Estatística descritiva</strong> — resume quantitativamente as características mais relevantes de um conjunto de dados.</li>
+<li><strong>Dados univariados</strong> — um mesmo atributo pode se repetir para diferentes registros; subdivididos em:
+<ul>
+<li><em>Medidas de localidade</em> (pontos de referência, numéricos ou simbólicos)</li>
+<li><em>Medidas de espalhamento</em> (intervalo, variância, desvio padrão)</li>
+<li><em>Medidas de distribuição</em> (definidas pela média do conjunto)</li>
+</ul>
+</li>
+<li><strong>Dados multivariados</strong> — possuem mais de um atributo de entrada.</li>
+</ul>
+<h3 id="35-pré-processamento-de-dados">3.5 Pré-processamento de Dados</h3>
+<p>Necessário porque dados de fontes variadas podem conter ruídos, imperfeições, duplicações etc. Técnicas citadas:</p>
+<ul>
+<li><strong>Eliminação manual de atributos</strong> — remoção de atributos irrelevantes</li>
+<li><strong>Integração de dados</strong> — identificação de objetos e seus conjuntos</li>
+<li><strong>Amostragem de dados</strong> — representação dos dados originais</li>
+<li><strong>Dados desbalanceados</strong> — correção via redefinição de conjunto, classificadores para diferentes classes etc.</li>
+<li><strong>Limpeza dos dados</strong> — elimina dados incompletos, inconsistentes, redundantes e com ruído</li>
+<li><strong>Transformação dos dados</strong> — conversões simbólico-numéricas, numérico-simbólicas, transformação de atributos</li>
+<li><strong>Redução de dimensionalidade</strong> — via agregação, seleção de atributos, técnicas de ordenação/seleção de subconjuntos</li>
+</ul>
+<blockquote>
+<p><strong>Conexão com a disciplina anterior:</strong> este bloco dialoga diretamente com a Aula 2 (ETL) e a Aula 4 (AED) de Aquisição e Preparação de Dados — os mesmos problemas (missing values, outliers, normalização) reaparecem aqui como pré-condição para o aprendizado de máquina.</p>
+</blockquote>
+<h3 id="36-tipos-de-aprendizado-de-máquina">3.6 Tipos de Aprendizado de Máquina</h3>
+<ul>
+<li><strong>Supervisionado</strong> — objetivo estabelecido; dividido em problemas de <strong>regressão</strong> e <strong>classificação</strong>.</li>
+<li><strong>Não supervisionado</strong> — objetivo não bem definido; busca compreender os dados para realizar <strong>agrupamento</strong>.</li>
+<li><strong>Por reforço</strong> — saídas não bem definidas; respostas só podem ser aferidas após execuções.</li>
+<li><strong>Semissupervisionado</strong> (mencionado à parte) — usado quando há pouca quantidade de dados rotulados; dados não rotulados complementam o conjunto de treinamento.</li>
+</ul>
+<h3 id="37-hierarquia-do-aprendizado-indutivo-figura-2-carvalho-et-al-2011-p-6">3.7 Hierarquia do Aprendizado Indutivo (Figura 2, Carvalho et al., 2011, p. 6)</h3>
+<pre><code><div class="highlight"><pre><span></span>                    Aprendizado Indutivo
+                    /                  \
+            Supervisionado        Não Supervisionado
+            (preditivo)            (descritivo)
+            /          \           /      |        \
+    Classificação   Regressão  Agrupamento Associação Sumarização
+</pre></div>
+</code></pre>
+<ul>
+<li>
+<p><strong>Aprendizado supervisionado (preditivo):</strong> recebe dados rotulados como entrada e usa esses dados/atributos para determinar um novo conjunto de dados desconhecidos. Passa por uma etapa de <strong>treinamento</strong>, na qual o classificador aprende um padrão conforme os dados de treino.</p>
+<ul>
+<li><strong>Regressão</strong> — mapeia um exemplo em um valor real (ex.: prever tempo de internação de um paciente).</li>
+<li><strong>Classificação</strong> — associa a descrição de um objeto a uma classe (ex.: determinar a doença de um paciente pelos sintomas).</li>
+</ul>
+</li>
+<li>
+<p><strong>Aprendizado não supervisionado (descritivo):</strong> agrupa objetos de acordo com suas características; recebe dados do tipo {x1, x2...xn} e encontra associações entre eles.</p>
+<ul>
+<li><strong>Agrupamento</strong> — dados agrupados por similaridade.</li>
+<li><strong>Sumarização</strong> — busca descrição simples e compacta de um conjunto de dados.</li>
+<li><strong>Associação</strong> — encontra padrões frequentes de associação entre atributos.</li>
+</ul>
+</li>
+</ul>
+<h3 id="38-algoritmo-hipótese-e-viés">3.8 Algoritmo, Hipótese e Viés</h3>
+<p><strong>Algoritmo</strong> = passo a passo da resolução de um problema, traduzido em linguagem de programação.</p>
+<p>O algoritmo de AM aprende a <strong>induzir uma função ou hipótese</strong> capaz de resolver um problema a partir de um <strong>conjunto de dados de treinamento</strong> que representa instâncias do problema.</p>
+<ul>
+<li><strong>Hipótese</strong> — ideia inicial/suposição a ser comprovada ou não.</li>
+<li><strong>Atributos (ou variáveis)</strong> — características de um objeto (ex.: nome, idade, sexo, ano escolar de um aluno).</li>
+<li><strong>Viés</strong> — responsável por restringir as hipóteses visitadas no espaço de busca.
+<ul>
+<li><em>Viés de busca</em> — como o algoritmo procura a melhor hipótese.</li>
+<li><em>Viés de representação</em> — forma como a hipótese é representada (redes neurais, árvores de decisão, conjunto de regras — Figura 1).</li>
+</ul>
+</li>
+<li><strong>Tarefas de aprendizado:</strong>
+<ul>
+<li><em>Preditivas</em> — buscam antecipar.</li>
+<li><em>Descritivas</em> — buscam descrever um conjunto de dados.</li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</h2>
+<h3 id="41-quadro-2--algoritmos-de-aprendizado-de-máquina">4.1 Quadro 2 — Algoritmos de Aprendizado de Máquina</h3>
+<p><strong>Supervisionados:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Algoritmo</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regressão</td>
+<td>Regressão linear</td>
+<td>Recebe valores de variáveis e, por meio de equações, estima resultados aplicáveis a outras variáveis</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>Naïve Bayes</td>
+<td>Calcula a probabilidade de algo após as variáveis terem sido caracterizadas</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>Máquina de Vetor de Suporte (SVM)</td>
+<td>Constrói modelo indicando onde o objeto se enquadra, usando classificador + analisador por regressão (linear binário não probabilístico)</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>Regressão logística</td>
+<td>Define características semelhantes entre grupos de variáveis</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>Árvores de decisão</td>
+<td>Busca top-down nos dados, calculando árvores possíveis; reduzida quando muito complexa; classifica percorrendo a árvore até a folha</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>Redes neurais artificiais</td>
+<td>Baseadas no sistema biológico de neurônios interligados; aprendem exemplos e generalizam conceitos</td>
+</tr>
+<tr>
+<td>Classificação</td>
+<td>K-Vizinhos mais próximos (KNN)</td>
+<td>Classifica um item comparando sua similaridade com os dados de treinamento</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Não supervisionados:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Algoritmo</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agrupamento</td>
+<td>K-Means</td>
+<td>Algoritmo particional; divide dados em K grupos (clusters) não interseccionados; cada grupo representado pelo seu centro</td>
+</tr>
+<tr>
+<td>Agrupamento</td>
+<td>Hierárquicos</td>
+<td>Geram sequência de partições aninhadas com base em matriz de proximidade; resultado depende da ordem de entrada dos dados</td>
+</tr>
+<tr>
+<td>Agrupamento</td>
+<td>Grafos</td>
+<td>Agrupamento via grafos de proximidade</td>
+</tr>
+</tbody>
+</table>
+<p><em>Fonte: Adaptado de Ferreira Junior (2015), Silva (2016), Dias, Pascutti e Silva (2016) e Carvalho et al. (2011).</em></p>
+<h3 id="42-figura-1--diferentes-vieses-de-representação-exemplo-do-capítulo">4.2 Figura 1 — Diferentes Vieses de Representação (exemplo do capítulo)</h3>
+<pre><code><div class="highlight"><pre><span></span><span class="err">Á</span><span class="n">rvore</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="nl">decisão:</span>
+<span class="w">              </span><span class="n">Peso</span>
+<span class="w">           </span><span class="o">&lt;</span><span class="mh">50</span><span class="w">    </span><span class="err">≥</span><span class="mh">50</span>
+<span class="w">            </span><span class="o">|</span><span class="w">       </span><span class="se">\</span>
+<span class="w">          </span><span class="n">Sexo</span><span class="w">     </span><span class="n">Doente</span>
+<span class="w">         </span><span class="n">M</span><span class="o">/</span><span class="w">  </span><span class="n">\F</span>
+<span class="w">    </span><span class="n">Doente</span><span class="w">  </span><span class="n">Saudável</span>
+
+<span class="n">Conjunto</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">regras</span><span class="w"> </span><span class="nl">equivalente:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">Peso</span><span class="w"> </span><span class="err">≥</span><span class="w"> </span><span class="mh">50</span><span class="w"> </span><span class="n">então</span><span class="w"> </span><span class="n">Doente</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">Peso</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">50</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">Sexo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">M</span><span class="w"> </span><span class="n">então</span><span class="w"> </span><span class="n">Doente</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Se</span><span class="w"> </span><span class="n">Peso</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mh">50</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="n">Sexo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">então</span><span class="w"> </span><span class="n">Saudável</span>
+
+<span class="n">Redes</span><span class="w"> </span><span class="nl">neurais:</span><span class="w"> </span><span class="n">representação</span><span class="w"> </span><span class="n">por</span><span class="w"> </span><span class="n">matriz</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">pesos</span><span class="w"> </span><span class="n">numéricos</span>
+<span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="o">:</span><span class="w"> </span><span class="mh">0</span><span class="p">,</span><span class="mh">45</span><span class="w">  </span><span class="o">-</span><span class="mh">0</span><span class="p">,</span><span class="mh">40</span><span class="w">  </span><span class="mh">0</span><span class="p">,</span><span class="mh">54</span><span class="w">  </span><span class="mh">0</span><span class="p">,</span><span class="mh">12</span><span class="w">  </span><span class="mh">0</span><span class="p">,</span><span class="mh">98</span><span class="w">  </span><span class="mh">0</span><span class="p">,</span><span class="mh">37</span><span class="w"> </span><span class="p">...)</span>
+</pre></div>
+</code></pre>
+<h3 id="43-aplicações-citadas-no-capítulo">4.3 Aplicações Citadas no Capítulo</h3>
+<ul>
+<li><strong>Varejo on-line</strong> (Google Cloud, 2017) — algoritmos processam dados de navegação para prever comportamento de compra e personalizar ofertas em escala.</li>
+<li><strong>Energia</strong> — previsão de carga e preço, planejamento de expansão, redistribuição de alimentadores, agendamento de geradores, minimização de perdas, proteção de sistemas.</li>
+<li><strong>Saúde</strong> — mapeamento de características comuns em epidemias; uso de idade, sexo, histórico de doenças para diagnóstico.</li>
+<li><strong>Prevenção de incêndios florestais</strong> (Cortez e Morais, 2007 apud Carvalho et al., 2011) — comparação de 5 algoritmos (árvores de decisão, florestas aleatórias, SVM, regressão múltipla, redes neurais); melhor resultado com <strong>SVM</strong> usando 4 atributos meteorológicos (temperatura, umidade relativa, precipitação, velocidade do vento).</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</h2>
+<p><em>(Espaço reservado — nenhuma observação registrada até o momento para esta aula. A avaliação será dissertativa, conforme indicado.)</em></p>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</h2>
+<h3 id="referência-principal">Referência principal</h3>
+<p>MORAIS, Izabelly Soares de. <strong>Introdução a Big Data e Internet das Coisas (IoT)</strong> — capítulo &quot;Aprendizado de máquina (Machine Learning)&quot;. SAGAH.</p>
+<h3 id="referências-citadas-no-capítulo">Referências citadas no capítulo</h3>
+<ul>
+<li>AMARAL, F. <em>Introdução à ciência de dados: mineração de dados e big data</em>. Rio de Janeiro: Alta Books, 2016.</li>
+<li>CARVALHO, A. C. P. L. F. et al. <em>Inteligência artificial: uma abordagem de aprendizagem de máquina</em>. Rio de Janeiro: LTC, 2011.</li>
+<li>COPPIN, B. <em>Inteligência artificial</em>. Rio de Janeiro: LTC, 2010.</li>
+<li>DIAS, M. F. R.; PASCUTTI, P. G.; SILVA, M. L. <em>Aprendizado de máquina e suas aplicações em bioinformática</em>. Revista Semioses, v. 10, n. 1, 2016.</li>
+<li>FERREIRA JÚNIOR, M. M. <em>Modelos computacionais baseados em aprendizado de máquina para classificação e agrupamento de variedade de tucumã</em>. Dissertação (Mestrado) — UFAM, Itacoatiara, 2015.</li>
+<li>GOOGLE CLOUD. <em>Guia sobre análise de dados e aprendizado de máquina para CIO</em>. 2017.</li>
+<li>SILVA, M. C. R. <em>Aprendizagem de máquina em apoio ao diagnóstico em ortopedia</em>. Dissertação (Mestrado) — PUC-Campinas, 2016.</li>
+</ul>
+<h3 id="leituras-recomendadas-citadas-no-capítulo">Leituras recomendadas (citadas no capítulo)</h3>
+<ul>
+<li>MITCHELL, T. M. <em>Machine learning</em>. New York: McGraw-Hill, 1997.</li>
+<li>ROSA, J. L. G. <em>Fundamentos da inteligência artificial</em>. Rio de Janeiro: LTC, 2011.</li>
+<li>SOUTO, M. C. P. et al. <em>Técnicas de aprendizado de máquina para problemas de biologia molecular</em>. CSBC, 2003.</li>
+</ul>
+<h3 id="conexões-com-outras-disciplinas-da-grade">Conexões com outras disciplinas da grade</h3>
+<ul>
+<li><strong>Aquisição e Preparação de Dados (262GGR6046A):</strong> o pré-processamento descrito aqui (limpeza, transformação, redução de dimensionalidade, dados desbalanceados) retoma diretamente os conceitos de ETL (Aula 2) e AED (Aula 4) já estudados.</li>
+<li><strong>Aprendizado de Máquina Não Supervisionado (262GGR6044A):</strong> a Aula 1 dessa disciplina já havia introduzido a distinção supervisionado/não supervisionado; este capítulo aprofunda especificamente o lado <strong>supervisionado</strong> (regressão e classificação) e detalha algoritmos que ali foram apenas mencionados.</li>
+</ul>
+<hr />
+<p><strong>Status:</strong> Aula 1 documentada — aguardando avaliação dissertativa.</p>
+
+</section>
+
+<div class="doc-nav"><span></span><a class="btn cheio" href="s1-d2-aula-02.html">Aula 2 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

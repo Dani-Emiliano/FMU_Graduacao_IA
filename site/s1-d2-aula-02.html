@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 2 · Business Performance Management (BPM) · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 2 · Business Performance Management (BPM)</span></nav>
+    <span class="eyebrow">Aula 2 · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 2 · Business Performance Management (BPM)</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_02_RESUMO_BPM.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-2--business-performance-management-bpm">AULA 2 — BUSINESS PERFORMANCE MANAGEMENT (BPM)</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</a></li><li class="n3"><a href="#31-ciclo-do-bpm-figura-1-turban-et-al-2009-p-195">3.1 Ciclo do BPM (Figura 1, Turban et al., 2009, p. 195)</a></li><li class="n3"><a href="#32-medidas-de-desempenho--quadro-1-conceitos-básicos">3.2 Medidas de Desempenho — Quadro 1 (conceitos básicos)</a></li><li class="n3"><a href="#33-sistema-de-medida-de-desempenho">3.3 Sistema de Medida de Desempenho</a></li><li class="n3"><a href="#34-metodologias-de-bpm">3.4 Metodologias de BPM</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</a></li><li class="n2"><a href="#5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</a></li><li class="n2"><a href="#6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</a></li><li class="n3"><a href="#referência-principal">Referência principal</a></li><li class="n3"><a href="#referências-citadas-no-capítulo">Referências citadas no capítulo</a></li><li class="n3"><a href="#conexões-com-outras-disciplinasaulas">Conexões com outras disciplinas/aulas</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-2--business-performance-management-bpm">AULA 2 — BUSINESS PERFORMANCE MANAGEMENT (BPM)</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Supervisionado<br />
+<strong>Aula:</strong> 2 — Business Performance Management (BPM)<br />
+<strong>Fonte:</strong> <em>Introdução à Inteligência de Negócios</em> — Aline Zanin, SAGAH (Soluções Educacionais Integradas), capítulo &quot;Business performance management (BPM)&quot;</p>
+<h3 id="objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</h3>
+<ul>
+<li>Explicar os conceitos de estratégia, plano e monitoramento.</li>
+<li>Aplicar medidas de desempenho.</li>
+<li>Analisar metodologias de BPM.</li>
+</ul>
+<p><strong>Observação de contexto:</strong> esta aula muda de eixo em relação à Aula 1 (que tratou de Machine Learning propriamente dito) — o foco passa a ser gestão e inteligência de negócios (BI), um domínio de apoio à decisão que frequentemente fornece o contexto/dados para os modelos de aprendizado de máquina.</p>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p><strong>BPM (business performance management)</strong>, ou gerenciamento do desempenho do negócio, é uma ferramenta de suporte à tomada de decisão. Ele abrange um conjunto de processos, metodologias, métricas e aplicações criadas para medir o desempenho geral de uma empresa, ajudando gestores a converter estratégias em planos e objetivos, e depois monitorar o desempenho em relação a esses objetivos.</p>
+<p>O capítulo situa o BPM dentro de um conjunto maior de ferramentas com o mesmo propósito, mas nomes diferentes conforme a empresa criadora: <strong>corporate performance management (CPM)</strong> e <strong>enterprise performance management (EPM)</strong>.</p>
+<blockquote>
+<p><strong>BPM Standard Group</strong> define BPM como &quot;uma estrutura destinada a organizar, automatizar e analisar as metodologias de negócios, bem como as métricas, os processos e os sistemas, visando a induzir o desempenho geral da empresa&quot; (TURBAN <em>et al.</em>, 2009).</p>
+</blockquote>
+<p>Pontos importantes de definição:</p>
+<ul>
+<li>O BPM <strong>faz parte</strong> das estratégias de <em>business intelligence</em> (BI), mas não se limita a isso.</li>
+<li>O BPM <strong>não é</strong> uma tecnologia ou <em>software</em> de ERP (<em>enterprise resources planning</em>).</li>
+<li>Segundo Chicaleski (2008), o BPM &quot;pode ser definido como a união de componentes, como orçamento, planejamento, [BI], integração de dados, previsões e simulações&quot;.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</h2>
+<h3 id="31-ciclo-do-bpm-figura-1-turban-et-al-2009-p-195">3.1 Ciclo do BPM (Figura 1, Turban et al., 2009, p. 195)</h3>
+<p>O ciclo é dividido em dois grandes eixos:</p>
+<ul>
+<li><strong>Eixo da estratégia</strong> → estratégias e planos</li>
+<li><strong>Eixo da execução</strong> → monitoramento, ação e ajustes</li>
+</ul>
+<p>Conectados ao centro por <strong>dados integrados</strong>.</p>
+<pre><code><div class="highlight"><pre><span></span>                    ESTRATÉGIA
+        1. Fazer estratégias    2. Plano
+     (planos estratégicos,     (planos, orçamentos,
+      mapas estratégicos)       cenários, projetos)
+                    ↕
+              Dados integrados
+                    ↕
+     (ofertas e ações          (alertas, relatórios/
+      de agentes, previsões     análise, painéis)
+      e métodos)
+        4. Agir e ajustar      3. Monitorar
+                    EXECUÇÃO
+</pre></div>
+</code></pre>
+<p><strong>1. Estratégias</strong> — respondem a &quot;para onde queremos ir no futuro?&quot;. Geralmente formalizadas em um <strong>planejamento estratégico</strong> (mapa de ações para atingir objetivos em um período). Estratégias podem apresentar <strong>lacunas</strong> (gaps entre o planejado e o executado), causadas por 4 fatores principais:</p>
+<table>
+<thead>
+<tr>
+<th>Causa da lacuna</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Visão</strong></td>
+<td>Poucos funcionários conhecem a estratégia/visão da empresa, dificultando decisões alinhadas</td>
+</tr>
+<tr>
+<td><strong>Pessoas</strong></td>
+<td>Remuneração motiva a curto prazo, mas não alinha o colaborador à visão da empresa</td>
+</tr>
+<tr>
+<td><strong>Gerenciamento</strong></td>
+<td>Gestores nem sempre identificam os problemas principais, dispersando esforços</td>
+</tr>
+<tr>
+<td><strong>Recursos</strong></td>
+<td>Equipes superestimam o orçamento disponível e não conseguem executar a estratégia</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. Planos</strong> — respondem a &quot;como chegaremos até lá?&quot;. O plano operacional converte estratégia em metas, táticas, recursos e resultados esperados. Pode ser:</p>
+<ul>
+<li><strong>Centrado em táticas</strong> — práticas para atender aos objetivos do planejamento estratégico.</li>
+<li><strong>Centrado em orçamentos</strong> — ações planejadas visando ao lucro final.</li>
+</ul>
+<p><strong>3. Monitoramento</strong> — garante que o plano operacional ocorre conforme esperado. Desafio principal: definir <strong>o quê</strong> e <strong>como</strong> monitorar de forma que agregue valor.</p>
+<p><strong>4. Agir e ajustar</strong> — sem plano de ação/ajuste, estratégia, plano e monitoramento perdem utilidade. Toda divergência identificada no monitoramento deve gerar ação imediata.</p>
+<h3 id="32-medidas-de-desempenho--quadro-1-conceitos-básicos">3.2 Medidas de Desempenho — Quadro 1 (conceitos básicos)</h3>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Definição</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Métrica</strong></td>
+<td>Marcação de um fator monitorado; ponto de registro/controle</td>
+<td>Altura — 1,80 m; faturamento — 2 milhões</td>
+</tr>
+<tr>
+<td><strong>Medida</strong></td>
+<td>Quantidade de registros de um valor/desempenho, por acumulação</td>
+<td>30 clientes por dia (média); 200 mil <em>likes</em> até hoje (total)</td>
+</tr>
+<tr>
+<td><strong>Indicador</strong></td>
+<td>Fator qualitativo/quantitativo que expressa realização ou mudança; pode agregar várias medidas</td>
+<td>30% a mais de clientes no último ano; 10 graus de diferença entre cidades</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relação entre os três (Figura 2, Lawrence, 2019):</strong><br />
+Métrica = <strong>marcação</strong> (registra um valor) → Medida = <strong>acúmulo</strong> → Indicador = <strong>variação</strong> em comparação com outros cenários.</p>
+<h3 id="33-sistema-de-medida-de-desempenho">3.3 Sistema de Medida de Desempenho</h3>
+<p>Conjunto de estratégias de medição de desempenho. Características de um bom sistema:</p>
+<ul>
+<li>Concentra-se em fatores cruciais.</li>
+<li>Mistura passado, presente e futuro.</li>
+<li>Equilibra necessidades de acionistas, funcionários, parceiros, fornecedores e demais interessados.</li>
+<li>Tem metas baseadas em pesquisa e realidade, não arbitrárias.</li>
+</ul>
+<blockquote>
+<p>Segundo Simons (2002, <em>apud</em> Turban <em>et al.</em>, 2009, p. 206): sistemas de medida de desempenho &quot;auxiliam os gerentes a rastrear as implementações de estratégia de negócios comparando os resultados reais com metas estratégicas e objetivos [...] geralmente engloba métodos sistemáticos de união de metas de negócios com relatórios de retorno periódicos que indicam progresso contra metas.&quot;</p>
+</blockquote>
+<p><strong>3 etapas para criar um sistema de medida de desempenho:</strong></p>
+<ol>
+<li><strong>Definição e detalhamento de indicadores</strong> — etapa mais importante; define quais indicadores serão monitorados.</li>
+<li><strong>Implementação de um sistema de informação</strong> — envolve 3 níveis:
+<ul>
+<li><em>Interface do usuário</em> (navegador, planilhas, ERP)</li>
+<li><em>Tecnologias capacitadoras</em> (ex.: <em>dashboards</em> de BI)</li>
+<li><em>Bancos de dados</em> (estruturados ou repositórios de planilhas)</li>
+</ul>
+</li>
+<li><strong>Uso e revisão do sistema</strong> — melhorias e adequações contínuas à realidade da empresa.</li>
+</ol>
+<h3 id="34-metodologias-de-bpm">3.4 Metodologias de BPM</h3>
+<h4 id="balanced-scorecard-bsc">Balanced Scorecard (BSC)</h4>
+<p>Modelo de sistema de gestão baseado em um <em>cockpit</em> de indicadores que orienta a condução da empresa a partir de múltiplas perspectivas.</p>
+<p><strong>2 premissas básicas:</strong></p>
+<ol>
+<li>Indicadores financeiros isoladamente não explicam sucesso/fracasso.</li>
+<li>Gestores precisam de informação em tempo adequado.</li>
+</ol>
+<p><strong>4 perspectivas do BSC</strong> (Figura 3, Turban et al., 2009, p. 211):</p>
+<table>
+<thead>
+<tr>
+<th>Perspectiva</th>
+<th>Pergunta-chave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Financeira</strong></td>
+<td>Para ter sucesso financeiro, como deveríamos aparecer para nossos acionistas?</td>
+</tr>
+<tr>
+<td><strong>Cliente</strong></td>
+<td>Para alcançar nossa visão, como deveríamos aparecer para nossos clientes?</td>
+</tr>
+<tr>
+<td><strong>Processos internos de negócios</strong></td>
+<td>Para satisfazer acionistas e clientes, em que processos devemos nos superar?</td>
+</tr>
+<tr>
+<td><strong>Aprendizado e crescimento</strong></td>
+<td>Para alcançar nossa visão, como sustentamos nossa capacidade de mudar e melhorar?</td>
+</tr>
+</tbody>
+</table>
+<p>Todas as 4 perspectivas giram em torno do centro: <strong>visão e estratégia</strong> da empresa. Cada perspectiva usa uma matriz com 4 colunas: <strong>Objetivos, Medidas, Metas, Iniciativas</strong>.</p>
+<p><strong>Exemplo do capítulo:</strong></p>
+<ul>
+<li>Objetivo: aumentar as vendas.</li>
+<li>Medidas: comparação matemática das vendas com o mesmo período do ano anterior.</li>
+<li>Meta: ser a empresa que mais vende no segmento X no ano 2022.</li>
+<li>Iniciativas: aumentar divulgação da marca; vender produtos da marca Y.</li>
+</ul>
+<p>O ponto focal do BSC é o <strong>equilíbrio</strong>: financeiro x não financeiro, interno x externo, quantitativo x qualitativo, curto x longo prazo.</p>
+<h4 id="six-sigma">Six Sigma</h4>
+<p>Estratégia de gestão <strong>quantitativa</strong> (usa estatística) e <strong>estruturada</strong> (metodologia específica), focada na melhoria de processos já existentes.</p>
+<p><strong>3 objetivos principais:</strong></p>
+<ol>
+<li>Redução de custos.</li>
+<li>Otimização de produtos e processos.</li>
+<li>Incentivo à satisfação do cliente.</li>
+</ol>
+<p>Fornece meios para medir/monitorar processos-chave ligados à lucratividade e acelerar melhoria de desempenho (TURBAN <em>et al.</em>, 2019). Foco principal: satisfação do cliente via redução de defeitos.</p>
+<p><strong>Duas metodologias, cada uma com 5 fases (Periard, 2012):</strong></p>
+<p><strong>DMADV</strong> (para <em>novos</em> processos/produtos):</p>
+<ol>
+<li><em>Define goals</em> — definir objetivos alinhados a cliente e gestão.</li>
+<li><em>Measure and identify</em> — mensurar características críticas para a qualidade.</li>
+<li><em>Analyze</em> — desenvolver e projetar alternativas.</li>
+<li><em>Design details</em> — projetar detalhes e otimizar (fase mais longa, exige muitos testes).</li>
+<li><em>Verify the design</em> — executar pilotos, implementar produção, entregar ao proprietário do processo.</li>
+</ol>
+<p><strong>DMAIC</strong> (para <em>melhorar</em> processos existentes):</p>
+<ol>
+<li><em>Define the problem</em> — a partir de opiniões de clientes e objetivos da empresa.</li>
+<li><em>Measure key aspects</em> — aspectos principais do projeto atual.</li>
+<li><em>Analyze the data</em> — relação causa e efeito.</li>
+<li><em>Improve the process</em> — melhorar/otimizar com base na análise.</li>
+<li><em>Control</em> — assegurar correção de desvios futuros.</li>
+</ol>
+<p><strong>BSC x Six Sigma:</strong> a escolha depende da afinidade da equipe e do foco desejado. Six Sigma foca em resultados/cliente e exige base organizacional sólida; BSC identifica oportunidades de melhoria alinhadas aos objetivos estratégicos (VASQUES, 2019).</p>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</h2>
+<ul>
+<li><strong>Exemplo de matriz BSC</strong> (perspectiva financeira): Objetivo &quot;aumentar vendas&quot; → Medida &quot;comparação com mesmo período do ano anterior&quot; → Meta &quot;ser líder no segmento X em 2022&quot; → Iniciativas &quot;aumentar divulgação da marca, vender produtos da marca Y&quot;.</li>
+<li><strong>Aplicação de Six Sigma citada no capítulo:</strong> monitoramento de gastos com luz, diárias de viagem, telefone etc.</li>
+<li>Links complementares citados no capítulo (não verificados nesta sessão): vídeo sobre BSC e vídeo sobre Six Sigma (Canal Instituto Montanari; Canal Grupo Voitto).</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</h2>
+<p><em>(Espaço reservado — nenhuma observação registrada até o momento para esta aula.)</em></p>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</h2>
+<h3 id="referência-principal">Referência principal</h3>
+<p>ZANIN, Aline. <strong>Introdução à Inteligência de Negócios</strong> — capítulo &quot;Business performance management (BPM)&quot;. SAGAH.</p>
+<h3 id="referências-citadas-no-capítulo">Referências citadas no capítulo</h3>
+<ul>
+<li>CHICALESKI, P. M. D. <em>O que é business performance management?</em> 2008.</li>
+<li>LAWRENCE, C. <em>Qual a diferença entre métrica, medida e indicador?</em> 2019.</li>
+<li>PERIARD, G. <em>Seis sigma: o que é e como funciona.</em> 2012.</li>
+<li>SIMONS, R. <em>Performance measurement and control systems for implementing strategy.</em> Upper Saddle River, NJ: Prentice Hall, 2002.</li>
+<li>TURBAN, E. <em>et al. Business intelligence: um enfoque gerencial para a inteligência do negócio.</em> Porto Alegre: Bookman, 2009.</li>
+<li>VASQUES, R. C. <em>Balanced Scorecard (BSC), CMMI e Six Sigma, como construir altos níveis de maturidade e desempenho.</em></li>
+</ul>
+<h3 id="conexões-com-outras-disciplinasaulas">Conexões com outras disciplinas/aulas</h3>
+<ul>
+<li><strong>Aula 1 (Aprendizado de Máquina):</strong> troca de eixo — de um conteúdo técnico/algorítmico (ML) para um conteúdo de gestão/BI. O BPM é o tipo de contexto de negócio que consome os resultados de modelos de AM (ex.: um indicador do BSC pode ser alimentado por uma predição de ML).</li>
+<li><strong>Aquisição e Preparação de Dados:</strong> o conceito de &quot;dados integrados&quot; no centro do ciclo do BPM dialoga com o ETL já estudado (extração/integração de dados de múltiplas fontes para consolidar indicadores).</li>
+</ul>
+<hr />
+<p><strong>Status:</strong> Aula 2 documentada.</p>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d2-aula-01.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 1</a><a class="btn cheio" href="s1-d2-aula-03.html">Aula 3 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

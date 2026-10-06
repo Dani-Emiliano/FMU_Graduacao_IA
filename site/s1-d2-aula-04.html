@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4 · Classificação de textos com Python · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 4 · Classificação de textos com Python</span></nav>
+    <span class="eyebrow">Aula 4 · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 4 · Classificação de textos com Python</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_04_RESUMO_CLASSIFICACAO_TEXTO_PYTHON.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-4--classificação-de-textos-utilizando-python-para-construir-e-treinar-modelos-de-machine-learning">AULA 4 — CLASSIFICAÇÃO DE TEXTOS: UTILIZANDO PYTHON PARA CONSTRUIR E TREINAR MODELOS DE MACHINE LEARNING</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</a></li><li class="n3"><a href="#31-obtenção-dos-dados">3.1 Obtenção dos dados</a></li><li class="n3"><a href="#32-ferramentas-utilizadas">3.2 Ferramentas utilizadas</a></li><li class="n3"><a href="#33-exploração-dos-dados">3.3 Exploração dos dados</a></li><li class="n3"><a href="#34-preparação-dos-dados-pré-processamento">3.4 Preparação dos dados (pré-processamento)</a></li><li class="n3"><a href="#35-extração-de-recursos-features-e-vetorização">3.5 Extração de recursos (features) e vetorização</a></li><li class="n3"><a href="#36-o-classificador-naïve-bayes--teoria">3.6 O classificador Naïve Bayes — teoria</a></li><li class="n3"><a href="#37-exemplo-matemático-do-capítulo-quadros-1-e-2">3.7 Exemplo matemático do capítulo (Quadros 1 e 2)</a></li><li class="n3"><a href="#38-treinamento-e-teste-do-modelo-metodologia">3.8 Treinamento e teste do modelo (metodologia)</a></li><li class="n3"><a href="#39-avaliação-do-modelo">3.9 Avaliação do modelo</a></li><li class="n3"><a href="#310-ajuste-de-hiperparâmetros">3.10 Ajuste de hiperparâmetros</a></li><li class="n3"><a href="#311-naïve-bayes-prós-e-contras-síntese-do-capítulo">3.11 Naïve Bayes: prós e contras (síntese do capítulo)</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</a></li><li class="n2"><a href="#5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</a></li><li class="n3"><a href="#pontos-de-atenção-no-texto-base-identificados-na-análise-não-são-observações-da-aluna">Pontos de atenção no texto-base (identificados na análise; não são observações da aluna)</a></li><li class="n2"><a href="#6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</a></li><li class="n3"><a href="#referência-principal">Referência principal</a></li><li class="n3"><a href="#referências-citadas-no-capítulo">Referências citadas no capítulo</a></li><li class="n3"><a href="#conexões-com-outras-aulas-e-disciplinas">Conexões com outras aulas e disciplinas</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-4--classificação-de-textos-utilizando-python-para-construir-e-treinar-modelos-de-machine-learning">AULA 4 — CLASSIFICAÇÃO DE TEXTOS: UTILIZANDO PYTHON PARA CONSTRUIR E TREINAR MODELOS DE MACHINE LEARNING</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Supervisionado (262GGR4728A)<br />
+<strong>Aula:</strong> 4 — Classificação de textos — Utilizando Python para construir e treinar modelos de machine learning<br />
+<strong>Fonte:</strong> <em>Processamento de Linguagem Natural</em> — Juliano Vieira Martins, SAGAH (Soluções Educacionais Integradas)</p>
+<h3 id="objetivos-de-aprendizagem-conforme-o-capítulo">Objetivos de aprendizagem (conforme o capítulo)</h3>
+<ul>
+<li>Descrever processos de manipulação de dados para utilizar classificadores de texto.</li>
+<li>Analisar o classificador Naïve Bayes.</li>
+<li>Aplicar o classificador Naïve Bayes em um estudo prático.</li>
+</ul>
+<p><strong>Observação de continuidade:</strong> esta aula é a continuação direta da Aula 3 (mesmo livro, autor diferente — Michel Bernardo Fernandes da Silva na Aula 3, Juliano Vieira Martins nesta). A Aula 3 tratou os conceitos de PLN, classificação e pré-processamento (tokenização, stopwords, pontuação) em nível teórico; esta aula aplica tudo isso em <strong>código Python real</strong>, do zero até um classificador funcionando.</p>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p>A classificação de texto é definida como o processo de <strong>atribuir rótulos/etiquetas de categorias ao texto</strong> de acordo com seu conteúdo — uma das tarefas fundamentais do PLN, com aplicações em análise de sentimentos, rotulagem de tópicos, detecção de spam, de intenção e de idioma. Exemplos de contexto: textos curtos (tweets, chamadas de notícias, SMS) e textos longos (análises de clientes, artigos de mídia, contratos legais).</p>
+<p>Motivação de negócio: dados em texto (e-mails, chats, páginas web, mídias sociais, tickets de suporte, pesquisas) são abundantes e potencialmente valiosos, mas difíceis de explorar por serem <strong>não estruturados</strong>. A classificação de texto estrutura esses dados de forma rápida e econômica, visando melhorar a tomada de decisão e automatizar processos.</p>
+<p>O capítulo segue três grandes blocos:</p>
+<ol>
+<li><strong>Obtenção e preparação dos dados</strong></li>
+<li><strong>Análise do classificador Naïve Bayes</strong> (teoria/matemática)</li>
+<li><strong>Aplicação do classificador em um estudo prático</strong> (código completo, com o dataset SMS Spam Collection)</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</h2>
+<h3 id="31-obtenção-dos-dados">3.1 Obtenção dos dados</h3>
+<p>Premissa central: um classificador só é útil se os dados de treinamento forem <strong>precisos e representativos</strong>. Um modelo treinado com dados pouco representativos do objetivo gera resultados ruins (JURAFSKY; MARTIN, 2019).</p>
+<p><strong>Pergunta-guia para obter dados:</strong> &quot;para qual objetivo de classificação são os dados?&quot; — a resposta orienta onde buscá-los.</p>
+<ul>
+<li><strong>Fontes internas:</strong> sistemas de atendimento ao cliente, formulários de satisfação etc., geralmente exportáveis em <strong>CSV</strong> (comma-separated values) ou <strong>TSV</strong> (tab-separated values).</li>
+<li><strong>Fontes externas:</strong> ferramentas de <em>web scraping</em>, <strong>APIs</strong> (application programming interface — software intermediário que permite comunicação entre dois aplicativos) ou <strong>conjuntos de dados públicos</strong> (<em>public datasets</em>).</li>
+</ul>
+<p><strong>Datasets públicos citados no capítulo:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Tarefa</th>
+<th>Tamanho aproximado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reuters news dataset</td>
+<td>Classificação de tópicos</td>
+<td>~20 mil artigos</td>
+</tr>
+<tr>
+<td>20 Newsgroups</td>
+<td>Classificação de tópicos</td>
+<td>~20 mil documentos</td>
+</tr>
+<tr>
+<td>Amazon Product Reviews</td>
+<td>Análise de sentimentos</td>
+<td>~143 milhões de avaliações</td>
+</tr>
+<tr>
+<td>IMDB reviews</td>
+<td>Análise de sentimentos</td>
+<td>~25 mil críticas de filmes</td>
+</tr>
+<tr>
+<td>Twitter Airline Sentiment</td>
+<td>Análise de sentimentos</td>
+<td>~15 mil tweets</td>
+</tr>
+<tr>
+<td>Spambase</td>
+<td>Detecção de spam</td>
+<td>~4,6 mil e-mails rotulados</td>
+</tr>
+<tr>
+<td>SMS Spam Collection</td>
+<td>Detecção de spam</td>
+<td>~5,5 mil SMS rotuladas (dataset usado no capítulo)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-ferramentas-utilizadas">3.2 Ferramentas utilizadas</h3>
+<ul>
+<li><strong>Google Colab (Colaboratory):</strong> ambiente Jupyter Notebook gratuito, sem configuração, executado na nuvem; requer conta Gmail. Permite escrever/executar código, salvar/compartilhar análises e usar recursos de computação pelo navegador.</li>
+<li><strong>UC Irvine Machine Learning Repository (UCI):</strong> repositório mantido pela UCI com mais de 490 conjuntos de dados (DUA; GRAFF, 2019); fonte do <strong>SMS Spam Collection Data Set</strong> usado no exemplo prático.</li>
+</ul>
+<h3 id="33-exploração-dos-dados">3.3 Exploração dos dados</h3>
+<p>Usa-se a biblioteca <strong>Pandas</strong>: o <code>DataFrame</code> é uma estrutura tabular, bidimensional, mutável em tamanho, podendo ser heterogênea, com eixos rotulados (linhas e colunas) — composto por <strong>dados, linhas e colunas</strong>.</p>
+<p>No dataset SMS Spam Collection: <strong>5.572 registros</strong> (IDs de 0 a 5.571); coluna 0 = rótulo da classe, coluna 1 = mensagem. Distribuição das classes: <strong>4.825 &quot;ham&quot;</strong> (não-spam) e <strong>747 &quot;spam&quot;</strong>.</p>
+<h3 id="34-preparação-dos-dados-pré-processamento">3.4 Preparação dos dados (pré-processamento)</h3>
+<p>Passos realizados, na ordem apresentada pelo capítulo:</p>
+<ol>
+<li>
+<p><strong>Expressões regulares (regex):</strong> usadas para identificar/substituir padrões em texto (números, e-mails, telefones, URLs, pontuação). Implementadas em Python via pacote <code>re</code>.</p>
+</li>
+<li>
+<p><strong>Padronização para minúsculas:</strong> antes das substituições, para que, por exemplo, &quot;Love&quot; e &quot;love&quot; tenham a mesma importância.</p>
+</li>
+<li>
+<p><strong>Substituições por regex</strong> (nesta ordem, no capítulo):</p>
+<ul>
+<li>endereços de e-mail → <code>emailaddress</code></li>
+<li>URLs → <code>webaddress</code></li>
+<li>símbolos monetários (£, $) → <code>moneysymb</code></li>
+<li>números de telefone → <code>phonenumbr</code></li>
+<li>números → <code>numbr</code></li>
+<li>remoção de pontuação</li>
+<li>normalização de espaços múltiplos → um espaço</li>
+<li>remoção de espaços nas bordas</li>
+</ul>
+<p><strong>Cuidado destacado no capítulo:</strong> as palavras de substituição (<code>emailaddress</code>, <code>webaddress</code> etc.) precisam ser escolhidas de forma que <strong>não colidam</strong> com palavras que já existem naturalmente no texto — senão a frequência dessas palavras seria artificialmente inflada.</p>
+</li>
+<li>
+<p><strong>Remoção de <em>stop words</em>:</strong> palavras de &quot;parada&quot;, comuns no idioma e de pouco valor discriminativo para a classificação (ex. em inglês: <em>i, me, my, myself, we, our, ours</em>).</p>
+</li>
+<li>
+<p><strong>Stemming (radicalização):</strong> substituir uma palavra por sua variante morfológica de base (ex.: <em>programs, programer, programing, programers</em> → <em>program</em>).</p>
+</li>
+</ol>
+<p><strong>Biblioteca usada para stopwords/stemming/tokenização:</strong> <strong>NLTK</strong> (Natural Language Toolkit).</p>
+<h3 id="35-extração-de-recursos-features-e-vetorização">3.5 Extração de recursos (<em>features</em>) e vetorização</h3>
+<p>Para treinar o classificador, o texto precisa virar uma <strong>representação numérica (vetor)</strong>:</p>
+<ol>
+<li>Criar um conjunto de todas as palavras do texto e contar a <strong>frequência</strong> de cada uma.</li>
+<li>Selecionar as palavras <strong>mais frequentes</strong> (no exemplo: as <strong>1.500 mais frequentes</strong>) para formar o <strong>vetor-modelo de features</strong>.</li>
+<li>Para cada mensagem, gerar um vetor de <em>features</em> (dicionário <code>{palavra: True/False}</code> indicando se a palavra aparece ou não na mensagem).</li>
+<li>Associar cada vetor de <em>features</em> ao seu rótulo (0 = ham, 1 = spam), formando tuplas (<em>features</em>, rótulo).</li>
+</ol>
+<p><strong>Observação importante do capítulo:</strong> &quot;quantidade não significa qualidade&quot; — é preciso cuidado com quais palavras entram no vetor-modelo, pois o classificador considera até palavras que aparecem <strong>uma única vez</strong> em todo o texto.</p>
+<p><strong>Conversão de rótulos:</strong> usa-se <code>LabelEncoder</code> (do <code>sklearn.preprocessing</code>) para converter rótulos categóricos (ham/spam) em valores binários (0/1).</p>
+<p><strong>Embaralhamento (shuffle):</strong> as mensagens são embaralhadas (com <code>seed</code> fixa para reprodutibilidade) para que a <strong>ordem não interfira</strong> no treinamento.</p>
+<h3 id="36-o-classificador-naïve-bayes--teoria">3.6 O classificador Naïve Bayes — teoria</h3>
+<p>Naïve Bayes é um algoritmo de <strong>aprendizagem de máquina supervisionado</strong>, da família dos algoritmos <strong>probabilísticos</strong>, baseado na <strong>teoria das probabilidades</strong> e no <strong>teorema de Bayes</strong>. Prediz o conteúdo de um texto atribuindo-lhe um rótulo (nome de classe). Chama-se &quot;ingênuo&quot; (<em>naïve</em>) porque faz uma suposição simplista: trata as <em>features</em> como <strong>independentes entre si</strong>.</p>
+<p>Funcionamento: calcula a probabilidade de cada classe para um documento e produz como saída o rótulo da classe com <strong>maior probabilidade</strong>.</p>
+<p><strong>Teorema de Bayes — elementos:</strong></p>
+<ul>
+<li><strong>c</strong> (classe/hipótese): ex. spam / não_spam.</li>
+<li><strong>d</strong> (documento/dados): ex. uma mensagem de SMS.</li>
+<li><strong>P(c):</strong> probabilidade <em>a priori</em> da hipótese <em>c</em> (confiança na hipótese sem ver os dados).</li>
+<li><strong>P(d|c):</strong> probabilidade de <em>d</em> dado <em>c</em>.</li>
+<li><strong>P(d):</strong> probabilidade <em>a priori</em> sobre as amostras de treino <em>d</em>.</li>
+<li><strong>P(c|d):</strong> probabilidade de <em>c</em> dado <em>d</em> (o que se quer calcular).</li>
+</ul>
+<p>Como o objetivo é apenas <strong>comparar</strong> qual classe tem maior probabilidade, o divisor comum <strong>P(d)</strong> pode ser descartado nas duas comparações.</p>
+<p><strong>Problema da contagem zero e Laplace Smoothing:</strong> se uma palavra nunca aparece nos dados de treino de uma classe, a probabilidade fica zero e anula toda a multiplicação. Solução: <strong>Laplace Smoothing</strong> (ou <em>Additive Smoothing</em>) — soma-se <strong>1</strong> a toda contagem, de modo que nenhuma probabilidade seja zero. O denominador é ajustado somando a <strong>quantidade de palavras distintas</strong> do vocabulário.</p>
+<h3 id="37-exemplo-matemático-do-capítulo-quadros-1-e-2">3.7 Exemplo matemático do capítulo (Quadros 1 e 2)</h3>
+<p><strong>Quadro 1 — mensagens rotuladas e mensagem de teste:</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Palavras</th>
+<th>Classe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Treino 0</td>
+<td>Compre Viagra sem juros</td>
+<td>SPAM</td>
+</tr>
+<tr>
+<td>Treino 1</td>
+<td>passar mercado abastecer geladeira</td>
+<td>NÃO-SPAM</td>
+</tr>
+<tr>
+<td>Treino 2</td>
+<td>Viagra barato medicamento</td>
+<td>SPAM</td>
+</tr>
+<tr>
+<td>Treino 3</td>
+<td>Medicamento estimulador preço baixo</td>
+<td>SPAM</td>
+</tr>
+<tr>
+<td>Treino 4</td>
+<td>deixei prato feito geladeira</td>
+<td>NÃO-SPAM</td>
+</tr>
+<tr>
+<td>Teste 5</td>
+<td>Medicamento emagrecedor sem frete</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+<p>Probabilidades <em>a priori</em>: <strong>P(spam) = 3/5</strong>; <strong>P(não_spam) = 2/5</strong>.</p>
+<p><strong>Vocabulário com Laplace Smoothing:</strong> 16 palavras distintas no conjunto (compre, Viagra, sem, juros, passar, mercado, abastecer, geladeira, barato, medicamento, estimulador, preço, baixo, deixei, prato, feito). Classe spam tem <strong>11</strong> palavras (total, com repetição); classe não-spam tem <strong>8</strong>.</p>
+<p><strong>Quadro 2 — probabilidades de cada palavra da frase-teste, com suavização:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Palavra</th>
+<th>P(palavra|spam)</th>
+<th>P(palavra|não-spam)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>medicamento</td>
+<td>(2+1)/(11+16) = 0,111111111111111</td>
+<td>(0+1)/(8+16) = 0,041666666666667</td>
+</tr>
+<tr>
+<td>emagrecedor</td>
+<td>(0+1)/(11+16) = 0,037037037037037</td>
+<td>(0+1)/(8+16) = 0,041666666666667</td>
+</tr>
+<tr>
+<td>sem</td>
+<td>(0+1)/(11+16) = 0,037037037037037</td>
+<td>(0+1)/(8+16) = 0,041666666666667</td>
+</tr>
+<tr>
+<td>frete</td>
+<td>(0+1)/(11+16) = 0,037037037037037</td>
+<td>(0+1)/(8+16) = 0,041666666666667</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resultado da multiplicação das 4 probabilidades:</strong></p>
+<ul>
+<li>P(spam) × produto = <strong>0,00000564502</strong></li>
+<li>P(não_spam) × produto = <strong>0,00000301408</strong></li>
+</ul>
+<p><strong>Conclusão do exemplo:</strong> a mensagem &quot;medicamento emagrecedor sem frete&quot; é classificada como <strong>SPAM</strong>, pois teve a maior probabilidade final.</p>
+<h3 id="38-treinamento-e-teste-do-modelo-metodologia">3.8 Treinamento e teste do modelo (metodologia)</h3>
+<p><strong>Divisão treino/teste</strong> — necessária para avaliar se o modelo <strong>generaliza</strong> (prediz bem dados nunca vistos) ou sofreu <em><strong>overfitting</strong></em> (decorou os dados de treino, memorizando em vez de &quot;aprender&quot;; sintoma: alta precisão no treino, baixa no teste).</p>
+<p>Existe ainda, eventualmente, um terceiro conjunto — <strong>dados de desenvolvimento</strong> —, usado enquanto se testam diferentes configurações/variações do classificador.</p>
+<p><strong><code>train_test_split</code></strong> (de <code>sklearn.model_selection</code>) — parâmetros principais:</p>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*arrays</code></td>
+<td>Conjunto(s) de dados (listas, arrays numpy, matrizes scipy-sparse ou DataFrame pandas)</td>
+</tr>
+<tr>
+<td><code>train_size</code></td>
+<td>Tamanho do conjunto de treino: <code>None</code> (padrão), <code>int</code> (nº exato de amostras) ou <code>float</code> (0,1 a 1,0)</td>
+</tr>
+<tr>
+<td><code>test_size</code></td>
+<td>Tamanho do conjunto de teste; padrão 0,25 se <code>train_size</code> for <code>None</code></td>
+</tr>
+<tr>
+<td><code>random_state</code></td>
+<td>Fixa a semente para tornar a divisão reproduzível</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classificador — <code>MultinomialNB</code></strong> (de <code>sklearn.naive_bayes</code>), adequado para <em>features</em> <strong>discretas</strong> (ex. contagem de palavras). Parâmetros:</p>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alpha</code></td>
+<td>(float) parâmetro de suavização Laplace/Lidstone (0 = sem suavização)</td>
+</tr>
+<tr>
+<td><code>fit_prior</code></td>
+<td>(bool) se deve aprender as probabilidades <em>a priori</em> das classes a partir dos dados</td>
+</tr>
+<tr>
+<td><code>class_prior</code></td>
+<td>(array) probabilidades <em>a priori</em> definidas manualmente; se especificado, não são ajustadas pelos dados</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conversão de formato:</strong> os dados em dicionário precisam virar <strong>matriz</strong> (lista de listas) antes de entrar no <code>MultinomialNB</code>. Usa-se <code>DictVectorizer</code> (de <code>sklearn.feature_extraction</code>).</p>
+<h3 id="39-avaliação-do-modelo">3.9 Avaliação do modelo</h3>
+<p><strong>Tabela de contingência / Matriz de confusão (2×2, caso binário spam/ham):</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Predito: spam</th>
+<th>Predito: não-spam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Real: spam</strong></td>
+<td>VP (verdadeiro-positivo)</td>
+<td>FN (falso-negativo)</td>
+</tr>
+<tr>
+<td><strong>Real: ham</strong></td>
+<td>FP (falso-positivo)</td>
+<td>VN (verdadeiro-negativo)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Métricas:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Fórmula</th>
+<th>O que mede</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Acurácia</strong></td>
+<td>(VP + VN) / (VP + VN + FP + FN)</td>
+<td>Assertividade geral do modelo, para todas as classes</td>
+</tr>
+<tr>
+<td><strong>Precisão</strong></td>
+<td>VP / (VP + FP)</td>
+<td>Assertividade apenas para uma classe específica</td>
+</tr>
+<tr>
+<td><strong>Revocação (<em>recall</em>)</strong></td>
+<td>VP / (VP + FN)</td>
+<td>Frequência com que os exemplos de uma classe foram corretamente encontrados</td>
+</tr>
+<tr>
+<td><strong>F1-score</strong></td>
+<td>(2 × precisão × revocação) / (precisão + revocação)</td>
+<td>Média harmônica entre precisão e revocação; quanto maior, melhor o modelo</td>
+</tr>
+</tbody>
+</table>
+<p>Ferramentas: <code>confusion_matrix</code> e <code>classification_report</code> (ambas de <code>sklearn.metrics</code>).</p>
+<h3 id="310-ajuste-de-hiperparâmetros">3.10 Ajuste de hiperparâmetros</h3>
+<p>Classificadores em geral têm vários parâmetros ajustáveis (<em>hiperparâmetros</em>). Testar manualmente todas as combinações é inviável (exemplo do capítulo: 2 parâmetros, um com 100 valores possíveis e outro booleano → <strong>200 combinações</strong>).</p>
+<p><strong>Duas técnicas de busca:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Como funciona</th>
+<th>Quando usar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><strong>Grid Search</strong></em></td>
+<td>Testa <strong>exaustivamente</strong> todas as combinações possíveis</td>
+<td>Dataset relativamente pequeno, muitos parâmetros a ajustar → resultados mais precisos</td>
+</tr>
+<tr>
+<td><em><strong>Random Search</strong></em></td>
+<td>Testa combinações <strong>aleatórias</strong> dos valores</td>
+<td>Datasets grandes e muitas dimensões de ajuste → custo computacional do Grid Search fica muito alto</td>
+</tr>
+</tbody>
+</table>
+<p>Ferramenta: <code>GridSearchCV</code> (de <code>sklearn.model_selection</code>), que otimiza por <strong>validação cruzada</strong>.</p>
+<h3 id="311-naïve-bayes-prós-e-contras-síntese-do-capítulo">3.11 Naïve Bayes: prós e contras (síntese do capítulo)</h3>
+<p><strong>A favor:</strong></p>
+<ul>
+<li>Bom desempenho na predição da classe correta, mesmo sendo &quot;ingênuo&quot;.</li>
+<li>Funciona bem em situações reais (classificação de documentos, filtragem de spam).</li>
+<li>Rápido na execução; tem bom desempenho mesmo com poucos dados.</li>
+<li>Relativamente simples de configurar para aplicações rotineiras.</li>
+</ul>
+<p><strong>Contra:</strong></p>
+<ul>
+<li>A suposição de independência entre <em>features</em> limita a exploração de interações reais entre os dados (ainda que, na prática, isso não costume prejudicar tarefas de classificação de texto).</li>
+<li>Se uma variável do conjunto de teste <strong>nunca foi vista</strong> no treino, o modelo atribui probabilidade <strong>0</strong> e não consegue prever com precisão (o próprio Laplace Smoothing, aplicado no treino, mitiga esse problema).</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</h2>
+<p>O código completo deste capítulo (obtenção dos dados, regex, NLTK, vetorização, treinamento, avaliação e ajuste de hiperparâmetros) foi organizado em arquivo complementar, pronto para compilação em Jupyter Notebook:</p>
+<p>➡️ <strong><code>AULA_04_CLASSIFICACAO_TEXTO_PYTHON_PRATICO.md</code></strong></p>
+</section>
+<section class="bloco"><h2 id="5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</h2>
+<p><em>(Espaço reservado — nenhuma observação registrada até o momento para esta aula.)</em></p>
+<h3 id="pontos-de-atenção-no-texto-base-identificados-na-análise-não-são-observações-da-aluna">Pontos de atenção no texto-base (identificados na análise; não são observações da aluna)</h3>
+<ol>
+<li><strong>Pequena inconsistência de nomenclatura no Quadro 2:</strong> a tabela traz &quot;P(palavra|não-spam)&quot; na coluna, mas o texto corrido logo acima usa &quot;não_spam&quot; (com <em>underscore</em>). Mesmo conceito, grafias diferentes dentro do próprio capítulo.</li>
+<li><strong>Trecho de código com erro tipográfico evidente (OCR/editoração do livro):</strong> nas variáveis Python, o PDF mostra espaços estranhos dentro de identificadores (ex.: <code>pd.read _ ta ble</code>, <code>word _ tokens</code>, <code>train _ test _ split</code>). Isso é um artefato de formatação do PDF original (não um erro do leitor) — no arquivo prático, os nomes foram corrigidos para a sintaxe Python real (<code>read_table</code>, <code>word_tokens</code>, <code>train_test_split</code>), já que o código como está no PDF não executaria.</li>
+<li><strong>MultinomialNB em dados booleanos:</strong> o capítulo monta as <em>features</em> como <code>True</code>/<code>False</code> (palavra presente ou não) e depois diz que a distribuição multinomial &quot;normalmente requer contagens de recursos inteiros&quot;. Isso é uma inconsistência técnica do capítulo: o ideal para dados binários (presença/ausência) seria o <code>BernoulliNB</code>, não o <code>MultinomialNB</code> — mas o <code>DictVectorizer</code>, ao vetorizar dicionários com <code>True</code>/<code>False</code>, converte esses valores para <code>1.0</code>/<code>0.0</code>, o que faz o <code>MultinomialNB</code> funcionar ainda que não seja a escolha teoricamente mais alinhada ao tipo de dado.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</h2>
+<h3 id="referência-principal">Referência principal</h3>
+<p>MARTINS, Juliano Vieira. <strong>Processamento de Linguagem Natural</strong> — capítulo &quot;Classificação de textos — Utilizando Python para construir e treinar modelos de machine learning&quot;. SAGAH.</p>
+<h3 id="referências-citadas-no-capítulo">Referências citadas no capítulo</h3>
+<ul>
+<li>DUA, D.; GRAFF, C. <em>UCI Machine Learning Repository.</em> Irvine, CA: University of California, 2019.</li>
+<li>GOOGLE COLABORATORY. Mountain View, CA: Google, c2020.</li>
+<li>JURAFSKY, D. S.; MARTIN, H. <em>Speech and language processing: an introduction to natural language processing, computational linguistics, and speech recognition.</em> 3. ed. New Jersey: Prentice Hall, 2019.</li>
+<li>NATURAL LANGUAGE TOOLKIT. <em>NLTK 3.5 documentation.</em> 2020.</li>
+<li>NUMPY. c2020.</li>
+<li>PANDAS. <em>Python Data Analysis Library.</em> Texas: Zenodo, 2020.</li>
+<li>PYTHON. Wilmington: Python Software Foundation, c2020.</li>
+<li>SCIKIT-LEARN: <em>Machine learning in Python.</em> c2020.</li>
+</ul>
+<h3 id="conexões-com-outras-aulas-e-disciplinas">Conexões com outras aulas e disciplinas</h3>
+<ul>
+<li><strong>Aula 3 (Classificação de textos — introdução ao aprendizado supervisionado):</strong> esta aula é a aplicação prática direta da teoria vista lá — tokenização, remoção de stopwords e pontuação (Aula 3, seção de pré-processamento) reaparecem aqui como código real com NLTK e regex; o Naïve Bayes citado na Aula 3 (como um dos algoritmos do pipeline) é aprofundado matematicamente aqui.</li>
+<li><strong>Aula 1 (Aprendizado de Máquina):</strong> Naïve Bayes já constava no Quadro 2 da Aula 1 como algoritmo de classificação supervisionada; esta aula mostra sua base probabilística (teorema de Bayes) e sua implementação.</li>
+<li><strong>Atividade 1 (Mineração de Dados) / Aquisição e Preparação de Dados:</strong> o pré-processamento com regex, stopwords e normalização dialoga diretamente com os conceitos de limpeza e transformação de dados já estudados (ETL, AED).</li>
+<li><strong>Overfitting e divisão treino/teste:</strong> conceito novo nesta aula, mas que se conecta à discussão de qualidade de dados e generalização de modelos vista de forma mais geral na Aula 1.</li>
+</ul>
+<hr />
+<p><strong>Status:</strong> Aula 4 documentada.</p>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d2-aula-03.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 3</a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

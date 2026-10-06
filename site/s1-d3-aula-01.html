@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 1 · Qualidade de dados, IA, Machine Learning e Deep Learning · Aprendizado de Máquina Não Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d3.html">Aprendizado de Máquina Não Supervisionado</a> <span>›</span> <span>Aula 1 · Qualidade de dados, IA, Machine Learning e Deep Learning</span></nav>
+    <span class="eyebrow">Aula 1 · Aprendizado de Máquina Não Supervisionado</span>
+    <h1>Aula 1 · Qualidade de dados, IA, Machine Learning e Deep Learning</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d3.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/1_Resumos_das_aulas/AULA_01_RESUMO_LIMPEZA_DADOS_ML_DL.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-1--qualidade-de-dados-machine-learning-e-deep-learning">AULA 1 — QUALIDADE DE DADOS, MACHINE LEARNING E DEEP LEARNING</a></li><li class="n2"><a href="#aprendizado-de-máquina-não-supervisionado-262ggr6044a--graduação-em-ia-fmu">APRENDIZADO DE MÁQUINA NÃO SUPERVISIONADO (262GGR6044A) — Graduação em IA, FMU</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e Objetivos</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e Contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</a></li><li class="n3"><a href="#31-dificuldades-da-limpeza-de-dados-material-acadêmico--slide-da-aula">3.1 Dificuldades da Limpeza de Dados (material acadêmico — slide da aula)</a></li><li class="n3"><a href="#32-inteligência-artificial-mitos-e-verdades-livro-base">3.2 Inteligência Artificial: Mitos e Verdades (livro-base)</a></li><li class="n3"><a href="#33-engenharia-do-conhecimento-livro-base">3.3 Engenharia do Conhecimento (livro-base)</a></li><li class="n3"><a href="#34-machine-learning-livro-base">3.4 Machine Learning (livro-base)</a></li><li class="n3"><a href="#35-deep-learning-e-redes-neurais-artificiais-rna-livro-base--slide-da-aula--ponto-que-a-dani-identificou-como-pouco-aprofundado-na-aula">3.5 Deep Learning e Redes Neurais Artificiais (RNA) (livro-base + slide da aula — ponto que a Dani identificou como pouco aprofundado na aula)</a></li><li class="n3"><a href="#36-big-data-livro-base">3.6 Big Data (livro-base)</a></li><li class="n3"><a href="#37-pca-x-análise-fatorial--movido-para-a-aula-3">3.7 PCA x Análise Fatorial — movido para a Aula 3</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</a></li><li class="n2"><a href="#5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</a></li><li class="n2"><a href="#6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-1--qualidade-de-dados-machine-learning-e-deep-learning">AULA 1 — QUALIDADE DE DADOS, MACHINE LEARNING E DEEP LEARNING</h1></div>
+<section class="bloco"><h2 id="aprendizado-de-máquina-não-supervisionado-262ggr6044a--graduação-em-ia-fmu">APRENDIZADO DE MÁQUINA NÃO SUPERVISIONADO (262GGR6044A) — Graduação em IA, FMU</h2>
+</section>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e Objetivos</h2>
+<p><strong>Disciplina:</strong> Aprendizado de Máquina Não Supervisionado (262GGR6044A)<br />
+<strong>Aula:</strong> 1<br />
+<strong>Livro-base da aula:</strong> <em>Engenharia do Conhecimento e Inteligência Artificial</em> — Cynthia da Silva Barbosa (SAGAH)</p>
+<p><strong>Objetivos de aprendizagem (do livro-base):</strong></p>
+<ul>
+<li>Comparar mitos e verdades sobre inteligência artificial.</li>
+<li>Relacionar a utilização de engenharia do conhecimento para criação de sistemas inteligentes.</li>
+<li>Reconhecer as principais tecnologias e ferramentas utilizadas para desenvolvimento de aplicações inteligentes e análise de dados.</li>
+</ul>
+<blockquote>
+<p>A aula em si não detalhou modelos de ML/redes neurais/deep learning em profundidade — esse aprofundamento vem do capítulo do livro-base, conforme observação da Dani na seção 5.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e Contextualização</h2>
+<p>A Aula 1 retoma a importância da <strong>estruturação e qualidade dos dados</strong> — tema que conecta diretamente com a disciplina anterior (Aquisição e Preparação de Dados) — e introduz o panorama de <strong>Inteligência Artificial</strong>, <strong>Engenharia do Conhecimento</strong>, <strong>Machine Learning</strong> (supervisionado e não supervisionado) e <strong>Deep Learning</strong>, que serão a base conceitual do restante da disciplina de Aprendizado Não Supervisionado.</p>
+<p>A normalização de dados foi mencionada na aula, mas <strong>não será registrada aqui</strong> por já ter sido coberta em detalhe na disciplina anterior (Aquisição e Preparação de Dados).</p>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos Fundamentais e Explicações</h2>
+<h3 id="31-dificuldades-da-limpeza-de-dados-material-acadêmico--slide-da-aula">3.1 Dificuldades da Limpeza de Dados <em>(material acadêmico — slide da aula)</em></h3>
+<p>O termo <em>limpeza dos dados</em> existe porque nem sempre os dados têm a qualidade esperada. Quatro problemas típicos:</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dados ruidosos</strong></td>
+<td>Apresentam valores ou erros que divergem do esperado (ex.: idade = 450)</td>
+</tr>
+<tr>
+<td><strong>Dados inconsistentes</strong></td>
+<td>Contradizem os valores de atributos do mesmo objeto — comum em etapas de integração de tabelas diferentes (ex.: mesma pessoa com idades diferentes em registros distintos)</td>
+</tr>
+<tr>
+<td><strong>Dados redundantes</strong></td>
+<td>Os valores dos atributos dos objetos se repetem</td>
+</tr>
+<tr>
+<td><strong>Dados incompletos</strong></td>
+<td>Há detecção de ausência de valores ou de parte de algum dado</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Exemplos ilustrados com uma tabela de Nome/Idade/Telefone contendo os quatro tipos de problema.)</em></p>
+<p><strong>Conexão direta:</strong> este conteúdo é uma continuação natural do que foi visto em ETL e Análise Exploratória de Dados na disciplina anterior — os mesmos quatro problemas (ruído, inconsistência, redundância, incompletude) aparecem lá sob a ótica de tratamento de dados (missing values, outliers, conflitos semânticos/estruturais).</p>
+<hr />
+<h3 id="32-inteligência-artificial-mitos-e-verdades-livro-base">3.2 Inteligência Artificial: Mitos e Verdades <em>(livro-base)</em></h3>
+<p>O conceito de IA surgiu em <strong>1956</strong>, com o objetivo de imitar o comportamento humano por meio de computadores.</p>
+<p>A IA já está presente no cotidiano (Google Maps/Waze, buscadores, Netflix) e em praticamente todos os setores: indústria, vendas/marketing, saúde, segurança, ensino, robótica, ciência de dados.</p>
+<p><strong>Quadro de mitos x realidade (livro):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mito</th>
+<th>Realidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A IA substituirá o trabalho de desenvolvedores</td>
+<td>A IA muda funções existentes e cria novas posições</td>
+</tr>
+<tr>
+<td>Tomará decisões e fará diagnósticos médicos de altíssima complexidade</td>
+<td>O profissional de saúde ainda decide; a IA acelera o processo</td>
+</tr>
+<tr>
+<td>Controlará pessoas</td>
+<td>É usada para automatização e produtividade</td>
+</tr>
+<tr>
+<td>Não compreenderá as necessidades do cliente</td>
+<td>Melhora o relacionamento (ex.: chatbots)</td>
+</tr>
+<tr>
+<td>Dificilmente identificará pessoas</td>
+<td>Identificação facial e reconhecimento de voz são aplicações fortes</td>
+</tr>
+<tr>
+<td>Não preverá tendências futuras</td>
+<td>Realiza previsões com base em pesquisas e análises</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Classificação da IA (Mussa, 2020):</strong></p>
+<ul>
+<li><strong>IA genérica/forte:</strong> máquinas realizariam todas as tarefas humanas, incluindo pensar e autoaprimorar-se — hipótese de singularidade. Ainda não comprovada; exemplo citado (Deep Blue x Kasparov, 1997) é IA estreita disfarçada de &quot;forte&quot;.</li>
+<li><strong>IA estreita/fraca:</strong> realiza tarefas específicas (tradução, reconhecimento facial, filtro de spam). É a base deste capítulo e da maioria das aplicações reais (Google, Amazon, Facebook, Alibaba, Waze, Uber).</li>
+</ul>
+<hr />
+<h3 id="33-engenharia-do-conhecimento-livro-base">3.3 Engenharia do Conhecimento <em>(livro-base)</em></h3>
+<p>Originalmente, consistia em criar <strong>sistemas especialistas</strong> transferindo o conhecimento de profissionais especialistas — abordagem que se mostrou limitada (raciocínio humano é incerto e varia de profissional para profissional).</p>
+<p>Evoluiu para uma abordagem de <strong>modelagem computacional</strong>, dando origem aos <strong>sistemas de conhecimento</strong> (sistemas especialistas + sistemas baseados em conhecimento), que são a base da IA.</p>
+<p><strong>Hierarquia (Figura 1 do livro):</strong></p>
+<pre><code><div class="highlight"><pre><span></span>Inteligência Artificial
+ └─ Sistemas Inteligentes
+     └─ Sistemas Baseados em Conhecimento
+         └─ Sistemas Especialistas
+</pre></div>
+</code></pre>
+<p><strong>Características dos sistemas inteligentes:</strong></p>
+<ul>
+<li>Utilizam conhecimento para realizar atividades ou solucionar problemas.</li>
+<li>Realizam associações para lidar com problemas complexos.</li>
+<li>Armazenam e recuperam grandes volumes de informação para apoiar decisões.</li>
+</ul>
+<p><strong>Atividades típicas da engenharia do conhecimento:</strong> interpretação/análise de dados, classificação, monitoramento de sistemas, planejamento, previsão, projeto.</p>
+<hr />
+<h3 id="34-machine-learning-livro-base">3.4 Machine Learning <em>(livro-base)</em></h3>
+<p>Objetivo: compreender a estrutura dos dados e adaptá-los a modelos conhecidos, facilitando interpretação, análise e predição via algoritmos. Característica central: <strong>aprender com os dados fornecidos</strong>.</p>
+<h4 id="supervisionado">Supervisionado</h4>
+<p>Possui resultado esperado conhecido durante o treinamento.</p>
+<ul>
+<li><strong>Classificação:</strong> classifica o novo dado com base em critérios aprendidos no treino (ex.: tumor benigno/maligno).</li>
+<li><strong>Regressão:</strong> gera uma função que descreve como uma variável se comporta em relação a outras (ex.: estimar idade de uma pessoa).</li>
+</ul>
+<h4 id="não-supervisionado">Não supervisionado</h4>
+<p>Computadores aprendem padrões, conceitos e dados <strong>não rotulados</strong>, sem supervisão — identificam semelhanças com base em padrões/repetições.</p>
+<ul>
+<li><strong>Agrupamento (clustering):</strong> dados agrupados por similaridade (ex.: agrupar clientes por preferência).</li>
+<li><strong>Associação:</strong> procura padrões relacionados entre atributos (ex.: produtos vendidos em conjunto).</li>
+<li><strong>Sumarização:</strong> busca descrição simples e compacta de um conjunto de dados (ex.: sumarizar notícias).</li>
+<li>Também usado em <strong>detecção de anomalias</strong> (peças defeituosas, fraude).</li>
+</ul>
+<blockquote>
+<p>Esta é a categoria central da disciplina atual (Aprendizado de Máquina Não Supervisionado).</p>
+</blockquote>
+<h4 id="aprendizagem-por-reforço">Aprendizagem por reforço</h4>
+<p>Baseada em punição de ações negativas e recompensa por ações positivas. A máquina testa caminhos, avalia o resultado e ajusta estratégia quando insatisfatório. Usada em algoritmos financeiros/de investimento.</p>
+<hr />
+<h3 id="35-deep-learning-e-redes-neurais-artificiais-rna-livro-base--slide-da-aula--ponto-que-a-dani-identificou-como-pouco-aprofundado-na-aula">3.5 Deep Learning e Redes Neurais Artificiais (RNA) <em>(livro-base + slide da aula — ponto que a Dani identificou como pouco aprofundado na aula)</em></h3>
+<p><strong>Deep Learning</strong> é a parte avançada do Machine Learning, técnica para extração automatizada de padrões de grandes volumes de dados, modelando-os em alto nível de abstração (Schmidhuber, 2015). Usa <strong>Redes Neurais Artificiais (RNAs)</strong> como base — RNAs imitam o funcionamento dos neurônios do sistema nervoso.</p>
+<p><strong>Como a RNA processa informação (slide da aula):</strong></p>
+<ol>
+<li>Os neurônios processam dados para reconhecer padrões (ex.: reconhecimento facial, reconhecimento de fala).</li>
+<li>A informação passa por camadas: a <strong>camada de entrada</strong> recebe os dados, as <strong>camadas ocultas</strong> (intermediárias) processam, a <strong>camada de saída</strong> produz o resultado. Cada camada é tipicamente um algoritmo simples e uniforme com uma função de ativação.</li>
+<li>O Deep Learning aprende com seus erros via <strong>Back Propagation</strong>: o resultado da rede é comparado ao esperado (Comparador), o erro é calculado e retropropagado pela rede para ajustar os pesos.</li>
+</ol>
+<p><strong>Exemplo funcional (livro):</strong> porta lógica AND — a rede neural calcula a função com base em duas entradas booleanas; só é verdadeira quando ambas as entradas são verdadeiras. Serve de analogia didática para como a RNA combina entradas para gerar uma saída.</p>
+<p><strong>Classificação das técnicas de Deep Learning (livro):</strong></p>
+<ul>
+<li><strong>Redes para aprendizado supervisionado:</strong> auxiliam na classificação de padrões conforme a distribuição das classes.</li>
+<li><strong>Redes de aprendizado não supervisionado (ou de geração):</strong> identificam relações em dados não rotulados; dados visíveis são caracterizados por distribuições estatísticas conjuntas.</li>
+<li><strong>Redes híbridas:</strong> combinam métodos generativos e discriminativos.</li>
+</ul>
+<p><strong>CNN (Convolutional Neural Network):</strong> classe de rede neural voltada à análise e processamento de imagens digitais. Exemplo citado (Krizhevsky, Sutskever e Hinton, 2012): CNN com 60 milhões de parâmetros e 650 mil neurônios em 5 camadas convolucionais, treinada para classificar mais de 1 milhão de imagens do banco ImageNet.</p>
+<p><strong>Aplicações de Deep Learning:</strong> processamento/reconhecimento de imagens, identificação de doenças, desenvolvimento de medicamentos, reconhecimento facial e de fala.</p>
+<p><strong>Ferramentas citadas:</strong> Knime (código aberto, integração/análise/mineração de dados), Deeplearning4J (framework Java, voltado a negócios), Lasagne (abstrai complexidade de DL, interface em Python).</p>
+<hr />
+<h3 id="36-big-data-livro-base">3.6 Big Data <em>(livro-base)</em></h3>
+<p>Grande base de dados em repositórios, não necessariamente estruturados. Os <strong>5 V's</strong> (Barbieri, 2011):</p>
+<table>
+<thead>
+<tr>
+<th>V</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Volume</strong></td>
+<td>Coleta por diversas fontes (redes sociais, navegadores, e-commerce)</td>
+</tr>
+<tr>
+<td><strong>Velocidade</strong></td>
+<td>Ritmo de geração de dados por celulares, sensores etc.</td>
+</tr>
+<tr>
+<td><strong>Veracidade</strong></td>
+<td>Necessidade de verificar se as informações são verdadeiras</td>
+</tr>
+<tr>
+<td><strong>Variedade</strong></td>
+<td>Dados estruturados ou não, de diferentes fontes (vídeo, áudio, e-mail)</td>
+</tr>
+<tr>
+<td><strong>Valor</strong></td>
+<td>Dados agregam valor à tomada de decisão organizacional</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ferramenta citada:</strong> Hadoop (open source, processa grandes volumes em arquitetura cluster/servidores distribuídos). Exemplos de uso: Walmart e Nike para pesquisa de mercado e perfil de consumo.</p>
+<p><strong>Outras tecnologias mencionadas (aplicadas à robótica/IA):</strong></p>
+<ul>
+<li><strong>Transfer learning:</strong> reaproveita conhecimento adquirido na resolução de um problema em outro problema similar.</li>
+<li><strong>Reinforcement learning:</strong> agentes inteligentes agem em um ambiente maximizando recompensa.</li>
+<li><strong>GAN (Generative Adversarial Network):</strong> gera conteúdo cuja autenticidade não é evidente na avaliação.</li>
+</ul>
+<hr />
+<h3 id="37-pca-x-análise-fatorial--movido-para-a-aula-3">3.7 PCA x Análise Fatorial — movido para a Aula 3</h3>
+<p>O infográfico comparando PCA e Análise Fatorial faz parte do material da Unidade 3 e está registrado em <code>AULA_03_RESUMO_PCA_OUTLIERS.md</code> (seção 3.1).</p>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, Aplicações e Material Prático</h2>
+<ul>
+<li>Exemplo de dados ruidosos/inconsistentes/redundantes/incompletos: tabela Nome/Idade/Telefone (slide da aula).</li>
+<li>Exemplo de RNA/porta lógica AND (tabela verdade) — livro.</li>
+<li>Exemplo de reconhecimento facial e de fala como aplicações de camadas de neurônios — slide da aula.</li>
+<li>Exemplo de classificação de imagens via CNN (ImageNet, Krizhevsky et al., 2012) — livro.</li>
+<li>Exemplo de Big Data aplicado por Walmart e Nike — livro.</li>
+<li>Exemplo de detecção de fraude em cartão de crédito via ML (compra fora do padrão geográfico do cliente) — livro.</li>
+</ul>
+<p>Nenhum código Python foi apresentado nesta aula (diferente da Aula 3 da disciplina anterior, que trouxe implementações de normalização com Scikit-learn).</p>
+</section>
+<section class="bloco"><h2 id="5-minhas-observações-e-dúvidas">5. Minhas Observações e Dúvidas</h2>
+<ul>
+<li><strong>[Dani]</strong> A parte de estruturação/limpeza dos dados (dados ruidosos, inconsistentes, redundantes, incompletos) se relaciona diretamente com a disciplina anterior (Aquisição e Preparação de Dados).</li>
+<li><strong>[Dani]</strong> A aula apresentou modelos (ML, rede neural, deep learning) mas sem aprofundar — considerado um ponto essencial que precisa de mais detalhe. Por isso, o conteúdo da seção 3.4 e 3.5 foi trazido com base no capítulo do livro-base (<em>Engenharia do Conhecimento e Inteligência Artificial</em>).</li>
+<li><strong>[Dani]</strong> A aula também abordou normalização de dados, mas esse conteúdo não foi registrado aqui por já ter sido coberto na disciplina anterior.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões-com-outros-conteúdos">6. Referências e Conexões com Outros Conteúdos</h2>
+<p><strong>Livro-base desta aula:</strong><br />
+BARBOSA, C. da S. <em>Engenharia do conhecimento e inteligência artificial</em>. SAGAH.</p>
+<p><strong>Referências citadas no capítulo:</strong></p>
+<ul>
+<li>ABEL, M.; FIORINI S. R. Uma revisão da engenharia do conhecimento: evolução, paradigmas e aplicações. <em>International Journal of Knowledge Engineering and Management</em>, v. 2, nº 2, p. 1–35, 2013.</li>
+<li>BARBIERI, C. <em>BI2-Business intelligence</em>: modelagem e qualidade. Rio de Janeiro: Elsevier, 2011.</li>
+<li>CLAUDINO, L. S. A. <em>Machine learning</em>. Londrina: Educacional S.A., 2019.</li>
+<li>KRIZHEVSKY, A.; SUTSKEVER, I.; HINTON, G. E. ImageNet classification with deep convolutional neural networks. In: INTERNATIONAL CONFERENCE ON NEURAL INFORMATION PROCESSING SYSTEMS, 25., 2012, Nevada.</li>
+<li>MCCULLOCH, W. S.; PITTS, W. A logical calculus of the ideas immanent in nervous activity. <em>Bulletin of Mathematical Biology</em>, v. 52, nº 1/2, p. 99–115, 1990.</li>
+<li>MUSSA, A. <em>Inteligência artificial: mitos e verdades</em>. São Paulo: Saint Paul, 2020. (E-book).</li>
+<li>NUNES, S. <em>Banco de dados relacional e big data</em>. Valinhos: Sérgio Nunes, 2016.</li>
+<li>REZENDE, S. O. <em>Sistemas inteligentes: fundamentos e aplicações</em>. Barueri: Manole, 2003.</li>
+<li>SCHMIDHUBER, J. Deep learning in neural networks: an overview. <em>Neural Networks</em>, v. 61, p. 85–117, 2015.</li>
+<li>SCHREIBER, G. et al. <em>Knowledge engineering and management: the commonkads methodology</em>. Cambridge: MIT Press, 2000.</li>
+</ul>
+<p><strong>Leitura recomendada (do livro):</strong> DAVENPORT, H. T. <em>Big data at work: dispelling the myths, uncovering the opportunities</em>. Cambridge: Harvard Business Review, 2014.</p>
+<p><strong>Conexões com a disciplina anterior (Aquisição e Preparação de Dados — 262GGR6046A):</strong></p>
+<ul>
+<li>Dificuldades de qualidade de dados (ruído, inconsistência, redundância, incompletude) ↔ Aula 4 (AED): missing values, outliers, conflitos semânticos/estruturais no ETL.</li>
+<li>Normalização de dados: já detalhada na Aula 3 daquela disciplina (Min-Max, Z-Score, Escala Decimal, Robust Scaler) — não repetida aqui por decisão da Dani.</li>
+</ul>
+<p><strong>Conexão interna à disciplina:</strong> PCA e Análise Fatorial (redução de dimensionalidade, tratadas na Aula 3) e ML não supervisionado (agrupamento, associação, sumarização, detecção de anomalias) são pilares centrais desta disciplina e devem aparecer novamente em aulas futuras com mais profundidade técnica/prática.</p>
+
+</section>
+
+<div class="doc-nav"><span></span><a class="btn cheio" href="s1-d3-aula-02.html">Aula 2 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d3.html">← Aprendizado de Máquina Não Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 3 · Laboratório outliers e PCA no VS Code · Aprendizado de Máquina Não Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d3.html">Aprendizado de Máquina Não Supervisionado</a> <span>›</span> <span>Aula 3 · Laboratório outliers e PCA no VS Code</span></nav>
+    <span class="eyebrow">Laboratório · Aprendizado de Máquina Não Supervisionado</span>
+    <h1>Aula 3 · Laboratório outliers e PCA no VS Code</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d3.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/HOWTO_AULA_03_OUTLIERS_PCA_VSCODE.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#how-to--identificar-outliers-e-executar-pca-no-vs-code">HOW-TO — Identificar outliers e executar PCA no VS Code</a></li><li class="n2"><a href="#1-o-que-você-vai-fazer">1. O que você vai fazer</a></li><li class="n2"><a href="#2-pré-requisitos">2. Pré-requisitos</a></li><li class="n2"><a href="#3-passo-a-passo">3. Passo a passo</a></li><li class="n3"><a href="#31-criar-a-pasta-do-projeto">3.1 Criar a pasta do projeto</a></li><li class="n3"><a href="#32-abrir-o-terminal-do-vs-code">3.2 Abrir o terminal do VS Code</a></li><li class="n3"><a href="#33-criar-o-ambiente-virtual-isola-as-bibliotecas-deste-projeto">3.3 Criar o ambiente virtual (isola as bibliotecas deste projeto)</a></li><li class="n3"><a href="#34-instalar-as-bibliotecas">3.4 Instalar as bibliotecas</a></li><li class="n3"><a href="#35-escolher-o-interpretador-no-vs-code">3.5 Escolher o interpretador no VS Code</a></li><li class="n3"><a href="#36-executar">3.6 Executar</a></li><li class="n2"><a href="#4-o-que-cada-célula-faz-e-como-ler-o-resultado">4. O que cada célula faz e como ler o resultado</a></li><li class="n3"><a href="#células-12--carregar-e-olhar-os-dados">Células 1–2 — Carregar e olhar os dados</a></li><li class="n3"><a href="#célula-3--iqr">Célula 3 — IQR</a></li><li class="n3"><a href="#célula-4--mahalanobis">Célula 4 — Mahalanobis</a></li><li class="n3"><a href="#célula-5--decidir-e-tratar">Célula 5 — Decidir e tratar</a></li><li class="n3"><a href="#células-68--pca">Células 6–8 — PCA</a></li><li class="n3"><a href="#célula-9--o-estrago-dos-outliers">Célula 9 — O estrago dos outliers</a></li><li class="n3"><a href="#célula-10--pca-no-fluxo-supervisionado">Célula 10 — PCA no fluxo supervisionado</a></li><li class="n3"><a href="#célula-11--reconstrução">Célula 11 — Reconstrução</a></li><li class="n2"><a href="#5-resultados-reais-para-você-conferir-se-rodou-certo">5. Resultados reais (para você conferir se rodou certo)</a></li><li class="n2"><a href="#6-como-interpretar-o-raciocínio-para-a-atividade">6. Como interpretar (o raciocínio para a atividade)</a></li><li class="n2"><a href="#7-usar-com-o-seu-próprio-arquivo-csv">7. Usar com o seu próprio arquivo (CSV)</a></li><li class="n2"><a href="#8-sobre-o-dataset-boston-do-capítulo">8. Sobre o dataset Boston do capítulo</a></li><li class="n2"><a href="#9-quando-usar-cada-método-de-outliers-para-o-md-e-a-prova">9. Quando usar cada método de outliers (para o .md e a prova)</a></li><li class="n2"><a href="#10-problemas-comuns">10. Problemas comuns</a></li><li class="n2"><a href="#11-exercícios-para-fixar">11. Exercícios para fixar</a></li><li class="n2"><a href="#12-arquivos-deste-pacote">12. Arquivos deste pacote</a></li><li class="n2"><a href="#arquivos-do-laboratorio">Arquivos do laboratório</a></li><li class="n2"><a href="#saidas-de-exemplo">Saídas de exemplo</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="how-to--identificar-outliers-e-executar-pca-no-vs-code">HOW-TO — Identificar outliers e executar PCA no VS Code</h1></div>
+<div class="abertura">
+<p><strong>Aula 3 — Aprendizado de Máquina Não Supervisionado (262GGR6044A)</strong></p>
+<p>Tempo estimado: 20 a 30 minutos (a primeira vez).</p>
+<blockquote>
+<p><strong>Está com a PCA &quot;nebulosa&quot;?</strong> Rode primeiro o <code>pca_exemplo_imoveis.py</code> (mesmo ambiente, 7 células curtas) e leia a seção 3.9.0 do <code>.md</code> da Aula 3. Depois volte ao script principal.<br />
+Resultado: um script que roda célula por célula, gera 3 gráficos na pasta <code>saidas/</code> e imprime as tabelas que você precisa para interpretar.</p>
+</blockquote>
+<blockquote>
+<p><strong>Este material é complementação.</strong> O capítulo da aula usa o dataset Boston Housing. Aqui uso o dataset <strong>Wine</strong> (vem junto com o scikit-learn, funciona offline e não tem os problemas do Boston, explicados na seção 8). O método é o mesmo do capítulo (IQR, box-plot, Mahalanobis) e o script foi <strong>testado</strong> (os números da seção 5 são resultados reais da execução).</p>
+</blockquote></div>
+<section class="bloco"><h2 id="1-o-que-você-vai-fazer">1. O que você vai fazer</h2>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>O que o script faz</th>
+<th>Conceito da aula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1–2</td>
+<td>Carrega o dataset e desenha box-plots</td>
+<td>Box-plot e visualização de outliers</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Marca outliers pelo IQR (cercas de 1,5× e 3×)</td>
+<td>Método do intervalo interquartil</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Calcula a distância de Mahalanobis (clássica e robusta)</td>
+<td>Outliers multivariados</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Compara remover × limitar (clip) × manter</td>
+<td>Decidir remover ou não</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Faz a PCA &quot;na mão&quot; com NumPy e confere com o scikit-learn</td>
+<td>Metodologia da PCA, passo a passo</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Scree plot, variância acumulada, critério de Kaiser, cargas</td>
+<td>Quantos componentes manter</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Projeta em PC1 × PC2 e desenha o biplot</td>
+<td>Interpretar a PCA</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Injeta 3 linhas com erro e mede o estrago na PCA</td>
+<td>Por que tratar outliers antes da PCA</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Compara um modelo com e sem PCA (Pipeline)</td>
+<td>PCA no aprendizado supervisionado</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Mede o erro de reconstrução</td>
+<td>O que se perde ao descartar componentes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="2-pré-requisitos">2. Pré-requisitos</h2>
+<ol>
+<li><strong>Python 3.10 ou superior.</strong> Baixe em python.org. No Windows, marque <strong>&quot;Add python.exe to PATH&quot;</strong> no instalador.</li>
+<li><strong>VS Code</strong> instalado.</li>
+<li>Extensões do VS Code (ícone de quadradinhos na barra lateral, ou <code>Ctrl+Shift+X</code>):
+<ul>
+<li><strong>Python</strong> (Microsoft)</li>
+<li><strong>Jupyter</strong> (Microsoft), necessária para rodar célula por célula</li>
+</ul>
+</li>
+</ol>
+<p>Verifique no terminal:</p>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>python<span class="w"> </span>--version
+</pre></div>
+</code></pre>
+<p>Se aparecer algo como <code>Python 3.12.x</code>, está certo. No macOS/Linux, use <code>python3</code>.</p>
+</section>
+<section class="bloco"><h2 id="3-passo-a-passo">3. Passo a passo</h2>
+<h3 id="31-criar-a-pasta-do-projeto">3.1 Criar a pasta do projeto</h3>
+<ol>
+<li>Crie uma pasta, por exemplo <code>aula03</code>.</li>
+<li>No VS Code: <strong>File → Open Folder</strong> e escolha a pasta.</li>
+<li>Copie para dentro dela os dois arquivos entregues: <code>aula03_outliers_pca.py</code> e <code>requirements.txt</code>.</li>
+</ol>
+<h3 id="32-abrir-o-terminal-do-vs-code">3.2 Abrir o terminal do VS Code</h3>
+<p>Atalho: <code>Ctrl+` </code> (tecla crase, abaixo do Esc). Confirme que o caminho mostrado é o da pasta <code>aula03</code>.</p>
+<h3 id="33-criar-o-ambiente-virtual-isola-as-bibliotecas-deste-projeto">3.3 Criar o ambiente virtual (isola as bibliotecas deste projeto)</h3>
+<p><strong>Windows (PowerShell):</strong></p>
+<pre><code class="language-powershell"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+<span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</pre></div>
+</code></pre>
+<p>Se der erro de &quot;execução de scripts desabilitada&quot;, use o Prompt de Comando (cmd) no lugar do PowerShell:</p>
+<pre><code class="language-bat"><div class="highlight"><pre><span></span>.venv\Scripts\activate.bat
+</pre></div>
+</code></pre>
+<p>(Alternativa: liberar scripts só para o seu usuário com <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>. Isso muda uma configuração do Windows, então só faça se concordar.)</p>
+<p><strong>macOS/Linux:</strong></p>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</code></pre>
+<p>Quando funcionar, o terminal mostra <code>(.venv)</code> no início da linha.</p>
+<h3 id="34-instalar-as-bibliotecas">3.4 Instalar as bibliotecas</h3>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</code></pre>
+<p>Instala: <code>numpy</code>, <code>pandas</code>, <code>scipy</code>, <code>scikit-learn</code>, <code>matplotlib</code> e <code>seaborn</code>.</p>
+<h3 id="35-escolher-o-interpretador-no-vs-code">3.5 Escolher o interpretador no VS Code</h3>
+<ol>
+<li><code>Ctrl+Shift+P</code>, digite <strong>Python: Select Interpreter</strong>.</li>
+<li>Escolha o que termina em <code>.venv</code> (algo como <code>.\.venv\Scripts\python.exe</code>).</li>
+</ol>
+<h3 id="36-executar">3.6 Executar</h3>
+<p><strong>Opção A — célula por célula (recomendado para estudar):</strong></p>
+<ol>
+<li>Abra <code>aula03_outliers_pca.py</code>.</li>
+<li>Acima de cada <code># %%</code> aparece <strong>Run Cell</strong>. Clique, ou posicione o cursor e use <code>Shift+Enter</code>.</li>
+<li>Na primeira vez, o VS Code pode pedir para instalar o <strong>ipykernel</strong>: aceite. (Se preferir, rode <code>pip install ipykernel</code>.)</li>
+<li>Os resultados e gráficos aparecem na janela <strong>Interactive</strong>.</li>
+</ol>
+<p><strong>Opção B — arquivo inteiro:</strong></p>
+<ul>
+<li>Botão ▶ no canto superior direito, ou no terminal:</li>
+</ul>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>python<span class="w"> </span>aula03_outliers_pca.py
+</pre></div>
+</code></pre>
+<p>Cada gráfico abre em uma janela e o script só continua quando você a fecha. Os arquivos também ficam salvos em <code>saidas/</code>.</p>
+<blockquote>
+<p>Rode as células <strong>em ordem</strong>: as seguintes usam variáveis criadas pelas anteriores.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="4-o-que-cada-célula-faz-e-como-ler-o-resultado">4. O que cada célula faz e como ler o resultado</h2>
+<h3 id="células-12--carregar-e-olhar-os-dados">Células 1–2 — Carregar e olhar os dados</h3>
+<ul>
+<li>Confirme <code>Formato: (178, 13)</code> e que não há valores ausentes.</li>
+<li>Nos box-plots, <strong>pontos isolados além dos bigodes</strong> são outliers pela regra de 1,5 × IQR.</li>
+<li>Veja que as variáveis têm escalas muito diferentes (<code>proline</code> na casa dos 700, <code>hue</code> perto de 1). É por isso que a PCA exige padronização.</li>
+</ul>
+<h3 id="célula-3--iqr">Célula 3 — IQR</h3>
+<p>Para cada coluna: <code>limite_inf = Q1 − 1,5×IQR</code> e <code>limite_sup = Q3 + 1,5×IQR</code>. Tudo fora disso é outlier.</p>
+<ul>
+<li>A tabela <code>resumo</code> mostra limites, quantidade e percentual por coluna.</li>
+<li>A saída &quot;Outliers EXTREMOS (3 × IQR)&quot; lista quem passa das cercas externas.</li>
+<li><code>identificar_outliers(df[&quot;malic_acid&quot;])</code> devolve valores <strong>e índices</strong>, igual à função do capítulo.</li>
+</ul>
+<h3 id="célula-4--mahalanobis">Célula 4 — Mahalanobis</h3>
+<p>Olha as variáveis <strong>em conjunto</strong>: uma linha pode ter cada valor &quot;normal&quot; e uma combinação incomum.</p>
+<ul>
+<li>Corte: quantil 0,975 da qui-quadrado com p graus de liberdade (aqui, 24,74).</li>
+<li>Compara a versão clássica (usa média e covariância da amostra) com a robusta (<code>MinCovDet</code>).</li>
+</ul>
+<h3 id="célula-5--decidir-e-tratar">Célula 5 — Decidir e tratar</h3>
+<p>Compara três estratégias lado a lado: remover linhas, limitar valores (<code>clip</code>) ou manter. O script <strong>não decide por você</strong>.</p>
+<h3 id="células-68--pca">Células 6–8 — PCA</h3>
+<ul>
+<li><strong>Célula 6</strong> repete a metodologia do capítulo: padronizar → matriz de covariância → autovalores/autovetores → ordenar → variância explicada → projetar. As duas últimas linhas confirmam que sua conta na mão bate com o scikit-learn (<code>True</code>/<code>True</code>).</li>
+<li><strong>Célula 7</strong> mostra o scree plot e a variância acumulada, e imprime as <strong>cargas</strong> (peso de cada variável em cada componente).</li>
+<li><strong>Célula 8</strong> projeta cada vinho em PC1 × PC2. A cor da classe é só para você enxergar a separação: <strong>a PCA não usa o rótulo</strong>.</li>
+</ul>
+<h3 id="célula-9--o-estrago-dos-outliers">Célula 9 — O estrago dos outliers</h3>
+<p>Adiciona 3 linhas com valores 8 desvios-padrão acima da média e refaz a PCA. Compare as três linhas da tabela.</p>
+<h3 id="célula-10--pca-no-fluxo-supervisionado">Célula 10 — PCA no fluxo supervisionado</h3>
+<p>Treina uma regressão logística sem PCA, com 2 componentes e mantendo 95%. O ponto-chave: scaler e PCA ficam <strong>dentro do <code>Pipeline</code></strong>, para serem ajustados só com os dados de treino.</p>
+<h3 id="célula-11--reconstrução">Célula 11 — Reconstrução</h3>
+<p>Mostra que o erro ao descartar componentes é exatamente a soma dos autovalores descartados.</p>
+</section>
+<section class="bloco"><h2 id="5-resultados-reais-para-você-conferir-se-rodou-certo">5. Resultados reais (para você conferir se rodou certo)</h2>
+<p>Valores obtidos na execução de teste (Python 3.12, scikit-learn 1.8). Pequenas diferenças na última casa decimal podem ocorrer entre versões.</p>
+<p><strong>Outliers (IQR, 1,5×):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variável</th>
+<th>Qtde de outliers</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>malic_acid</td>
+<td>3</td>
+<td>1,7</td>
+</tr>
+<tr>
+<td>ash</td>
+<td>3</td>
+<td>1,7</td>
+</tr>
+<tr>
+<td>alcalinity_of_ash</td>
+<td>4</td>
+<td>2,2</td>
+</tr>
+<tr>
+<td>magnesium</td>
+<td>4</td>
+<td>2,2</td>
+</tr>
+<tr>
+<td>proanthocyanins</td>
+<td>2</td>
+<td>1,1</td>
+</tr>
+<tr>
+<td>color_intensity</td>
+<td>4</td>
+<td>2,2</td>
+</tr>
+<tr>
+<td>hue</td>
+<td>1</td>
+<td>0,6</td>
+</tr>
+<tr>
+<td>demais 6 variáveis</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>17 de 178 linhas (9,6%)</strong> têm pelo menos um outlier.</li>
+<li><strong>Nenhum</strong> outlier extremo (3 × IQR).</li>
+<li><code>malic_acid</code>: índices 123, 137 e 173 (5,80, 5,51 e 5,65).</li>
+</ul>
+<p><strong>Mahalanobis (corte MD² = 24,74):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Versão</th>
+<th>Outliers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clássica</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Robusta (MinCovDet)</td>
+<td>51 (inclui os 12 da clássica)</td>
+</tr>
+</tbody>
+</table>
+<p>IQR e Mahalanobis robusta concordam em 14 linhas. Maiores distâncias robustas: linhas 121, 69, 95, 110 e 96.</p>
+<p><strong>PCA (dados padronizados):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Autovalor</th>
+<th>Variância explicada</th>
+<th>Acumulada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC1</td>
+<td>4,73</td>
+<td>36,2%</td>
+<td>36,2%</td>
+</tr>
+<tr>
+<td>PC2</td>
+<td>2,51</td>
+<td>19,2%</td>
+<td>55,4%</td>
+</tr>
+<tr>
+<td>PC3</td>
+<td>1,45</td>
+<td>11,1%</td>
+<td>66,5%</td>
+</tr>
+<tr>
+<td>PC4</td>
+<td>0,92</td>
+<td>7,1%</td>
+<td>73,6%</td>
+</tr>
+<tr>
+<td>PC5</td>
+<td>0,86</td>
+<td>6,6%</td>
+<td>80,2%</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>PC10</td>
+<td>0,25</td>
+<td>1,9%</td>
+<td>96,2%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Componentes para ≥ 95%: <strong>10</strong>. Critério de Kaiser: <strong>3</strong>. Cotovelo do scree plot: perto de <strong>3 a 4</strong>.</li>
+<li>Cargas de PC1: <code>flavanoids</code> (0,42), <code>total_phenols</code> (0,39), <code>od280/od315</code> (0,38), com sinal oposto em <code>nonflavanoid_phenols</code> (−0,30) e <code>malic_acid</code> (−0,25).</li>
+<li>Cargas de PC2: <code>color_intensity</code> (0,53), <code>alcohol</code> (0,48), <code>proline</code> (0,36).</li>
+</ul>
+<p><strong>Efeito de outliers na PCA:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Base</th>
+<th>Linhas</th>
+<th>PC1</th>
+<th>PC1+PC2</th>
+<th>Cosseno do PC1 vs. original</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>original</td>
+<td>178</td>
+<td>36,2%</td>
+<td>55,4%</td>
+<td>1,000</td>
+</tr>
+<tr>
+<td>com 3 linhas erradas</td>
+<td>181</td>
+<td>32,2%</td>
+<td>50,7%</td>
+<td>0,992</td>
+</tr>
+<tr>
+<td>erradas removidas (3×IQR)</td>
+<td>178</td>
+<td>36,2%</td>
+<td>55,4%</td>
+<td>1,000</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Modelo com e sem PCA (regressão logística):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Componentes</th>
+<th>Acurácia (validação cruzada)</th>
+<th>Acurácia no teste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sem PCA</td>
+<td>13</td>
+<td>0,984</td>
+<td>0,981</td>
+</tr>
+<tr>
+<td>PCA, 2 componentes</td>
+<td>2</td>
+<td>0,968</td>
+<td>0,944</td>
+</tr>
+<tr>
+<td>PCA, 95%</td>
+<td>10</td>
+<td>0,975</td>
+<td>0,981</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reconstrução:</strong> com 1 componente o erro é 8,294; com 2, 5,797; com 3, 4,351; com 5, 2,579; com 8, 1,038; com 13, 0. Em todos os casos coincide com a soma dos autovalores descartados.</p>
+</section>
+<section class="bloco"><h2 id="6-como-interpretar-o-raciocínio-para-a-atividade">6. Como interpretar (o raciocínio para a atividade)</h2>
+<p><strong>Outliers</strong></p>
+<ol>
+<li>As 17 linhas sinalizadas pelo IQR são todas <strong>moderadas</strong> (nenhuma extrema). Em dados reais de vinho, isso é típico de variação natural, não de erro de digitação.</li>
+<li>A Mahalanobis robusta marca bem mais linhas (51) porque estima a covariância usando só a parte &quot;mais comportada&quot; dos dados, o que encolhe a elipse de normalidade; além disso, o corte qui-quadrado supõe dados normais, e os dados reais não são. <strong>Use-a como ranking</strong>: investigue as maiores distâncias (121, 69, 95...) em vez de remover todas as 51.</li>
+<li><strong>Decisão neste caso:</strong> remover 9,6% das linhas por IQR seria perder dados reais sem evidência de erro. O mais defensável é <strong>manter</strong> (ou, no máximo, limitar com <code>clip</code>) e documentar o motivo. Compare com o quadro de decisão da seção 4.3 do <code>.md</code> da Aula 3.</li>
+</ol>
+<p><strong>PCA</strong></p>
+<ol>
+<li>PC1 sozinho guarda 36% da variância e PC1+PC2 guardam 55%. Para 95%, são 10 componentes: <strong>os dados não são muito compressíveis</strong>. Os 13 atributos têm correlações moderadas, não fortíssimas.</li>
+<li>Kaiser sugere 3 e a regra dos 95% sugere 10. Os critérios divergem; a escolha é uma decisão sua e depende do objetivo (visualizar → 2 ou 3; alimentar um modelo → valide por desempenho).</li>
+<li>PC1 é um eixo &quot;perfil fenólico&quot; (flavonoides, fenóis totais e OD280 de um lado; fenóis não flavonoides e ácido málico do outro). PC2 mistura intensidade de cor, álcool e prolina. Dar nome ao componente é interpretação sua, não resultado da PCA.</li>
+<li>No gráfico PC1 × PC2, as três classes aparecem bem separadas <strong>sem a PCA ter visto o rótulo</strong>. É o poder do método não supervisionado.</li>
+<li>Outliers: três linhas erradas bastaram para derrubar o PC1 de 36,2% para 32,2% e girar o eixo. Após remover as linhas erradas, a PCA volta ao resultado original.</li>
+<li>Supervisionado: <strong>a PCA não melhorou a acurácia</strong> (0,984 sem PCA contra 0,975 com 95%). Ela serve para comprimir, reduzir multicolinearidade e visualizar, mas não garante ganho de desempenho.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="7-usar-com-o-seu-próprio-arquivo-csv">7. Usar com o seu próprio arquivo (CSV)</h2>
+<p>Troque a célula 1 por:</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">df_bruto</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"meu_arquivo.csv"</span><span class="p">)</span>        <span class="c1"># ajuste separador/decimal se precisar: sep=";", decimal=","</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df_bruto</span><span class="p">[</span><span class="s2">"coluna_alvo"</span><span class="p">]</span>                       <span class="c1"># opcional: só se existir um rótulo</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df_bruto</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"coluna_alvo"</span><span class="p">,</span> <span class="s2">"id"</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">)</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="s2">"number"</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">);</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<p>E ajuste as partes que citam <code>wine</code>: a célula 8 usa <code>wine.target_names</code> (troque por nomes das suas classes ou apague a coloração) e a célula 10 só faz sentido se você tiver um rótulo.</p>
+<p><strong>Checklist antes de rodar PCA no seu dado:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Verifique</th>
+<th>Por quê</th>
+<th>O que fazer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valores ausentes</td>
+<td>A PCA não aceita <code>NaN</code> (erro <code>Input contains NaN</code>)</td>
+<td><code>dropna()</code> ou imputar (média/mediana)</td>
+</tr>
+<tr>
+<td>Colunas de ID</td>
+<td>Número de identificação não é medida</td>
+<td>Remover</td>
+</tr>
+<tr>
+<td>Variáveis categóricas</td>
+<td>PCA exige numéricas contínuas</td>
+<td>Não aplicar PCA nelas (ver análise de correspondência, Aula 2)</td>
+</tr>
+<tr>
+<td>Escalas diferentes</td>
+<td>Variáveis de maior escala dominam</td>
+<td>Padronizar (<code>StandardScaler</code>), como no script</td>
+</tr>
+<tr>
+<td>Outliers</td>
+<td>Distorcem médias, variâncias e eixos</td>
+<td>Avaliar com IQR/Mahalanobis <strong>antes</strong></td>
+</tr>
+<tr>
+<td>Rótulo</td>
+<td>Não faz parte da PCA</td>
+<td>Separar em <code>y</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="8-sobre-o-dataset-boston-do-capítulo">8. Sobre o dataset Boston do capítulo</h2>
+<p>O capítulo usa <code>boston_df</code>, que não é carregado no texto. A função <code>load_boston</code> foi <strong>removida do scikit-learn na versão 1.2</strong>, em parte por uma preocupação ética com uma de suas variáveis (a coluna <code>B</code>, construída a partir da proporção de moradores negros). Por isso este how-to usa o Wine.</p>
+<p>Se quiser reproduzir o capítulo mesmo assim, existe a opção de baixar a base pelo OpenML (precisa de internet; <strong>não testei aqui</strong>, pois meu ambiente não acessa a internet):</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">fetch_openml</span>
+<span class="n">boston</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"boston"</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">boston_df</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">"coerce"</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p>Uma alternativa sem esse problema, também por download (também não testada aqui): <code>fetch_california_housing(as_frame=True).data</code>.</p>
+</section>
+<section class="bloco"><h2 id="9-quando-usar-cada-método-de-outliers-para-o-md-e-a-prova">9. Quando usar cada método de outliers (para o <code>.md</code> e a prova)</h2>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Quando usar</th>
+<th>Exemplo teórico</th>
+<th>Exemplo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Box-plot / IQR (1,5×)</strong></td>
+<td>Variável <strong>isolada</strong>; sem supor distribuição normal; triagem rápida</td>
+<td>Idade = 450 numa coluna de idades</td>
+<td>Valor de venda muito acima do normal numa coluna de faturamento</td>
+</tr>
+<tr>
+<td><strong>IQR com 3× (extremos)</strong></td>
+<td>Quando quer só os casos gritantes, evitando falsos alarmes</td>
+<td>Salário 10 vezes a mediana</td>
+<td>Leitura de sensor travada num valor absurdo</td>
+</tr>
+<tr>
+<td><strong>Mahalanobis clássica</strong></td>
+<td>Várias variáveis juntas, dados aproximadamente normais, poucos outliers</td>
+<td>Altura 1,60 m e peso 120 kg: cada valor é plausível, a combinação não</td>
+<td>Cliente com renda baixa e gasto altíssimo em cartão</td>
+</tr>
+<tr>
+<td><strong>Mahalanobis robusta (MinCovDet)</strong></td>
+<td>Mesma situação, mas há muitos outliers contaminando a média e a covariância</td>
+<td>Base de transações com fraudes misturadas</td>
+<td>Detecção de comportamento anômalo em acessos a sistema</td>
+</tr>
+<tr>
+<td><strong>Remover</strong></td>
+<td>Erro comprovado (digitação, sensor, corrupção)</td>
+<td>Idade negativa</td>
+<td>Linha duplicada por falha de integração</td>
+</tr>
+<tr>
+<td><strong>Limitar (<code>clip</code>)</strong></td>
+<td>Valor real mas extremo, que distorce o modelo; não quer perder a linha</td>
+<td>Renda de bilionário numa base de classe média</td>
+<td>Preço de imóvel de luxo numa base de moradia popular</td>
+</tr>
+<tr>
+<td><strong>Manter e investigar</strong></td>
+<td>Outlier é o objeto de estudo</td>
+<td>Fraude, falha, intrusão</td>
+<td>Transação suspeita num antifraude</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="10-problemas-comuns">10. Problemas comuns</h2>
+<table>
+<thead>
+<tr>
+<th>Sintoma</th>
+<th>Causa provável</th>
+<th>Solução</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ModuleNotFoundError: No module named 'sklearn'</code></td>
+<td>Instalou fora do ambiente virtual</td>
+<td>Ative o <code>.venv</code> (deve aparecer <code>(.venv)</code>), selecione o interpretador (3.5) e rode <code>pip install -r requirements.txt</code></td>
+</tr>
+<tr>
+<td><code>.venv\Scripts\Activate.ps1 cannot be loaded</code></td>
+<td>PowerShell bloqueia scripts</td>
+<td>Use <code>activate.bat</code> no cmd (3.3)</td>
+</tr>
+<tr>
+<td><code>Run Cell</code> não aparece</td>
+<td>Extensão Python/Jupyter ausente ou arquivo sem <code># %%</code></td>
+<td>Instale as extensões (seção 2) e use o arquivo original</td>
+</tr>
+<tr>
+<td>Pede &quot;ipykernel&quot;</td>
+<td>Falta o kernel Jupyter</td>
+<td>Aceite a instalação ou <code>pip install ipykernel</code></td>
+</tr>
+<tr>
+<td>Gráfico não abre / script &quot;trava&quot;</td>
+<td>Janela do gráfico aberta esperando</td>
+<td>Feche a janela do gráfico; ou veja o PNG em <code>saidas/</code></td>
+</tr>
+<tr>
+<td><code>ValueError: Input contains NaN</code></td>
+<td>Valores ausentes no seu CSV</td>
+<td>Trate os ausentes (seção 7)</td>
+</tr>
+<tr>
+<td><code>FileNotFoundError</code> no CSV</td>
+<td>Caminho errado</td>
+<td>Coloque o CSV na pasta do projeto ou use o caminho completo</td>
+</tr>
+<tr>
+<td>Números diferentes dos da seção 5</td>
+<td>Versão diferente de biblioteca</td>
+<td>Pequenas diferenças são normais; se forem grandes, confira se usou o Wine</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="11-exercícios-para-fixar">11. Exercícios para fixar</h2>
+<ol>
+<li><strong>Troque o fator:</strong> na célula 3, use <code>fator=3</code> na lista principal. O que muda na quantidade de outliers? Qual é a vantagem de cada fator?</li>
+<li><strong>PCA sem padronizar:</strong> na célula 6, troque <code>Xp</code> por <code>df.to_numpy()</code> e compare a variância de PC1. Qual variável domina? (Dica: veja a escala de <code>proline</code>.)</li>
+<li><strong>PCA sem os outliers do IQR:</strong> rode a PCA em <code>df_sem_qualquer</code> (célula 5) e compare com a original. Os 17 outliers faziam diferença?</li>
+<li><strong>Escolha de componentes:</strong> na célula 10, teste <code>PCA(n_components=3)</code> e <code>PCA(n_components=5)</code>. A acurácia sobe ou desce?</li>
+<li><strong>Dataset próprio:</strong> aplique o roteiro ao CSV de um projeto seu seguindo o checklist da seção 7.</li>
+<li><strong>Explique em 3 linhas</strong> por que, na célula 10, a PCA entra dentro do <code>Pipeline</code> e não antes do <code>train_test_split</code>.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="12-arquivos-deste-pacote">12. Arquivos deste pacote</h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Para quê</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aula03_outliers_pca.py</code></td>
+<td>Script completo, dividido em células <code># %%</code></td>
+</tr>
+<tr>
+<td><code>pca_exemplo_imoveis.py</code></td>
+<td>Exemplo curto e fictício (10 imóveis) para entender a PCA em linguagem prática; roda em segundos e usa as mesmas bibliotecas</td>
+</tr>
+<tr>
+<td><code>requirements.txt</code></td>
+<td>Bibliotecas a instalar</td>
+</tr>
+<tr>
+<td><code>saidas_exemplo/</code></td>
+<td>Gráficos que o script gera (para você conferir) e a figura de intuição da PCA</td>
+</tr>
+<tr>
+<td><code>HOWTO_AULA_03_OUTLIERS_PCA_VSCODE.md</code></td>
+<td>Este guia</td>
+</tr>
+</tbody>
+</table>
+
+</section>
+<h2 id="arquivos-do-laboratorio">Arquivos do laboratório</h2><h3 id="arq-aula03_outliers_pca">aula03_outliers_pca.py</h3><p><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/aula03_outliers_pca.py">Abrir arquivo original</a></p><div class="highlight"><pre><span></span><span class="c1"># %% [markdown]</span>
+<span class="c1"># # Aula 3 — Outliers (IQR, box-plot, Mahalanobis) e PCA</span>
+<span class="c1"># Aprendizado de Máquina Não Supervisionado (262GGR6044A)</span>
+<span class="c1">#</span>
+<span class="c1"># Como usar no VS Code: execute célula por célula (Shift+Enter em cada bloco "# %%")</span>
+<span class="c1"># ou rode o arquivo inteiro (botão ▶ "Run Python File").</span>
+<span class="c1"># Os gráficos também são salvos na pasta "saidas/".</span>
+
+<span class="c1"># %% 0. Configuração e imports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">chi2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.covariance</span><span class="w"> </span><span class="kn">import</span> <span class="n">MinCovDet</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_wine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">SAIDA</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"saidas"</span><span class="p">)</span>
+<span class="n">SAIDA</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.width"</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.max_columns"</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">"whitegrid"</span><span class="p">)</span>
+
+<span class="c1"># %% 1. Carregar os dados (Wine: 178 vinhos, 13 variáveis numéricas, 3 classes)</span>
+<span class="c1"># Troque esta célula para usar o seu próprio CSV: df = pd.read_csv("meu_arquivo.csv")</span>
+<span class="n">wine</span> <span class="o">=</span> <span class="n">load_wine</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>          <span class="c1"># somente variáveis numéricas (sem rótulo)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wine</span><span class="o">.</span><span class="n">target</span>                <span class="c1"># rótulo (só usado para colorir gráficos e na etapa supervisionada)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Formato:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Valores ausentes por coluna:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">[[</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"std"</span><span class="p">,</span> <span class="s2">"min"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">]]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># %% 2. Visualizar: box-plot de cada variável (escalas diferentes → um gráfico por coluna)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">eixos</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">eixos</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#4C72B0"</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">eixos</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[</span><span class="n">p</span><span class="p">:]:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">"Box-plots: pontos isolados fora dos bigodes são outliers (regra 1,5 × IQR)"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">SAIDA</span> <span class="o">/</span> <span class="s2">"01_boxplots.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># %% 3. Identificar outliers com o método do intervalo interquartil (IQR)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">limites_iqr</span><span class="p">(</span><span class="n">dados</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">fator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Devolve (limite_inferior, limite_superior) por coluna: Q1 - f*IQR e Q3 + f*IQR."""</span>
+    <span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">dados</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">dados</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+    <span class="k">return</span> <span class="n">q1</span> <span class="o">-</span> <span class="n">fator</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">,</span> <span class="n">q3</span> <span class="o">+</span> <span class="n">fator</span> <span class="o">*</span> <span class="n">iqr</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">identificar_outliers</span><span class="p">(</span><span class="n">serie</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">fator</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Versão univariada (equivalente à função do capítulo): valores e índices fora dos limites."""</span>
+    <span class="n">q1</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">serie</span><span class="p">,</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">75</span><span class="p">])</span>
+    <span class="n">iqr</span> <span class="o">=</span> <span class="n">q3</span> <span class="o">-</span> <span class="n">q1</span>
+    <span class="k">return</span> <span class="n">serie</span><span class="p">[(</span><span class="n">serie</span> <span class="o">&lt;</span> <span class="n">q1</span> <span class="o">-</span> <span class="n">fator</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">serie</span> <span class="o">&gt;</span> <span class="n">q3</span> <span class="o">+</span> <span class="n">fator</span> <span class="o">*</span> <span class="n">iqr</span><span class="p">)]</span>
+
+
+<span class="n">inf</span><span class="p">,</span> <span class="n">sup</span> <span class="o">=</span> <span class="n">limites_iqr</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>                      <span class="c1"># cercas internas (1,5 × IQR)</span>
+<span class="n">mascara</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">&lt;</span> <span class="n">inf</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span> <span class="o">&gt;</span> <span class="n">sup</span><span class="p">)</span>               <span class="c1"># True = outlier moderado ou extremo</span>
+<span class="n">resumo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"limite_inf"</span><span class="p">:</span> <span class="n">inf</span><span class="p">,</span> <span class="s2">"limite_sup"</span><span class="p">:</span> <span class="n">sup</span><span class="p">,</span>
+    <span class="s2">"n_outliers"</span><span class="p">:</span> <span class="n">mascara</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="s2">"pct"</span><span class="p">:</span> <span class="p">(</span><span class="n">mascara</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resumo</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">linhas_com_outlier</span> <span class="o">=</span> <span class="n">mascara</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Linhas com pelo menos um outlier: </span><span class="si">{</span><span class="n">linhas_com_outlier</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> "</span>
+      <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="n">linhas_com_outlier</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+<span class="c1"># cercas externas (3 × IQR): outliers extremos</span>
+<span class="n">inf3</span><span class="p">,</span> <span class="n">sup3</span> <span class="o">=</span> <span class="n">limites_iqr</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">fator</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">mascara_ext</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span> <span class="o">&lt;</span> <span class="n">inf3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span> <span class="o">&gt;</span> <span class="n">sup3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Outliers EXTREMOS (3 × IQR) por coluna:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mascara_ext</span><span class="o">.</span><span class="n">sum</span><span class="p">()[</span><span class="n">mascara_ext</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># exemplo univariado: quais valores e índices</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Outliers de 'malic_acid':"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">identificar_outliers</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"malic_acid"</span><span class="p">]))</span>
+
+<span class="c1"># %% 4. Outliers multivariados: distância de Mahalanobis</span>
+<span class="c1"># MD² de dados normais multivariados segue qui-quadrado com p graus de liberdade.</span>
+<span class="c1"># Candidato a outlier: MD² &gt; quantil 0,975 de χ²(p).</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">corte</span> <span class="o">=</span> <span class="n">chi2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># (a) Clássica: média e covariância da amostra (sensíveis aos próprios outliers)</span>
+<span class="n">dif</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">md2_classica</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">"ij,jk,ik-&gt;i"</span><span class="p">,</span> <span class="n">dif</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span> <span class="n">dif</span><span class="p">)</span>
+
+<span class="c1"># (b) Robusta: MinCovDet estima média/covariância ignorando as observações mais estranhas</span>
+<span class="n">mcd</span> <span class="o">=</span> <span class="n">MinCovDet</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">md2_robusta</span> <span class="o">=</span> <span class="n">mcd</span><span class="o">.</span><span class="n">mahalanobis</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>               <span class="c1"># devolve MD² (distância ao quadrado)</span>
+
+<span class="n">out_classica</span> <span class="o">=</span> <span class="n">md2_classica</span> <span class="o">&gt;</span> <span class="n">corte</span>
+<span class="n">out_robusta</span> <span class="o">=</span> <span class="n">md2_robusta</span> <span class="o">&gt;</span> <span class="n">corte</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Corte χ²(0,975; gl=</span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">) para MD²: </span><span class="si">{</span><span class="n">corte</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outliers (Mahalanobis clássica): </span><span class="si">{</span><span class="n">out_classica</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outliers (Mahalanobis robusta) : </span><span class="si">{</span><span class="n">out_robusta</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Em comum: </span><span class="si">{</span><span class="p">(</span><span class="n">out_classica</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">out_robusta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">top</span> <span class="o">=</span> <span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"MD2_classica"</span><span class="p">:</span> <span class="n">md2_classica</span><span class="p">,</span> <span class="s2">"MD2_robusta"</span><span class="p">:</span> <span class="n">md2_robusta</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"MD2_robusta"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Maiores distâncias (robusta):</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">top</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Linhas que o IQR (univariado) e a Mahalanobis (multivariada) sinalizam</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">IQR e Mahalanobis robusta concordam em:"</span><span class="p">,</span> <span class="p">(</span><span class="n">linhas_com_outlier</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">out_robusta</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="s2">"linhas"</span><span class="p">)</span>
+
+<span class="c1"># %% 5. Decidir e tratar (marcar primeiro, decidir depois)</span>
+<span class="n">df_sem_qualquer</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">linhas_com_outlier</span><span class="p">]</span>                      <span class="c1"># a) remove linhas com qualquer outlier (1,5 × IQR)</span>
+<span class="n">df_sem_extremos</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">mascara_ext</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>                 <span class="c1"># b) remove só linhas com outlier extremo (3 × IQR)</span>
+<span class="n">df_limitado</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">lower</span><span class="o">=</span><span class="n">inf</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="n">sup</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>            <span class="c1"># c) limita (clip) os valores às cercas</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Original             : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> linhas"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"a) sem qualquer outl.: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_sem_qualquer</span><span class="p">)</span><span class="si">}</span><span class="s2"> linhas (</span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df_sem_qualquer</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> perdidas)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"b) sem extremos      : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_sem_extremos</span><span class="p">)</span><span class="si">}</span><span class="s2"> linhas (</span><span class="si">{</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df_sem_extremos</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2"> perdidas)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"c) clip              : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_limitado</span><span class="p">)</span><span class="si">}</span><span class="s2"> linhas (nenhuma perdida; valores ajustados)"</span><span class="p">)</span>
+<span class="c1"># Regra prática: erro de coleta → corrigir/remover; valor real e relevante → manter e investigar.</span>
+
+<span class="c1"># %% 6. PCA passo a passo "na mão" (NumPy) — espelha a metodologia do capítulo</span>
+<span class="c1"># Passo 1: padronizar (média 0, desvio 1) — a PCA é sensível à escala</span>
+<span class="n">Xp</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># Passo 2: matriz de covariância (p × p, simétrica). Com dados padronizados ≈ matriz de correlação</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">Xp</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Passo 3: autovalores e autovetores (eigh é o indicado para matriz simétrica)</span>
+<span class="n">autovalores</span><span class="p">,</span> <span class="n">autovetores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+<span class="c1"># Passo 4: ordenar do maior para o menor autovalor</span>
+<span class="n">ordem</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">autovalores</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">autovalores</span><span class="p">,</span> <span class="n">autovetores</span> <span class="o">=</span> <span class="n">autovalores</span><span class="p">[</span><span class="n">ordem</span><span class="p">],</span> <span class="n">autovetores</span><span class="p">[:,</span> <span class="n">ordem</span><span class="p">]</span>
+
+<span class="c1"># Passo 5: variância explicada = autovalor / soma dos autovalores</span>
+<span class="n">var_explicada</span> <span class="o">=</span> <span class="n">autovalores</span> <span class="o">/</span> <span class="n">autovalores</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">tabela</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"autovalor"</span><span class="p">:</span> <span class="n">autovalores</span><span class="p">,</span>
+    <span class="s2">"var_explicada_%"</span><span class="p">:</span> <span class="n">var_explicada</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">"acumulada_%"</span><span class="p">:</span> <span class="n">var_explicada</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabela</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># Passo 6: projetar os dados nos componentes (scores) = dados padronizados × autovetores</span>
+<span class="n">scores_manual</span> <span class="o">=</span> <span class="n">Xp</span> <span class="o">@</span> <span class="n">autovetores</span>
+
+<span class="c1"># Conferência com o scikit-learn (o sinal de cada componente é arbitrário → comparamos o valor absoluto)</span>
+<span class="n">pca_full</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Autovalores iguais ao sklearn? "</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">autovalores</span><span class="p">,</span> <span class="n">pca_full</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Scores iguais ao sklearn (|valor|)?"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">scores_manual</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pca_full</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Xp</span><span class="p">))))</span>
+
+<span class="c1"># %% 7. PCA com scikit-learn: quantos componentes manter?</span>
+<span class="n">acumulada</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca_full</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+<span class="n">n95</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">acumulada</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">autovalores_corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">kaiser</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">autovalores_corr</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Componentes para ≥ 95% da variância: </span><span class="si">{</span><span class="n">n95</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Critério de Kaiser (autovalor da matriz de correlação &gt; 1): </span><span class="si">{</span><span class="n">kaiser</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">autovalores_corr</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"red"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Kaiser (autovalor = 1)"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Scree plot (procure o 'cotovelo')"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Componente"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Autovalor"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">pca_full</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Individual"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">acumulada</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"darkred"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Acumulada"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">95</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"95%"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Variância explicada (%)"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"Componente"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"%"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">SAIDA</span> <span class="o">/</span> <span class="s2">"02_scree_variancia.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Cargas (loadings): peso de cada variável original em cada componente</span>
+<span class="n">cargas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca_full</span><span class="o">.</span><span class="n">components_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span>
+                      <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Cargas dos 3 primeiros componentes (maiores valores absolutos = variáveis mais importantes):"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cargas</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"PC1"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># %% 8. Projeção em 2D (PC1 × PC2) e biplot</span>
+<span class="n">pca2</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+<span class="n">scores2</span> <span class="o">=</span> <span class="n">pca2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+<span class="n">nomes_classe</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">wine</span><span class="o">.</span><span class="n">target_names</span><span class="p">))</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">classe</span><span class="p">,</span> <span class="n">nome</span> <span class="ow">in</span> <span class="n">nomes_classe</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">scores2</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="n">classe</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">nome</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">"PC1 (</span><span class="si">{</span><span class="n">pca2</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span>
+        <span class="n">ylabel</span><span class="o">=</span><span class="sa">f</span><span class="s2">"PC2 (</span><span class="si">{</span><span class="n">pca2</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">)"</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"Scores: cada ponto é um vinho (cor = classe, só para visualizar)"</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span> <span class="n">ax2</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span> <span class="o">=</span> <span class="n">pca2</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">pca2</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"tab:red"</span><span class="p">,</span> <span class="n">head_width</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span> <span class="n">length_includes_head</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">vx</span> <span class="o">*</span> <span class="mf">1.08</span><span class="p">,</span> <span class="n">vy</span> <span class="o">*</span> <span class="mf">1.08</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"PC1"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"PC2"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Cargas: setas próximas apontam para variáveis correlacionadas"</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s2">"equal"</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">SAIDA</span> <span class="o">/</span> <span class="s2">"03_pc1_pc2_biplot.png"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">130</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># %% 9. Efeito dos outliers na PCA (por que limpar/avaliar ANTES de reduzir)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+<span class="n">df_sujo</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">linhas_falsas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>                                   <span class="c1"># 3 linhas com erros de digitação em 3 colunas cada</span>
+    <span class="n">linha</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">linha</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+    <span class="n">linhas_falsas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+<span class="n">df_sujo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">linhas_falsas</span><span class="p">)],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># limpa as linhas com outlier extremo (3 × IQR) e refaz a PCA</span>
+<span class="n">i3</span><span class="p">,</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">limites_iqr</span><span class="p">(</span><span class="n">df_sujo</span><span class="p">,</span> <span class="n">fator</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">df_sujo_limpo</span> <span class="o">=</span> <span class="n">df_sujo</span><span class="p">[</span><span class="o">~</span><span class="p">((</span><span class="n">df_sujo</span> <span class="o">&lt;</span> <span class="n">i3</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df_sujo</span> <span class="o">&gt;</span> <span class="n">s3</span><span class="p">))</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pca_resumo</span><span class="p">(</span><span class="n">dados</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">rotulo</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dados</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pca</span><span class="p">,</span> <span class="p">{</span><span class="s2">"base"</span><span class="p">:</span> <span class="n">rotulo</span><span class="p">,</span> <span class="s2">"linhas"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">dados</span><span class="p">),</span>
+                 <span class="s2">"PC1_%"</span><span class="p">:</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+                 <span class="s2">"PC1+PC2_%"</span><span class="p">:</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">}</span>
+
+
+<span class="n">pca_ref</span><span class="p">,</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">pca_resumo</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s2">"original"</span><span class="p">)</span>
+<span class="n">pca_sujo</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">pca_resumo</span><span class="p">(</span><span class="n">df_sujo</span><span class="p">,</span> <span class="s2">"com 3 linhas erradas"</span><span class="p">)</span>
+<span class="n">pca_limpo</span><span class="p">,</span> <span class="n">r3</span> <span class="o">=</span> <span class="n">pca_resumo</span><span class="p">(</span><span class="n">df_sujo_limpo</span><span class="p">,</span> <span class="s2">"erradas removidas (3×IQR)"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">pc</span> <span class="ow">in</span> <span class="p">((</span><span class="n">r1</span><span class="p">,</span> <span class="n">pca_ref</span><span class="p">),</span> <span class="p">(</span><span class="n">r2</span><span class="p">,</span> <span class="n">pca_sujo</span><span class="p">),</span> <span class="p">(</span><span class="n">r3</span><span class="p">,</span> <span class="n">pca_limpo</span><span class="p">)):</span>
+    <span class="n">r</span><span class="p">[</span><span class="s2">"cos_PC1_vs_original"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">pca_ref</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">pc</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">(cos_PC1 = 1 significa mesma direção do PC1 da base original; menor que 1 = o outlier girou o eixo)"</span><span class="p">)</span>
+
+<span class="c1"># %% 10. PCA no fluxo supervisionado: sempre dentro de um Pipeline (evita vazamento de dados)</span>
+<span class="n">X_tr</span><span class="p">,</span> <span class="n">X_te</span><span class="p">,</span> <span class="n">y_tr</span><span class="p">,</span> <span class="n">y_te</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+<span class="n">modelos</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"Sem PCA (13 variáveis)"</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"pad"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+                                        <span class="p">(</span><span class="s2">"clf"</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">))]),</span>
+    <span class="s2">"PCA com 2 componentes"</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"pad"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s2">"pca"</span><span class="p">,</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)),</span>
+                                       <span class="p">(</span><span class="s2">"clf"</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">))]),</span>
+    <span class="s2">"PCA mantendo 95%"</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">"pad"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s2">"pca"</span><span class="p">,</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)),</span>
+                                  <span class="p">(</span><span class="s2">"clf"</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">))]),</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="n">nome</span><span class="p">,</span> <span class="n">modelo</span> <span class="ow">in</span> <span class="n">modelos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">X_tr</span><span class="p">,</span> <span class="n">y_tr</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">modelo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_tr</span><span class="p">,</span> <span class="n">y_tr</span><span class="p">)</span>
+    <span class="n">n_comp</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s2">"pca"</span><span class="p">]</span><span class="o">.</span><span class="n">n_components_</span> <span class="k">if</span> <span class="s2">"pca"</span> <span class="ow">in</span> <span class="n">modelo</span><span class="o">.</span><span class="n">named_steps</span> <span class="k">else</span> <span class="n">p</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">nome</span><span class="si">:</span><span class="s2">&lt;26</span><span class="si">}</span><span class="s2"> componentes=</span><span class="si">{</span><span class="n">n_comp</span><span class="si">:</span><span class="s2">&gt;2</span><span class="si">}</span><span class="s2">  acurácia CV=</span><span class="si">{</span><span class="n">cv</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">  teste=</span><span class="si">{</span><span class="n">modelo</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_te</span><span class="p">,</span><span class="w"> </span><span class="n">y_te</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># O scaler e a PCA são ajustados SOMENTE no treino de cada dobra; o teste só é transformado.</span>
+
+<span class="c1"># %% 11. Erro de reconstrução: quanto de informação se perde ao descartar componentes?</span>
+<span class="n">linhas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">):</span>
+    <span class="n">pca_k</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+    <span class="n">Xr</span> <span class="o">=</span> <span class="n">pca_k</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">pca_k</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">Xp</span><span class="p">))</span>
+    <span class="n">erro_total_por_linha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">Xp</span> <span class="o">-</span> <span class="n">Xr</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">descartado</span> <span class="o">=</span> <span class="n">pca_full</span><span class="o">.</span><span class="n">explained_variance_</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+    <span class="n">linhas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"componentes"</span><span class="p">:</span> <span class="n">k</span><span class="p">,</span> <span class="s2">"var_mantida_%"</span><span class="p">:</span> <span class="n">pca_k</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+                   <span class="s2">"erro_reconstrucao"</span><span class="p">:</span> <span class="n">erro_total_por_linha</span><span class="p">,</span> <span class="s2">"soma_autovalores_descartados"</span><span class="p">:</span> <span class="n">descartado</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">linhas</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Erro de reconstrução = soma dos autovalores descartados (as duas últimas colunas coincidem)."</span><span class="p">)</span>
+</pre></div>
+<h3 id="arq-pca_exemplo_imoveis">pca_exemplo_imoveis.py</h3><p><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/pca_exemplo_imoveis.py">Abrir arquivo original</a></p><div class="highlight"><pre><span></span><span class="c1"># %% [markdown]</span>
+<span class="c1"># # PCA em linguagem prática: exemplo dos imóveis</span>
+<span class="c1"># Exemplo FICTÍCIO e pequeno (10 imóveis), feito para você enxergar o que a PCA entrega.</span>
+<span class="c1"># Execute célula por célula (Shift+Enter) ou rode o arquivo inteiro.</span>
+
+<span class="c1"># %% 1. A planilha: 10 imóveis, 5 colunas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="n">imoveis</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"area_m2"</span><span class="p">:</span>      <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">180</span><span class="p">],</span>
+    <span class="s2">"quartos"</span><span class="p">:</span>      <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="s2">"banheiros"</span><span class="p">:</span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+    <span class="s2">"valor_mil_rs"</span><span class="p">:</span> <span class="p">[</span><span class="mi">280</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">610</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="mi">820</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">1200</span><span class="p">],</span>
+    <span class="s2">"dist_centro_km"</span><span class="p">:</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Imóvel </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">)])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imoveis</span><span class="p">)</span>
+
+<span class="c1"># %% 2. Quais colunas "andam juntas"? (correlação: perto de 1 = andam juntas)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imoveis</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># %% 3. Colocar tudo na mesma régua e rodar a PCA</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">imoveis</span><span class="p">)</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># %% 4. Quanta informação cada coluna-resumo (componente) guarda?</span>
+<span class="n">tabela</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">"informação guardada (%)"</span><span class="p">:</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">"acumulada (%)"</span><span class="p">:</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabela</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># %% 5. A "receita" de cada coluna-resumo (cargas): quanto de cada coluna original entra</span>
+<span class="n">receita</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">imoveis</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"PC1"</span><span class="p">,</span> <span class="s2">"PC2"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">receita</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># %% 6. A "nota" de cada imóvel nas duas colunas novas (scores)</span>
+<span class="n">notas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">imoveis</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"PC1"</span><span class="p">,</span> <span class="s2">"PC2"</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">notas</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># Interpretação (feita por você): PC1 ≈ "porte do imóvel" (área, quartos, banheiros, valor).</span>
+<span class="c1"># PC2 ≈ "localização" (distância ao centro). Dar nome ao componente é interpretação, não resultado.</span>
+
+<span class="c1"># %% 7. Quanto se perde ao ficar só com 2 colunas em vez de 5?</span>
+<span class="n">pca2</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X_aprox</span> <span class="o">=</span> <span class="n">pca2</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">pca2</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
+<span class="n">erro</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">X_aprox</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Informação mantida com 2 componentes: </span><span class="si">{</span><span class="n">pca2</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Erro médio por célula da tabela (em desvios-padrão): </span><span class="si">{</span><span class="n">erro</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+<h3 id="arq-requirements">requirements.txt</h3><p><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/requirements.txt">Abrir arquivo original</a></p><div class="highlight"><pre><span></span>numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+</pre></div>
+<h2 id="saidas-de-exemplo">Saídas de exemplo</h2><div class="galeria"><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/00_intuicao_pca_2d.png" target="_blank"><img src="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/00_intuicao_pca_2d.png" alt="Intuição da PCA em 2D" loading="lazy"><span>Intuição da PCA em 2D</span></a><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/01_boxplots.png" target="_blank"><img src="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/01_boxplots.png" alt="Box-plots" loading="lazy"><span>Box-plots</span></a><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/02_scree_variancia.png" target="_blank"><img src="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/02_scree_variancia.png" alt="Scree plot · variância" loading="lazy"><span>Scree plot · variância</span></a><a href="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/03_pc1_pc2_biplot.png" target="_blank"><img src="../Semestre_1/3%20-%20Aprendizado%20n%C3%A3o%20supervisionado/2_Laboratorios/aula03_vscode/saidas_exemplo/03_pc1_pc2_biplot.png" alt="Biplot PC1 × PC2" loading="lazy"><span>Biplot PC1 × PC2</span></a></div>
+
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d3.html">← Aprendizado de Máquina Não Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

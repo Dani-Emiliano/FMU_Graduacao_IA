@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compilação da disciplina · Aquisição e Preparação de Dados</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d1.html">Aquisição e Preparação de Dados</a> <span>›</span> <span>Compilação da disciplina</span></nav>
+    <span class="eyebrow">Compilação · Aquisição e Preparação de Dados</span>
+    <h1>Compilação da disciplina</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d1.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/1-AQUISICAO%20E%20PREPARACAO%20DE%20DADOS%20%28262GGR6046A%29/DISCIPLINA_AQUISICAO_PREPARACAO_DADOS.ipynb"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aquisição-e-preparação-de-dados">AQUISIÇÃO E PREPARAÇÃO DE DADOS</a></li><li class="n2"><a href="#262ggr6046a--graduação-em-ia">262GGR6046A — Graduação em IA</a></li><li class="n1"><a href="#aula-1-visão-holística-dos-dados-na-internet">AULA 1: VISÃO HOLÍSTICA DOS DADOS NA INTERNET</a></li><li class="n2"><a href="#objetivos">Objetivos</a></li><li class="n2"><a href="#1-dados-abertos-definição-e-características">1. Dados Abertos: Definição e Características</a></li><li class="n3"><a href="#3-características-principais">3 Características Principais</a></li><li class="n3"><a href="#3-leis-de-david-eaves-ativista-de-dados-abertos">3 Leis de David Eaves (Ativista de Dados Abertos)</a></li><li class="n2"><a href="#2-oito-princípios-dos-dados-abertos-governamentais-califórnia-2007">2. Oito Princípios dos Dados Abertos Governamentais (Califórnia, 2007)</a></li><li class="n2"><a href="#3-níveis-de-qualidade-5-estrelas-para-dados-abertos">3. Níveis de Qualidade: 5 Estrelas para Dados Abertos</a></li><li class="n2"><a href="#4-dados-conectados-vs-dados-abertos">4. Dados Conectados vs Dados Abertos</a></li><li class="n3"><a href="#dados-conectados">Dados Conectados</a></li><li class="n3"><a href="#diferença-chave">Diferença Chave</a></li><li class="n2"><a href="#5-linked-data-api-ld-api">5. Linked Data API (LD API)</a></li><li class="n2"><a href="#6-ontologias-e-web-semântica">6. Ontologias e Web Semântica</a></li><li class="n2"><a href="#7-ferramentas-para-dados-conectados">7. Ferramentas para Dados Conectados</a></li><li class="n2"><a href="#8-aplicações-práticas">8. Aplicações Práticas</a></li><li class="n3"><a href="#cidades-inteligentes">Cidades Inteligentes</a></li><li class="n3"><a href="#exemplo-globocom">Exemplo: Globo.com</a></li><li class="n3"><a href="#cenário-brasil">Cenário Brasil</a></li><li class="n2"><a href="#questões-de-prova-aula-1">Questões de Prova (Aula 1)</a></li><li class="n1"><a href="#aula-2-etl--extract-transform-and-load">AULA 2: ETL — EXTRACT, TRANSFORM AND LOAD</a></li><li class="n2"><a href="#objetivos-1">Objetivos</a></li><li class="n2"><a href="#1-definição-etl">1. Definição ETL</a></li><li class="n3"><a href="#fontes-heterogêneas">Fontes Heterogêneas</a></li><li class="n2"><a href="#2-três-fases-do-etl">2. Três Fases do ETL</a></li><li class="n3"><a href="#fase-1-extração-extract">FASE 1: EXTRAÇÃO (Extract)</a></li><li class="n3"><a href="#fase-2-transformação-transform">FASE 2: TRANSFORMAÇÃO (Transform)</a></li><li class="n3"><a href="#fase-3-carga-load">FASE 3: CARGA (Load)</a></li><li class="n2"><a href="#3-arquitetura-etl-completa">3. Arquitetura ETL Completa</a></li><li class="n2"><a href="#4-olap--online-analytical-processing">4. OLAP — Online Analytical Processing</a></li><li class="n2"><a href="#5-dez-vantagens-do-etl">5. Dez Vantagens do ETL</a></li><li class="n3"><a href="#crítico">CRÍTICO</a></li><li class="n2"><a href="#questões-de-prova-aula-2">Questões de Prova (Aula 2)</a></li><li class="n1"><a href="#aula-3-normalização-de-dados-com-pandas-numpy-e-scikit-learn">AULA 3: NORMALIZAÇÃO DE DADOS COM PANDAS, NUMPY E SCIKIT-LEARN</a></li><li class="n2"><a href="#objetivos-2">Objetivos</a></li><li class="n2"><a href="#1-o-que-é-normalização">1. O que é Normalização?</a></li><li class="n3"><a href="#distinções-importantes">Distinções Importantes</a></li><li class="n2"><a href="#2-quatro-tipos-de-normalização">2. Quatro Tipos de Normalização</a></li><li class="n3"><a href="#1-mínimo-máximo">1. MÍNIMO-MÁXIMO</a></li><li class="n3"><a href="#2-z-score-padronização">2. Z-SCORE (Padronização)</a></li><li class="n3"><a href="#3-escala-decimal">3. ESCALA DECIMAL</a></li><li class="n3"><a href="#4-robust-scaler-para-outliers">4. ROBUST SCALER (Para Outliers)</a></li><li class="n2"><a href="#3-comparativo-dos-quatro-métodos">3. Comparativo dos Quatro Métodos</a></li><li class="n2"><a href="#4-bibliotecas-python-essenciais">4. Bibliotecas Python Essenciais</a></li><li class="n3"><a href="#numpy">NumPy</a></li><li class="n3"><a href="#pandas">Pandas</a></li><li class="n3"><a href="#scikit-learn">Scikit-learn</a></li><li class="n2"><a href="#5-importante-salvar-normalizadores">5. IMPORTANTE: Salvar Normalizadores</a></li><li class="n2"><a href="#questões-de-prova-aula-3">Questões de Prova (Aula 3)</a></li><li class="n2"><a href="#material-complementar-de-vídeo">Material Complementar de Vídeo</a></li><li class="n1"><a href="#aula-4-análise-exploratória-de-dados-aed">AULA 4: ANÁLISE EXPLORATÓRIA DE DADOS (AED)</a></li><li class="n2"><a href="#objetivos-3">Objetivos</a></li><li class="n2"><a href="#1-pirâmide-dados--informação--conhecimento--sabedoria">1. Pirâmide Dados → Informação → Conhecimento → Sabedoria</a></li><li class="n2"><a href="#2-análise-exploratória-de-dados-aed">2. Análise Exploratória de Dados (AED)</a></li><li class="n3"><a href="#diferença-aed-vs-outras-abordagens">Diferença: AED vs Outras Abordagens</a></li><li class="n2"><a href="#3-classificação-de-dados-em-aed">3. Classificação de Dados em AED</a></li><li class="n3"><a href="#valores-numéricos-quantitativos">Valores Numéricos (Quantitativos)</a></li><li class="n3"><a href="#valores-não-numéricos-qualitativos">Valores Não-Numéricos (Qualitativos)</a></li><li class="n2"><a href="#4-etapas-da-aed">4. Etapas da AED</a></li><li class="n3"><a href="#41-coleta-e-organização">4.1 COLETA E ORGANIZAÇÃO</a></li><li class="n3"><a href="#42-tratamento-de-dados">4.2 TRATAMENTO DE DADOS</a></li><li class="n3"><a href="#43-análise-de-dados">4.3 ANÁLISE DE DADOS</a></li><li class="n3"><a href="#44-apresentação-e-interpretação">4.4 APRESENTAÇÃO E INTERPRETAÇÃO</a></li><li class="n2"><a href="#5-objetivos-e-importância-de-aed-bem-feita">5. Objetivos e Importância de AED Bem Feita</a></li><li class="n3"><a href="#por-que-aed-é-principal-etapa">Por que AED é Principal Etapa?</a></li><li class="n3"><a href="#problemas-detectados-por-aed">Problemas Detectados por AED</a></li><li class="n2"><a href="#6-pré-processamento-reescalonar-vs-normalizar-vs-padronizar">6. Pré-processamento: Reescalonar vs Normalizar vs Padronizar</a></li><li class="n3"><a href="#problema">Problema</a></li><li class="n3"><a href="#soluções">Soluções</a></li><li class="n2"><a href="#7-qualidade-de-dados-em-projetos-ml">7. Qualidade de Dados em Projetos ML</a></li><li class="n3"><a href="#impacto-da-má-qualidade">Impacto da Má Qualidade</a></li><li class="n3"><a href="#realidade-empresarial">Realidade Empresarial</a></li><li class="n2"><a href="#questões-de-prova-aula-4">Questões de Prova (Aula 4)</a></li><li class="n2"><a href="#-o-que-é-numpynumpy--numerical-pythonbiblioteca-python-de-código-aberto-para--computação-numérica--trabalhar-com-arrays-multidimensionais--operações-matemáticas-e-científicas--base-para-pandas-scikit-learn-e-outras-bibliotecas----1-instalaçãobashpip-install-numpyverificar-instalaçãopythonimport-numpy-as-npprintnp__version__----2-objeto-fundamental-ndarrayndarray--n-dimensional-array-array-multidimensional-criar-um-arraypythonimport-numpy-as-np">📚 O que é NumPy?NumPy = Numerical PythonBiblioteca Python de código aberto para:- Computação numérica- Trabalhar com arrays multidimensionais- Operações matemáticas e científicas- Base para Pandas, Scikit-learn e outras bibliotecas---## 1️⃣ INSTALAÇÃObashpip install numpyVerificar instalação:pythonimport numpy as npprint(np.version)---## 2️⃣ OBJETO FUNDAMENTAL: ndarrayndarray = N-dimensional array (array multidimensional)### Criar um array:pythonimport numpy as np</a></li><li class="n1"><a href="#integração-etl-clássico-vs-etl--ml-moderno">INTEGRAÇÃO: ETL CLÁSSICO vs ETL + ML MODERNO</a></li><li class="n2"><a href="#reflexão-crítica-sobre-normalização">Reflexão Crítica sobre Normalização</a></li><li class="n2"><a href="#1-etl-clássico">1. ETL Clássico</a></li><li class="n3"><a href="#características">Características</a></li><li class="n3"><a href="#problema-principal">Problema Principal</a></li><li class="n2"><a href="#2-etl--ml-moderno-cascata-de-modelos">2. ETL + ML Moderno (Cascata de Modelos)</a></li><li class="n3"><a href="#sua-arquitetura">Sua Arquitetura</a></li><li class="n2"><a href="#3-três-cenários-onde-funciona">3. Três Cenários Onde Funciona</a></li><li class="n3"><a href="#cenário-1-sua-caso--compatibilidade-física-com-padrão-de-marca">Cenário 1: Sua Caso — Compatibilidade Física com Padrão de Marca</a></li><li class="n3"><a href="#cenário-2-detecção-de-fraude-em-transações">Cenário 2: Detecção de Fraude em Transações</a></li><li class="n3"><a href="#cenário-3-análise-de-desempenho-com-exceções">Cenário 3: Análise de Desempenho com Exceções</a></li><li class="n2"><a href="#4-aprendizado-supervisionado-na-detecção">4. Aprendizado Supervisionado na Detecção</a></li><li class="n2"><a href="#5-quando-cada-abordagem-faz-sentido">5. Quando Cada Abordagem Faz Sentido</a></li><li class="n2"><a href="#6-conclusão">6. Conclusão</a></li><li class="n1"><a href="#-anexos">📎 ANEXOS</a></li><li class="n2"><a href="#materiais-de-referência">Materiais de Referência</a></li><li class="n3"><a href="#aula-1-dados-abertos">Aula 1: Dados Abertos</a></li><li class="n3"><a href="#aula-2-etl">Aula 2: ETL</a></li><li class="n3"><a href="#aula-3-normalização--numpy">Aula 3: Normalização + NumPy</a></li><li class="n3"><a href="#aula-4-aed">Aula 4: AED</a></li><li class="n2"><a href="#desempenho-final-da-disciplina">Desempenho Final da Disciplina</a></li><li class="n2"><a href="#arquivos-gerados">Arquivos Gerados</a></li><li class="n2"><a href="#como-usar-este-notebook">Como Usar Este Notebook</a></li><li class="n2"><a href="#próximos-passos-sugeridos">Próximos Passos Sugeridos</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aquisição-e-preparação-de-dados">AQUISIÇÃO E PREPARAÇÃO DE DADOS</h1></div>
+<section class="bloco"><h2 id="262ggr6046a--graduação-em-ia">262GGR6046A — Graduação em IA</h2>
+<p><strong>Autor:</strong> Rafael Gastão Coimbra Ferreira<br />
+<strong>Compilação:</strong> Dani (Estudo Estruturado)<br />
+<strong>Data:</strong> Setembro 2026<br />
+<strong>Status:</strong> 4 Aulas Completas | Média: 9.5/10</p>
+</section>
+<div class="capitulo"><h1 id="aula-1-visão-holística-dos-dados-na-internet">AULA 1: VISÃO HOLÍSTICA DOS DADOS NA INTERNET</h1></div>
+<div class="abertura">
+<p><strong>Nota: 10/10</strong> ✅ | 5/5 questões corretas</p>
+</div>
+<section class="bloco"><h2 id="objetivos">Objetivos</h2>
+<ul>
+<li>Explicar o que são dados abertos, destacando características principais</li>
+<li>Diferenciar dados conectados de dados abertos</li>
+<li>Analisar uso de dados conectados para desenvolvimento de sistemas</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="1-dados-abertos-definição-e-características">1. Dados Abertos: Definição e Características</h2>
+<p><strong>Definição:</strong> Dados que podem ser acessados, utilizados, modificados e compartilhados por qualquer pessoa para diferentes finalidades.</p>
+<h3 id="3-características-principais">3 Características Principais</h3>
+<ol>
+<li>
+<p><strong>Acesso e Disponibilidade</strong></p>
+<ul>
+<li>Disponibilizados por completo</li>
+<li>Formatos que facilitem modificação</li>
+<li>Sem cobranças</li>
+<li>Normalmente em portais governamentais</li>
+</ul>
+</li>
+<li>
+<p><strong>Reutilização</strong></p>
+<ul>
+<li>Permitem reuso em outras bases de dados</li>
+<li>Sem restrições comerciais</li>
+</ul>
+</li>
+<li>
+<p><strong>Participação Universal</strong></p>
+<ul>
+<li>Qualquer pessoa pode usar e distribuir</li>
+<li>Sem restrições discriminatórias</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-leis-de-david-eaves-ativista-de-dados-abertos">3 Leis de David Eaves (Ativista de Dados Abertos)</h3>
+<ol>
+<li>
+<p><strong>Se não pode ser encontrado e indexado na Web, não existe</strong></p>
+<ul>
+<li>Dados ocultos = dados inacessíveis</li>
+</ul>
+</li>
+<li>
+<p><strong>Se não estiver aberto em formato compreensível por máquina, não pode ser reaproveitado</strong></p>
+<ul>
+<li>Necessário formato estruturado (CSV, XML, RDF, não PDF)</li>
+<li>Máquinas precisam processar dados</li>
+</ul>
+</li>
+<li>
+<p><strong>Se algum dispositivo legal não permitir replicação, não é útil</strong></p>
+<ul>
+<li>Licenças restritivas limitam uso</li>
+<li>Dados com restrições legais = menos valor</li>
+</ul>
+</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="2-oito-princípios-dos-dados-abertos-governamentais-califórnia-2007">2. Oito Princípios dos Dados Abertos Governamentais (Califórnia, 2007)</h2>
+<table>
+<thead>
+<tr>
+<th>Princípio</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Completos</strong></td>
+<td>Sem controle de privacidade/acesso/segurança; abertos para qualquer uso</td>
+</tr>
+<tr>
+<td><strong>Primários</strong></td>
+<td>Publicados em máximo detalhe, não sumarizados/agrupados</td>
+</tr>
+<tr>
+<td><strong>Atuais</strong></td>
+<td>Publicados rápido para não perder valor; atualizados conforme necessário</td>
+</tr>
+<tr>
+<td><strong>Acessíveis</strong></td>
+<td>Disponibilizados para maior público; normalmente na internet</td>
+</tr>
+<tr>
+<td><strong>Processáveis por Máquina</strong></td>
+<td>Estrutura que facilite processamento automatizado</td>
+</tr>
+<tr>
+<td><strong>Acesso Não Discriminatório</strong></td>
+<td>Disponíveis a qualquer pessoa, sem registro</td>
+</tr>
+<tr>
+<td><strong>Formatos Não Proprietários</strong></td>
+<td>Em formatos abertos, não proprietários</td>
+</tr>
+<tr>
+<td><strong>Licenças Livres</strong></td>
+<td>Não sujeitos a copyright/patentes/marcas</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="3-níveis-de-qualidade-5-estrelas-para-dados-abertos">3. Níveis de Qualidade: 5 Estrelas para Dados Abertos</h2>
+<pre><code><div class="highlight"><pre><span></span>⭐⭐⭐⭐⭐  RDF Linked (Web Semântica)
+  ↑         Vinculação com outros datasets
+  |         Múltiplos vocabulários
+  |         Ex: Meteo + DBpedia
+  |
+⭐⭐⭐⭐   RDF + URIs
+  ↑         URIs identificam recursos
+  |         Vocabulários padronizados
+  |         Ex: Meteo
+  |
+⭐⭐⭐     CSV
+  ↑         Formato não proprietário
+  |         Estruturado
+  |         Processável por máquina
+  |
+⭐⭐       XLS
+  ↑         Dados estruturados (planilhas)
+  |         Parcialmente processável
+  |
+⭐         PDF, DOC
+            Dados digitalizados
+            Difícil para máquinas
+</pre></div>
+</code></pre>
+<p><strong>5 Estrelas = Web Semântica:</strong> Conjunto de ontologias conectadas disponíveis na internet com licença aberta.</p>
+</section>
+<section class="bloco"><h2 id="4-dados-conectados-vs-dados-abertos">4. Dados Conectados vs Dados Abertos</h2>
+<h3 id="dados-conectados">Dados Conectados</h3>
+<p><strong>Definição:</strong> Conjunto de boas práticas W3C para publicação e conexão de dados.</p>
+<p><strong>4 Princípios Obrigatórios:</strong></p>
+<ol>
+<li>Utilizar URIs (Identificadores Universais de Recurso) para definir coisas</li>
+<li>Usar HTTP URIs para que dados sejam encontrados por pessoas e agentes</li>
+<li>Fornecer informações em formato estruturado (RDF, SPARQL)</li>
+<li>Possuir links para outras fontes de dados relacionados (via URIs)</li>
+</ol>
+<p><strong>Importante:</strong> Dados conectados NÃO precisam ser necessariamente abertos.</p>
+<ul>
+<li>Empresa privada pode conectar dados sem torná-los públicos</li>
+<li>O que importa é a <strong>estrutura W3C</strong>, não a abertura</li>
+</ul>
+<h3 id="diferença-chave">Diferença Chave</h3>
+<ul>
+<li><strong>Web de documentos (atual):</strong> HTML → hiperlinks entre páginas</li>
+<li><strong>Web de dados:</strong> RDF → acesso estruturado a dados de diferentes fontes</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="5-linked-data-api-ld-api">5. Linked Data API (LD API)</h2>
+<p><strong>Definição:</strong> Camada intermediária que oferece API web para acessar dados conectados com URIs e filtros.</p>
+<p><strong>Função:</strong> Identificador universal de recursos para integração entre sistemas.</p>
+</section>
+<section class="bloco"><h2 id="6-ontologias-e-web-semântica">6. Ontologias e Web Semântica</h2>
+<p><strong>Ontologia:</strong> Modelo para representar relações entre entidades em um domínio de interesse.</p>
+<p><strong>Exemplo Brasil:</strong> Governo federal criou ontologia para orçamento federal com categorias/classificações baseadas no &quot;Manual técnico do orçamento&quot;.</p>
+<p><strong>Web Semântica:</strong> Conjunto de ontologias conectadas disponíveis na internet com estrutura RDF e licença aberta.</p>
+</section>
+<section class="bloco"><h2 id="7-ferramentas-para-dados-conectados">7. Ferramentas para Dados Conectados</h2>
+<ul>
+<li><strong>Jena</strong> (Java) — extração de dados, projeção de gráficos RDF</li>
+<li><strong>Sesame</strong> — API para repositórios RDF com suporte SPARQL</li>
+<li><strong>IDEs Semantic Java</strong> — ambiente desenvolvimento</li>
+<li><strong>AllegroGraph</strong> — repositório RDF com armazenamento eficiente</li>
+<li><strong>OWLIM</strong> — gerenciamento RDF com escalabilidade</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="8-aplicações-práticas">8. Aplicações Práticas</h2>
+<h3 id="cidades-inteligentes">Cidades Inteligentes</h3>
+<p>Otimizar recursos (saúde, transporte, segurança) com monitoramento em tempo real.</p>
+<h3 id="exemplo-globocom">Exemplo: Globo.com</h3>
+<ul>
+<li>Grupo semântica organiza/distribui conteúdo</li>
+<li>API aberto &quot;Brainiak&quot; implementa dados conectados</li>
+<li>Interoperabilidade entre G1, SportTV, Globo Esporte</li>
+</ul>
+<h3 id="cenário-brasil">Cenário Brasil</h3>
+<ul>
+<li>Lei de Acesso à Informação (LAI) — direito a dados públicos</li>
+<li>Mercado deve absorver novas tecnologias</li>
+<li>Exemplo: App &quot;Diário Alagoas&quot; (governo Alagoas)</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="questões-de-prova-aula-1">Questões de Prova (Aula 1)</h2>
+<p><strong>Q1:</strong> Qual é a definição de dados abertos?<br />
+<strong>Resposta:</strong> Dados que podem ser acessados, utilizados, modificados e compartilhados por qualquer pessoa sem restrição aos dados → <strong>Participação universal</strong> ✅</p>
+<p><strong>Q2:</strong> Qual princípio de dados abertos refere-se a &quot;publicar o mais rápido possível&quot;?<br />
+<strong>Resposta:</strong> <strong>Atuais</strong> (publicar rápido para não perder valor) ✅</p>
+<p><strong>Q3:</strong> O que é LD API?<br />
+<strong>Resposta:</strong> Camada intermediária para acessar dados conectados via <strong>identificador universal de recursos</strong> (URIs) ✅</p>
+<p><strong>Q4:</strong> Dados conectados e abertos podem ser acessados por?<br />
+<strong>Resposta:</strong> <strong>Pessoas (PDF) e máquinas (RDF/JSON)</strong> ✅</p>
+<p><strong>Q5:</strong> Como URIs únicos resolvem problema de redundância de dados?<br />
+<strong>Resposta:</strong> Cada entidade tem identificador único → evita duplicação ✅</p>
+</section>
+<div class="capitulo"><h1 id="aula-2-etl--extract-transform-and-load">AULA 2: ETL — EXTRACT, TRANSFORM AND LOAD</h1></div>
+<div class="abertura">
+<p><strong>Nota: 10/10</strong> ✅ | 5/5 questões corretas</p>
+</div>
+<section class="bloco"><h2 id="objetivos-1">Objetivos</h2>
+<ul>
+<li>Conhecer conceito de ETL</li>
+<li>Identificar funções de Extração, Transformação e Carga</li>
+<li>Reconhecer objetivos e vantagens da utilização em Data Warehouse</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="1-definição-etl">1. Definição ETL</h2>
+<p><strong>ETL (Extract, Transform and Load) = Extração, Transformação e Carga</strong></p>
+<ul>
+<li>Procedimentos responsáveis pela extração de dados de várias fontes</li>
+<li>Limpeza, otimização e inserção em Data Warehouse</li>
+<li>Uma das fases mais críticas na construção de DW</li>
+<li>Grandes volumes processados nesta fase</li>
+</ul>
+<h3 id="fontes-heterogêneas">Fontes Heterogêneas</h3>
+<ul>
+<li>Bancos de dados relacionais (maioria)</li>
+<li>Bases de dados Access</li>
+<li>Planilhas (Excel)</li>
+<li>Arquivos CSV</li>
+<li>Arquivos XML</li>
+<li>Sistema comunica com heterogeneidade (formato e normalização)</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-três-fases-do-etl">2. Três Fases do ETL</h2>
+<h3 id="fase-1-extração-extract">FASE 1: EXTRAÇÃO (Extract)</h3>
+<ul>
+<li>Coleta de dados dos sistemas de origem (Data Sources/sistemas operacionais)</li>
+<li>Extração e transferência para staging area</li>
+<li><strong>ETL opera independente dos sistemas operacionais</strong></li>
+<li>Múltiplos servidores e tecnologias podem ser lidos</li>
+</ul>
+<h3 id="fase-2-transformação-transform">FASE 2: TRANSFORMAÇÃO (Transform)</h3>
+<p>Após extração, <strong>tratar, limpar e filtrar</strong> para garantir integridade.</p>
+<p><strong>Atividades principais:</strong></p>
+<ul>
+<li>Limpeza (erros digitação, caracteres desconhecidos, abreviações)</li>
+<li>Descoberta violação integridade</li>
+<li><strong>Padronização de valores</strong></li>
+<li>Identificação anomalias</li>
+<li>Resolução de conflitos <strong>antes</strong> inserir no DW</li>
+</ul>
+<p><strong>Conflitos Semânticos:</strong></p>
+<ul>
+<li>Mesmo nome para diferentes entidades</li>
+<li>Diferentes nomes para mesma entidade</li>
+</ul>
+<p><strong>Conflitos Estruturais:</strong></p>
+<ul>
+<li>Diferenças unidades (cm vs polegadas)</li>
+<li>Diferenças precisão (0,12 vs 0,123456)</li>
+<li>Diferenças códigos/expressões (M/F vs 0/1)</li>
+<li>Diferenças granularidade (semana vs mês)</li>
+<li>Diferenças abstração (1 atributo vs rua+complemento)</li>
+</ul>
+<h3 id="fase-3-carga-load">FASE 3: CARGA (Load)</h3>
+<ul>
+<li>Estruturar e carregar no Data Warehouse</li>
+<li>Modelo dimensional</li>
+<li>Varia conforme necessidades da organização</li>
+<li>Latência e reposição = opções estratégicas</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="3-arquitetura-etl-completa">3. Arquitetura ETL Completa</h2>
+<pre><code><div class="highlight"><pre><span></span>Fontes → Extração → Staging Area → Transformação → Data Warehouse → OLAP
+                      (área provisória)   (limpeza)
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="4-olap--online-analytical-processing">4. OLAP — Online Analytical Processing</h2>
+<ul>
+<li>Ferramenta <strong>após DW construído</strong></li>
+<li>Acesso e análise dos dados</li>
+<li>Análises <strong>multidimensionais</strong></li>
+<li>Cálculos complexos, tendências, modelação</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="5-dez-vantagens-do-etl">5. Dez Vantagens do ETL</h2>
+<p>✅ <strong>Qualidade dados</strong> — algoritmos complexos detectam erros<br />
+✅ <strong>Separação funcionalidade/dados</strong> — sistemas operacionais não afetam DW<br />
+✅ <strong>Desenvolvimento rápido</strong> — framework pré-construído<br />
+✅ <strong>Manutenção simples</strong> — alterações em um lugar<br />
+✅ <strong>Metadados automáticos</strong> — documentação gerada<br />
+✅ <strong>Desempenho otimizado</strong> — índices e cache<br />
+✅ <strong>Portabilidade</strong> — funciona em diferentes plataformas<br />
+✅ <strong>Múltiplas conexões</strong> — transparente ao usuário<br />
+✅ <strong>Reinicialização</strong> — recuperação em caso de falha<br />
+✅ <strong>Segurança modular</strong> — controle de acesso granular</p>
+<h3 id="crítico">CRÍTICO</h3>
+<p><strong>80% do projeto = definição regras transformação</strong></p>
+<p>Análise gerencial, não técnica. Necessário envolvimento de negócio.</p>
+</section>
+<section class="bloco"><h2 id="questões-de-prova-aula-2">Questões de Prova (Aula 2)</h2>
+<p>Todas as 5 questões respondidas corretamente ✅</p>
+</section>
+<div class="capitulo"><h1 id="aula-3-normalização-de-dados-com-pandas-numpy-e-scikit-learn">AULA 3: NORMALIZAÇÃO DE DADOS COM PANDAS, NUMPY E SCIKIT-LEARN</h1></div>
+<div class="abertura">
+<p><strong>Nota: 8/10</strong> | 4/5 questões corretas</p>
+</div>
+<section class="bloco"><h2 id="objetivos-2">Objetivos</h2>
+<ul>
+<li>Identificar necessidade de normalização de dados</li>
+<li>Reconhecer método adequado de normalização</li>
+<li>Implementar rotinas com Pandas e Numpy</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="1-o-que-é-normalização">1. O que é Normalização?</h2>
+<p><strong>Normalização:</strong> Transformação de variáveis de forma <strong>independente</strong> para uma <strong>escala comum</strong>, sem distorcer as diferenças no intervalo de valores.</p>
+<p><strong>Objetivo:</strong> Transformar dados em diferentes grandezas/escalas para conjunto padronizado.</p>
+<h3 id="distinções-importantes">Distinções Importantes</h3>
+<ul>
+<li><strong>Padronização:</strong> Criar distribuição normal (média=0, desvio-padrão=1)</li>
+<li><strong>Redimensionamento:</strong> Mudar unidade por constante (°C → °F)</li>
+<li><strong>Normalização:</strong> Reescalonar para intervalo [0,1] sem distorcer proporções</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-quatro-tipos-de-normalização">2. Quatro Tipos de Normalização</h2>
+<h3 id="1-mínimo-máximo">1. MÍNIMO-MÁXIMO</h3>
+<p><strong>Fórmula:</strong> <code>(x - min) / (max - min)</code><br />
+<strong>Intervalo:</strong> [0, 1]<br />
+<strong>Sensibilidade outliers:</strong> ⚠️ <strong>ALTA</strong><br />
+<strong>Função Python:</strong> <code>preprocessing.MinMaxScaler()</code></p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="n">scaler_mm</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">MinMaxScaler</span><span class="p">(</span><span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">dados_mm</span> <span class="o">=</span> <span class="n">scaler_mm</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Quando usar:</strong> Sem outliers + intervalo conhecido</p>
+<hr />
+<h3 id="2-z-score-padronização">2. Z-SCORE (Padronização)</h3>
+<p><strong>Fórmula:</strong> <code>(x - média) / desvio-padrão</code><br />
+<strong>Intervalo:</strong> [-∞, +∞] (números negativos e positivos)<br />
+<strong>Sensibilidade outliers:</strong> ✅ <strong>BAIXA</strong> (robusto)<br />
+<strong>Função Python:</strong> <code>preprocessing.StandardScaler()</code></p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="n">scaler_z</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">dados_z</span> <span class="o">=</span> <span class="n">scaler_z</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Resultado:</strong> Média = 0, Desvio-padrão = 1<br />
+<strong>Quando usar:</strong> Distribuição normal</p>
+<hr />
+<h3 id="3-escala-decimal">3. ESCALA DECIMAL</h3>
+<p><strong>Fórmula:</strong> <code>x / 10^m</code> (m torna máximo &lt; 1)<br />
+<strong>Intervalo:</strong> Variável<br />
+<strong>Sensibilidade outliers:</strong> ⚠️ <strong>MUITO ALTA</strong><br />
+<strong>Função Python:</strong> Manual (não há pronta)</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">dados</span><span class="p">))))</span>
+<span class="n">dados_decimal</span> <span class="o">=</span> <span class="n">dados</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="n">m</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<hr />
+<h3 id="4-robust-scaler-para-outliers">4. ROBUST SCALER (Para Outliers)</h3>
+<p><strong>Fórmula:</strong> <code>(x - mediana) / IQR</code><br />
+<strong>IQR:</strong> Q3 - Q1 (intervalo interquartil)<br />
+<strong>Intervalo:</strong> [-∞, +∞]<br />
+<strong>Sensibilidade outliers:</strong> ✅✅ <strong>MUITO BAIXA</strong><br />
+<strong>Função Python:</strong> <code>preprocessing.RobustScaler()</code></p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="n">scaler_robust</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">RobustScaler</span><span class="p">()</span>
+<span class="n">dados_robust</span> <span class="o">=</span> <span class="n">scaler_robust</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Quando usar:</strong> Muitos outliers nos dados</p>
+</section>
+<section class="bloco"><h2 id="3-comparativo-dos-quatro-métodos">3. Comparativo dos Quatro Métodos</h2>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Intervalo</th>
+<th>Outliers</th>
+<th>Função</th>
+<th>Caso</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mínimo-Máximo</strong></td>
+<td>[0,1]</td>
+<td>⚠️ Sensível</td>
+<td>MinMaxScaler</td>
+<td>Sem outliers, intervalo conhecido</td>
+<td>Recomendado para dados limpos</td>
+</tr>
+<tr>
+<td><strong>Z-Score</strong></td>
+<td>[-∞,+∞]</td>
+<td>✅ Robusto</td>
+<td>StandardScaler</td>
+<td>Distribuição normal</td>
+<td><strong>Mais utilizado</strong></td>
+</tr>
+<tr>
+<td><strong>Escala Decimal</strong></td>
+<td>Variável</td>
+<td>⚠️ Muito sensível</td>
+<td>Manual</td>
+<td>Educacional</td>
+<td>Raro em produção</td>
+</tr>
+<tr>
+<td><strong>Robust Scaler</strong></td>
+<td>[-∞,+∞]</td>
+<td>✅✅ Muito robusto</td>
+<td>RobustScaler</td>
+<td>Muitos outliers</td>
+<td>Dados com anomalias</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="4-bibliotecas-python-essenciais">4. Bibliotecas Python Essenciais</h2>
+<h3 id="numpy">NumPy</h3>
+<p><strong>Uso:</strong> Computação numérica com matrizes e arrays multidimensionais<br />
+<strong>Instalação:</strong> <code>pip install numpy</code><br />
+<strong>Função:</strong> Base para Pandas e Scikit-learn</p>
+<h3 id="pandas">Pandas</h3>
+<p><strong>Uso:</strong> Análise e manipulação de grandes volumes de dados<br />
+<strong>Rapidez:</strong> Muito mais rápido que estruturas Python puras<br />
+<strong>Estrutura:</strong> DataFrames (tabelas estruturadas)</p>
+<h3 id="scikit-learn">Scikit-learn</h3>
+<p><strong>Uso:</strong> Machine Learning<br />
+<strong>Interação:</strong> Projetado para funcionar com NumPy<br />
+<strong>Tipos:</strong> Normalização, classificação, regressão, agrupamento</p>
+</section>
+<section class="bloco"><h2 id="5-importante-salvar-normalizadores">5. IMPORTANTE: Salvar Normalizadores</h2>
+<p><strong>Sempre salve o scaler treinado</strong> para poder normalizar novos dados com a mesma escala:</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">joblib</span>
+
+<span class="c1"># Treinar</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dados_treino</span><span class="p">)</span>
+
+<span class="c1"># Salvar</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scaler</span><span class="p">,</span> <span class="s1">'scaler.pkl'</span><span class="p">)</span>
+
+<span class="c1"># Depois carregar e usar</span>
+<span class="n">scaler_loaded</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'scaler.pkl'</span><span class="p">)</span>
+<span class="n">dados_novo_normalizados</span> <span class="o">=</span> <span class="n">scaler_loaded</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dados_novo</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="questões-de-prova-aula-3">Questões de Prova (Aula 3)</h2>
+<p><strong>Q1:</strong> O que é normalização?<br />
+<strong>Resposta:</strong> <strong>C</strong> — Transformação independente para escala comum ✅</p>
+<p><strong>Q2:</strong> Qual biblioteca pode ser utilizada para classificação?<br />
+<strong>Resposta:</strong> <strong>D</strong> — Scikit-learn ✅</p>
+<p><strong>Q3:</strong> O que ocorre em Mínimo-Máximo?<br />
+<strong>Resposta:</strong> <strong>B</strong> — Valores mínimos e máximos transformados em 0 e 1 ✅</p>
+<p><strong>Q4:</strong> Qual fórmula representa Z-Score?<br />
+<strong>Resposta:</strong> <strong>A</strong> — É pouco sensível à presença de outliers ✅</p>
+<p><strong>Q5:</strong> (Não respondida corretamente — desculpas, este estava ambíguo na prova)</p>
+</section>
+<section class="bloco"><h2 id="material-complementar-de-vídeo">Material Complementar de Vídeo</h2>
+<p><strong>Análise Exploratória de Dados com Python</strong><br />
+https://www.youtube.com/embed/W_Bz7M91R1Q</p>
+<p>Este vídeo complementa a teoria com práticas em Python usando Pandas, NumPy e Matplotlib para exploração de dados reais.</p>
+</section>
+<div class="capitulo"><h1 id="aula-4-análise-exploratória-de-dados-aed">AULA 4: ANÁLISE EXPLORATÓRIA DE DADOS (AED)</h1></div>
+<div class="abertura">
+<p><strong>Nota: 10/10</strong> ✅ | 5/5 questões corretas</p>
+</div>
+<section class="bloco"><h2 id="objetivos-3">Objetivos</h2>
+<ul>
+<li>Definir o processo de análise exploratória</li>
+<li>Descrever as etapas de uma análise exploratória</li>
+<li>Reconhecer objetivos e importância de AED</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="1-pirâmide-dados--informação--conhecimento--sabedoria">1. Pirâmide Dados → Informação → Conhecimento → Sabedoria</h2>
+<pre><code><div class="highlight"><pre><span></span>           SABEDORIA
+        (aplicação em decisão)
+              ↑
+       CONHECIMENTO
+    (relacionamento de info)
+              ↑
+       INFORMAÇÃO
+      (dados processados)
+              ↑
+         DADOS
+        (brutos)
+</pre></div>
+</code></pre>
+<p><strong>Transformação:</strong> Dados brutos → Transformação → Informação → Conhecimento → Sabedoria</p>
+</section>
+<section class="bloco"><h2 id="2-análise-exploratória-de-dados-aed">2. Análise Exploratória de Dados (AED)</h2>
+<p><strong>Definição:</strong> A <strong>principal etapa da análise dos dados</strong>, onde deve-se:</p>
+<ul>
+<li>Organizar dados</li>
+<li>Resumir informações</li>
+<li>Aplicar cálculos</li>
+<li>Resumir em formato visual adequado</li>
+</ul>
+<h3 id="diferença-aed-vs-outras-abordagens">Diferença: AED vs Outras Abordagens</h3>
+<table>
+<thead>
+<tr>
+<th>Abordagem</th>
+<th>Estratégia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Estatística Clássica</strong></td>
+<td>Problema → Dados → <strong>Modelo</strong> → Análise</td>
+</tr>
+<tr>
+<td><strong>Estatística Bayesiana</strong></td>
+<td>Problema → Dados → Modelo Priori → Análise</td>
+</tr>
+<tr>
+<td><strong>AED</strong></td>
+<td>Problema → Dados → <strong>Análise</strong> → Modelo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Insight:</strong> AED <strong>explora dados ANTES de definir modelo</strong> (data-first)</p>
+</section>
+<section class="bloco"><h2 id="3-classificação-de-dados-em-aed">3. Classificação de Dados em AED</h2>
+<h3 id="valores-numéricos-quantitativos">Valores Numéricos (Quantitativos)</h3>
+<p><strong>Discretos:</strong> Números inteiros</p>
+<ul>
+<li>Exemplo: idade (18, 19, 20)</li>
+</ul>
+<p><strong>Contínuos:</strong> Números reais em intervalo</p>
+<ul>
+<li>Exemplo: peso (75,5 kg, 60,3 kg, 80,7 kg)</li>
+</ul>
+<h3 id="valores-não-numéricos-qualitativos">Valores Não-Numéricos (Qualitativos)</h3>
+<p><strong>Nominais:</strong> Sem ordem natural</p>
+<ul>
+<li>Exemplos: nome, cor, raça, sexo</li>
+</ul>
+<p><strong>Ordinais:</strong> Com ordem natural</p>
+<ul>
+<li>Exemplos: classe social (baixa/média/alta), tamanho roupa (P/M/G)</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="4-etapas-da-aed">4. Etapas da AED</h2>
+<h3 id="41-coleta-e-organização">4.1 COLETA E ORGANIZAÇÃO</h3>
+<ul>
+<li>Definir métodos de coleta</li>
+<li>Estabelecer objetivos da pesquisa</li>
+<li>Unificar dados de diferentes fontes</li>
+<li>Considerar natureza dos dados</li>
+</ul>
+<h3 id="42-tratamento-de-dados">4.2 TRATAMENTO DE DADOS</h3>
+<h4 id="missing-values-dados-ausentes">Missing Values (Dados Ausentes)</h4>
+<p><strong>Soluções:</strong></p>
+<ul>
+<li>Descartar registro com dados ausentes</li>
+<li><strong>Imputação:</strong> Preencher com:
+<ul>
+<li>Média ou mediana</li>
+<li>Repetição do último valor</li>
+<li>Regressão linear</li>
+</ul>
+</li>
+</ul>
+<p><strong>Crítico:</strong> Técnica depende <strong>do tipo do dado faltante</strong></p>
+<h4 id="normalização">Normalização</h4>
+<p>Transformar valores em escala comum [0,1] sem distorcer diferenças.</p>
+<h4 id="outliers-valores-extremos">Outliers (Valores Extremos)</h4>
+<p><strong>Definição:</strong> Valores que fogem do padrão observado</p>
+<p><strong>Causas:</strong></p>
+<ul>
+<li>Entrada errada de dados</li>
+<li>Erros em tempo de tratamento</li>
+</ul>
+<p><strong>Tratamento:</strong></p>
+<ul>
+<li>Remoção</li>
+<li>Investigação individual</li>
+<li>Transformação</li>
+</ul>
+<p><strong>Decisão Crítica:</strong> Depende do contexto</p>
+<ul>
+<li>Em análise de <strong>fraude</strong>: outlier = insight valioso (anomalia buscada)</li>
+<li>Em análise de <strong>comportamento</strong>: outlier = distorção (deve remover)</li>
+</ul>
+<h3 id="43-análise-de-dados">4.3 ANÁLISE DE DADOS</h3>
+<h4 id="análise-univariada">Análise Univariada</h4>
+<p>Avalia <strong>cada variável isoladamente</strong></p>
+<p>Objetivo: Frequência de valores possíveis</p>
+<p><strong>Exemplo:</strong></p>
+<pre><code><div class="highlight"><pre><span></span>Variável "idade" com valores {18, 19, 18, 21, 21, 18}
+Frequência: {18 → 3, 19 → 1, 21 → 2}
+</pre></div>
+</code></pre>
+<h4 id="análise-multivariada">Análise Multivariada</h4>
+<p>Estabelece <strong>relações entre 2+ variáveis</strong></p>
+<p>Exemplo: altura da pessoa mediante sexo e idade</p>
+<h4 id="correlações">Correlações</h4>
+<p>Dois acontecimentos <strong>tendem a ocorrer sincronizados</strong></p>
+<p>(Não são necessariamente causais)</p>
+<p><strong>Exemplos:</strong></p>
+<ul>
+<li>Inflação alta ↔ desemprego aumenta</li>
+<li>Cliente compra pão todo dia ↔ satisfação com pão alta</li>
+</ul>
+<h3 id="44-apresentação-e-interpretação">4.4 APRESENTAÇÃO E INTERPRETAÇÃO</h3>
+<h4 id="formas-de-apresentação">Formas de Apresentação</h4>
+<p><strong>Tabular:</strong></p>
+<ul>
+<li>Tabela com título, títulos colunas, corpo dados</li>
+<li>Precisa, mas menos intuitiva</li>
+</ul>
+<p><strong>Gráfica:</strong></p>
+<ul>
+<li>Deve ser auto-explicativa e fácil compreensão</li>
+<li>Visualmente mais intuitiva</li>
+<li>Tipos: colunas, barras, linhas, setores, radar, etc.</li>
+</ul>
+<p><strong>Importância:</strong> Escolher tipo adequado ao tipo de dados</p>
+<ul>
+<li>Quantitativos → gráficos de linhas, colunas</li>
+<li>Qualitativos nominais → gráficos de barras, setores</li>
+<li>Qualitativos ordinais → gráficos de barras ordenadas</li>
+</ul>
+<p><strong>Exemplo de erro:</strong></p>
+<ul>
+<li>Usar gráfico radar para estado civil (nominal)</li>
+<li>Não deixa clara a correlação entre valores e frequência</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="5-objetivos-e-importância-de-aed-bem-feita">5. Objetivos e Importância de AED Bem Feita</h2>
+<h3 id="por-que-aed-é-principal-etapa">Por que AED é Principal Etapa?</h3>
+<ol>
+<li><strong>Quebra mito:</strong> Data science ≠ apenas algoritmos</li>
+<li><strong>Qualidade de dados:</strong> Evita análises erradas</li>
+<li><strong>Insights:</strong> Encontra tendências e valor nos dados</li>
+<li><strong>Preparação:</strong> Ajusta dados para ML</li>
+<li><strong>Validação:</strong> Identifica erros antes de algoritmos</li>
+</ol>
+<h3 id="problemas-detectados-por-aed">Problemas Detectados por AED</h3>
+<ul>
+<li><strong>Missing values:</strong> Dados ausentes</li>
+<li><strong>Valores discrepantes:</strong> Tipos de dados errados</li>
+<li><strong>Dados corrompidos:</strong> Formato inválido</li>
+<li><strong>Ruído:</strong> Valores fora do domínio esperado</li>
+<li><strong>Outliers:</strong> Potencial insight ou erro</li>
+</ul>
+<p><strong>Exemplo real:</strong></p>
+<pre><code><div class="highlight"><pre><span></span>Dataset: Alocação de casas (ID, Rua, Nº, Status, Quartos, Banheiros)
+
+Problemas encontrados:
+<span class="k">-</span> missing_value: Linha 1, coluna Rua (vazio)
+<span class="k">-</span> corrupted: Linha 2, coluna Alocada (222 em campo Sim/Não)
+<span class="k">-</span> noise: Campo Status deveria ter apenas "Sim" ou "Não"
+<span class="k">-</span> outlier: Idade 475 em cadastro de aposentados (59-71)
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="6-pré-processamento-reescalonar-vs-normalizar-vs-padronizar">6. Pré-processamento: Reescalonar vs Normalizar vs Padronizar</h2>
+<h3 id="problema">Problema</h3>
+<p>Características em escalas diferentes (altura em cm, peso em gramas) podem dar importância errada ao algoritmo ML.</p>
+<h3 id="soluções">Soluções</h3>
+<p><strong>Reescalonar:</strong> Mudar unidade de medida (ex: cm → m)<br />
+<strong>Normalização:</strong> (x - min) / (max - min) → intervalo [0,1]<br />
+<strong>Padronização:</strong> (x - média) / desvio-padrão → média=0, σ=1</p>
+</section>
+<section class="bloco"><h2 id="7-qualidade-de-dados-em-projetos-ml">7. Qualidade de Dados em Projetos ML</h2>
+<h3 id="impacto-da-má-qualidade">Impacto da Má Qualidade</h3>
+<ul>
+<li>Resultados ruins em ML</li>
+<li>Análises de negócio erradas</li>
+<li>Decisões que prejudicam desempenho</li>
+<li>Dificultam iniciativas futuras</li>
+</ul>
+<h3 id="realidade-empresarial">Realidade Empresarial</h3>
+<ul>
+<li>Empresas superestimam resiliência algoritmos</li>
+<li>Subestimam efeitos dados com erros</li>
+<li>Produzem resultados ruins → análises erradas</li>
+<li>Prejudicam desempenho negócios</li>
+</ul>
+<p><strong>Conclusão:</strong> A qualidade dos dados é <strong>maior preocupação dos cientistas de dados</strong></p>
+</section>
+<section class="bloco"><h2 id="questões-de-prova-aula-4">Questões de Prova (Aula 4)</h2>
+<p><strong>Q1:</strong> A que se refere o conceito da AED?<br />
+<strong>Resposta:</strong> <strong>A) Análise exploratória de dados</strong> ✅</p>
+<p><strong>Q2:</strong> Como se chama um valor que se afasta da série?<br />
+<strong>Resposta:</strong> <strong>B) Outliers</strong> ✅</p>
+<p><strong>Q3:</strong> O que é a tendência de sincronização entre fatos?<br />
+<strong>Resposta:</strong> <strong>C) Correlação</strong> ✅</p>
+<p><strong>Q4:</strong> Qual tipo de apresentação facilita interpretação?<br />
+<strong>Resposta:</strong> <strong>D) Gráfico</strong> ✅</p>
+<p><strong>Q5:</strong> De que depende a escolha da técnica de imputação?<br />
+<strong>Resposta:</strong> <strong>E) O tipo do dado faltante</strong> ✅</p>
+</section>
+<section class="bloco"><h2 id="-o-que-é-numpynumpy--numerical-pythonbiblioteca-python-de-código-aberto-para--computação-numérica--trabalhar-com-arrays-multidimensionais--operações-matemáticas-e-científicas--base-para-pandas-scikit-learn-e-outras-bibliotecas----1-instalaçãobashpip-install-numpyverificar-instalaçãopythonimport-numpy-as-npprintnp__version__----2-objeto-fundamental-ndarrayndarray--n-dimensional-array-array-multidimensional-criar-um-arraypythonimport-numpy-as-np">📚 O que é NumPy?<strong>NumPy = Numerical Python</strong>Biblioteca Python de código aberto para:- Computação numérica- Trabalhar com arrays multidimensionais- Operações matemáticas e científicas- Base para Pandas, Scikit-learn e outras bibliotecas---## 1️⃣ INSTALAÇÃO<code>bashpip install numpy</code>Verificar instalação:<code>pythonimport numpy as npprint(np.__version__)</code>---## 2️⃣ OBJETO FUNDAMENTAL: ndarray<strong>ndarray</strong> = N-dimensional array (array multidimensional)### Criar um array:```pythonimport numpy as np</h2>
+
+</section>
+<div class="capitulo"><h1 id="integração-etl-clássico-vs-etl--ml-moderno">INTEGRAÇÃO: ETL CLÁSSICO vs ETL + ML MODERNO</h1></div>
+<section class="bloco"><h2 id="reflexão-crítica-sobre-normalização">Reflexão Crítica sobre Normalização</h2>
+<p><strong>Observação Dani:</strong> Normalização é teórica fase T-ETL, mas em arquiteturas ML modernas pode haver dois modelos em cascata.</p>
+</section>
+<section class="bloco"><h2 id="1-etl-clássico">1. ETL Clássico</h2>
+<pre><code><div class="highlight"><pre><span></span><span class="n">Coleta</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Extração</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">TRANSFORMAÇÃO</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Load</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Análise</span>
+<span class="w">                    </span><span class="err">├─</span><span class="w"> </span><span class="n">Normalização</span><span class="w"> </span><span class="p">(</span><span class="n">manual</span><span class="p">)</span>
+<span class="w">                    </span><span class="err">├─</span><span class="w"> </span><span class="n">Imputação</span><span class="w"> </span><span class="p">(</span><span class="n">regras</span><span class="w"> </span><span class="n">fixas</span><span class="p">)</span>
+<span class="w">                    </span><span class="err">├─</span><span class="w"> </span><span class="n">Remoção</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">outliers</span><span class="w"> </span><span class="p">(</span><span class="n">critério</span><span class="w"> </span><span class="n">estático</span><span class="p">)</span>
+<span class="w">                    </span><span class="err">└─</span><span class="w"> </span><span class="n">Validação</span><span class="w"> </span><span class="p">(</span><span class="n">schemas</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<h3 id="características">Características</h3>
+<p>❌ Decisões sobre outliers <strong>antes de entender os dados</strong><br />
+❌ Remoção automática (perde informação potencialmente valiosa)<br />
+❌ Uma única estratégia para todos os domínios<br />
+✅ Rápido e determinístico<br />
+✅ Reproduzível</p>
+<h3 id="problema-principal">Problema Principal</h3>
+<p>Você removia dados que poderiam ser <strong>insights valiosos</strong> (fraude, anomalia de interesse).</p>
+</section>
+<section class="bloco"><h2 id="2-etl--ml-moderno-cascata-de-modelos">2. ETL + ML Moderno (Cascata de Modelos)</h2>
+<pre><code><div class="highlight"><pre><span></span>Coleta → Extração → TRANSFORMAÇÃO (Híbrida) → Load → ANÁLISE COM ML
+                    ├─ Normalização básica (escala)
+                    ├─ Imputação (média/mediana)
+                    ├─ ML modelo 1: Detecção de outliers
+                    ├─ Tratamento contextual (decide remover/manter)
+                    └─ Validação com ML
+                                           ↓
+                                    ML modelo 2: Análise real
+</pre></div>
+</code></pre>
+<h3 id="sua-arquitetura">Sua Arquitetura</h3>
+<p>✅ <strong>2 modelos em sequência:</strong> primeiro detecta, depois analisa<br />
+✅ Outliers identificados <strong>com contexto do negócio</strong><br />
+✅ Aproveita aprendizado supervisionado<br />
+✅ Adaptável por domínio<br />
+⚠️ Mais complexo (mais pontos de falha)</p>
+</section>
+<section class="bloco"><h2 id="3-três-cenários-onde-funciona">3. Três Cenários Onde Funciona</h2>
+<h3 id="cenário-1-sua-caso--compatibilidade-física-com-padrão-de-marca">Cenário 1: Sua Caso — Compatibilidade Física com Padrão de Marca</h3>
+<pre><code><div class="highlight"><pre><span></span><span class="nv">Dataset</span>:<span class="w"> </span><span class="nv">Modelos</span><span class="w"> </span><span class="nv">potenciais</span><span class="w"> </span><span class="ss">(</span><span class="nv">altura</span>,<span class="w"> </span><span class="nv">peso</span>,<span class="w"> </span><span class="nv">propor</span>çõ<span class="nv">es</span><span class="ss">)</span>
+
+<span class="nv">PIPELINE</span>:
+<span class="mi">1</span>.<span class="w"> </span><span class="nv">Extra</span>çã<span class="nv">o</span><span class="w"> </span><span class="nv">bruta</span>
+<span class="mi">2</span>.<span class="w"> </span><span class="nv">Normaliza</span>çã<span class="nv">o</span><span class="w"> </span><span class="nv">b</span>á<span class="nv">sica</span><span class="w"> </span><span class="ss">(</span><span class="nv">escalas</span><span class="w"> </span><span class="nv">diferentes</span><span class="ss">)</span>
+<span class="mi">3</span>.<span class="w"> </span><span class="nv">ML</span><span class="w"> </span><span class="nv">Modelo</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ss">(</span><span class="nv">Unsupervised</span><span class="ss">)</span>:<span class="w"> </span><span class="nv">Detectar</span><span class="w"> </span><span class="nv">outliers</span>
+<span class="w">   </span>└─<span class="w"> </span><span class="nv">Identifica</span><span class="w"> </span><span class="s2">"altura = 2.50m"</span><span class="w"> </span><span class="nv">ou</span><span class="w"> </span><span class="s2">"peso = 250kg"</span>
+<span class="w">   </span>
+<span class="mi">4</span>.<span class="w"> </span><span class="nv">Decis</span>ã<span class="nv">o</span><span class="w"> </span><span class="nv">contextual</span>:
+<span class="w">   </span>✅<span class="w"> </span><span class="nv">MANTER</span><span class="w"> </span><span class="nv">se</span>:<span class="w"> </span><span class="s2">"Procuramos pessoas fora do padrão"</span>
+<span class="w">   </span>❌<span class="w"> </span><span class="nv">REMOVER</span><span class="w"> </span><span class="nv">se</span>:<span class="w"> </span><span class="s2">"Apenas padrão comercial"</span>
+<span class="w">   </span>
+<span class="mi">5</span>.<span class="w"> </span><span class="nv">ML</span><span class="w"> </span><span class="nv">Modelo</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="ss">(</span><span class="nv">Supervisionado</span><span class="ss">)</span>:<span class="w"> </span><span class="nv">Classificar</span><span class="w"> </span><span class="nv">compatibilidade</span>
+<span class="w">   </span>└─<span class="w"> </span><span class="nv">Treina</span><span class="w"> </span><span class="nv">com</span><span class="w"> </span><span class="nv">exemplos</span><span class="w"> </span><span class="nv">de</span><span class="w"> </span><span class="nv">sucesso</span><span class="w"> </span><span class="ss">(</span><span class="nv">modelos</span><span class="w"> </span><span class="nv">aprovados</span><span class="w"> </span><span class="nv">vs</span><span class="w"> </span><span class="nv">rejeitados</span><span class="ss">)</span>
+<span class="w">   </span>└─<span class="w"> </span><span class="nv">Aprende</span><span class="w"> </span><span class="nv">que</span><span class="w"> </span><span class="nv">outliers</span><span class="w"> </span><span class="nv">tratados</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">mais</span><span class="w"> </span><span class="nv">acur</span>á<span class="nv">cia</span>
+</pre></div>
+</code></pre>
+<p><strong>Vantagem:</strong> O outlier não é &quot;erro&quot;, é <strong>variação relevante</strong> que o modelo aprende a interpretar.</p>
+<h3 id="cenário-2-detecção-de-fraude-em-transações">Cenário 2: Detecção de Fraude em Transações</h3>
+<pre><code><div class="highlight"><pre><span></span>Dataset: Histórico transacional
+
+1. Normalização: Valores em escala comum
+2. ML Modelo 1 (Detecção): Isola transações anômalas
+   └─ Um saque de R$50k em conta que nunca saca
+   
+3. Decisão contextual:
+   ✅ INVESTIGAR (não remover!)
+   ❌ Remover mataria o insight mais valioso
+   
+4. ML Modelo 2 (Classificação): "Fraude vs Legítimo"
+   └─ Aprende que anômalias são **mais informativas** que padrão
+</pre></div>
+</code></pre>
+<p><strong>Insight:</strong> Os outliers são exatamente o que você <strong>quer prever</strong>.</p>
+<h3 id="cenário-3-análise-de-desempenho-com-exceções">Cenário 3: Análise de Desempenho com Exceções</h3>
+<pre><code><div class="highlight"><pre><span></span>Dataset: Performance de vendedores
+
+1. Normalização: Métricas em escala comparável
+2. ML Modelo 1 (Clustering): Identifica "top performers"
+   └─ Vendedor A: 500% acima da média
+   
+3. Decisão:
+   ✅ SEPARAR (investigar por quê é diferente)
+   └─ Pode gerar insights: tática, mercado, atuação
+   
+4. ML Modelo 2 (Regressão): Prever performance
+   └─ Aprende que exceções revelam **padrões ocultos**
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="4-aprendizado-supervisionado-na-detecção">4. Aprendizado Supervisionado na Detecção</h2>
+<p>Você pode <strong>rotular outliers manualmente</strong> e treinar um classificador:</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+
+<span class="c1"># Exemplo conceitual</span>
+<span class="n">dados</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">1.65</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>   <span class="c1"># normal</span>
+    <span class="p">[</span><span class="mf">1.80</span><span class="p">,</span> <span class="mi">20</span><span class="p">],</span>   <span class="c1"># normal</span>
+    <span class="p">[</span><span class="mf">1.72</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>   <span class="c1"># normal</span>
+    <span class="p">[</span><span class="mf">2.50</span><span class="p">,</span> <span class="mi">250</span><span class="p">]</span>   <span class="c1"># outlier (altura muito alta, peso muito alto)</span>
+<span class="p">])</span>
+
+<span class="n">eh_outlier</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>  <span class="c1"># Você marca</span>
+
+<span class="c1"># ML Modelo 1: Aprende padrão de outliers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">IsolationForest</span>
+<span class="n">classifier</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">outliers_detectados</span> <span class="o">=</span> <span class="n">classifier</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+
+<span class="c1"># ML Modelo 2: Usa dataset ANOTADO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">modelo_final</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">modelo_final</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dados</span><span class="p">[</span><span class="n">eh_outlier</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_treino</span><span class="p">)</span>  <span class="c1"># Treina com dados limpos</span>
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="5-quando-cada-abordagem-faz-sentido">5. Quando Cada Abordagem Faz Sentido</h2>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>ETL Clássico</th>
+<th>ETL + ML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Contexto</strong></td>
+<td>Análise descritiva</td>
+<td>Predição com ML</td>
+</tr>
+<tr>
+<td><strong>Outliers</strong></td>
+<td>Erro/Ruído</td>
+<td>Potencial insight</td>
+</tr>
+<tr>
+<td><strong>Decisão</strong></td>
+<td>Automática</td>
+<td>Contextual</td>
+</tr>
+<tr>
+<td><strong>Reproduzibilidade</strong></td>
+<td>Alta</td>
+<td>Depende do modelo</td>
+</tr>
+<tr>
+<td><strong>Custo</strong></td>
+<td>Baixo</td>
+<td>Alto (2 modelos)</td>
+</tr>
+<tr>
+<td><strong>Casos</strong></td>
+<td>BI, Relatórios</td>
+<td>Modelos preditivos</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="6-conclusão">6. Conclusão</h2>
+<p><strong>Sua abordagem está correta:</strong></p>
+<ol>
+<li>
+<p><strong>Normalização</strong> (escala comum) → <strong>Sempre faz no T da ETL</strong></p>
+<ul>
+<li>Necessária para qualquer coisa depois</li>
+</ul>
+</li>
+<li>
+<p><strong>Detecção de outliers com ML</strong> → <strong>Modelo 1 (após Load ou antes)</strong></p>
+<ul>
+<li>Usa aprendizado supervisionado/não-supervisionado</li>
+<li>Marca o dado, não necessariamente remove</li>
+</ul>
+</li>
+<li>
+<p><strong>Análise/predição real</strong> → <strong>Modelo 2 (após normalização + marcação)</strong></p>
+<ul>
+<li>Treina com dados anotados</li>
+<li>Aprende a lidar com outliers no contexto</li>
+</ul>
+</li>
+</ol>
+</section>
+<div class="capitulo"><h1 id="-anexos">📎 ANEXOS</h1></div>
+<section class="bloco"><h2 id="materiais-de-referência">Materiais de Referência</h2>
+<h3 id="aula-1-dados-abertos">Aula 1: Dados Abertos</h3>
+<ul>
+<li>Lei de Acesso à Informação (LAI) — Brasil</li>
+<li>W3C (World Wide Web Consortium) — padrões web</li>
+<li>SPARQL — linguagem de consulta RDF</li>
+</ul>
+<h3 id="aula-2-etl">Aula 2: ETL</h3>
+<ul>
+<li>Kimball Method — design dimensional</li>
+<li>Inmon Architecture — enterprise data warehouse</li>
+<li>Apache Airflow — orquestração de pipelines</li>
+</ul>
+<h3 id="aula-3-normalização--numpy">Aula 3: Normalização + NumPy</h3>
+<p><strong>Fonte:</strong> Introducing NumPy — Envato Tuts+<br />
+https://code.tutsplus.com/introducing-numpy--cms-28703t</p>
+<p><strong>Conteúdo:</strong></p>
+<ul>
+<li>Objeto fundamental ndarray</li>
+<li>Atributos (.dtype, .shape, .size, .itemsize, .ndim, .data)</li>
+<li>Criar arrays (zeros, ones, arange, linspace, empty)</li>
+<li>Operações (reshape, concatenate, split)</li>
+<li>Operações matemáticas (sum, mean, std, min, max, sqrt, exp, log)</li>
+<li>Integração com Scikit-learn</li>
+</ul>
+<h3 id="aula-4-aed">Aula 4: AED</h3>
+<p><strong>Livro:</strong> Preparação e Análise Exploratória de Dados<br />
+<strong>Autor:</strong> Rafael Gastão Coimbra Ferreira<br />
+<strong>Editora:</strong> SAGAH<br />
+<strong>Capítulo:</strong> 4</p>
+</section>
+<section class="bloco"><h2 id="desempenho-final-da-disciplina">Desempenho Final da Disciplina</h2>
+<table>
+<thead>
+<tr>
+<th>Aula</th>
+<th>Tema</th>
+<th>Nota</th>
+<th>Questões</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Dados Abertos</td>
+<td><strong>10/10</strong> ✅</td>
+<td>5/5</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>ETL</td>
+<td><strong>10/10</strong> ✅</td>
+<td>5/5</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Normalização</td>
+<td><strong>8/10</strong></td>
+<td>4/5</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>AED</td>
+<td><strong>10/10</strong> ✅</td>
+<td>5/5</td>
+</tr>
+<tr>
+<td><strong>MÉDIA</strong></td>
+<td>—</td>
+<td><strong>9.5/10</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="arquivos-gerados">Arquivos Gerados</h2>
+<ol>
+<li><code>AULA_1_RESUMO_DADOS_ABERTOS.md</code></li>
+<li><code>AULA_2_RESUMO_ETL.md</code></li>
+<li><code>AULA_3_RESUMO_NORMALIZACAO.md</code></li>
+<li><code>AULA_3_NUMPY_PRATICO.md</code></li>
+<li><code>AULA_4_ANALISE_EXPLORATORIA_COMPLETO.md</code></li>
+<li><code>OUTLIERS_NORMALIZACAO_ETL_vs_ML.md</code> — Integração teórica</li>
+<li><code>DISCIPLINA_AQUISICAO_PREPARACAO_DADOS.ipynb</code> — <strong>Este arquivo</strong></li>
+</ol>
+</section>
+<section class="bloco"><h2 id="como-usar-este-notebook">Como Usar Este Notebook</h2>
+<ol>
+<li><strong>Revisão rápida:</strong> Leia as seções de resumo</li>
+<li><strong>Estudo aprofundado:</strong> Acesse os arquivos <code>.md</code> específicos</li>
+<li><strong>Implementação prática:</strong> Use o código Python dos exemplos</li>
+<li><strong>Teste de conhecimento:</strong> Volte às questões de prova</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="próximos-passos-sugeridos">Próximos Passos Sugeridos</h2>
+<ol>
+<li><strong>Simulado integrado</strong> das 4 aulas</li>
+<li><strong>Exercícios práticos em Python</strong> (Pandas + NumPy + Matplotlib)</li>
+<li><strong>Projeto de capstone:</strong> Dataset real com pipeline ETL → AED → ML</li>
+</ol>
+<hr />
+<p><strong>Última atualização:</strong> Setembro 2026<br />
+<strong>Status:</strong> Completo e pronto para revisão</p>
+</section>
+
+
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d1.html">← Aquisição e Preparação de Dados</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

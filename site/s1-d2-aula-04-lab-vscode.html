@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4 · Laboratório guiado no VS Code · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 4 · Laboratório guiado no VS Code</span></nav>
+    <span class="eyebrow">Laboratório · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 4 · Laboratório guiado no VS Code</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_04_LABORATORIO_VSCODE.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-4--anexo-laboratório-prático-vscode">AULA 4 — ANEXO: LABORATÓRIO PRÁTICO (VSCODE)</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#passo-0--preparar-o-ambiente">Passo 0 — Preparar o ambiente</a></li><li class="n2"><a href="#passo-1--baixar-o-dataset">Passo 1 — Baixar o dataset</a></li><li class="n2"><a href="#passo-2--explorar-o-dataset-com-pandas">Passo 2 — Explorar o dataset com Pandas</a></li><li class="n2"><a href="#passo-3--ver-o-problema-do-ruído-opcional-só-para-visualizar">Passo 3 — Ver o problema do ruído (opcional, só para visualizar)</a></li><li class="n2"><a href="#passo-4--limpeza-do-texto-com-expressões-regulares">Passo 4 — Limpeza do texto com expressões regulares</a></li><li class="n2"><a href="#passo-5--remover-stopwords-e-aplicar-stemming-nltk">Passo 5 — Remover stopwords e aplicar stemming (NLTK)</a></li><li class="n2"><a href="#passo-6--montar-o-vetor-de-features-palavras-mais-frequentes">Passo 6 — Montar o vetor de features (palavras mais frequentes)</a></li><li class="n2"><a href="#passo-7--vetorizar-cada-mensagem-e-binarizar-os-rótulos">Passo 7 — Vetorizar cada mensagem e binarizar os rótulos</a></li><li class="n2"><a href="#passo-8--dividir-em-treino-e-teste">Passo 8 — Dividir em treino e teste</a></li><li class="n2"><a href="#passo-9--treinar-o-classificador-naïve-bayes">Passo 9 — Treinar o classificador Naïve Bayes</a></li><li class="n2"><a href="#passo-10--avaliar-o-modelo">Passo 10 — Avaliar o modelo</a></li><li class="n2"><a href="#passo-11--ajustar-hiperparâmetros-opcional">Passo 11 — Ajustar hiperparâmetros (opcional)</a></li><li class="n2"><a href="#resumo-das-diferenças-entre-este-laboratório-e-o-código-do-livro">Resumo das diferenças entre este laboratório e o código do livro</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-4--anexo-laboratório-prático-vscode">AULA 4 — ANEXO: LABORATÓRIO PRÁTICO (VSCODE)</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+<blockquote>
+<p>Este anexo guia você, passo a passo, na execução do pipeline de classificação de texto (SMS Spam Collection + Naïve Bayes) no <strong>VSCode</strong>, sem precisar de Jupyter/Colab. A cada passo: o que fazer, por quê, e o que conferir antes de seguir para o próximo.</p>
+<p><strong>Como rodar cada bloco:</strong> crie um arquivo <code>sms_classifier.py</code> na pasta do laboratório e vá colando os blocos nele, <strong>nesta ordem</strong>. Depois de colar um bloco, selecione o trecho novo e aperte <strong>Shift+Enter</strong> — o VSCode abre um terminal Python interativo e executa só aquele trecho, mostrando o resultado na hora. Isso permite ver cada etapa funcionando antes de ir para a próxima, sem precisar rodar o arquivo inteiro de novo a cada vez. Quando quiser rodar tudo de uma vez, use o botão &quot;Run Python File&quot; ou <code>python sms_classifier.py</code> no terminal.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="passo-0--preparar-o-ambiente">Passo 0 — Preparar o ambiente</h2>
+<p><strong>Objetivo:</strong> ter um ambiente Python isolado, com as bibliotecas do capítulo instaladas.</p>
+<ol>
+<li>Crie uma pasta para o laboratório e abra-a no VSCode.</li>
+<li>No terminal integrado do VSCode, crie e ative um ambiente virtual:</li>
+</ol>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+
+<span class="c1"># Windows</span>
+.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+
+<span class="c1"># Linux/Mac</span>
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</code></pre>
+<ol start="3">
+<li>Instale as bibliotecas usadas no capítulo:</li>
+</ol>
+<pre><code class="language-bash"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>requests<span class="w"> </span>pandas<span class="w"> </span>nltk<span class="w"> </span>scikit-learn<span class="w"> </span>numpy
+</pre></div>
+</code></pre>
+<ol start="4">
+<li>Confira se a extensão <strong>Python</strong> da Microsoft está instalada no VSCode e selecione o interpretador do <code>.venv</code> (canto inferior direito, ou <code>Ctrl+Shift+P</code> → &quot;Python: Select Interpreter&quot;).</li>
+</ol>
+<p><strong>Checkpoint:</strong> rodar <code>python -c &quot;import pandas, nltk, sklearn; print('ok')&quot;</code> deve imprimir <code>ok</code> sem erro.</p>
+</section>
+<section class="bloco"><h2 id="passo-1--baixar-o-dataset">Passo 1 — Baixar o dataset</h2>
+<p><strong>Objetivo:</strong> obter o SMS Spam Collection Data Set (UCI), o mesmo usado no capítulo.</p>
+<p><strong>Diferença em relação ao livro:</strong> o capítulo usa <code>/content</code> porque está no Google Colab. No VSCode, vamos salvar na pasta local do projeto.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Pasta onde os dados ficarão salvos</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"dados"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s1">'https://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip'</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+<span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="s2">"dados"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Arquivos baixados:"</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">"dados"</span><span class="p">))</span>
+</pre></div>
+</code></pre>
+<p><strong>O que conferir:</strong> a lista impressa deve incluir <code>SMSSpamCollection</code> e <code>readme</code>. Esse é o arquivo de texto com as mensagens rotuladas.</p>
+</section>
+<section class="bloco"><h2 id="passo-2--explorar-o-dataset-com-pandas">Passo 2 — Explorar o dataset com Pandas</h2>
+<p><strong>Objetivo:</strong> entender o formato dos dados antes de processá-los — quantas mensagens, como estão rotuladas, qual a proporção spam/ham.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s2">"dados/SMSSpamCollection"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classes</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<p><strong>O que conferir:</strong> você deve ver <strong>5.572 linhas</strong>, coluna 0 = rótulo (<code>ham</code>/<code>spam</code>), coluna 1 = mensagem, e a contagem deve bater com <strong>4.825 ham / 747 spam</strong>. Se os números baterem, os dados estão carregados corretamente.</p>
+</section>
+<section class="bloco"><h2 id="passo-3--ver-o-problema-do-ruído-opcional-só-para-visualizar">Passo 3 — Ver o problema do ruído (opcional, só para visualizar)</h2>
+<p><strong>Objetivo:</strong> visualizar, antes de limpar, que tipo de &quot;sujeira&quot; existe no texto (números, e-mails, pontuação). Este passo não altera nada — é só para você enxergar o motivo da limpeza que vem a seguir.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[\d@_!#$%^&amp;*()&lt;&gt;?/\|}{~:]'</span><span class="p">)</span>
+<span class="n">text_messages</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">amostra</span> <span class="o">=</span> <span class="n">text_messages</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">amostra</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>O que conferir:</strong> devem aparecer palavras com números, pontuação ou símbolos — essas são exatamente o tipo de ruído que o Passo 4 vai tratar.</p>
+</section>
+<section class="bloco"><h2 id="passo-4--limpeza-do-texto-com-expressões-regulares">Passo 4 — Limpeza do texto com expressões regulares</h2>
+<p><strong>Objetivo:</strong> padronizar o texto, substituindo e-mails, URLs, números de telefone, valores monetários e números por marcadores fixos, e remover pontuação e espaços extras — para que o classificador não trate &quot;R$50&quot; e &quot;50&quot; como coisas totalmente diferentes, por exemplo.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">processed_lines</span> <span class="o">=</span> <span class="n">text_messages</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^.+@[^\.].*\.[a-z]{2,}$'</span><span class="p">,</span> <span class="s1">'emailaddress'</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^http\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$'</span><span class="p">,</span> <span class="s1">'webaddress'</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'£|\$'</span><span class="p">,</span> <span class="s1">'moneysymb'</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^\(?[\d]</span><span class="si">{3}</span><span class="s1">\)?[\s-]?[\d]</span><span class="si">{3}</span><span class="s1">[\s-]?[\d]</span><span class="si">{4}</span><span class="s1">$'</span><span class="p">,</span> <span class="s1">'phonenumbr'</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'\d+(\.\d+)?'</span><span class="p">,</span> <span class="s1">'numbr'</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'[^\w\d\s]'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'\s+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">),</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^\s+|\s+?$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">newword</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+    <span class="n">processed_lines</span> <span class="o">=</span> <span class="n">processed_lines</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">newword</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">processed_lines</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Nota em relação ao livro:</strong> adicionei <code>regex=True</code> explicitamente — em versões mais novas do pandas, <code>str.replace</code> exige esse parâmetro quando o padrão é uma expressão regular (no livro, de 2020, isso era o comportamento padrão).</p>
+</blockquote>
+<p><strong>O que conferir:</strong> compare <code>processed_lines.head()</code> com <code>df[1].head()</code> (o texto original) — você deve ver números virando <code>numbr</code>, tudo em minúsculas, sem pontuação.</p>
+</section>
+<section class="bloco"><h2 id="passo-5--remover-stopwords-e-aplicar-stemming-nltk">Passo 5 — Remover stopwords e aplicar stemming (NLTK)</h2>
+<p><strong>Objetivo:</strong> tirar palavras sem valor discriminativo (artigos, pronomes) e reduzir palavras à sua forma-base, para que variações da mesma palavra não sejam tratadas como palavras diferentes pelo classificador.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'stopwords'</span><span class="p">)</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'punkt'</span><span class="p">)</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'punkt_tab'</span><span class="p">)</span>  <span class="c1"># necessário em versões recentes do NLTK</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.stem</span><span class="w"> </span><span class="kn">import</span> <span class="n">PorterStemmer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>
+
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">'english'</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">)):</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">filtered_sentence</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
+            <span class="n">stemmed_word</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+            <span class="n">filtered_sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stemmed_word</span><span class="p">)</span>
+    <span class="n">processed_lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_sentence</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">processed_lines</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p>Este bloco segue a indexação do livro (<code>processed_lines[i]</code>) sem alteração — testei e ela funciona normalmente aqui, porque o índice da <code>Series</code> é o padrão (0, 1, 2...), que coincide com a posição. Só use <code>.iloc[i]</code> no lugar se, em algum momento, você filtrar ou reordenar <code>processed_lines</code> antes deste passo — aí o índice deixaria de coincidir com a posição.</p>
+</blockquote>
+<p><strong>O que conferir:</strong> o texto deve ficar mais enxuto — sem &quot;the&quot;, &quot;is&quot;, &quot;to&quot; etc. (stopwords em inglês, porque o dataset é em inglês).</p>
+</section>
+<section class="bloco"><h2 id="passo-6--montar-o-vetor-de-features-palavras-mais-frequentes">Passo 6 — Montar o vetor de features (palavras mais frequentes)</h2>
+<p><strong>Objetivo:</strong> transformar texto em números. Primeiro, descobrir quais são as palavras mais frequentes em todo o dataset — elas serão as &quot;colunas&quot; do nosso vetor de características.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">processed_lines</span><span class="p">:</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">:</span>
+        <span class="n">all_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="n">all_words</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">FreqDist</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Total de palavras: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Palavras mais comuns: </span><span class="si">{</span><span class="n">all_words</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="n">word_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_words</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1500</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Lista de características: </span><span class="si">{</span><span class="n">word_features</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>O que conferir:</strong> as &quot;palavras mais comuns&quot; devem fazer sentido para um dataset de SMS (palavras curtas e genéricas). Se aparecer muito lixo (pontuação solta, números soltos), volte ao Passo 4/5 e confira se rodou certo.</p>
+</section>
+<section class="bloco"><h2 id="passo-7--vetorizar-cada-mensagem-e-binarizar-os-rótulos">Passo 7 — Vetorizar cada mensagem e binarizar os rótulos</h2>
+<p><strong>Objetivo:</strong> para cada mensagem, gerar um vetor dizendo quais das 1.500 palavras-modelo aparecem nela — e transformar &quot;ham&quot;/&quot;spam&quot; em 0/1.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">bin_labels</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+
+<span class="n">messages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">,</span> <span class="n">bin_labels</span><span class="p">))</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+
+<span class="n">featuresets</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_features</span><span class="p">:</span>
+        <span class="n">features</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">)</span>
+    <span class="n">featuresets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">features</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Total de mensagens vetorizadas: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">featuresets</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Exemplo (5 primeiras features da 1ª mensagem): "</span>
+      <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">featuresets</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">())[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">, rótulo: </span><span class="si">{</span><span class="n">featuresets</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Nota em relação ao livro:</strong> o código original usa <code>np.random.seed = seed</code> (atribuição, sem chamar a função) — testei, e isso tem dois problemas: não fixa a semente de fato, <strong>e</strong> substitui a função <code>np.random.seed</code> por um número inteiro, quebrando qualquer chamada futura a <code>np.random.seed(...)</code> no mesmo programa (gera <code>TypeError: 'int' object is not callable</code>). O correto é <code>np.random.seed(seed)</code>, como está acima.</p>
+</blockquote>
+<p><strong>O que conferir:</strong> o total deve ser 5.572 (mesmo número de mensagens do início). Cada feature deve ser <code>True</code>/<code>False</code>.</p>
+</section>
+<section class="bloco"><h2 id="passo-8--dividir-em-treino-e-teste">Passo 8 — Dividir em treino e teste</h2>
+<p><strong>Objetivo:</strong> separar uma parte dos dados para treinar o modelo e outra, nunca vista durante o treino, para avaliar se ele realmente aprendeu (e não apenas decorou).</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">training</span><span class="p">,</span> <span class="n">testing</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">featuresets</span><span class="p">,</span>
+    <span class="n">train_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Treino:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">training</span><span class="p">),</span> <span class="s2">"| Teste:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">testing</span><span class="p">))</span>
+
+<span class="n">test_features</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">testing</span><span class="p">)</span>
+<span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">training</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>O que conferir:</strong> treino deve ter ~75% das mensagens (≈4.179) e teste ~25% (≈1.393).</p>
+</section>
+<section class="bloco"><h2 id="passo-9--treinar-o-classificador-naïve-bayes">Passo 9 — Treinar o classificador Naïve Bayes</h2>
+<p><strong>Objetivo:</strong> converter os dicionários de features em matriz e treinar o <code>MultinomialNB</code>.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictVectorizer</span>
+
+<span class="n">vect</span> <span class="o">=</span> <span class="n">DictVectorizer</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">train_features_vec</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
+<span class="n">test_features_vec</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">fit_prior</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">class_prior</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features_vec</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_features_vec</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Predições geradas:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">predicted</span><span class="p">))</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Correção importante em relação ao livro:</strong> o capítulo usa <code>vect.fit_transform</code> tanto no treino quanto no teste. Isso é um erro — ao chamar <code>fit_transform</code> de novo no teste, o vetorizador <strong>reaprende</strong> um vocabulário novo a partir do teste, que pode não ter as mesmas colunas (nem na mesma ordem) do vocabulário de treino. O correto é <code>fit_transform</code> <strong>só no treino</strong>, e <code>transform</code> (sem <code>fit</code>) no teste, para garantir que os dois usem exatamente o mesmo espaço de features. É o que o código acima já faz.</p>
+</blockquote>
+<p><strong>O que conferir:</strong> nenhum erro de dimensão (<code>shape mismatch</code>) deve aparecer — se aparecer, é sinal de que <code>fit_transform</code> foi chamado duas vezes.</p>
+</section>
+<section class="bloco"><h2 id="passo-10--avaliar-o-modelo">Passo 10 — Avaliar o modelo</h2>
+<p><strong>Objetivo:</strong> medir o quão bem o modelo classificou as mensagens de teste.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="n">confus_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+<span class="n">df_confusao</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">confus_matrix</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[[</span><span class="s1">'Real'</span><span class="p">,</span> <span class="s1">'Real'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ham'</span><span class="p">,</span> <span class="s1">'spam'</span><span class="p">]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[[</span><span class="s1">'Predito'</span><span class="p">,</span> <span class="s1">'Predito'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'ham'</span><span class="p">,</span> <span class="s1">'spam'</span><span class="p">]]</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_confusao</span><span class="p">)</span>
+
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span>
+    <span class="n">test_labels</span><span class="p">,</span>
+    <span class="n">predicted</span><span class="p">,</span>
+    <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">'ham'</span><span class="p">,</span> <span class="s1">'spam'</span><span class="p">],</span>
+    <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">report</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Nota em relação ao livro:</strong> os rótulos de linha/coluna foram ajustados para <code>['ham', 'spam']</code>, na mesma ordem que o <code>LabelEncoder</code> usa (0 = ham, 1 = spam) — o livro escreveu <code>['spam', 'ham']</code> no índice da matriz de confusão, o que inverteria a leitura das classes.</p>
+</blockquote>
+<p><strong>O que conferir:</strong> a acurácia (coluna &quot;precision&quot;/&quot;recall&quot; na linha de cada classe, ou calculada à mão com a fórmula do resumo teórico) deve ficar bem alta (tipicamente acima de 90% nesse dataset) — é um dataset relativamente &quot;fácil&quot; para Naïve Bayes.</p>
+</section>
+<section class="bloco"><h2 id="passo-11--ajustar-hiperparâmetros-opcional">Passo 11 — Ajustar hiperparâmetros (opcional)</h2>
+<p><strong>Objetivo:</strong> buscar automaticamente a melhor combinação de parâmetros do <code>MultinomialNB</code>, em vez de testar manualmente.</p>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'alpha'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="s1">'fit_prior'</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+    <span class="s1">'class_prior'</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span>
+<span class="p">}</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features_vec</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Melhor score:"</span><span class="p">,</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Melhores parâmetros:"</span><span class="p">,</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Nota em relação ao livro:</strong> testei <code>class_prior=[0.25, 0.5]</code> isoladamente — o <code>scikit-learn</code> <strong>aceita</strong> sem erro, mesmo essa lista não somando 1 (0,25 + 0,5 = 0,75). Ele usa os valores exatamente como informados, sem normalizar. Ou seja, o código do livro roda, mas <code>[0.25, 0.5]</code> não representa probabilidades <em>a priori</em> coerentes (não é uma distribuição de probabilidade válida) — é um valor de exemplo didático, não um valor que você usaria de fato num caso real. Se quiser que o grid teste um <code>class_prior</code> que realmente some 1, troque para algo como <code>[0.25, 0.75]</code> ou <code>[0.5, 0.5]</code>.</p>
+</blockquote>
+<p><strong>O que conferir:</strong> <code>gs.best_score_</code> deve ser próximo (ou igual) à acurácia que você já tinha visto no Passo 10.</p>
+</section>
+<section class="bloco"><h2 id="resumo-das-diferenças-entre-este-laboratório-e-o-código-do-livro">Resumo das diferenças entre este laboratório e o código do livro</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>O que o livro faz</th>
+<th>O que foi ajustado aqui</th>
+<th>Por quê</th>
+<th>Testado?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Roda em <code>/content</code> (Colab)</td>
+<td>Salva em <code>dados/</code> local</td>
+<td>Você está no VSCode, não no Colab</td>
+<td>— (ambiente)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>str.replace(pattern, newword)</code></td>
+<td><code>str.replace(pattern, newword, regex=True)</code></td>
+<td>Pandas 3.x trata o padrão como texto literal sem esse parâmetro</td>
+<td>✅ confirmado</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>processed_lines[i] = ...</code></td>
+<td>Mantido como no livro</td>
+<td>Testei: funciona normalmente aqui, pois o índice da Series coincide com a posição</td>
+<td>✅ confirmado (correção anterior era desnecessária)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>np.random.seed = seed</code></td>
+<td><code>np.random.seed(seed)</code></td>
+<td>A forma do livro não fixa a semente <strong>e</strong> quebra chamadas futuras a <code>np.random.seed(...)</code></td>
+<td>✅ confirmado</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>vect.fit_transform</code> no treino <strong>e</strong> no teste</td>
+<td><code>fit_transform</code> só no treino, <code>transform</code> no teste</td>
+<td>Evita vocabulários diferentes entre treino e teste</td>
+<td>✅ confirmado</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Índice <code>['spam', 'ham']</code></td>
+<td>Índice <code>['ham', 'spam']</code></td>
+<td>Bate com a ordem 0/1 do <code>LabelEncoder</code> (ordem alfabética)</td>
+<td>lógica, não testado isoladamente</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>class_prior: [None, [0.25, 0.5]]</code></td>
+<td>Mantido como no livro</td>
+<td>Testei: o scikit-learn aceita sem erro, mesmo não somando 1 — é só um valor didático, não uma falha de código</td>
+<td>✅ confirmado (correção anterior era desnecessária)</td>
+</tr>
+</tbody>
+</table>
+<p>Duas das sete notas da primeira versão deste laboratório eram suposições minhas que não se confirmaram ao testar — mantive a tabela mostrando isso, em vez de simplesmente apagar o erro, porque isso é informação real sobre o quanto validar antes de afirmar importa mais do que parecer completo.</p>
+<p>Essas são correções técnicas para o código <strong>rodar corretamente</strong> no seu ambiente — não mudam os conceitos do capítulo, só a implementação.</p>
+<hr />
+<p><strong>Status:</strong> anexo de laboratório da Aula 4 pronto para execução passo a passo no VSCode.</p>
+
+</section>
+
+
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

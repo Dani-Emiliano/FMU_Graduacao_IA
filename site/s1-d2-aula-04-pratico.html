@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4 · Código prático (classificação de texto) · Aprendizado de Máquina Supervisionado</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+      <button class="btn-tema" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema"><svg class="ico lua" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="ico sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d2.html">Aprendizado de Máquina Supervisionado</a> <span>›</span> <span>Aula 4 · Código prático (classificação de texto)</span></nav>
+    <span class="eyebrow">Laboratório · Aprendizado de Máquina Supervisionado</span>
+    <h1>Aula 4 · Código prático (classificação de texto)</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d2.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+      <a class="chip" href="../Semestre_1/2%20-%20AprendizadoSupervisionado/Aulas/AULA_04_CLASSIFICACAO_TEXTO_PYTHON_PRATICO.md"><svg class="ico" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg> Arquivo de origem</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-4--material-prático-classificação-de-texto-com-python-naïve-bayes">AULA 4 — MATERIAL PRÁTICO: CLASSIFICAÇÃO DE TEXTO COM PYTHON (NAÏVE BAYES)</a></li><li class="n2"><a href="#disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</a></li><li class="n2"><a href="#célula-0--verificar-versão-do-python-opcional">Célula 0 — Verificar versão do Python (opcional)</a></li><li class="n2"><a href="#célula-1--download-do-dataset-sms-spam-collection-uci">Célula 1 — Download do dataset (SMS Spam Collection, UCI)</a></li><li class="n2"><a href="#célula-2--explorar-o-dataset-com-pandas">Célula 2 — Explorar o dataset com Pandas</a></li><li class="n2"><a href="#célula-3--expressões-regulares-identificar-caracteres-especiais-exemplo-informativo">Célula 3 — Expressões regulares: identificar caracteres especiais (exemplo informativo)</a></li><li class="n2"><a href="#célula-4--limpeza-do-texto-com-regex-substituições-definitivas">Célula 4 — Limpeza do texto com regex (substituições definitivas)</a></li><li class="n2"><a href="#célula-5--remoção-de-stopwords-e-stemming-nltk">Célula 5 — Remoção de stopwords e stemming (NLTK)</a></li><li class="n2"><a href="#célula-6--construção-do-vetor-modelo-de-features-palavras-mais-frequentes">Célula 6 — Construção do vetor-modelo de features (palavras mais frequentes)</a></li><li class="n2"><a href="#célula-7--vetorizar-cada-mensagem-como-vetor-de-features--rótulo-binário">Célula 7 — Vetorizar cada mensagem como vetor de features + rótulo binário</a></li><li class="n2"><a href="#célula-8--dividir-em-treino-e-teste">Célula 8 — Dividir em treino e teste</a></li><li class="n2"><a href="#célula-9--vetorizar-dicionários-em-matriz-e-treinar-o-naïve-bayes">Célula 9 — Vetorizar dicionários em matriz e treinar o Naïve Bayes</a></li><li class="n2"><a href="#célula-10--matriz-de-confusão-e-relatório-de-avaliação">Célula 10 — Matriz de confusão e relatório de avaliação</a></li><li class="n2"><a href="#célula-11--ajuste-de-hiperparâmetros-com-grid-search">Célula 11 — Ajuste de hiperparâmetros com Grid Search</a></li><li class="n2"><a href="#bibliotecas-utilizadas-neste-capítulo-resumo">Bibliotecas utilizadas neste capítulo (resumo)</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-4--material-prático-classificação-de-texto-com-python-naïve-bayes">AULA 4 — MATERIAL PRÁTICO: CLASSIFICAÇÃO DE TEXTO COM PYTHON (NAÏVE BAYES)</h1></div>
+<section class="bloco"><h2 id="disciplina-aprendizado-de-máquina-supervisionado--graduação-em-ia-fmu">Disciplina: Aprendizado de Máquina Supervisionado — Graduação em IA (FMU)</h2>
+<blockquote>
+<p>Código extraído e organizado a partir do capítulo &quot;Classificação de textos — Utilizando Python para construir e treinar modelos de machine learning&quot; (Juliano Vieira Martins, SAGAH). O PDF original apresenta espaços indevidos dentro de identificadores Python (ex.: <code>word _ tokens</code>), provavelmente um artefato de diagramação do livro — abaixo, o código foi normalizado para sintaxe Python válida (<code>word_tokens</code>), preservando integralmente a lógica e os comentários do capítulo. Organizado em células, pronto para colar em um Jupyter Notebook / Google Colab.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="célula-0--verificar-versão-do-python-opcional">Célula 0 — Verificar versão do Python (opcional)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">python</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="célula-1--download-do-dataset-sms-spam-collection-uci">Célula 1 — Download do dataset (SMS Spam Collection, UCI)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>  <span class="c1"># Biblioteca HTTP</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>   <span class="c1"># Biblioteca de compressão de arquivos</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>        <span class="c1"># Biblioteca para lidar com Entrada e saídas.</span>
+
+<span class="c1"># URL do arquivo TSV</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s1">'https://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip'</span>
+
+<span class="c1"># Download do arquivo TSV</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="c1"># Instanciando o compressor ZipFile</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">content</span><span class="p">))</span>
+
+<span class="c1"># Extração (descompressão) dos dados</span>
+<span class="n">z</span><span class="o">.</span><span class="n">extractall</span><span class="p">()</span>
+</pre></div>
+</code></pre>
+<p>O dataset baixado fica disponível em <code>/content/SMSSpamCollection</code> (ambiente Google Colab).</p>
+</section>
+<section class="bloco"><h2 id="célula-2--explorar-o-dataset-com-pandas">Célula 2 — Explorar o dataset com Pandas</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># Carregar o dataset de mensagens para um DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">'/content/SMSSpamCollection'</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'utf-8'</span><span class="p">)</span>
+
+<span class="c1"># Imprimir informações úteis sobre o conjunto de dados (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>
+
+<span class="c1"># Imprimir as 5 primeiras linhas do conjunto de dados (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Variável para as classes, para evitar ficar usando a notação df[0]</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Imprimir a distribuição das classes (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classes</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</code></pre>
+<p><strong>Resultado esperado (conforme o capítulo):</strong> 5.572 registros, coluna 0 = rótulo, coluna 1 = mensagem; distribuição de 4.825 &quot;ham&quot; e 747 &quot;spam&quot;.</p>
+</section>
+<section class="bloco"><h2 id="célula-3--expressões-regulares-identificar-caracteres-especiais-exemplo-informativo">Célula 3 — Expressões regulares: identificar caracteres especiais (exemplo informativo)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>  <span class="c1"># Biblioteca de expressões regulares</span>
+
+<span class="c1"># Padrão de expressão regular para encontrar números e caracteres especiais</span>
+<span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">'[\d@_!#$%^&amp;*()&lt;&gt;?/\|}{~:]'</span><span class="p">)</span>
+
+<span class="c1"># Selecionar a coluna de mensagens</span>
+<span class="n">text_messages</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Selecionar as 10 primeiras linhas</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="n">text_messages</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="c1"># Para cada linha na lista de mensagens</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+    <span class="c1"># Criar lista de palavras dividindo a frase pelos espaços em branco</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">' '</span><span class="p">)</span>
+    <span class="c1"># Para cada palavra na lista de palavras:</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="c1"># Se algum caractere do padrão existir na palavra</span>
+        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+            <span class="c1"># Imprime a palavra</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p>Este bloco é apenas informativo — nada é alterado no conjunto de dados aqui; serve para visualizar quais palavras contêm números, e-mails, telefones, URLs etc.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="célula-4--limpeza-do-texto-com-regex-substituições-definitivas">Célula 4 — Limpeza do texto com regex (substituições definitivas)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="c1"># Alterar todas as palavras para minúsculas</span>
+<span class="n">processed_lines</span> <span class="o">=</span> <span class="n">text_messages</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+<span class="c1"># Lista de tuplas com os padrões e novas palavras</span>
+<span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c1"># Substituir endereços de email por 'emailaddress'</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^.+@[^\.].*\.[a-z]{2,}$'</span><span class="p">,</span> <span class="s1">'emailaddress'</span><span class="p">),</span>
+    <span class="c1"># Substituir URLs por 'webaddress'</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^http\://[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(/\S*)?$'</span><span class="p">,</span> <span class="s1">'webaddress'</span><span class="p">),</span>
+    <span class="c1"># Substituir símbolos monetários (Dólar e Euro) por 'moneysymb'</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'£|\$'</span><span class="p">,</span> <span class="s1">'moneysymb'</span><span class="p">),</span>
+    <span class="c1"># Substituir números de telefone por 'phonenumbr'</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^\(?[\d]</span><span class="si">{3}</span><span class="s1">\)?[\s-]?[\d]</span><span class="si">{3}</span><span class="s1">[\s-]?[\d]</span><span class="si">{4}</span><span class="s1">$'</span><span class="p">,</span> <span class="s1">'phonenumbr'</span><span class="p">),</span>
+    <span class="c1"># Substituir números por 'numbr'</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'\d+(\.\d+)?'</span><span class="p">,</span> <span class="s1">'numbr'</span><span class="p">),</span>
+    <span class="c1"># Remover pontuação (! ?)</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'[^\w\d\s]'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">),</span>
+    <span class="c1"># Substituir dois ou mais espaços em branco por um único espaço</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'\s+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">),</span>
+    <span class="c1"># Remover os espaços em branco à esquerda e à direita</span>
+    <span class="p">(</span><span class="sa">r</span><span class="s1">'^\s+|\s+?$'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Substituir no texto os padrões encontrados</span>
+<span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">newword</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+    <span class="n">processed_lines</span> <span class="o">=</span> <span class="n">processed_lines</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">newword</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Por que essas palavras de substituição (<code>emailaddress</code>, <code>webaddress</code>...)?</strong> Para não colidir com palavras que já existam naturalmente no texto — senão a frequência de uma palavra comum (ex.: &quot;mail&quot;) seria inflada artificialmente.</p>
+</section>
+<section class="bloco"><h2 id="célula-5--remoção-de-stopwords-e-stemming-nltk">Célula 5 — Remoção de stopwords e stemming (NLTK)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'stopwords'</span><span class="p">)</span>  <span class="c1"># arquivo de suporte ao stopwords</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'punkt'</span><span class="p">)</span>      <span class="c1"># arquivo de suporte à tokenização</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.corpus</span><span class="w"> </span><span class="kn">import</span> <span class="n">stopwords</span>          <span class="c1"># gerar lista de stopwords</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.stem</span><span class="w"> </span><span class="kn">import</span> <span class="n">PorterStemmer</span>        <span class="c1"># stemmizar palavras</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nltk.tokenize</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_tokenize</span>    <span class="c1"># tokenizar texto</span>
+
+<span class="c1"># Criar uma lista das stop words</span>
+<span class="n">stop_words</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">'english'</span><span class="p">)</span>
+
+<span class="c1"># Inicializar uma instância de Porter Stemmer</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">PorterStemmer</span><span class="p">()</span>
+
+<span class="c1"># Para cada índice da lista</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">)):</span>
+    <span class="c1"># Criar lista de palavras tokenizadas para cada linha</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1"># Inicializar uma lista para receber as palavras filtradas</span>
+    <span class="n">filtered_sentence</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Para cada palavra da lista de palavras tokenizadas:</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">:</span>
+        <span class="c1"># Se a palavra não está na lista de stop words</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
+            <span class="c1"># Cria um stem para a palavra</span>
+            <span class="n">stemmed_word</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+            <span class="c1"># Adiciona na lista de palavras filtradas</span>
+            <span class="n">filtered_sentence</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stemmed_word</span><span class="p">)</span>
+    <span class="c1"># Junta as palavras da lista para substituir o texto antigo pelo novo texto processado</span>
+    <span class="n">processed_lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_sentence</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="célula-6--construção-do-vetor-modelo-de-features-palavras-mais-frequentes">Célula 6 — Construção do vetor-modelo de features (palavras mais frequentes)</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="c1"># Inicializar uma lista de palavras</span>
+<span class="n">all_words</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Para cada linha da lista de linhas que foram processadas:</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">processed_lines</span><span class="p">:</span>
+    <span class="c1"># Criar lista de palavras tokenizadas para cada linha</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="c1"># Para cada palavra da lista de palavras:</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">:</span>
+        <span class="c1"># Adiciona a palavra no "bag" onde estão todas as palavras</span>
+        <span class="n">all_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="c1"># Atribui a contagem de frequência para cada palavra da lista</span>
+<span class="n">all_words</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">FreqDist</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span>
+
+<span class="c1"># Imprimir o número total de palavras existentes na lista (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Total de palavras: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">all_words</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># Imprimir as 10 palavras mais comuns existentes na lista (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Palavras mais comuns: </span><span class="si">{</span><span class="n">all_words</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># Usar as 1500 palavras mais comuns como modelo de features</span>
+<span class="n">word_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_words</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">:</span><span class="mi">1500</span><span class="p">]</span>
+
+<span class="c1"># Imprimir as 10 primeiras features (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Lista de características: </span><span class="si">{</span><span class="n">word_features</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Atenção (destacada no capítulo):</strong> &quot;quantidade não significa qualidade&quot; — o classificador considera até palavras que aparecem uma única vez em todo o texto; o tamanho do vetor (1.500) é ajustável para melhorar o desempenho.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="célula-7--vetorizar-cada-mensagem-como-vetor-de-features--rótulo-binário">Célula 7 — Vetorizar cada mensagem como vetor de features + rótulo binário</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="c1"># Converter rótulos de classes para valores binários: 0 = ham e 1 = spam</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">bin_labels</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+
+<span class="c1"># Adicionar em uma lista de tuplas a mensagem e o rótulo da classe, na mesma posição</span>
+<span class="n">messages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">processed_lines</span><span class="p">,</span> <span class="n">bin_labels</span><span class="p">))</span>
+
+<span class="c1"># Definir um valor de seed para reprodutibilidade</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+<span class="c1"># Embaralhar as mensagens para que a ordem não interfira no treinamento</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+
+<span class="c1"># Inicializar uma lista geral para os vetores de features e os respectivos rótulos</span>
+<span class="n">featuresets</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Para cada par texto e rótulo da lista de mensagens:</span>
+<span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">messages</span><span class="p">:</span>
+    <span class="c1"># Criar lista de palavras tokenizadas para cada linha</span>
+    <span class="n">word_tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="c1"># Inicializar um dicionário (set de features)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Para cada palavra existente na lista de tokens-modelo</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_features</span><span class="p">:</span>
+        <span class="c1"># Se a palavra existir no texto, atribui True; senão, False</span>
+        <span class="n">features</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">word_tokens</span><span class="p">)</span>
+    <span class="c1"># Adiciona na lista geral como tupla (vetor de features, rótulo binarizado)</span>
+    <span class="n">featuresets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">features</span><span class="p">,</span> <span class="n">label</span><span class="p">))</span>
+</pre></div>
+</code></pre>
+</section>
+<section class="bloco"><h2 id="célula-8--dividir-em-treino-e-teste">Célula 8 — Dividir em treino e teste</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Dividir os dados em dois conjuntos: 75% treinamento e 25% teste</span>
+<span class="n">training</span><span class="p">,</span> <span class="n">testing</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">featuresets</span><span class="p">,</span>       <span class="c1"># dataset com as características e rótulos</span>
+    <span class="n">train_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>    <span class="c1"># tamanho do conjunto de teste</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>  <span class="c1"># garante que as divisões geradas sejam reproduzíveis</span>
+<span class="p">)</span>
+
+<span class="c1"># Imprimir número de instâncias no conjunto de treinamento (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">training</span><span class="p">))</span>
+
+<span class="c1"># Imprimir número de instâncias no conjunto de teste (opcional)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">testing</span><span class="p">))</span>
+
+<span class="n">test_features</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">testing</span><span class="p">)</span>
+<span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">training</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Parâmetros de <code>train_test_split</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*arrays</code></td>
+<td>Conjunto(s) de dados (listas, arrays numpy, matrizes scipy-sparse, DataFrame pandas)</td>
+</tr>
+<tr>
+<td><code>train_size</code></td>
+<td><code>None</code> (padrão) / <code>int</code> (nº exato) / <code>float</code> (0,1 a 1,0)</td>
+</tr>
+<tr>
+<td><code>test_size</code></td>
+<td>Padrão 0,25 quando <code>train_size=None</code></td>
+</tr>
+<tr>
+<td><code>random_state</code></td>
+<td>Fixa a semente para reprodutibilidade</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="célula-9--vetorizar-dicionários-em-matriz-e-treinar-o-naïve-bayes">Célula 9 — Vetorizar dicionários em matriz e treinar o Naïve Bayes</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultinomialNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction</span><span class="w"> </span><span class="kn">import</span> <span class="n">DictVectorizer</span>
+
+<span class="c1"># Instanciar o vetorizador de dicionários</span>
+<span class="n">vect</span> <span class="o">=</span> <span class="n">DictVectorizer</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Vetorizar os dados de treinamento e teste</span>
+<span class="n">train_features</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">train_features</span><span class="p">)</span>
+<span class="n">test_features</span> <span class="o">=</span> <span class="n">vect</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span>
+
+<span class="c1"># Instanciar o modelo Naive Bayes</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MultinomialNB</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">fit_prior</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">class_prior</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># Treinar o modelo com os dados de treinamento</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+
+<span class="c1"># Testar o modelo com os dados de teste</span>
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<p><strong>Parâmetros de <code>MultinomialNB</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>alpha</code></td>
+<td>(float, opcional, padrão=0) suavização Laplace/Lidstone (0 = sem suavização)</td>
+</tr>
+<tr>
+<td><code>fit_prior</code></td>
+<td>(bool) se deve aprender as probabilidades <em>a priori</em> das classes a partir dos dados</td>
+</tr>
+<tr>
+<td><code>class_prior</code></td>
+<td>(array) probabilidades <em>a priori</em> definidas manualmente</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="célula-10--matriz-de-confusão-e-relatório-de-avaliação">Célula 10 — Matriz de confusão e relatório de avaliação</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="c1"># Gera matriz de confusão a partir dos resultados preditos</span>
+<span class="n">confus_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">test_labels</span><span class="p">,</span> <span class="n">predicted</span><span class="p">)</span>
+
+<span class="c1"># Cria um DataFrame adicionando nomes de linhas e colunas</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">confus_matrix</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="p">[[</span><span class="s1">'Real'</span><span class="p">,</span> <span class="s1">'Real'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'spam'</span><span class="p">,</span> <span class="s1">'ham'</span><span class="p">]],</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[[</span><span class="s1">'Predito'</span><span class="p">,</span> <span class="s1">'Predito'</span><span class="p">],</span> <span class="p">[</span><span class="s1">'spam'</span><span class="p">,</span> <span class="s1">'ham'</span><span class="p">]]</span>
+<span class="p">)</span>
+</pre></div>
+</code></pre>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="c1"># Gerar relatório de avaliação de performance do modelo</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span>
+    <span class="n">test_labels</span><span class="p">,</span>
+    <span class="n">predicted</span><span class="p">,</span>
+    <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s1">'spam'</span><span class="p">,</span> <span class="s1">'ham'</span><span class="p">],</span>
+    <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Cria um DataFrame do relatório</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">report</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+</pre></div>
+</code></pre>
+<p><strong>Métricas geradas:</strong> acurácia, precisão, revocação e F1-score (fórmulas no arquivo de resumo teórico, seção 3.9).</p>
+</section>
+<section class="bloco"><h2 id="célula-11--ajuste-de-hiperparâmetros-com-grid-search">Célula 11 — Ajuste de hiperparâmetros com Grid Search</h2>
+<pre><code class="language-python"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># linspace do numpy gera uma lista entre intervalos (start, stop, length)</span>
+    <span class="s1">'alpha'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="c1"># Ligado ou desligado</span>
+    <span class="s1">'fit_prior'</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+    <span class="c1"># Nenhum ou [probabilidade para cada classe]</span>
+    <span class="s1">'class_prior'</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span>
+<span class="p">}</span>
+
+<span class="c1"># Instanciar o GridSearchCV com o estimador (model), o grid de parâmetros,</span>
+<span class="c1"># validação cruzada com 5 folds e todos os processadores em paralelo (n_jobs=-1)</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Treinar o modelo N vezes com todas as combinações de parâmetros</span>
+<span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_features</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">)</span>
+
+<span class="c1"># Imprimir melhor score e melhores parâmetros</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Melhor score: "</span><span class="p">,</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Melhores parâmetros: "</span><span class="p">,</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p><strong>Grid Search</strong> testa exaustivamente todas as combinações (melhor para datasets pequenos com muitos parâmetros). <strong>Random Search</strong> testa combinações aleatórias (melhor para datasets grandes, onde o Grid Search ficaria caro demais computacionalmente).</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="bibliotecas-utilizadas-neste-capítulo-resumo">Bibliotecas utilizadas neste capítulo (resumo)</h2>
+<table>
+<thead>
+<tr>
+<th>Biblioteca</th>
+<th>Papel no pipeline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requests</code>, <code>zipfile</code>, <code>io</code></td>
+<td>Download e extração do dataset</td>
+</tr>
+<tr>
+<td><code>pandas</code></td>
+<td>Carregar e manipular o dataset em <code>DataFrame</code></td>
+</tr>
+<tr>
+<td><code>re</code></td>
+<td>Expressões regulares para limpeza do texto</td>
+</tr>
+<tr>
+<td><code>nltk</code></td>
+<td>Stopwords, stemming (<code>PorterStemmer</code>) e tokenização (<code>word_tokenize</code>)</td>
+</tr>
+<tr>
+<td><code>numpy</code></td>
+<td>Operações numéricas, <code>seed</code>, <code>shuffle</code>, <code>linspace</code></td>
+</tr>
+<tr>
+<td><code>sklearn.preprocessing.LabelEncoder</code></td>
+<td>Converter rótulos categóricos em binários</td>
+</tr>
+<tr>
+<td><code>sklearn.model_selection.train_test_split</code></td>
+<td>Dividir dados em treino/teste</td>
+</tr>
+<tr>
+<td><code>sklearn.feature_extraction.DictVectorizer</code></td>
+<td>Converter dicionários de features em matriz</td>
+</tr>
+<tr>
+<td><code>sklearn.naive_bayes.MultinomialNB</code></td>
+<td>Classificador Naïve Bayes multinomial</td>
+</tr>
+<tr>
+<td><code>sklearn.metrics.confusion_matrix</code>, <code>classification_report</code></td>
+<td>Avaliação do modelo</td>
+</tr>
+<tr>
+<td><code>sklearn.model_selection.GridSearchCV</code></td>
+<td>Ajuste de hiperparâmetros</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Status:</strong> material prático da Aula 4 organizado e pronto para execução em notebook (Google Colab ou Jupyter local).</p>
+
+</section>
+
+
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d2.html">← Aprendizado de Máquina Supervisionado</a> · <a href="https://github.com/Dani-Emiliano/FMU_Graduacao_IA" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
