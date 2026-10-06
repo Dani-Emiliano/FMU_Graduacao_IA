@@ -454,7 +454,7 @@ def rodape(extra=""):
 <footer class="rodape">
   <div class="container">
     <span>Graduação em Inteligência Artificial · FMU</span>
-    <span>{extra}<a href="{REPO_GITHUB}" target="_blank" rel="noopener">Repositório no GitHub</a></span>
+    <span>{extra}</span>
   </div>
 </footer>"""
 
@@ -692,7 +692,6 @@ def gerar_doc(d, slug, titulo, arquivo, eyebrow, anterior=None, proximo=None, ex
                 continue
             lang = "python" if p.suffix == ".py" else "text"
             blocos.append(f'<h3 id="arq-{slug_github(p.stem)}">{e(p.name)}</h3>'
-                          f'<p><a href="{url_repo(x)}">Abrir arquivo original</a></p>'
                           + _realce(p.read_text(encoding="utf-8"), lang, None))
         if blocos:
             bloco_extras = '<h2 id="arquivos-do-laboratorio">Arquivos do laboratório</h2>' + "".join(blocos)
@@ -790,7 +789,6 @@ def gerar_disciplina(d):
       <div class="meta">{"".join(f'<span class="chip conceito">{e(c)}</span>' for c in d["conceitos"])}</div>
       <div class="acoes">
         <a class="btn cheio" href="{pag_comp}">{ICONES["livro"]} Ler a compilação completa</a>
-        <a class="btn contorno" href="{url_repo(d["pasta"])}">{ICONES["pasta"]} Pasta no repositório</a>
       </div>
     </div>
     <div class="hero-disc">{ico_disc(d, grande=True)}</div>
