@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 4 · Migração do relacional para NoSQL e motores de busca · Banco de Dados Não Relacional</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d4.html">Banco de Dados Não Relacional</a> <span>›</span> <span>Aula 4 · Migração do relacional para NoSQL e motores de busca</span></nav>
+    <span class="eyebrow">Aula 4 · Banco de Dados Não Relacional</span>
+    <h1>Aula 4 · Migração do relacional para NoSQL e motores de busca</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d4.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-04--migração-de-bancos-relacionais-para-nosql-e-motores-de-busca-search-engines">AULA 04 — Migração de bancos relacionais para NoSQL e Motores de busca (search engines)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</a></li><li class="n3"><a href="#objetivos-dos-capítulos">Objetivos dos capítulos</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</a></li><li class="n1"><a href="#parte-a--migração-de-bases-relacionais-para-nosql">PARTE A — MIGRAÇÃO DE BASES RELACIONAIS PARA NoSQL</a></li><li class="n3"><a href="#31-motivos-para-migrar-bezerra">3.1 Motivos para migrar (Bezerra)</a></li><li class="n3"><a href="#32-riscos-da-migração-bezerra">3.2 Riscos da migração (Bezerra)</a></li><li class="n3"><a href="#33-os-maiores-desafios-da-migração-infográfico">3.3 Os maiores desafios da migração (Infográfico)</a></li><li class="n3"><a href="#34-passos-para-uma-migração-assertiva-bezerra">3.4 Passos para uma migração assertiva (Bezerra)</a></li><li class="n3"><a href="#35-etapas-e-processos-da-migração-quadros-3-e-4">3.5 Etapas e processos da migração (Quadros 3 e 4)</a></li><li class="n3"><a href="#36-métodos-de-migração-bezerra-com-base-em-oliveira-2017">3.6 Métodos de migração (Bezerra, com base em Oliveira, 2017)</a></li><li class="n1"><a href="#parte-b--motores-de-busca">PARTE B — MOTORES DE BUSCA</a></li><li class="n3"><a href="#37-o-que-são-e-como-surgiram-pereira">3.7 O que são e como surgiram (Pereira)</a></li><li class="n3"><a href="#38-como-funciona-um-motor-de-busca">3.8 Como funciona um motor de busca</a></li><li class="n3"><a href="#39-tipos-de-motores-de-busca-pereira">3.9 Tipos de motores de busca (Pereira)</a></li><li class="n3"><a href="#310-a-importância-do-nosql-para-motores-de-busca-pereira">3.10 A importância do NoSQL para motores de busca (Pereira)</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</a></li><li class="n3"><a href="#41-casos-e-exemplos-citados-no-material">4.1 Casos e exemplos citados no material</a></li><li class="n3"><a href="#42-exemplo-de-migração-tabela-pessoa--coleção-complementação--exemplo-ilustrativo-elaborado-para-estudo-reutiliza-a-tabela-hipotética-da-aula-02-não-faz-parte-do-material-da-fmu">4.2 Exemplo de migração: tabela pessoa → coleção (complementação — exemplo ilustrativo elaborado para estudo; reutiliza a tabela hipotética da Aula 02; não faz parte do material da FMU)</a></li><li class="n3"><a href="#43-exemplo-de-índice-invertido-complementação--exemplo-ilustrativo-elaborado-para-estudo">4.3 Exemplo de índice invertido (complementação — exemplo ilustrativo elaborado para estudo)</a></li><li class="n3"><a href="#44-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.4 Cenários de aplicação (complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</a></li><li class="n3"><a href="#45-material-prático">4.5 Material prático</a></li><li class="n2"><a href="#5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</a></li><li class="n2"><a href="#6-referências-e-conexões">6. Referências e conexões</a></li><li class="n3"><a href="#conexões-com-as-aulas-01-02-e-03-complementação--conceitos-explicados-antes-aqui-apenas-ponteiros">Conexões com as Aulas 01, 02 e 03 (complementação — conceitos explicados antes; aqui apenas ponteiros)</a></li><li class="n3"><a href="#aplicação-profissional-complementação">Aplicação profissional (complementação)</a></li><li class="n3"><a href="#referências-acadêmicas-do-material">Referências acadêmicas (do material)</a></li><li class="n3"><a href="#materiais-complementares-indicados-no-pdf-linksqr-codes-não-acessados--apenas-títulos-e-descrições-do-próprio-pdf">Materiais complementares indicados no PDF (links/QR codes não acessados — apenas títulos e descrições do próprio PDF)</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-04--migração-de-bancos-relacionais-para-nosql-e-motores-de-busca-search-engines">AULA 04 — Migração de bancos relacionais para NoSQL e Motores de busca (<em>search engines</em>)</h1></div>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e objetivos</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Informação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>Banco de Dados Não Relacional (262GGR6387A)</td>
+</tr>
+<tr>
+<td><strong>Curso</strong></td>
+<td>Graduação em Inteligência Artificial — FMU</td>
+</tr>
+<tr>
+<td><strong>Aula / Unidade</strong></td>
+<td>Aula 04 (Unidade 4)</td>
+</tr>
+<tr>
+<td><strong>Tema</strong></td>
+<td>(1) Motivos, etapas, processos e métodos de <strong>migração</strong> de bancos relacionais para NoSQL; (2) <strong>motores de busca</strong>: definição, funcionamento, tipos e a relação com NoSQL e indexação (ElasticSearch)</td>
+</tr>
+<tr>
+<td><strong>Material acadêmico</strong></td>
+<td>Apresentação da unidade; Infográfico <em>Migrações de bases relacionais para bases NoSQL</em>; capítulo <em>Migrações de bases relacionais para bases NoSQL</em> (BEZERRA, W. R. — <em>Banco de dados não relacional</em>, SAGAH); Dica do Professor e Saiba mais (migrações); Infográfico <em>Motores de busca (search engines)</em>; capítulo <em>Motores de busca (search engines)</em> (PEREIRA, M. A. — <em>Banco de dados não relacional</em>, SAGAH); Dica do Professor (Amazon A9) e Saiba mais (motores de busca)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</h3>
+<ul>
+<li>Identificar os motivos e as etapas da migração de bancos relacionais para NoSQL.</li>
+<li>Descrever os principais métodos de migração.</li>
+<li>Explicar o funcionamento dos motores de busca.</li>
+<li>Relacionar bancos NoSQL aos processos de indexação e recuperação de informações.</li>
+</ul>
+<h3 id="objetivos-dos-capítulos">Objetivos dos capítulos</h3>
+<ul>
+<li><em>Migrações:</em> definir os motivos da migração; especificar os passos necessários; descrever os métodos existentes.</li>
+<li><em>Motores de busca:</em> definir o motor de busca e seu funcionamento; classificar os motores quanto à fonte dos dados; relacionar o uso de NoSQL com a indexação dos motores de busca.</li>
+</ul>
+<blockquote>
+<p><strong>Nota de contexto:</strong> a Aula 01 mostrou <em>o que</em> é NoSQL; a Aula 02, o relacional e os índices; a Aula 03, <em>como</em> o dado é distribuído (replicação e <em>sharding</em>). A Aula 04 trata de dois problemas práticos: <strong>como sair do relacional para o NoSQL</strong> (migração) e <strong>como encontrar informação em grandes volumes</strong> (motores de busca, em que o NoSQL é a base da indexação).</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e contextualização</h2>
+<p>O crescimento do volume e da variedade de dados exige soluções mais flexíveis e escaláveis. A unidade tem dois blocos independentes, ligados pela ideia de que o NoSQL resolve problemas que o relacional enfrenta em larga escala.</p>
+<table>
+<thead>
+<tr>
+<th>Bloco</th>
+<th>Pergunta que responde</th>
+<th>Ideia central</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A. Migração</strong></td>
+<td>Por que, como e com que método levar os dados de um banco relacional para um NoSQL?</td>
+<td>A migração exige <strong>planejamento</strong> (organizacional e técnico), muda a <strong>mentalidade</strong> e o <strong>código das aplicações</strong>, e segue <strong>fases</strong> (pré-migração → fases → pós-migração) por um de <strong>três métodos</strong></td>
+</tr>
+<tr>
+<td><strong>B. Motores de busca</strong></td>
+<td>Como um motor encontra e ordena resultados a partir de palavras-chave?</td>
+<td><strong>Rastrear → indexar → consultar → ranquear por relevância</strong>; o NoSQL (em especial o <strong>ElasticSearch</strong>, baseado em Apache Lucene, com <strong>índice invertido</strong>) sustenta a indexação em grande volume</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</h2>
+
+</section>
+<div class="capitulo"><h1 id="parte-a--migração-de-bases-relacionais-para-nosql">PARTE A — MIGRAÇÃO DE BASES RELACIONAIS PARA NoSQL</h1></div>
+<div class="abertura">
+<h3 id="31-motivos-para-migrar-bezerra">3.1 Motivos para migrar (Bezerra)</h3>
+<p><strong>Ponto de partida do material:</strong> os bancos NoSQL <strong>não surgiram para substituir</strong> os relacionais, e sim para oferecer uma <strong>alternativa</strong> flexível, fluida, de alto desempenho e robusta. Uma empresa pode usar <strong>os dois</strong>, em uma <strong>arquitetura híbrida</strong>, para aproveitar o melhor de cada conceito.</p>
+<p><strong>Por que, mesmo assim, migrar?</strong></p>
+<ul>
+<li><strong>Larga escala (Frozza <em>et al.</em>, 2018):</strong> o relacional pode ter limitações em <strong>alta concorrência</strong> de leitura e escrita, em <strong>disponibilidade</strong> e em <strong>velocidade de acesso/armazenamento de <em>big data</em></strong>. Efeitos: <strong>rigidez</strong> na manipulação (por ser estruturado) e <strong>lentidão</strong> nas consultas.</li>
+<li><strong>Dados variados:</strong> aplicações geram dados de estruturas, formatos e tamanhos diferentes. Em uma rede social, os dados são em geral <strong>não estruturados</strong> (textos, imagens, vídeos), e é praticamente impossível coletá-los e armazená-los em um banco tradicional.</li>
+<li><strong>Aderência à web (Machado <em>et al.</em>, 2019):</strong> o NoSQL se ajusta melhor a ambientes web e visa superar problemas do modelo relacional.</li>
+<li><strong>Disponibilidade durante a migração (Sadalage e Fowler, 2013):</strong> migrar entre SGBDs <strong>relacionais</strong> com grandes volumes é complexo, porque <strong>manter os dados disponíveis</strong> durante a migração é praticamente impossível (a movimentação pode <strong>bloquear tabelas</strong>).</li>
+</ul>
+<p><strong>Quadro 1 do material — motivos para a migração</strong></p>
+<table>
+<thead>
+<tr>
+<th>Motivo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Desenvolvimento de novas aplicações</strong></td>
+<td>Construção de aplicações com base em outros modelos e estruturas de dados</td>
+</tr>
+<tr>
+<td><strong>Atualização de aplicações existentes</strong></td>
+<td>Necessidade de levar aplicações já existentes a modelos mais flexíveis de armazenamento e processamento</td>
+</tr>
+<tr>
+<td><strong>Integração entre sistemas</strong></td>
+<td>Fusão de sistemas de arquiteturas diversas, com bases de estruturas diferentes que precisam se comunicar</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-riscos-da-migração-bezerra">3.2 Riscos da migração (Bezerra)</h3>
+<table>
+<thead>
+<tr>
+<th>Risco</th>
+<th>O que é</th>
+<th>Mitigação citada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Perda de informação</strong></td>
+<td>Dados perdidos durante o processo</td>
+<td>Planejamento adequado; recuperação por <em>backup</em></td>
+</tr>
+<tr>
+<td><strong>Problemas de compatibilidade</strong></td>
+<td>Incompatibilidade com outros sistemas operacionais ou extensões/formatos não suportados pelo NoSQL</td>
+<td>Levantamento de requisitos <strong>antes</strong> da migração</td>
+</tr>
+<tr>
+<td><strong>Falhas catastróficas</strong></td>
+<td>Erros de <em>software</em> não previstos; mais tempo de inatividade do SGBD ou perda de dados</td>
+<td>Controle do ambiente de ponta a ponta</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Impacto nas aplicações:</strong> em uma migração (relacional → NoSQL, &quot;e vice-versa&quot;), as aplicações (<em>web</em>, <em>mobile</em>, <em>desktop</em>) precisam ter o <strong>código-fonte alterado</strong>, tanto na <strong>forma de comunicação</strong> com o novo SGBD quanto na <strong>forma de gravar e ler</strong> os dados.</p>
+<h3 id="33-os-maiores-desafios-da-migração-infográfico">3.3 Os maiores desafios da migração (Infográfico)</h3>
+<table>
+<thead>
+<tr>
+<th>Desafio</th>
+<th>Natureza</th>
+<th>O que diz o infográfico</th>
+<th>O que fazer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mentalidade relacional</strong></td>
+<td>Humano</td>
+<td>NoSQL armazena de forma diferente; muitos desenvolvedores aplicam conceitos relacionais no NoSQL e geram falhas e erros</td>
+<td>Focar em <strong>como a aplicação interage com os dados</strong>, não em linhas ou muitas tabelas</td>
+</tr>
+<tr>
+<td><strong>Relacionamentos existem no NoSQL</strong></td>
+<td>Humano/técnico</td>
+<td>Muitos acreditam que as entidades perdem seus relacionamentos; &quot;em partes&quot; é verdade, mas em bancos <strong>orientados a documentos</strong> podem existir relacionamentos, inclusive de forma mais simples, <strong>como no RavenDB</strong></td>
+<td>Aprender a modelar relacionamentos no modelo do banco de destino</td>
+</tr>
+<tr>
+<td><strong><em>Stored procedures</em> não existem</strong></td>
+<td>Técnico</td>
+<td>Não há procedimentos armazenados em NoSQL</td>
+<td><strong>Mover a lógica para a aplicação</strong>, e não para o banco; rever a lógica dos sistemas</td>
+</tr>
+<tr>
+<td><strong><em>Triggers</em> não existem</strong></td>
+<td>Técnico</td>
+<td>Gatilhos também não existem; o RavenDB tem recurso parecido, as <em><strong>Subscriptions</strong></em> (assinaturas), que permitem monitorar alterações em qualquer documento</td>
+<td>Tratar na aplicação ou usar recurso equivalente do banco escolhido</td>
+</tr>
+</tbody>
+</table>
+<p>Conclusão do infográfico: os desafios podem ser superados se o <strong>planejamento ocorrer antes da migração</strong>.</p>
+<h3 id="34-passos-para-uma-migração-assertiva-bezerra">3.4 Passos para uma migração assertiva (Bezerra)</h3>
+<p><strong>Ideia de base (Pulgatti, 2017):</strong> o NoSQL não tem esquema definido; a <strong>semântica</strong> (significado) dos dados fica a cargo do <strong>desenvolvedor</strong>, e não do SGBD. O programador deve organizar os dados no destino para que sejam <strong>interpretados da mesma forma</strong> que no relacional. Esses passos devem ser considerados <strong>antes</strong> de iniciar a mudança.</p>
+<p><strong>A) Ponto de vista organizacional (Quadro 2)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Orçamento</strong></td>
+<td>Recursos financeiros dedicados à migração, inclusive para contratar mão de obra especializada</td>
+</tr>
+<tr>
+<td><strong>Estratégia</strong></td>
+<td>Levantamento de requisitos (prioridades) e planejamento do <strong>cronograma</strong></td>
+</tr>
+<tr>
+<td><strong>Usuários</strong></td>
+<td>Participação ativa dos usuários finais: definem e esclarecem regras de negócio, ampliam a visão sobre quais dados priorizar e revelam o que esperam (desempenho? flexibilidade? capacidade de armazenamento?)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>B) Ponto de vista técnico</strong></p>
+<table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>O que fazer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Auditoria</strong></td>
+<td>Auditar o banco de origem para achar dados <strong>obsoletos</strong> ou campos <strong>não usados</strong> que podem ser ignorados; verificar se a <strong>capacidade</strong> do destino atende à expectativa</td>
+</tr>
+<tr>
+<td><em><strong>Backup</strong></em></td>
+<td>Copiar <strong>antes</strong> de iniciar a migração ou de manipulações agressivas; permite restaurar em caso de falha</td>
+</tr>
+<tr>
+<td><strong>Validação dos dados</strong></td>
+<td>Verificar a <strong>integridade</strong> na origem e no destino durante e após a migração</td>
+</tr>
+<tr>
+<td><strong>Testes</strong></td>
+<td>Medir a <strong>performance</strong> do novo SGBD <strong>após</strong> a migração; só ao fim dos testes desativar o banco anterior</td>
+</tr>
+<tr>
+<td><strong>Mapeamento de tipos de dados</strong></td>
+<td>Conhecer os tipos envolvidos; verificar <strong>metadados</strong> na origem; converter para tipo correspondente no destino. Se não houver equivalente, converter na origem, converter durante a migração ou, junto com a equipe de desenvolvimento, <strong>excluir</strong> o dado se for pouco relevante</td>
+</tr>
+<tr>
+<td><strong>Caracteres</strong></td>
+<td>Cuidar da codificação: caractere incompatível causa erro ou perda de dados e pode inviabilizar a conclusão</td>
+</tr>
+<tr>
+<td><strong>Modelagem de dados</strong></td>
+<td>No relacional, a regra simples é o <strong>relacionamento entre entidades</strong>; no NoSQL <strong>não há padrão único</strong> (depende do tipo de banco). Em bancos orientados a documentos (MongoDB, CouchDB): formato semiestruturado <strong>JSON</strong> ou <strong>BSON</strong> (JSON binário); <strong>documento</strong> = arquivo JSON; <strong>coleção</strong> = conjunto de documentos; documentos têm <strong>atributos</strong> com valores. Em uma migração, <strong>tabela (relacional) → coleção (NoSQL)</strong></td>
+</tr>
+<tr>
+<td><strong>Falhas na migração</strong></td>
+<td>Prever desconexão de rede ou problemas de gravação nos servidores; controlar o ambiente de ponta a ponta</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Fique atento (do material):</strong> outros tipos de NoSQL também são usados em migrações (chave/valor, colunas, grafos, entre outros) e a modelagem deve respeitar a estrutura de cada um (ver <strong>Aula 01 §3.6</strong>).</p>
+</blockquote>
+<h3 id="35-etapas-e-processos-da-migração-quadros-3-e-4">3.5 Etapas e processos da migração (Quadros 3 e 4)</h3>
+<p><strong>Quadro 3 — etapas</strong></p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pré-migração</strong></td>
+<td>Fase preparatória, no SGBD de origem; organiza todas as informações sobre os dados a migrar</td>
+</tr>
+<tr>
+<td><strong>Fases 1 a 5</strong></td>
+<td>Processos executados conforme o projeto; podem ser <strong>mais</strong> (&gt; 5) ou <strong>menos</strong> (&lt; 5) fases, e os processos variam de projeto para projeto</td>
+</tr>
+<tr>
+<td><strong>Pós-migração</strong></td>
+<td>Fase final: dados já transferidos ao NoSQL; os dados do destino são <strong>comparados</strong> aos da origem para verificar a integridade</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quadro 4 — processos (glossário da migração)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Origem</strong></td>
+<td>SGBD relacional de onde os dados saem</td>
+</tr>
+<tr>
+<td><strong>Destino</strong></td>
+<td>SGBD NoSQL para onde os dados vão</td>
+</tr>
+<tr>
+<td><strong>EI (extração inicial)</strong></td>
+<td>Extração inicial dos dados da base relacional (origem)</td>
+</tr>
+<tr>
+<td><strong>Arquivos</strong></td>
+<td>Dados extraídos da origem <strong>já no formato aceito</strong> pelo NoSQL</td>
+</tr>
+<tr>
+<td><strong>Coletor (C1)</strong></td>
+<td>Comunicação entre os servidores de origem e destino, monitorada pelo <em>software</em> de migração</td>
+</tr>
+<tr>
+<td><strong>EO (extração <em>on-line</em>)</strong></td>
+<td>Extração das <strong>operações de manipulação e definição de dados</strong> ocorridas na origem e envio ao destino</td>
+</tr>
+<tr>
+<td><strong>RI (replicação inicial)</strong></td>
+<td>Replica no destino as informações extraídas pelo EI</td>
+</tr>
+<tr>
+<td><strong>RO (replicação <em>on-line</em>)</strong></td>
+<td>Replica as informações extraídas pelo EO, mantendo-se <em>on-line</em> enquanto ocorre a sincronização</td>
+</tr>
+<tr>
+<td><strong>Exportação para CSV</strong></td>
+<td>Gravação e envio dos dados em CSV (<em>comma separated values</em>) da origem ao destino (etapa <em><strong>off-line</strong></em>)</td>
+</tr>
+<tr>
+<td><strong>Importação do CSV</strong></td>
+<td>Leitura do CSV no servidor de destino (etapa <em><strong>off-line</strong></em>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36-métodos-de-migração-bezerra-com-base-em-oliveira-2017">3.6 Métodos de migração (Bezerra, com base em Oliveira, 2017)</h3>
+<p>Existem dois tipos de método, <em><strong>on-line</strong></em> e <em><strong>off-line</strong></em>, com variações. O capítulo detalha <strong>três</strong>:</p>
+<p><strong>Método 1 — Migração <em>on-line</em> com sincronização contínua (Quadro 5)</strong><br />
+A aplicação <strong>permanece conectada ao SGBD de origem, com sincronia total</strong>, durante a transferência. Só é conectada à nova estrutura <strong>quando a migração termina</strong>. Exige conhecimento avançado de programação (os mecanismos de conexão mudam de um SGBD para outro). Quando necessário, pode haver desconexão para testes.</p>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>O que acontece</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pré-migração</td>
+<td>Aplicação e dados no banco relacional</td>
+</tr>
+<tr>
+<td>Fase 1</td>
+<td>Aplicação em execução; <strong>EI</strong> dos dados</td>
+</tr>
+<tr>
+<td>Fase 2</td>
+<td>Aplicação em execução; <strong>RI</strong> no servidor de destino</td>
+</tr>
+<tr>
+<td>Fase 3</td>
+<td>Aplicação em execução; <strong>EO</strong> dos dados</td>
+</tr>
+<tr>
+<td>Fase 4</td>
+<td>Aplicação em execução; <strong>RO</strong> dos dados</td>
+</tr>
+<tr>
+<td>Pós-migração</td>
+<td>Aplicação e dados no banco NoSQL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Método 2 — Migração <em>off-line</em> por meio de uma ferramenta (Quadro 6)</strong><br />
+A aplicação <strong>não está em execução</strong>; a transferência é controlada por um <em>software</em> de migração. <strong>Exemplo do material:</strong> <strong>Oracle GoldenGate</strong>, que faz <strong>replicação heterogênea</strong>: entre SGBDs de versões diferentes, sistemas operacionais distintos e até estruturas diferentes (como NoSQL). A Figura 2 do material mostra origens (Oracle, MySQL, SQL Server, IBM DB2, Informix, SAP Sybase, Tandem, JMS, Cassandra) e destinos (DBMS, nuvem, Big Data, NoSQL — como Kafka, MongoDB, ElasticSearch, HBase — e <em>streams</em>).</p>
+<table>
+<thead>
+<tr>
+<th>Pré-migração</th>
+<th>Fase 1</th>
+<th>Fase 2</th>
+<th>Pós-migração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aplicação e dados no relacional</td>
+<td><strong>EI</strong> no servidor de origem</td>
+<td><strong>RI</strong> no servidor de destino</td>
+<td>Aplicação e dados no NoSQL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Método 3 — Migração <em>off-line</em> manual por meio de <em>scripts</em> (Quadro 7)</strong><br />
+Processo <strong>manual</strong>, feito por um especialista que levanta quais dados extrair, o <strong>formato</strong> em que serão gravados e enviados e como será o <strong>carregamento</strong> no destino.</p>
+<table>
+<thead>
+<tr>
+<th>Pré-migração</th>
+<th>Fase 1</th>
+<th>Fase 2</th>
+<th>Pós-migração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aplicação e dados no relacional</td>
+<td><strong>Gerar arquivo CSV</strong> para enviar ao destino</td>
+<td><strong>Ler o arquivo CSV</strong> no destino</td>
+<td>Aplicação e dados no NoSQL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quadro-síntese dos três métodos</strong> <em>(organização de estudo a partir dos Quadros 4 a 7; a coluna &quot;Quando usar&quot; é complementação)</em></p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th><em>On-line</em> com sincronização contínua</th>
+<th><em>Off-line</em> por ferramenta</th>
+<th><em>Off-line</em> manual (<em>scripts</em>/CSV)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aplicação durante a migração</strong></td>
+<td>Em execução, ligada à origem</td>
+<td>Parada</td>
+<td>Parada</td>
+</tr>
+<tr>
+<td><strong>Processos usados</strong></td>
+<td>EI → RI → EO → RO</td>
+<td>EI → RI</td>
+<td>Exportação CSV → Importação CSV</td>
+</tr>
+<tr>
+<td><strong>Quem controla</strong></td>
+<td><em>Software</em> de migração (coletor C1) <em>(interpretação de estudo)</em></td>
+<td><em>Software</em> de migração</td>
+<td>Especialista (<em>scripts</em>)</td>
+</tr>
+<tr>
+<td><strong>Nº de fases (material)</strong></td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Exige</strong></td>
+<td>Programação avançada</td>
+<td>Ferramenta adequada (ex.: GoldenGate)</td>
+<td>Conhecimento do formato e da carga</td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong> <em>(complementação)</em></td>
+<td>Sistema que <strong>não pode parar</strong></td>
+<td>Origens/destinos <strong>heterogêneos</strong> e janela de parada aceitável</td>
+<td>Volume pequeno ou médio, equipe com domínio técnico, parada tolerável</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusão do capítulo:</strong> as migrações de relacional para NoSQL podem ocorrer de forma leve e sem complicações <strong>desde que haja planejamento e medidas preventivas</strong>.</p>
+<blockquote>
+<p><strong>Conexão com a Aula 03 <em>(complementação)</em>:</strong> EI/RI/EO/RO lembram a <strong>replicação</strong> (cópia inicial + acompanhamento contínuo das alterações). O método <em>on-line</em> se aproxima de replicação <em>on-line</em>; os métodos <em>off-line</em>, de replicação <em>off-line</em> (Aula 03 §3.4).</p>
+</blockquote></div>
+<div class="capitulo"><h1 id="parte-b--motores-de-busca">PARTE B — MOTORES DE BUSCA</h1></div>
+<div class="abertura">
+<h3 id="37-o-que-são-e-como-surgiram-pereira">3.7 O que são e como surgiram (Pereira)</h3>
+<p><strong>Definição:</strong> programas desenvolvidos para <strong>pesquisar e localizar informações relevantes</strong> a partir de termos inseridos pelos usuários, devolvendo uma lista dos <em>sites</em> e arquivos que mais correspondem à busca (Tarakeswar e Kavitha, 2011). Podem usar <strong>modelos probabilísticos ou booleanos</strong> e ter diferentes <strong>fontes de dados</strong> e de <strong>indexação</strong>.</p>
+<p><strong>Linha do tempo do material</strong></p>
+<table>
+<thead>
+<tr>
+<th>Marco</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1945</strong></td>
+<td><strong>Memex</strong>, dispositivo descrito por Vannevar Bush: comprimir e armazenar informação de livros e documentos e consultá-la de forma rápida. É considerado o conceito inicial do <strong>hipertexto/<em>hiperlink</em></strong> (Nyce e Kahn, 1991)</td>
+</tr>
+<tr>
+<td><strong>Anos 1960</strong></td>
+<td><strong>Internet</strong>: rede de computadores interconectados (auge da Guerra Fria), para facilitar a conexão entre laboratórios; popularizada no fim dos anos 80 com o uso comercial</td>
+</tr>
+<tr>
+<td><strong>Início dos anos 90</strong></td>
+<td><strong>WWW</strong> (<em>World Wide Web</em>): sistema de informação global <strong>que funciona dentro da internet</strong>, com interface de fácil acesso baseada em <em>hiperlink</em></td>
+</tr>
+<tr>
+<td><strong>1990</strong></td>
+<td><strong>Archie</strong>, o primeiro motor de busca, ainda na internet <strong>pré-web</strong>: diretório de serviço (documentos, nomes e contatos); logo substituído por motores pós-web</td>
+</tr>
+<tr>
+<td><strong>1992</strong></td>
+<td>Artigo de Berners-Lee, Cailliau e Groff já menciona ferramentas de busca que facilitem o acesso além do <em>hiperlink</em></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Atenção ao conceito:</strong> <strong>internet ≠ WWW</strong> (a web é um sistema que roda sobre a internet).</p>
+<h3 id="38-como-funciona-um-motor-de-busca">3.8 Como funciona um motor de busca</h3>
+<p>O processo começa <strong>antes</strong> de o usuário pesquisar. O infográfico resume em <strong>seis passos</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Passo (infográfico)</th>
+<th>Detalhe do capítulo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Mesmo antes de ser ferramenta de busca, o motor <strong>sonda</strong> materiais da web e os organiza em uma espécie de <strong>biblioteca</strong></td>
+<td><strong>Rastreadores</strong> (<em>web crawlers</em>, aranhas, <em>spiders</em>) detectam páginas públicas, analisam conteúdo e <em>links</em> e extraem dados para catalogar e classificar. Exemplos: <strong>Googlebot</strong> (Google), <strong>Yahoo! Slurp</strong> (Yahoo!), <strong>Msnbot</strong> (Microsoft)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>O usuário insere frase ou palavras na barra, com ou sem filtros</td>
+<td>O motor analisa o significado de cada palavra, <strong>erros de digitação</strong> (&quot;mangs&quot; → &quot;manga&quot;), <strong>contexto</strong> (&quot;manga&quot; da blusa ou a fruta?), se a necessidade é ampla ou específica, se o resultado deve ser <strong>local ou global</strong>, notícias <strong>antigas ou recentes</strong> (modelos linguísticos e compreensão de linguagem natural)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Procura as <strong>palavras-chave</strong> nos arquivos <strong>indexados</strong> nessa &quot;biblioteca&quot;</td>
+<td><strong>Indexação</strong> = registrar as informações e criar o <strong>índice de pesquisa</strong>. O rastreador analisa texto, imagens, vídeos e áudios; o índice do Google tem mais de <strong>100 milhões de gigabytes</strong> (material, fonte [2020?])</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cálculos de <strong>proximidade</strong> entre o buscado e os resultados criam um <em>ranking</em> por <strong>relevância</strong></td>
+<td>Princípios gerais: <strong>localização</strong> da palavra-chave no arquivo e <strong>frequência</strong> com que aparece. Mais relevantes: termo mais vezes e no <strong>início da página, nos <em>links</em>, subtítulos e <em>tags</em></strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Resultados exibidos em nova página, na ordem do <em>ranking</em></td>
+<td>Cada motor tem <strong>seu próprio método de pesos</strong>; por isso o mesmo termo gera <strong>resultados ordenados de modo diverso</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>O usuário acessa informações relacionadas e pode <strong>filtrar</strong> (ano, idioma)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Outros detalhes do material</strong></p>
+<ul>
+<li><strong>Duplicados:</strong> os itens coletados identificam conteúdo duplicado; no Google, as &quot;cópias&quot; são <strong>penalizadas</strong>, exibidas em posição e frequência menores.</li>
+<li><strong>Atualização:</strong> o motor faz <strong>revisitação</strong> das páginas para achar mudanças.</li>
+<li><strong>Vários termos:</strong> a frase &quot;amarelo, lápis, xícara&quot; não faz sentido, mas o motor devolve xícaras e lápis amarelos, e muitas vezes os três itens juntos (Figura 1, Google Imagens). Isso ocorre pelo operador booleano <strong>AND implícito</strong> nas barras de busca.</li>
+</ul>
+<p><strong>Operadores booleanos</strong> (Yoshioka e Haraguchi, 2005): palavras que informam como combinar termos; além do <strong>AND</strong>, há <strong>OR</strong> e <strong>NOT</strong> (E, OU, NÃO). Podem ser usados explicitamente na busca avançada, em <strong>maiúsculas</strong>, e funcionam como <strong>filtros</strong> que selecionam conjuntos de documentos e modificam a classificação.</p>
+<p><strong>Modelos de cálculo da relevância</strong></p>
+<table>
+<thead>
+<tr>
+<th>Modelo</th>
+<th>Como funciona</th>
+<th>Observações do material</th>
+<th>Quando usar <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Booleano</strong></td>
+<td><strong>Correspondência exata</strong> entre os termos e os documentos; o documento é <strong>relevante ou irrelevante</strong>, sem meio-termo</td>
+<td>O mais <strong>antigo e simples</strong></td>
+<td>Consultas que exigem filtro exato (código, número de processo, termo obrigatório)</td>
+</tr>
+<tr>
+<td><strong>Probabilístico</strong></td>
+<td>Estima a <strong>probabilidade</strong> de o usuário achar o documento relevante, <strong>além da correspondência de termos</strong></td>
+<td>Pode ser melhorado com <strong>inferência bayesiana</strong></td>
+<td>Buscas em linguagem natural, em que se quer <strong>ordenar por relevância</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Aprendizagem bayesiana (Zhao, 2018):</strong> método para calcular a probabilidade assumida, a partir dos <strong>registros de visita a <em>sites</em> anteriores do usuário</strong>, inferindo qual resultado o agradaria mais; torna o sistema <strong>personalizado</strong>.</p>
+<blockquote>
+<p><strong>Fique atento (do material):</strong> <strong>consulta</strong> × <strong>pesquisa</strong>. <em>Consulta</em>: só aparecem os resultados que correspondem aos termos inseridos. <em>Pesquisa</em>: pode incluir termos opcionais e devolve resultados <strong>ordenados por relevância</strong>.</p>
+</blockquote>
+<h3 id="39-tipos-de-motores-de-busca-pereira">3.9 Tipos de motores de busca (Pereira)</h3>
+<p><strong>Quanto à indexação</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Como indexa</th>
+<th>Vantagem</th>
+<th>Limitação</th>
+<th>Exemplo do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Por rastreador</strong></td>
+<td><em>Bot</em>/<em>spider</em> rastreia e indexa novos conteúdos. Três partes: <strong>rastreador</strong>, <strong>índice</strong> e <strong><em>software</em> do mecanismo</strong></td>
+<td>Informação <strong>mais atualizada</strong> (rastreio constante)</td>
+<td>—</td>
+<td><strong>Ask</strong></td>
+</tr>
+<tr>
+<td><strong>Manual</strong></td>
+<td><strong>Atividade humana</strong>: o dono da página define endereço, título e descrição; a submissão é <strong>revisada por editores</strong>; também pode vir de documentos não digitais transcritos</td>
+<td><strong>Qualidade</strong> do conteúdo melhor</td>
+<td>Alterações só aparecem quando reenviadas manualmente, o que limita resultados recentes</td>
+<td>Motores especializados, como os de <strong>genealogia</strong></td>
+</tr>
+<tr>
+<td><strong>Híbrido</strong></td>
+<td>Combina rastreador e manual</td>
+<td>Dados atualizados <strong>e</strong> curados</td>
+<td>—</td>
+<td><strong>Google Search</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quadro 1 do material (comparação)</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">Rastreador</th>
+<th style="text-align:center">Manual</th>
+<th style="text-align:center">Híbrido</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indexação por robôs</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+</tr>
+<tr>
+<td>Indexação manual</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✔</td>
+</tr>
+<tr>
+<td>Dados sempre atualizados</td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+</tr>
+<tr>
+<td>Dados mais confiáveis e curados</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">✔</td>
+<td style="text-align:center">✔</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quanto à fonte de dados</strong></p>
+<table>
+<thead>
+<tr>
+<th>Fonte</th>
+<th>Como funciona</th>
+<th>Exemplo do material</th>
+<th>Quando usar <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Metadados</strong></td>
+<td>A maior parte dos motores da internet usa <strong>metadados</strong> de arquivos e <em>sites</em>: informações <strong>sobre</strong> os dados, em arquivos &quot;invisíveis&quot;, incluindo palavras-chave; a indexação ocorre sobre campos bem definidos</td>
+<td>Figura 2: <code>&lt;title&gt;</code>, <code>&lt;meta name=&quot;description&quot; ...&gt;</code>, <code>&lt;meta name=&quot;keywords&quot; ...&gt;</code></td>
+<td>Busca na web aberta</td>
+</tr>
+<tr>
+<td><strong>Federados</strong></td>
+<td><strong>Mesma pesquisa</strong> em <strong>vários bancos, <em>sites</em> e repositórios</strong>, usando a indexação <strong>já existente em cada um</strong>; a busca é <strong>paralela</strong> e os resultados são <strong>mesclados</strong> antes de exibir (&quot;pesquisa federada&quot;, Melton e Buxton, 2011)</td>
+<td><strong>Google Scholar</strong></td>
+<td>Reunir fontes independentes sem reindexar tudo</td>
+</tr>
+<tr>
+<td><strong>Por <em>desktop</em></strong></td>
+<td>Fonte <strong>não relacionada à internet</strong>: busca na <strong>própria máquina</strong> (arquivos, músicas, filmes, textos). Faz busca e indexação de forma <strong>contínua</strong>, mantendo o índice atualizado; coleta nome do arquivo, caminho, metadados e conteúdo</td>
+<td><strong>Windows Search</strong></td>
+<td>Achar arquivos entre centenas de pastas</td>
+</tr>
+</tbody>
+</table>
+<h3 id="310-a-importância-do-nosql-para-motores-de-busca-pereira">3.10 A importância do NoSQL para motores de busca (Pereira)</h3>
+<p><strong>Por quê?</strong> NoSQL (&quot;<em>not only SQL</em>&quot;, &quot;não apenas SQL&quot;) não segue a linguagem estruturada, o que facilita guardar <strong>grandes volumes</strong> com <strong>alta escalabilidade</strong> e <strong>disponibilidade</strong> (Hiriyannaiah <em>et al.</em>, 2018). Por isso é ideal &quot;por trás&quot; de um motor: armazena o volume crescente de informações da indexação e facilita os resultados conforme os critérios. Exemplos citados: <strong>Apache Lucene, Apache Solr e ElasticSearch</strong> (McCreary e Kelly, 2014).</p>
+<p><strong>Estratégias que o NoSQL usa para tornar a busca eficaz</strong></p>
+<table>
+<thead>
+<tr>
+<th>Estratégia</th>
+<th>O que é</th>
+<th>Quando usar <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Índice de intervalo</strong></td>
+<td>Indexa todos os valores de cada item em <strong>ordem crescente</strong></td>
+<td><strong>Palavras-chave alfabéticas</strong> e <strong>datas</strong> (o material), p. ex. busca por período</td>
+</tr>
+<tr>
+<td><strong>Índice reverso (invertido)</strong></td>
+<td>Para <strong>cada palavra</strong> da coleção, a <strong>lista de documentos</strong> que a contêm</td>
+<td>Acelerar busca de documentos por <strong>palavra-chave</strong></td>
+</tr>
+<tr>
+<td><strong>Classificação por relevância</strong></td>
+<td>Calcula a probabilidade de a página corresponder ao que se procura (quantidade de palavras-chave, tipo de documento, avaliação de conteúdos etc.)</td>
+<td>Ordenar os resultados</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ElasticSearch (Elastic, c2020)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Característica</th>
+<th>Descrição do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Natureza</td>
+<td>Motor de pesquisa <strong>orientado a documentos</strong>, <strong>gratuito</strong> e de <strong>código aberto</strong>, baseado no <strong>Apache Lucene</strong></td>
+</tr>
+<tr>
+<td>Armazenamento</td>
+<td>Dados armazenados <strong>centralmente</strong>; busca rápida; cálculo de relevância com ajuste fino e analítico; fácil de ampliar</td>
+</tr>
+<tr>
+<td>Usos</td>
+<td>Busca em aplicativos e <em>websites</em>, buscas empresariais, análise e monitoramento de dados; aceita dados de <strong>diferentes tipos e fontes</strong></td>
+</tr>
+<tr>
+<td>Indexação</td>
+<td>Após a análise dos dados brutos, os dados são salvos em <strong>documentos JSON</strong>; o <strong>índice</strong> é o conjunto de documentos relacionados; cada documento tem <strong>chaves</strong> (nomes de campos) ligadas a <strong>valores</strong>. A estratégia é o <strong>índice invertido</strong>, que torna os dados &quot;buscáveis&quot; praticamente em <strong>tempo real</strong></td>
+</tr>
+<tr>
+<td>Distribuição</td>
+<td>Sistema distribuído: índices divididos em <em><strong>shards</strong></em> (partições), que podem ser <strong>replicados</strong>; maior tolerância a falhas, pois é possível recuperar índices em outras partições se a principal falhar</td>
+</tr>
+<tr>
+<td>Recursos</td>
+<td><strong>Facetagem</strong> e <strong>percolação</strong></td>
+</tr>
+<tr>
+<td>Implantação</td>
+<td>Serviços consolidados (<strong>ElasticSearch Service</strong> na AWS, no Google Cloud Platform e no Alibaba Cloud) ou <em>download</em> e instalação no próprio <em>hardware</em>/nuvem</td>
+</tr>
+<tr>
+<td>Aplicações derivadas</td>
+<td>Mais de 10; <strong>Elastic App Search</strong> (APIs e painéis; tolerância a erros de digitação; calibrar relevância com sinônimos; reordenar resultados; pesos distintos) e <strong>Elastic Site Search</strong> (busca avançada em <em>sites</em>; rastreador sem manutenção; usado por SurveyMonkey e Shopify)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Saiba mais (do material) — percolação:</strong> método de pesquisa <strong>reverso</strong>: em vez de devolver todos os <strong>documentos</strong> que correspondem ao que foi pesquisado, devolve todas as <strong>pesquisas já armazenadas</strong> que correspondem a um documento. Útil para notificar quando um novo documento corresponde a uma consulta registrada.</p>
+</blockquote>
+<blockquote>
+<p>Ver <strong>Aula 03 §3.9–3.11</strong> (<em>shards</em>, réplicas e <em>clusters</em>): o ElasticSearch aplica essas ideias ao índice de busca. Ver <strong>Aula 02 §3.7</strong> (índices): o índice invertido é outro tipo de estrutura de apoio à busca, voltado a <strong>texto</strong>.</p>
+</blockquote></div>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</h2>
+<h3 id="41-casos-e-exemplos-citados-no-material">4.1 Casos e exemplos citados no material</h3>
+<ul>
+<li><strong>Rede social:</strong> dados não estruturados que o relacional tradicional não comporta bem (motivo de migração).</li>
+<li><strong>Oracle GoldenGate:</strong> replicação heterogênea para migração <em>off-line</em> por ferramenta (origens relacionais → NoSQL, nuvem, <em>big data</em>, <em>streams</em>).</li>
+<li><strong>RavenDB:</strong> relacionamentos entre documentos e <em>Subscriptions</em> como substituto de <em>triggers</em>.</li>
+<li><strong>MongoDB e CouchDB:</strong> modelo de documentos JSON/BSON; tabela → coleção.</li>
+<li><strong>Busca &quot;amarelo, lápis, xícara&quot;:</strong> AND implícito no Google Imagens.</li>
+<li><strong>Busca &quot;manga&quot;:</strong> ambiguidade resolvida pelo contexto; &quot;mangs&quot; corrigido para &quot;manga&quot;.</li>
+<li><strong>Google Search</strong> (híbrido), <strong>Ask</strong> (rastreador), <strong>Google Scholar</strong> (federado), <strong>Windows Search</strong> (<em>desktop</em>), motores de <strong>genealogia</strong> (manual).</li>
+<li><strong>ElasticSearch</strong> em SurveyMonkey e Shopify (Elastic Site Search).</li>
+<li><strong>Dica do Professor:</strong> o motor <strong>A9 da Amazon</strong> é focado em <strong>qual produto é mais atraente ao cliente</strong>, e não apenas em quais resultados correspondem à pesquisa (descrição do próprio PDF; vídeo/QR não acessado).</li>
+</ul>
+<h3 id="42-exemplo-de-migração-tabela-pessoa--coleção-complementação--exemplo-ilustrativo-elaborado-para-estudo-reutiliza-a-tabela-hipotética-da-aula-02-não-faz-parte-do-material-da-fmu">4.2 Exemplo de migração: tabela <code>pessoa</code> → coleção <em>(complementação — exemplo ilustrativo elaborado para estudo; reutiliza a tabela hipotética da Aula 02; não faz parte do material da FMU)</em></h3>
+<p><strong>Origem (relacional):</strong></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>nome</th>
+<th>idade</th>
+<th>endereço</th>
+<th>estudo</th>
+<th>sexo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Carla</td>
+<td>41</td>
+<td>Rua das Flores, 120</td>
+<td>Superior</td>
+<td>F</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Destino (documento JSON em uma coleção <code>pessoa</code>):</strong></p>
+<pre><code class="language-json"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">"_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"nome"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Carla"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"idade"</span><span class="p">:</span><span class="w"> </span><span class="mi">41</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"endereco"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rua das Flores, 120"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"estudo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Superior"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"sexo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"F"</span>
+<span class="p">}</span>
+</pre></div>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Conceito relacional</th>
+<th>Equivalente no destino de documentos (segundo o material)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabela</td>
+<td><strong>Coleção</strong></td>
+</tr>
+<tr>
+<td>Linha</td>
+<td><strong>Documento</strong> (JSON/BSON)</td>
+</tr>
+<tr>
+<td>Coluna</td>
+<td><strong>Atributo</strong> do documento</td>
+</tr>
+</tbody>
+</table>
+<p>Passos do material aplicados ao exemplo: <strong>auditoria</strong> (a coluna <code>estudo</code> é usada?), <strong>backup</strong>, <strong>mapeamento de tipos</strong> (inteiro → número; texto → <em>string</em>), <strong>caracteres</strong> (acentos em &quot;Superior&quot;/&quot;endereço&quot; e a codificação), <strong>modelagem</strong> (manter <code>endereco</code> embutido ou separar em outro documento?), <strong>validação</strong> (comparar contagem e amostras origem × destino) e <strong>testes</strong> de desempenho.</p>
+<h3 id="43-exemplo-de-índice-invertido-complementação--exemplo-ilustrativo-elaborado-para-estudo">4.3 Exemplo de índice invertido <em>(complementação — exemplo ilustrativo elaborado para estudo)</em></h3>
+<p><strong>Documentos:</strong> D1 = &quot;xícara amarelo&quot;; D2 = &quot;lápis amarelo&quot;; D3 = &quot;xícara lápis&quot;.</p>
+<table>
+<thead>
+<tr>
+<th>Palavra</th>
+<th>Documentos (índice invertido)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>amarelo</td>
+<td>D1, D2</td>
+</tr>
+<tr>
+<td>lápis</td>
+<td>D2, D3</td>
+</tr>
+<tr>
+<td>xícara</td>
+<td>D1, D3</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Consulta</th>
+<th>Operação sobre as listas</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>amarelo AND lápis</code></td>
+<td>{D1, D2} ∩ {D2, D3}</td>
+<td><strong>D2</strong></td>
+</tr>
+<tr>
+<td><code>amarelo OR lápis</code></td>
+<td>{D1, D2} ∪ {D2, D3}</td>
+<td><strong>D1, D2, D3</strong></td>
+</tr>
+<tr>
+<td><code>amarelo AND NOT xícara</code></td>
+<td>{D1, D2} − {D1, D3}</td>
+<td><strong>D2</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Sem índice, o motor teria de <strong>ler todos os documentos</strong> a cada busca; com ele, vai direto à lista da palavra. <em>(Ver Aula 02 §3.7: mesma ideia de &quot;sumário que aponta para o dado&quot;.)</em></p>
+<h3 id="44-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.4 Cenários de aplicação <em>(complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</em></h3>
+<ul>
+<li><strong>Imagine que você tem este problema:</strong> um sistema de pedidos que <strong>não pode ficar parado</strong> e precisa migrar para um banco de documentos. <strong>Será analisado pelo método:</strong> migração <strong><em>on-line</em> com sincronização contínua</strong>, <strong>porque</strong> a aplicação segue ligada à origem enquanto EI, RI, EO e RO copiam e sincronizam os dados.</li>
+<li><strong>Imagine que você tem este problema:</strong> um cadastro pequeno, usado só em horário comercial, e a equipe pode parar o sistema no fim de semana. <strong>Será analisado pelo método:</strong> <strong><em>off-line</em> manual por <em>scripts</em> (CSV)</strong>, <strong>porque</strong> o volume é pequeno, a parada é tolerável e basta exportar e importar o arquivo.</li>
+<li><strong>Imagine que você tem este problema:</strong> dados em Oracle, SQL Server e DB2 que precisam ir para MongoDB, Kafka e ElasticSearch. <strong>Será analisado pelo método:</strong> <strong><em>off-line</em> por ferramenta</strong> (como o GoldenGate), <strong>porque</strong> a replicação heterogênea cobre origens e destinos diferentes.</li>
+<li><strong>Imagine que você tem este problema:</strong> o cálculo de comissão vive em uma <em><strong>stored procedure</strong></em> no banco relacional. <strong>Será analisado pelo desafio:</strong> &quot;<em>stored procedures</em> não existem&quot;, <strong>porque</strong>, segundo o material, a lógica deve ser movida para a aplicação.</li>
+<li><strong>Imagine que você tem este problema:</strong> um portal com milhões de páginas e usuários que buscam por palavras e esperam o resultado ordenado. <strong>Será analisado pela solução:</strong> motor de busca com <strong>índice invertido (ElasticSearch)</strong>, <strong>porque</strong> ele aponta, para cada palavra, os documentos que a contêm e calcula relevância.</li>
+<li><strong>Imagine que você tem este problema:</strong> reunir resultados de <strong>três bases independentes</strong> sem reindexá-las. <strong>Será analisado pelo tipo:</strong> motor de busca <strong>federado</strong>, <strong>porque</strong> consulta cada base com a indexação que ela já tem e mescla os resultados.</li>
+<li><strong>Imagine que você tem este problema:</strong> achar um contrato &quot;dentro de centenas de pastas&quot; do seu computador. <strong>Será analisado pelo tipo:</strong> motor de busca por <em><strong>desktop</strong></em>, <strong>porque</strong> a fonte é a própria máquina e o índice é atualizado continuamente.</li>
+</ul>
+<h3 id="45-material-prático">4.5 Material prático</h3>
+<p>O material da Aula 4 <strong>não traz código</strong> (apenas quadros, figuras e o trecho de metadados HTML da Figura 2). Por isso <strong>não há arquivo <code>AULA_04_..._PRATICO.md</code></strong>. Os exemplos de 4.2 e 4.3 são ilustrações de estudo.</p>
+</section>
+<section class="bloco"><h2 id="5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</h2>
+<ol>
+<li><strong>Fases do Quadro 3 × quadros 5 a 7:</strong> o Quadro 3 fala em &quot;Fases 1 a 5&quot; (podendo ser mais ou menos), mas o método <em>on-line</em> tem <strong>4 fases</strong> e os dois <em>off-line</em> têm <strong>2</strong>. O número 5 é apenas ilustrativo.</li>
+<li><strong>Coletor (C1) sem lugar nas fases:</strong> o Quadro 4 define o coletor como a comunicação entre origem e destino, mas ele <strong>não aparece</strong> nos Quadros 5 a 7. A atribuição &quot;quem controla&quot; na síntese 3.6 é interpretação de estudo.</li>
+<li><strong>Quadro 6 (<em>off-line</em> por ferramenta) ambíguo:</strong> o texto diz que a transferência é &quot;controlada por um <em>software</em> de migração, <strong>porém os processos são executados manualmente</strong>&quot;. Se a ferramenta controla, o que é manual? Não fica claro. Além disso, o método usa só EI e RI, sem EO/RO, embora o texto diga que &quot;se assemelha ao <em>on-line</em>&quot;.</li>
+<li><strong>Método <em>on-line</em>: &quot;conectada à nova estrutura somente ao final&quot; × &quot;desconexão para testes&quot;:</strong> o capítulo não explica como a aplicação é testada contra o destino sem se desconectar da origem, nem como as <strong>escritas feitas durante a migração</strong> são aplicadas (o papel de EO/RO é só sugerido).</li>
+<li><strong>&quot;Migração relacional → relacional é praticamente impossível manter disponível&quot; (Sadalage e Fowler):</strong> a afirmação é forte e fica em tensão com o método <em>on-line</em>, que o próprio capítulo apresenta como forma de manter a aplicação em execução. O material não explica por que isso seria viável só no NoSQL.</li>
+<li><strong>&quot;Podem ocorrer de maneira leve e sem complicações&quot; (conclusão):</strong> contrasta com os riscos (perda de dados, falhas catastróficas) e com os desafios do infográfico. A leitura prudente é &quot;<strong>se</strong> houver planejamento&quot;.</li>
+<li><strong>&quot;E vice-versa&quot;:</strong> o capítulo cita a migração NoSQL → relacional uma única vez e não a desenvolve.</li>
+<li><strong>Infográfico: &quot;<em>stored procedures</em> e <em>triggers</em> não existem em NoSQL&quot;:</strong> é generalização do material. <em>Complementação (conferir na documentação de cada SGBD):</em> alguns bancos NoSQL oferecem recursos semelhantes, como <em>triggers</em> no Cassandra e <em>scripts</em> no servidor (Lua) no Redis. O próprio infográfico cita as <em>Subscriptions</em> do RavenDB como equivalente a <em>triggers</em>.</li>
+<li><strong>&quot;Relacionamentos existem no NoSQL — em partes isso é verdade&quot;:</strong> a frase é vaga e o único exemplo é o RavenDB. O material não mostra como os relacionamentos são representados (documentos embutidos × referências).</li>
+<li><strong>Mapeamento de tipos:</strong> o capítulo orienta converter ou excluir dados sem equivalente, mas não dá exemplos concretos de tipos (ex.: datas, decimais).</li>
+<li><strong>Lucene, Solr e ElasticSearch como &quot;NoSQL&quot;:</strong> <em>Complementação (conferir):</em> o Lucene é uma <strong>biblioteca</strong> de indexação e busca, e Solr e ElasticSearch são servidores de busca construídos sobre ela. Enquadrá-los como NoSQL (orientado a documentos) é a classificação do material; na prática, o ElasticSearch é muito usado <strong>ao lado</strong> de outro banco, e não como único repositório.</li>
+<li><strong>&quot;NoSQL não segue a linguagem estruturada&quot;:</strong> simplificação. Vários bancos NoSQL têm linguagens de consulta próprias (algumas parecidas com SQL).</li>
+<li><strong>ElasticSearch: &quot;maior consistência... maior tolerância a falhas&quot; por dividir em <em>shards</em> replicados:</strong> a tolerância a falhas vem principalmente das <strong>réplicas</strong>; o <em>sharding</em> divide a carga (ver Aula 03 §3.13). A frase mistura os dois conceitos.</li>
+<li><strong>Consulta × pesquisa:</strong> a distinção do &quot;Fique atento&quot; é do material; não é a definição usual (em geral &quot;consulta&quot; e &quot;pesquisa&quot; são sinônimos, e a diferença aqui parece ligada ao modo de busca do ElasticSearch/Lucene). Usar como <strong>definição da disciplina</strong>.</li>
+<li><strong>Google Search como &quot;híbrido&quot; e Google Scholar como &quot;federado&quot;:</strong> os tipos se <strong>cruzam</strong> (indexação × fonte de dados): um mesmo motor pode ser híbrido quanto à indexação e usar metadados como fonte. Não são categorias excludentes.</li>
+<li><strong>Informações datadas:</strong> o índice do Google &quot;acima de 100 milhões de gigabytes&quot; tem fonte &quot;[2020?]&quot;; os <em>links</em> têm &quot;acesso em jun. 2020&quot;; a Dica do Professor diz que a Amazon é &quot;a empresa mais valiosa do mundo&quot; (afirmação de época, não verificada aqui). Tratar como contexto histórico, não como dado atual.</li>
+<li><strong>Atribuição do capítulo de migrações:</strong> o PDF principal e o arquivo avulso (&quot;BD_Não_relacional&quot;) trazem o <strong>mesmo</strong> capítulo (Bezerra); o mesmo vale para o capítulo de motores de busca (Pereira). Não há conteúdo diferente entre as cópias.</li>
+<li><strong>Materiais complementares não acessados:</strong> os <strong>QR codes</strong> (infográficos, Dicas do Professor, Saiba mais) <strong>não foram abertos</strong>; usei apenas os títulos e descrições do PDF (lista na seção 6). O conteúdo interativo do livro &quot;Recuperação de informação&quot; (cap. 6, <em>Linguagens de consulta</em>) também não estava disponível.</li>
+<li><strong>Atividade 4 (A4):</strong> o PDF inclui a atividade; por padrão do projeto, ela <strong>não</strong> foi incorporada a este arquivo.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões">6. Referências e conexões</h2>
+<h3 id="conexões-com-as-aulas-01-02-e-03-complementação--conceitos-explicados-antes-aqui-apenas-ponteiros">Conexões com as Aulas 01, 02 e 03 <em>(complementação — conceitos explicados antes; aqui apenas ponteiros)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Tema desta aula</th>
+<th>Onde foi visto</th>
+<th>O que acrescenta agora</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Por que o NoSQL (volume, variedade, escalabilidade)</td>
+<td><strong>Aula 01 §3.2, §3.4 e §3.8</strong></td>
+<td>Vira <strong>motivo de migração</strong> (Quadro 1)</td>
+</tr>
+<tr>
+<td>Tipos de NoSQL (documentos, chave/valor, colunas, grafos)</td>
+<td><strong>Aula 01 §3.6 e §3.7</strong></td>
+<td>A <strong>modelagem</strong> na migração depende do tipo; foco em documentos (JSON/BSON, MongoDB, CouchDB)</td>
+</tr>
+<tr>
+<td>Modelo relacional (tabelas, linhas, colunas)</td>
+<td><strong>Aula 01 §3.1; Aula 02</strong></td>
+<td>Tabela → coleção; linha → documento; coluna → atributo</td>
+</tr>
+<tr>
+<td>BASE × ACID, SQL × NoSQL</td>
+<td><strong>Aula 01 §3.5 e §3.8</strong></td>
+<td>Explica a &quot;mentalidade relacional&quot; como desafio</td>
+</tr>
+<tr>
+<td>Índices (B-<em>tree</em>, hash, primário/secundário)</td>
+<td><strong>Aula 02 §3.7, Anexos A e B</strong></td>
+<td><strong>Índice invertido</strong> e <strong>índice de intervalo</strong> como estruturas de busca</td>
+</tr>
+<tr>
+<td>Replicação (passiva/ativa; <em>on-line</em>/<em>off-line</em>; síncrona/assíncrona)</td>
+<td><strong>Aula 03 §3.4–3.7</strong></td>
+<td>EI/RI/EO/RO de migração têm lógica de replicação</td>
+</tr>
+<tr>
+<td><em>Sharding</em>, <em>shards</em> e réplicas; <em>clusters</em></td>
+<td><strong>Aula 03 §3.9–3.13</strong></td>
+<td>O ElasticSearch divide o <strong>índice</strong> em <em>shards</em> replicados</td>
+</tr>
+<tr>
+<td>Cassandra e MongoDB</td>
+<td><strong>Aula 03 §3.14–3.16</strong></td>
+<td>MongoDB é o destino citado na migração (documentos JSON/BSON) e o ElasticSearch também é orientado a documentos</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dependência de ideias:</strong> motivos e riscos (3.1–3.2) → desafios e passos (3.3–3.4) → etapas e processos (3.5) → métodos (3.6). Em paralelo: busca e relevância (3.7–3.8) → tipos (3.9) → NoSQL como base da indexação (3.10).</p>
+<h3 id="aplicação-profissional-complementação">Aplicação profissional <em>(complementação)</em></h3>
+<ul>
+<li><strong>Arquitetura de dados e <em>cloud</em>:</strong> a escolha do método de migração é função de <strong>janela de parada, volume, heterogeneidade e orçamento</strong>; serviços gerenciados de busca (ElasticSearch em AWS/GCP) aparecem em desenhos de arquitetura.</li>
+<li><strong>Governança:</strong> os passos organizacionais (orçamento, estratégia, usuários) correspondem a escopo, cronograma e envolvimento de partes interessadas em um projeto de migração.</li>
+<li><strong>IA/ML:</strong> recuperação de informação e relevância (probabilística, bayesiana, personalização) são a base de sistemas de recomendação e de busca semântica; o rastreamento e a extração de páginas aparecem em coleta de dados para modelos.</li>
+</ul>
+<h3 id="referências-acadêmicas-do-material">Referências acadêmicas (do material)</h3>
+<p><strong>Capítulo <em>Migrações de bases relacionais para bases NoSQL</em> (Bezerra):</strong></p>
+<ul>
+<li>FROZZA, A. A. <em>et al.</em> DINo: uma ferramenta para importação de dados em bancos de dados NoSQL. <em>In</em>: ERBD, 14., 2018, Rio Grande. <em>Anais</em> [...]. p. 135–138.</li>
+<li>MACHADO, R. <em>et al.</em> Uma aplicação para migração de dados de banco relacional para MongoDB. <em>In</em>: ERES, 3., 2019, Rio do Sul. <em>Anais</em> [...]. p. 113–120.</li>
+<li>OLIVEIRA, F. V. <em>Migração de bases de dados relacionais para NoSQL</em>: métodos de análise. Dissertação (Mestrado) — ISCTE-IUL, Lisboa, 2017.</li>
+<li>ORACLE. <em>GoldenGate for Big Data</em>. Redwood City: Oracle, 2019.</li>
+<li>PULGATTI, L. D. <em>Data migration between different data models of NoSQL databases</em>. Dissertação (Mestrado) — UFPR, Curitiba, 2017.</li>
+<li>SADALAGE, P. J.; FOWLER, M. <em>NoSQL essencial</em>: um guia conciso para o mundo emergente de persistência poliglota. São Paulo: Novatec, 2013.</li>
+</ul>
+<p><strong>Capítulo <em>Motores de busca (search engines)</em> (Pereira):</strong></p>
+<ul>
+<li>BERNERS-LEE, T. J.; CAILLIAU, R.; GROFF, J.-F. The world-wide web. <em>Computer Networks and ISDN Systems</em>, v. 25, n. 4-5, p. 454-459, 1992.</li>
+<li>BUSH, V. As we may think. <em>The Atlantic Monthly</em>, v. 176, n. 1, p. 101-108, 1945.</li>
+<li>COMO funciona a pesquisa Google. <em>In</em>: GOOGLE. [2020?].</li>
+<li>ELASTIC. <em>Elasticsearch</em>. c2020.</li>
+<li>EMTAGE, A.; DEUTSCH, P. Archie: an electronic directory service for the internet. <em>In</em>: USENIX CONFERENCE, 1992, Quebec. <em>Anais</em>... p. 93-110.</li>
+<li>HIRIYANNAIAH, S. <em>et al.</em> Semi-structured data analysis and visualisation using NoSQL. <em>International Journal of Big Data Intelligence</em>, v. 5, n. 3, p. 133-142, 2018.</li>
+<li>MCCREARY, D. G.; KELLY, A. M. <em>Making sense of NoSQL</em>: a guide for managers and the rest of us. Shelter Island: Manning, 2014.</li>
+<li>MELTON, J.; BUXTON, S. <em>Querying XML</em>: XQuery, XPath, and SQL/XML in context. Burlington: Morgan Kaufmann, 2011.</li>
+<li>NYCE, J. M.; KAHN, P. (Ed.). <em>From memex to hypertext</em>: Vannevar Bush and the mind's machine. Cambridge: Academic Press, 1991.</li>
+<li>TARAKESWAR, K.; KAVITHA, D. Search engines: a study. <em>Journal of Computer Applications</em>, v. 4, n. 1, p. 29-33, 2011.</li>
+<li>WINDOWS search overview. <em>In</em>: MICROSOFT. 31 may 2018.</li>
+<li>YOSHIOKA, M.; HARAGUCHI, M. On a combination of probabilistic and boolean IR models for WWW document retrieval. <em>ACM Transactions on Asian Language Information Processing</em>, v. 4, n. 3, p. 340-356, 2005.</li>
+<li>ZHAO, Y. The application of Bayesian learning in the search engine. <em>Wireless Personal Communications</em>, v. 103, n. 2, p. 1121-1131, 2018.</li>
+</ul>
+<h3 id="materiais-complementares-indicados-no-pdf-linksqr-codes-não-acessados--apenas-títulos-e-descrições-do-próprio-pdf">Materiais complementares indicados no PDF <em>(links/QR codes não acessados — apenas títulos e descrições do próprio PDF)</em></h3>
+<ul>
+<li><strong>Dica do Professor (migrações):</strong> como se preparar para a migração de um SGBD relacional para um NoSQL, entendendo as características da migração (vídeo, via QR).</li>
+<li><strong>Saiba mais (migrações):</strong> <em>VDINo</em> — ferramenta para importação de dados de SGBD relacional (como PostgreSQL) para MongoDB, Redis ou Cassandra; <em>Uma aplicação para migração de dados de banco relacional para MongoDB</em> — aplicação <strong>DB2Mongo</strong> (arquitetura, levantamento de requisitos, desenvolvimento e testes); <em>NoSqlayer</em> — <em>framework</em> de migração de relacional para NoSQL (módulos de migração e mapeamento e testes).</li>
+<li><strong>Dica do Professor (motores de busca):</strong> o motor de busca <strong>A9</strong> da Amazon e sua importância para o comércio eletrônico da empresa (via QR).</li>
+<li><strong>Saiba mais (motores de busca):</strong> <em>Recuperação de informação — conceitos e tecnologia das máquinas de busca</em> (cap. 6, <em>Linguagens de consulta</em>; conteúdo interativo na plataforma); <em>Como a busca do Google realmente funciona</em> (inclui RankBrain e Knowledge Graph); <em>Como fazer Scrapy com Python para iniciantes</em> (extração de dados de páginas com rastreio web).</li>
+<li><strong>Infográficos:</strong> <em>Os maiores desafios da migração para NoSQL</em> e <em>Como funcionam os mecanismos de busca</em> (QR codes não acessados; o conteúdo do infográfico foi lido na própria imagem do PDF).</li>
+</ul>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d4-aula-03.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 3</a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d4.html">← Banco de Dados Não Relacional</a> · </span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

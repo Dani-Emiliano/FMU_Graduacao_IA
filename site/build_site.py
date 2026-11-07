@@ -38,6 +38,8 @@ REPO_GITHUB = "https://github.com/Dani-Emiliano/FMU_Graduacao_IA"
 D1 = "Semestre_1/1-AQUISICAO E PREPARACAO DE DADOS (262GGR6046A)"
 D2 = "Semestre_1/2 - AprendizadoSupervisionado"
 D3 = "Semestre_1/3 - Aprendizado não supervisionado"
+D4 = "Semestre_1/4 - Banco de dados não relacional (262GGR6387A)"
+D5 = "Semestre_1/5 - Direitos Humanos e Cultura Brasileira"
 
 CONFIG = {
     "semestres": [
@@ -60,6 +62,7 @@ CONFIG = {
             "capacidades_aplicacao": [
                 "Conectar a análise de dados à gestão de desempenho (BPM, BSC e Six Sigma)",
                 "Avaliar o papel do self-service analytics e da governança no uso dos dados",
+                "Relacionar direitos humanos, diversidade e sustentabilidade à atuação profissional em tecnologia",
                 "Base para os próximos semestres: todo modelo de IA depende de dados bem tratados",
             ],
         },
@@ -224,6 +227,122 @@ CONFIG = {
                 (f"{D3}/4_Anexos/AULA_03_Infografico_PCA_x_Analise_Fatorial.png", "Aula 3 · PCA × Análise Fatorial"),
             ],
         },
+        # ---------------------------------------------------------- D4
+        {
+            "id": "s1-d4",
+            "semestre": 1,
+            "ordem": 4,
+            "nome": "Banco de Dados Não Relacional",
+            "codigo": "262GGR6387A",
+            "status": "concluida",
+            "icone": "nosql",
+            "pasta": D4,
+            "descricao": (
+                "Da origem do NoSQL à distribuição de dados em escala: tipos de bancos não "
+                "relacionais e modelo BASE, SQL com agregação, consultas complexas e índices, "
+                "replicação e sharding (Cassandra e MongoDB), migração do relacional para NoSQL "
+                "e motores de busca."
+            ),
+            "conceitos": ["Tipos de NoSQL e modelo BASE × ACID", "SQL: agregação, subconsultas e índices",
+                          "Replicação e sharding", "Migração para NoSQL e motores de busca"],
+            "compilado": None,  # ainda sem compilação da disciplina: o botão principal abre a Aula 1
+            "aulas": [
+                {"n": 1, "tema": "NoSQL: história, classificação, BASE e aplicabilidade",
+                 "arquivo": f"{D4}/1_Resumos_das_aulas/AULA_01_RESUMO_NOSQL_HISTORIA_CLASSIFICACAO.md",
+                 "objetivos": ["Descrever a origem, a evolução e os principais conceitos dos bancos NoSQL",
+                               "Identificar os tipos de bancos não relacionais e explicar o modelo BASE",
+                               "Diferenciar SQL e NoSQL e demonstrar a aplicabilidade de cada tipo"]},
+                {"n": 2, "tema": "SQL: agregação e agrupamento, consultas complexas e índices",
+                 "arquivo": f"{D4}/1_Resumos_das_aulas/AULA_02_RESUMO_SQL_INDICES_AGREGACAO_CONSULTAS.md",
+                 "objetivos": ["Definir índices, suas vantagens, e criá-los, excluí-los e aplicá-los em consultas",
+                               "Utilizar funções de agregação e agrupamento em SQL",
+                               "Desenvolver consultas com junção, ordenação, aninhamento e correlacionamento"]},
+                {"n": 3, "tema": "Replicação e sharding: dados distribuídos em clusters (Cassandra e MongoDB)",
+                 "arquivo": f"{D4}/1_Resumos_das_aulas/AULA_03_RESUMO_REPLICACAO_SHARDING.md",
+                 "objetivos": ["Conceituar sharding, sua relação com a escalabilidade horizontal e com índices",
+                               "Identificar o sharding no Apache Cassandra e no MongoDB",
+                               "Descrever o papel da replicação e analisar estratégias de aplicação"]},
+                {"n": 4, "tema": "Migração do relacional para NoSQL e motores de busca",
+                 "arquivo": f"{D4}/1_Resumos_das_aulas/AULA_04_RESUMO_MIGRACAO_NOSQL_MOTORES_BUSCA.md",
+                 "objetivos": ["Identificar os motivos, as etapas e os métodos de migração para NoSQL",
+                               "Explicar o funcionamento dos motores de busca",
+                               "Relacionar bancos NoSQL à indexação e recuperação de informações"]},
+            ],
+            "labs": [
+                {"slug": "aula-02-pratico", "titulo": "Aula 2 · SQL e índices: material prático",
+                 "arquivo": f"{D4}/1_Resumos_das_aulas/AULA_02_SQL_INDICES_PRATICO.md", "extras": []},
+            ],
+            "atividades": [],
+            "pdfs": [
+                ("", "Aula 1 · Unidade 1: NoSQL"),
+                ("", "Aula 2 · Unidade 2: SQL, índices e agregação"),
+                ("", "Aula 3 · Unidade 3: replicação e sharding"),
+                ("", "Aula 3 · Gestão da replicação (R. C. Mengato Junior, SAGAH)"),
+                ("", "Aula 3 · Sharding (J. A. Soares, SAGAH)"),
+                ("", "Aula 4 · Unidade 4: migração e motores de busca"),
+                ("", "Aula 4 · Migrações de bases relacionais para NoSQL (W. R. Bezerra, SAGAH)"),
+                ("", "Aula 4 · Motores de busca (M. A. Pereira, SAGAH)"),
+            ],
+            "imagens": [],
+        },
+        # ---------------------------------------------------------- D5
+        {
+            "id": "s1-d5",
+            "semestre": 1,
+            "ordem": 5,
+            "nome": "Direitos Humanos e Cultura Brasileira",
+            "codigo": "—",
+            "status": "concluida",
+            "icone": "direitos",
+            "pasta": D5,
+            "subir_titulos": True,  # aulas estão em "##" no .md: viram capítulos no site
+            "descricao": (
+                "Direitos humanos e cidadania como exercício constante e coletivo: a DUDH e a "
+                "cidadania, as relações étnico-raciais e as matrizes formadoras do Brasil, a "
+                "dignidade da pessoa humana e os direitos da pessoa com deficiência, e a ligação "
+                "entre diversidade, cidadania e sustentabilidade."
+            ),
+            "conceitos": ["DUDH e cidadania", "Relações étnico-raciais (Leis 10.639 e 11.645)",
+                          "Estatuto da Pessoa com Deficiência", "Diversidade e sustentabilidade (ESG, ODS)"],
+            "compilado": {"arquivo": f"{D5}/2_Compilado/DISCIPLINA_DIREITOS_HUMANOS_CULTURA_BRASILEIRA.md",
+                          "titulo": "Compilação da disciplina"},
+            "aulas": [
+                {"n": 1, "tema": "Declaração Universal dos Direitos Humanos, cidadania e direitos humanos",
+                 "arquivo": f"{D5}/1_Resumos_das_aulas/AULA_01_RESUMO_DUDH_CIDADANIA_DIREITOS_HUMANOS.md",
+                 "objetivos": ["Descrever o contexto histórico anterior à DUDH e analisar seus dispositivos",
+                               "Reconhecer a DUDH como instrumento de defesa dos direitos humanos",
+                               "Definir cidadania, sua evolução histórica e sua relação com os direitos humanos"]},
+                {"n": 2, "tema": "Relações étnico-raciais, ensino de história e culturas afro-brasileira, africana e indígena",
+                 "arquivo": f"{D5}/1_Resumos_das_aulas/AULA_02_RESUMO_RELACOES_ETNICO_RACIAIS.md",
+                 "objetivos": ["Reconhecer as matrizes indígena, europeia e africana na formação do Brasil",
+                               "Identificar desigualdades históricas, sociais e raciais na educação",
+                               "Analisar as Leis nº 10.639/2003 e nº 11.645/2008 e o enfrentamento do racismo",
+                               "Reconhecer o debate sobre inclusão, diversidade e equidade na educação"]},
+                {"n": 3, "tema": "Dignidade da pessoa humana e direitos da pessoa com deficiência",
+                 "arquivo": f"{D5}/1_Resumos_das_aulas/AULA_03_RESUMO_DIGNIDADE_PESSOA_HUMANA_PCD.md",
+                 "objetivos": ["Relacionar dignidade da pessoa humana e direitos fundamentais",
+                               "Compreender o Estatuto da Pessoa com Deficiência e seus avanços",
+                               "Analisar a Lei nº 7.853 e o Decreto nº 3.298 e os órgãos de apoio às PCDs"]},
+                {"n": 4, "tema": "Direitos humanos, diversidade e sustentabilidade",
+                 "arquivo": f"{D5}/1_Resumos_das_aulas/AULA_04_RESUMO_DIREITOS_HUMANOS_DIVERSIDADE_SUSTENTABILIDADE.md",
+                 "objetivos": ["Contrastar indivíduo e cidadão e descrever a diversidade à luz do art. 2º da DUDH",
+                               "Definir sustentabilidade, seus critérios e requisitos do desenvolvimento sustentável",
+                               "Reconhecer tecnologias sustentáveis e relacioná-las a direitos e cidadania"]},
+            ],
+            "labs": [],
+            "atividades": [],
+            "pdfs": [
+                ("", "Aula 1 · Direitos Humanos: DUDH (F. F. Seixas, SAGAH)"),
+                ("", "Aula 1 · Psicologia Social: cidadania e direitos humanos (D. D. de Castro, SAGAH)"),
+                ("", "Aula 2 · Estudos Culturais Antropológicos: relações étnico-raciais (G. Marin, SAGAH)"),
+                ("", "Aula 2 · Organização e Legislação da Educação: relações étnico-raciais no Brasil (P. R. Bes, SAGAH)"),
+                ("", "Aula 3 · Legislação Social: dignidade da pessoa humana e EPCD (A. da S. Lima, SAGAH)"),
+                ("", "Aula 3 · Políticas Setoriais III: leis de amparo à PCD (F. R. Souto, SAGAH)"),
+                ("", "Aula 4 · Direitos Humanos e Diversidade: diversidade e sustentabilidade (R. C. V. Scarano, SAGAH)"),
+                ("", "Aula 4 · Gestão de Recursos Ambientais: tecnologias sustentáveis (R. S. Camargo, SAGAH)"),
+            ],
+            "imagens": [],
+        },
     ],
 }
 
@@ -295,11 +414,16 @@ def ajustar_links(html_str: str, origem: str) -> str:
             return m.group(0)
         if rel in MAPA_MD:
             novo = MAPA_MD[rel] + (f"#{ancora}" if ancora else "")
-        else:
-            novo = url_repo(rel) + (f"#{ancora}" if ancora else "")
-        return f'{attr}="{novo}"'
+            return f'{attr}="{novo}"'
+        return f'data-fora="1" {attr}="#"'  # arquivo não publicado: desativado abaixo
 
-    return re.sub(r'(href|src)="([^"]+)"', troca, html_str)
+    html_str = re.sub(r'(href|src)="([^"]+)"', troca, html_str)
+    # imagem de arquivo não publicado -> legenda de referência
+    html_str = re.sub(r'<img data-fora="1" src="#" alt="([^"]*)"[^>]*>',
+                      lambda m: f'<span class="ref-arquivo">Figura: {m.group(1) or "imagem do material"}</span>', html_str)
+    # link para arquivo não publicado -> texto simples
+    html_str = re.sub(r'<a data-fora="1" href="#">(.*?)</a>', r'<span class="ref-arquivo">\1</span>', html_str, flags=re.S)
+    return html_str
 
 
 def seccionar(corpo: str) -> str:
@@ -329,6 +453,21 @@ def seccionar(corpo: str) -> str:
     return "\n".join(saida)
 
 
+SUBIR_TITULOS = set()  # .md cujas aulas estão em "##": sobem um nível (aula vira capítulo)
+
+
+def subir_titulos(texto: str) -> str:
+    """Sobe um nível os títulos ## em diante (fora de blocos de código); o # do título fica."""
+    saida, em_codigo = [], False
+    for linha in texto.splitlines():
+        if linha.lstrip().startswith("```"):
+            em_codigo = not em_codigo
+        elif not em_codigo and re.match(r"^#{2,6} ", linha):
+            linha = linha[1:]
+        saida.append(linha)
+    return "\n".join(saida)
+
+
 def renderizar(caminho: str):
     """Retorna (html, sumario[(nivel, texto, id)]) para .md ou .ipynb."""
     arq = RAIZ / caminho
@@ -344,6 +483,8 @@ def renderizar(caminho: str):
         texto = "\n\n".join(partes)
     else:
         texto = arq.read_text(encoding="utf-8")
+    if caminho in SUBIR_TITULOS:
+        texto = subir_titulos(texto)
 
     md = _md()
     tokens = md.parse(texto)
@@ -377,6 +518,8 @@ ICONES_DISC = {
     "dados": '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="7" ry="2.6"/><path d="M5 5v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V5"/><path d="M5 11v6c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6v-6"/></svg>',
     "alvo": '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>',
     "clusters": '<svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="4.5" stroke-dasharray="2 2"/><circle cx="16.5" cy="15.5" r="5" stroke-dasharray="2 2"/><circle cx="6" cy="7" r="1"/><circle cx="8.5" cy="9.2" r="1"/><circle cx="15" cy="14.5" r="1"/><circle cx="18" cy="16.5" r="1"/><circle cx="16" cy="18" r="1"/></svg>',
+    "direitos": '<svg viewBox="0 0 24 24"><path d="M12 3v18M7 21h10"/><path d="M5 7h14"/><path d="M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/><circle cx="12" cy="4" r="1"/></svg>',
+    "nosql": '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/><path d="M10 6.5h4M6.5 10v4M17.5 10v4"/></svg>',
     "padrao": '<svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/></svg>',
 }
 
@@ -489,6 +632,11 @@ def trilha(*itens):
     return '<nav class="trilha" aria-label="Você está em">' + " <span>›</span> ".join(partes) + "</nav>"
 
 
+def cod_sufixo(d):
+    c = d.get("codigo", "")
+    return f" · {e(c)}" if c and c != "—" else ""
+
+
 def status_chip(st):
     return f'<span class="status {st}">{STATUS_TXT[st]}</span>'
 
@@ -547,7 +695,7 @@ def gerar_index():
       <a class="card" href="{nome_pagina_disc(d)}">
         <div class="topo-card">{ico_disc(d)}</div>
         <h3>{e(d["nome"])}</h3>
-        <span class="sub">Semestre {d["semestre"]} · {e(d["codigo"])}</span>
+        <span class="sub">Semestre {d["semestre"]}{cod_sufixo(d)}</span>
         <p>{e(d["descricao"])}</p>
         <div class="rodape-card">{status_chip(d["status"])}<span>Abrir {ICONES["seta"]}</span></div>
       </a>""" for d in discs)
@@ -637,7 +785,7 @@ def gerar_semestre(s):
       <a class="card" href="{nome_pagina_disc(d)}">
         <div class="topo-card">{ico_disc(d)}</div>
         <h3>{e(d["nome"])}</h3>
-        <span class="sub">Disciplina {d["ordem"]} · {e(d["codigo"])} · {len(d["aulas"])} aulas</span>
+        <span class="sub">Disciplina {d["ordem"]}{cod_sufixo(d)} · {len(d["aulas"])} aulas</span>
         <p>{e(d["descricao"])}</p>
         <div class="rodape-card">{status_chip(d["status"])}<span>Abrir {ICONES["seta"]}</span></div>
       </a>""" for d in discs)
@@ -647,7 +795,7 @@ def gerar_semestre(s):
   <div class="container">
     {trilha(("index.html", "Home"), (None, f"Semestre {s['n']}"))}
     <span class="eyebrow">Semestre {s["n"]}</span>
-    <h1>{e(s["titulo"])}</h1>
+    <h1>{e(s["titulo"] or f"Semestre {s['n']}")}</h1>
     <p class="lead">{e(s["descricao"])}</p>
     <div class="progresso">
       <div class="trilho"><div class="barra" style="width:{pct}%"></div></div>
@@ -697,9 +845,8 @@ def gerar_doc(d, slug, titulo, arquivo, eyebrow, anterior=None, proximo=None, ex
             bloco_extras = '<h2 id="arquivos-do-laboratorio">Arquivos do laboratório</h2>' + "".join(blocos)
             itens_sum += '<li class="n2"><a href="#arquivos-do-laboratorio">Arquivos do laboratório</a></li>'
     if imagens:
-        gal = "".join(f'<a href="{url_repo(c)}" target="_blank"><img src="{url_repo(c)}" alt="{e(t)}" loading="lazy"><span>{e(t)}</span></a>'
-                      for c, t in imagens)
-        bloco_extras += f'<h2 id="saidas-de-exemplo">Saídas de exemplo</h2><div class="galeria">{gal}</div>'
+        gal = "".join(f'<li>{e(t)} <small>({e(Path(c).name)})</small></li>' for c, t in imagens)
+        bloco_extras += f'<h2 id="saidas-de-exemplo">Saídas de exemplo</h2><p>Gráficos gerados pelo laboratório (arquivos no material local):</p><ul>{gal}</ul>'
         itens_sum += '<li class="n2"><a href="#saidas-de-exemplo">Saídas de exemplo</a></li>'
 
     nav = ""
@@ -737,11 +884,15 @@ def gerar_doc(d, slug, titulo, arquivo, eyebrow, anterior=None, proximo=None, ex
 
 
 def gerar_disciplina(d):
-    comp = d["compilado"]
-    pag_comp = nome_pagina_doc(d, "compilado")
+    comp = d.get("compilado")
     aulas_arq = [a for a in d["aulas"] if a.get("arquivo")]
-
-    gerar_doc(d, "compilado", "Compilação da disciplina", comp["arquivo"], "Compilação")
+    if comp:
+        pag_comp = nome_pagina_doc(d, "compilado")
+        txt_principal = "Ler a compilação completa"
+        gerar_doc(d, "compilado", "Compilação da disciplina", comp["arquivo"], "Compilação")
+    else:
+        pag_comp = nome_pagina_doc(d, f'aula-{aulas_arq[0]["n"]:02d}')
+        txt_principal = "Começar pela Aula 1"
     for idx, a in enumerate(aulas_arq):
         ant = aulas_arq[idx - 1] if idx > 0 else None
         prox = aulas_arq[idx + 1] if idx + 1 < len(aulas_arq) else None
@@ -770,8 +921,8 @@ def gerar_disciplina(d):
 
     praticas = "".join(f'<a class="arquivo" href="{nome_pagina_doc(d, l["slug"])}">{ICONES["codigo"]}{e(l["titulo"])}<small>Lab</small></a>' for l in d["labs"])
     praticas += "".join(f'<a class="arquivo" href="{nome_pagina_doc(d, x["slug"])}">{ICONES["livro"]}{e(x["titulo"])}<small>Atividade</small></a>' for x in d["atividades"])
-    pdfs = "".join(f'<a class="arquivo" href="{url_repo(c)}" target="_blank">{ICONES["pdf"]}{e(t)}<small>PDF</small></a>' for c, t in d["pdfs"])
-    gal = "".join(f'<a href="{url_repo(c)}" target="_blank"><img src="{url_repo(c)}" alt="{e(t)}" loading="lazy"><span>{e(t)}</span></a>' for c, t in d["imagens"])
+    pdfs = "".join(f'<div class="arquivo ref">{ICONES["pdf"]}{e(t)}<small>PDF</small></div>' for c, t in d["pdfs"])
+    gal = "".join(f'<div class="arquivo ref">{ICONES["livro"]}{e(t)}<small>Infográfico</small></div>' for c, t in d["imagens"])
     objetivos = "".join(
         f'<div class="painel"><h3>Aula {a["n"]} · {e(a["tema"])}</h3><ul class="lista">'
         + "".join(f"<li>{e(o)}</li>" for o in a.get("objetivos", [])) + "</ul></div>"
@@ -783,12 +934,12 @@ def gerar_disciplina(d):
   <div class="container hero-grid">
     <div>
       {trilha(("index.html", "Home"), (nome_pagina_sem(d["semestre"]), f"Semestre {d['semestre']}"), (None, d["nome"]))}
-      <span class="eyebrow">Semestre {d["semestre"]} · Disciplina {d["ordem"]} · {e(d["codigo"])}</span>
+      <span class="eyebrow">Semestre {d["semestre"]} · Disciplina {d["ordem"]}{cod_sufixo(d)}</span>
       <h1>{e(d["nome"])}</h1>
       <p class="lead">{e(d["descricao"])}</p>
       <div class="meta">{"".join(f'<span class="chip conceito">{e(c)}</span>' for c in d["conceitos"])}</div>
       <div class="acoes">
-        <a class="btn cheio" href="{pag_comp}">{ICONES["livro"]} Ler a compilação completa</a>
+        <a class="btn cheio" href="{pag_comp}">{ICONES["livro"]} {txt_principal}</a>
       </div>
     </div>
     <div class="hero-disc">{ico_disc(d, grande=True)}</div>
@@ -812,11 +963,11 @@ def gerar_disciplina(d):
   </div>
 </section>
 
-{f'''<section class="secao"><div class="container"><div class="secao-titulo"><h2>Infográficos e anexos</h2></div><div class="galeria">{gal}</div></div></section>''' if gal else ""}
+{f'''<section class="secao"><div class="container"><div class="secao-titulo"><h2>Infográficos e anexos</h2><small>referência · material local</small></div><div class="arquivos">{gal}</div></div></section>''' if gal else ""}
 
 <section class="secao">
   <div class="container">
-    <div class="secao-titulo"><h2>Capítulos e livros-base</h2></div>
+    <div class="secao-titulo"><h2>Capítulos e livros-base</h2><small>referência bibliográfica</small></div>
     <div class="arquivos">{pdfs}</div>
   </div>
 </section>
@@ -826,7 +977,11 @@ def gerar_disciplina(d):
 
 def montar_mapa():
     for d in CONFIG["disciplinas"]:
-        MAPA_MD[d["compilado"]["arquivo"]] = nome_pagina_doc(d, "compilado")
+        if d.get("subir_titulos") and d.get("compilado"):
+            SUBIR_TITULOS.add(d["compilado"]["arquivo"])
+    for d in CONFIG["disciplinas"]:
+        if d.get("compilado"):
+            MAPA_MD[d["compilado"]["arquivo"]] = nome_pagina_doc(d, "compilado")
         for a in d["aulas"]:
             if a.get("arquivo"):
                 MAPA_MD[a["arquivo"]] = nome_pagina_doc(d, f'aula-{a["n"]:02d}')
@@ -837,7 +992,180 @@ def montar_mapa():
         MAPA_MD[d["pasta"]] = nome_pagina_disc(d)
 
 
+# =====================================================================
+# CENÁRIO 2 — descoberta automática a partir das pastas do repositório
+# ---------------------------------------------------------------------
+# Toda disciplina em Semestre_N/<número> - <Nome>/ que NÃO estiver no
+# CONFIG acima é montada sozinha a partir dos arquivos:
+#   - aulas ........ AULA_01_RESUMO_*.md (uma página por aula)
+#   - práticos ..... AULA_xx_*PRATICO* / *LABORATORIO* / *HOWTO* .md
+#   - atividades ... *atividade*.md
+#   - compilação ... DISCIPLINA_*.md ou DISCIPLINA_*.ipynb
+#   - livros ....... *.pdf (só o nome, como referência; sem link)
+# Código: "(262GGR…)" no nome da pasta ou no texto dos .md.
+# Status: "Concluída" se houver compilação; senão "Em andamento".
+# Para ajustar textos (descrição, conceitos, status, ícone), copie a
+# disciplina para o CONFIG: a entrada do CONFIG sempre tem prioridade.
+# =====================================================================
+RE_PASTA_DISC = re.compile(r"^(\d+)\s*-\s*(.+?)\s*$")
+RE_CODIGO = re.compile(r"\b(\d{3}GGR\d{4}[A-Z]?)\b")
+RE_AULA = re.compile(r"AULA_?0*(\d+)", re.I)
+PALAVRAS_PRATICA = ("PRATICO", "PRÁTICO", "LABORATORIO", "LABORATÓRIO", "HOWTO", "LAB_")
+
+
+def _limpa_md(t: str) -> str:
+    t = re.sub(r"[*_`]", "", t)
+    t = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _titulo_h1(texto: str) -> str:
+    for linha in texto.splitlines():
+        if linha.startswith("# "):
+            return _limpa_md(linha[2:])
+    return ""
+
+
+def _secao(texto: str, padrao: str) -> str:
+    """Conteúdo do primeiro título que casa com `padrao` até o próximo título de nível igual ou maior."""
+    linhas = texto.splitlines()
+    for i, l in enumerate(linhas):
+        m = re.match(r"^(#{1,6})\s+(.*)", l)
+        if m and re.search(padrao, m.group(2), re.I):
+            nivel, corpo = len(m.group(1)), []
+            for l2 in linhas[i + 1:]:
+                m2 = re.match(r"^(#{1,6})\s", l2)
+                if m2 and len(m2.group(1)) <= nivel:
+                    break
+                corpo.append(l2)
+            return "\n".join(corpo)
+    return ""
+
+
+def _objetivos(texto: str, maximo=5):
+    bloco = _secao(texto, r"objetivos")
+    itens = [_limpa_md(l.lstrip()[2:]) for l in bloco.splitlines() if re.match(r"^\s*[-*]\s+", l)]
+    return [i.rstrip(".") for i in itens if i][:maximo]
+
+
+def _primeiro_paragrafo(texto: str, limite=320) -> str:
+    bloco = _secao(texto, r"resumo|contextualiza")
+    for par in re.split(r"\n\s*\n", bloco):
+        p = par.strip()
+        if p and not p.startswith(("#", "|", ">", "-", "*", "!", "```")) and not p.rstrip().endswith(":") and len(p) > 80:
+            p = _limpa_md(p)
+            return p if len(p) <= limite else p[:limite].rsplit(" ", 1)[0] + "…"
+    return ""
+
+
+def _tema_aula(texto: str, n: int) -> str:
+    t = _titulo_h1(texto)
+    t = re.sub(r"^AULA\s*0*\d+\s*[—–:\-|]\s*", "", t, flags=re.I)
+    if t.isupper():
+        t = t.capitalize()
+    return t or f"Aula {n}"
+
+
+def _nome_bonito(nome: str) -> str:
+    nome = re.sub(r"\s*\(\s*\d{3}GGR\w+\s*\)", "", nome).strip()
+    nome = re.sub(r"(?<=[a-zà-ú])(?=[A-Z])", " ", nome)  # AprendizadoSupervisionado -> Aprendizado Supervisionado
+    return nome[:1].upper() + nome[1:]
+
+
+def _rotulo_pdf(nome: str) -> str:
+    base = Path(nome).stem
+    m = RE_AULA.match(base)
+    resto = RE_AULA.sub("", base, count=1).strip("_ -")
+    resto = resto.replace("_", " ")
+    return f"Aula {int(m.group(1))} · {resto}" if m else resto
+
+
+def descobrir_disciplinas():
+    configuradas = {d["pasta"] for d in CONFIG["disciplinas"]}
+    novas = []
+    for pasta_sem in sorted(RAIZ.glob("Semestre_*")):
+        m_sem = re.search(r"(\d+)", pasta_sem.name)
+        if not (pasta_sem.is_dir() and m_sem):
+            continue
+        n_sem = int(m_sem.group(1))
+        for pasta in sorted(p for p in pasta_sem.iterdir() if p.is_dir()):
+            rel_pasta = pasta.relative_to(RAIZ).as_posix()
+            m = RE_PASTA_DISC.match(pasta.name)
+            if rel_pasta in configuradas or not m:
+                continue
+            ordem, nome_pasta = int(m.group(1)), m.group(2)
+            mds = sorted(pasta.rglob("*.md")) + sorted(pasta.rglob("*.ipynb"))
+            rel = lambda p: p.relative_to(RAIZ).as_posix()
+
+            compilado = next((p for p in mds if p.name.upper().startswith("DISCIPLINA_")), None)
+            aulas, labs, atividades = {}, [], []
+            for p in mds:
+                nome = p.name.upper()
+                if p == compilado or nome == "README.MD":
+                    continue
+                if "ATIVIDADE" in nome:
+                    atividades.append(p); continue
+                ma = RE_AULA.search(nome)
+                if not ma:
+                    continue
+                n = int(ma.group(1))
+                if any(k in nome for k in PALAVRAS_PRATICA):
+                    labs.append((n, p))
+                elif n not in aulas or "RESUMO" in nome:
+                    aulas[n] = p
+            if not aulas and not compilado:
+                continue
+
+            textos = {n: p.read_text(encoding="utf-8") for n, p in aulas.items()}
+            tudo = " ".join(textos.values())
+            if compilado and compilado.suffix == ".md":
+                tudo += compilado.read_text(encoding="utf-8")
+            cod = RE_CODIGO.search(pasta.name) or RE_CODIGO.search(tudo)
+
+            lista_aulas = []
+            for n in sorted(aulas):
+                lista_aulas.append({"n": n, "tema": _tema_aula(textos[n], n), "arquivo": rel(aulas[n]),
+                                    "objetivos": _objetivos(textos[n])})
+            desc = _primeiro_paragrafo(textos[min(textos)]) if textos else ""
+
+            d = {
+                "id": f"s{n_sem}-d{ordem}",
+                "semestre": n_sem,
+                "ordem": ordem,
+                "nome": _nome_bonito(nome_pasta),
+                "codigo": cod.group(1) if cod else "—",
+                "status": "concluida" if compilado else "andamento",
+                "icone": "padrao",
+                "pasta": rel_pasta,
+                "descricao": desc or f"Conteúdos da disciplina {_nome_bonito(nome_pasta)}.",
+                "conceitos": [a["tema"] if len(a["tema"]) <= 60 else a["tema"][:57] + "…" for a in lista_aulas][:4],
+                "compilado": {"arquivo": rel(compilado), "titulo": "Compilação da disciplina"} if compilado else None,
+                "aulas": lista_aulas,
+                "labs": [{"slug": f"aula-{n:02d}-pratico" + (f"-{i + 1}" if [x for x, _ in labs].count(n) > 1 else ""),
+                          "titulo": f"Aula {n} · {_tema_aula(p.read_text(encoding='utf-8'), n)}",
+                          "arquivo": rel(p), "extras": []} for i, (n, p) in enumerate(sorted(labs))],
+                "atividades": [{"slug": re.sub(r"[^a-z0-9]+", "-", p.stem.lower()).strip("-"),
+                                "titulo": _limpa_md(_titulo_h1(p.read_text(encoding="utf-8"))) or p.stem.replace("_", " "),
+                                "arquivo": rel(p)} for p in atividades],
+                "pdfs": [("", _rotulo_pdf(p.name)) for p in sorted(pasta.rglob("*.pdf"))],
+                "imagens": [],
+                "auto": True,
+            }
+            # compilação com aulas em "##" (ex.: Direitos Humanos): aulas viram capítulos
+            if compilado and compilado.suffix == ".md":
+                if re.search(r"^## AULA", compilado.read_text(encoding="utf-8"), re.M):
+                    d["subir_titulos"] = True
+            novas.append(d)
+            print(f"[auto] disciplina encontrada: S{n_sem} · {d['nome']} ({len(lista_aulas)} aulas)")
+    CONFIG["disciplinas"].extend(novas)
+    # semestres que ganharam disciplinas passam a "em andamento"
+    for s in CONFIG["semestres"]:
+        if s["status"] == "futura" and disciplinas_do_semestre(s["n"]):
+            s["status"] = "andamento"
+
+
 def main():
+    descobrir_disciplinas()
     montar_mapa()
     faltando = [p for p in MAPA_MD if not (RAIZ / p).exists()]
     for p in faltando:
@@ -846,6 +1174,11 @@ def main():
     for s in CONFIG["semestres"]:
         gerar_semestre(s)
     for d in CONFIG["disciplinas"]:
+        fontes = ([d["compilado"]["arquivo"]] if d.get("compilado") else []) + \
+                 [a["arquivo"] for a in d["aulas"] if a.get("arquivo")]
+        if not all((RAIZ / f).exists() for f in fontes):
+            print(f"[aviso] fontes de '{d['nome']}' não encontradas: páginas existentes mantidas")
+            continue
         gerar_disciplina(d)
     print(f"Site gerado em {SITE}")
 

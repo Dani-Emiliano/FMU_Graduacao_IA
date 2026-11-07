@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 3 · Replicação e sharding: dados distribuídos em clusters (Cassandra e MongoDB) · Banco de Dados Não Relacional</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d4.html">Banco de Dados Não Relacional</a> <span>›</span> <span>Aula 3 · Replicação e sharding: dados distribuídos em clusters (Cassandra e MongoDB)</span></nav>
+    <span class="eyebrow">Aula 3 · Banco de Dados Não Relacional</span>
+    <h1>Aula 3 · Replicação e sharding: dados distribuídos em clusters (Cassandra e MongoDB)</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d4.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-03--replicação-e-sharding-distribuição-de-dados-em-clusters-cassandra-e-mongodb">AULA 03 — Replicação e Sharding: distribuição de dados em clusters (Cassandra e MongoDB)</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</a></li><li class="n3"><a href="#31-escalar-um-banco-vertical--horizontal-brandão">3.1 Escalar um banco: vertical × horizontal (Brandão)</a></li><li class="n3"><a href="#32-replicação-o-papel-em-sistemas-distribuídos-mengato-junior-com-base-em-coulouris-et-al-2013">3.2 Replicação: o papel em sistemas distribuídos (Mengato Junior, com base em Coulouris et al., 2013)</a></li><li class="n3"><a href="#33-modelo-básico-de-arquitetura-da-replicação-coulouris-et-al-fig-1">3.3 Modelo básico de arquitetura da replicação (Coulouris et al., Fig. 1)</a></li><li class="n3"><a href="#34-classificação-das-estratégias-de-replicação-infográfico">3.4 Classificação das estratégias de replicação (Infográfico)</a></li><li class="n3"><a href="#35-replicação-passiva-backup-primário">3.5 Replicação passiva (backup primário)</a></li><li class="n3"><a href="#36-replicação-ativa">3.6 Replicação ativa</a></li><li class="n3"><a href="#37-passiva--ativa-síntese">3.7 Passiva × ativa (síntese)</a></li><li class="n3"><a href="#38-aplicações-dos-modelos-de-replicação">3.8 Aplicações dos modelos de replicação</a></li><li class="n3"><a href="#39-o-que-é-sharding-brandão-e-pereira">3.9 O que é sharding (Brandão e Pereira)</a></li><li class="n3"><a href="#310-estratégias-de-sharding">3.10 Estratégias de sharding</a></li><li class="n3"><a href="#311-sharding-em-clusters-brandão">3.11 Sharding em clusters (Brandão)</a></li><li class="n3"><a href="#312-relação-entre-sharding-e-índices-brandão">3.12 Relação entre sharding e índices (Brandão)</a></li><li class="n3"><a href="#313-sharding--replicação-pereira">3.13 Sharding × replicação (Pereira)</a></li><li class="n3"><a href="#314-sharding-no-apache-cassandra-pereira--infográfico">3.14 Sharding no Apache Cassandra (Pereira + infográfico)</a></li><li class="n3"><a href="#315-sharding-no-mongodb-pereira--brandão">3.15 Sharding no MongoDB (Pereira + Brandão)</a></li><li class="n3"><a href="#316-cassandra--mongodb-síntese-do-material">3.16 Cassandra × MongoDB (síntese do material)</a></li><li class="n3"><a href="#317-sharding-no-bigtable-infográfico">3.17 Sharding no BigTable (infográfico)</a></li><li class="n3"><a href="#318-complemento-capítulo-sharding-soares--versão-reenviada">3.18 Complemento: capítulo Sharding (Soares) — versão reenviada</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</a></li><li class="n3"><a href="#41-aplicações-citadas-no-material">4.1 Aplicações citadas no material</a></li><li class="n3"><a href="#42-resultados-dos-exemplos-numéricos-do-material">4.2 Resultados dos exemplos numéricos do material</a></li><li class="n3"><a href="#43-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.3 Cenários de aplicação (complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</a></li><li class="n2"><a href="#5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</a></li><li class="n2"><a href="#6-referências-e-conexões">6. Referências e conexões</a></li><li class="n3"><a href="#conexões-com-as-aulas-01-e-02-complementação--conceitos-explicados-antes-aqui-apenas-ponteiros">Conexões com as Aulas 01 e 02 (complementação — conceitos explicados antes; aqui apenas ponteiros)</a></li><li class="n3"><a href="#aplicação-profissional-complementação">Aplicação profissional (complementação)</a></li><li class="n3"><a href="#referências-acadêmicas-do-material">Referências acadêmicas (do material)</a></li><li class="n3"><a href="#materiais-complementares-indicados-no-pdf-linksqr-codes-não-acessados--apenas-títulos-e-descrições-do-próprio-pdf">Materiais complementares indicados no PDF (links/QR codes não acessados — apenas títulos e descrições do próprio PDF)</a></li><li class="n2"><a href="#7-anexo-a--minhas-observações-e-dúvida-georredundância-no-azure-observação-da-dani-a-ligação-com-o-azure-é-complementação-não-faz-parte-do-material-da-fmu">7. Anexo A — Minhas observações e dúvida: georredundância no Azure (observação da Dani; a ligação com o Azure é complementação, não faz parte do material da FMU)</a></li><li class="n2"><a href="#8-anexo-b--pontos-de-discussão-sharding--fatos-e-dimensões-e-sharding--georredundância-levantados-pela-dani-análise-é-complementação-não-faz-parte-do-material-da-fmu">8. Anexo B — Pontos de discussão: sharding × fatos e dimensões, e sharding × georredundância (levantados pela Dani; análise é complementação, não faz parte do material da FMU)</a></li><li class="n3"><a href="#81-o-infográfico-de-big-data-bigtable-é-o-mesmo-princípio-de-fatos-e-dimensões">8.1 O infográfico de Big Data (BigTable) é o mesmo princípio de fatos e dimensões?</a></li><li class="n3"><a href="#82-sharding--georredundância-do-azure">8.2 Sharding × georredundância do Azure</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-03--replicação-e-sharding-distribuição-de-dados-em-clusters-cassandra-e-mongodb">AULA 03 — Replicação e Sharding: distribuição de dados em clusters (Cassandra e MongoDB)</h1></div>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e objetivos</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Informação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>Banco de Dados Não Relacional (262GGR6387A)</td>
+</tr>
+<tr>
+<td><strong>Curso</strong></td>
+<td>Graduação em Inteligência Artificial — FMU</td>
+</tr>
+<tr>
+<td><strong>Aula / Unidade</strong></td>
+<td>Aula 03 (Unidade 3)</td>
+</tr>
+<tr>
+<td><strong>Tema</strong></td>
+<td>Gestão da replicação (modelos, estratégias e aplicações); <em>sharding</em> (conceito, estratégias, clusters locais e remotos, comparação com índices); <em>sharding</em> no Apache Cassandra e no MongoDB</td>
+</tr>
+<tr>
+<td><strong>Material acadêmico</strong></td>
+<td>Apresentação da unidade; Infográfico <em>Gestão da replicação</em>; capítulo <em>Gestão da replicação</em> (MENGATO JUNIOR, R. C. — <em>Sistemas Distribuídos</em>, SAGAH); Infográfico <em>Sharding</em> (BigTable); capítulo <em>Sharding</em> (BRANDÃO, D. S. — <em>Framework de Big Data</em>, SAGAH) e, reenviado depois, capítulo <em>Sharding</em> (SOARES, J. A. — <em>Framework de Big Data</em>, SAGAH; ver 3.18 e 5.25); Infográfico <em>Sharding no Apache Cassandra</em>; capítulo <em>Frameworks que utilizam sharding como forma de distribuição</em> (PEREIRA, M. A. — <em>Framework de Big Data</em>, SAGAH); Dicas do Professor; Saiba mais</td>
+</tr>
+</tbody>
+</table>
+<h3 id="objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</h3>
+<ul>
+<li>Conceituar <em>sharding</em> e explicar sua relação com a escalabilidade horizontal.</li>
+<li>Descrever o uso de <em>sharding</em> em <em>clusters</em> locais e distribuídos.</li>
+<li>Comparar o funcionamento do <em>sharding</em> com o uso de índices.</li>
+<li>Identificar como o <em>sharding</em> é aplicado em tecnologias como Apache Cassandra e MongoDB.</li>
+<li>Descrever o papel da replicação em sistemas distribuídos.</li>
+<li>Analisar estratégias e situações práticas de aplicação de modelos de replicação.</li>
+</ul>
+<blockquote>
+<p><strong>Nota de contexto:</strong> a Aula 01 apresentou <em>o que</em> são os bancos NoSQL e <em>por que</em> eles abrem mão de garantias (CAP, BASE). A Aula 02 voltou ao relacional (SQL e índices). A Aula 03 mostra <strong>como</strong> um banco cresce além de uma máquina: copiando os dados (<strong>replicação</strong>) e/ou dividindo os dados (<em><strong>sharding</strong></em>).</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e contextualização</h2>
+<p>Com o crescimento do volume de dados e de usuários, um único servidor deixa de dar conta de armazenamento, processamento e disponibilidade. A unidade apresenta as duas técnicas centrais de distribuição:</p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Ideia em uma frase</th>
+<th>Resolve principalmente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Replicação</strong></td>
+<td><strong>Copiar</strong> os mesmos dados em vários computadores</td>
+<td>Disponibilidade, tolerância a falhas, desempenho de leitura</td>
+</tr>
+<tr>
+<td><em><strong>Sharding</strong></em> (fragmentação / particionamento horizontal)</td>
+<td><strong>Dividir</strong> os dados em partes (<em>shards</em>) espalhadas por vários computadores</td>
+<td>Escalabilidade de armazenamento e de processamento (leitura e escrita)</td>
+</tr>
+</tbody>
+</table>
+<p>Os capítulos seguem esta ordem: (1) replicação em sistemas distribuídos (modelo, estratégias passiva e ativa, aplicações); (2) <em>sharding</em> (conceito, estratégias, <em>clusters</em>, comparação com índices); (3) <em>sharding</em> na prática em <strong>Cassandra</strong> e <strong>MongoDB</strong>, incluindo a diferença entre <em>sharding</em> e replicação. As duas técnicas aparecem <strong>combinadas</strong> nos bancos reais — ponto que a unidade destaca no final. O capítulo de <em>Sharding</em> de Soares, reenviado depois, foi integrado em <strong>3.18</strong>, sem substituir o conteúdo anterior.</p>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</h2>
+<h3 id="31-escalar-um-banco-vertical--horizontal-brandão">3.1 Escalar um banco: vertical × horizontal (Brandão)</h3>
+<p>Escalabilidade é a capacidade de o sistema atender ao crescimento sem perder qualidade e com aumento de custo baixo (Ferreira, 2020); também é definida como lidar de forma transparente com um número crescente de usuários simultâneos (Veras, 2016).</p>
+<table>
+<thead>
+<tr>
+<th>Abordagem</th>
+<th>O que é</th>
+<th>Limites (segundo o material)</th>
+<th>Quando usar <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vertical</strong></td>
+<td>Comprar máquinas maiores, mais rápidas e mais caras (mais RAM, disco)</td>
+<td>Trabalhosa e cara, mesmo em nuvem; <strong>não é infinita</strong></td>
+<td>Crescimento moderado, equipe pequena, aplicação difícil de distribuir</td>
+</tr>
+<tr>
+<td><strong>Horizontal</strong></td>
+<td>Adicionar mais máquinas e <strong>particionar/redistribuir</strong> os dados (<em>sharding</em>)</td>
+<td>Aumenta a <strong>complexidade operacional</strong>: é preciso gerenciar várias máquinas ao mesmo tempo</td>
+<td>Volume que passa do teto de uma máquina; crescimento contínuo; custo abaixo do vertical em grande escala</td>
+</tr>
+</tbody>
+</table>
+<p>O material observa que o aumento vertical funciona em grandes empresas com aporte financeiro, mas não tanto em pequenas e médias; por isso ganham destaque técnicas e sistemas de código aberto.</p>
+<blockquote>
+<p>Ver <strong>Aula 01 §3.4</strong> (escalabilidade horizontal = clusterização + réplicas + <em>sharding</em>).</p>
+</blockquote>
+<hr />
+<h3 id="32-replicação-o-papel-em-sistemas-distribuídos-mengato-junior-com-base-em-coulouris-et-al-2013">3.2 Replicação: o papel em sistemas distribuídos (Mengato Junior, com base em Coulouris <em>et al.</em>, 2013)</h3>
+<p><strong>Definição:</strong> manter <strong>cópias de dados (ou de serviços)</strong> em diferentes computadores. O exemplo cotidiano do material é o <em>cache</em> do navegador: a página está salva em uma cópia no próprio computador.</p>
+<p><strong>Vantagens citadas:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Vantagem</th>
+<th>Explicação do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Desempenho</strong></td>
+<td>O cliente não precisa ir ao servidor remoto (latência de rede maior). Vale para o <em>cache</em> do navegador e para qualquer aplicação</td>
+</tr>
+<tr>
+<td><strong>Disponibilidade</strong></td>
+<td>Principal motivo do uso: serviços visam ~100% (24×7), o que só é possível com dados replicados</td>
+</tr>
+<tr>
+<td><strong>Tolerância a falhas</strong></td>
+<td>Alguns serviços precisam de comportamento rigorosamente correto mesmo com falhas. Dado <strong>disponível</strong> não significa dado <strong>correto/atualizado</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requisitos e dificuldades:</strong></p>
+<ul>
+<li><strong>Transparência:</strong> o usuário não precisa saber que existem várias cópias físicas; deve receber só o que pediu.</li>
+<li><strong>Consistência:</strong> <em>consistência</em> = qualquer consulta, em qualquer réplica, retorna o mesmo conjunto de informações (Tanenbaum e Steen, 2008). Manter várias cópias consistentes pode gerar <strong>problema de escalabilidade</strong>.</li>
+<li><strong>Rigidez varia por aplicação:</strong>
+<ul>
+<li><em>Rede social:</em> trocar a foto de perfil não precisa chegar a todos imediatamente.</li>
+<li><em>Controle de tráfego aéreo:</em> dado correto é necessário em escalas de tempo curtas.</li>
+<li><em>Sistema bancário:</em> crédito e débito replicados <strong>exatamente nessa ordem</strong>; se algum servidor inverter as operações, o saldo fica diferente e prejudica o usuário.</li>
+</ul>
+</li>
+<li><strong>Complexidade:</strong> falta de <strong>relógio global</strong> entre os servidores; consenso de tempo e tempos das mensagens de sincronização.</li>
+<li>Replicar também <strong>rotinas</strong> (microsserviços), não só dados.</li>
+</ul>
+<blockquote>
+<p>Ver <strong>Aula 01 §3.4</strong> (CAP, consistência eventual, <em>vector clocks</em>): o material trata, aqui, do mesmo dilema entre alta disponibilidade e política rígida de consistência.</p>
+</blockquote>
+<hr />
+<h3 id="33-modelo-básico-de-arquitetura-da-replicação-coulouris-et-al-fig-1">3.3 Modelo básico de arquitetura da replicação (Coulouris <em>et al.</em>, Fig. 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Papel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cliente (C)</strong></td>
+<td>Faz requisições de leitura ou de atualização (escrita/alteração de objeto ou arquivo)</td>
+</tr>
+<tr>
+<td><strong><em>Front-end</em> (FE)</strong></td>
+<td>Intermediário que se comunica com um ou mais gerenciadores de réplica, <strong>tornando o processo transparente</strong> ao cliente</td>
+</tr>
+<tr>
+<td><strong>Gerenciador de réplica (GR)</strong></td>
+<td>Mantém as réplicas; qualquer dispositivo que sirva os dados replicados (na prática, &quot;servidor&quot;)</td>
+</tr>
+</tbody>
+</table>
+<p>As operações de um gerenciador sobre suas réplicas devem ser <strong>recuperáveis e atômicas (indivisíveis)</strong>: não podem deixar a réplica inconsistente e, havendo falha, deve ser possível desfazer.</p>
+<p><strong>As cinco fases de uma requisição</strong> (Coulouris <em>et al.</em>, 2013) — cada uma pode afetar o desempenho:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Fase</th>
+<th>O que acontece</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Requisição</strong></td>
+<td>O FE dispara a requisição para um ou mais gerenciadores (pode fazer <em>multicast</em> para todos e esperar resposta de alguns)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Coordenação</strong></td>
+<td>Os gerenciadores verificam se a requisição deve ser aplicada e em que <strong>ordem</strong>: FIFO, ordem causal ou ordem total</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Execução</strong></td>
+<td>Executa de forma que possa ser <strong>desfeita</strong> se houver falha posterior (em um servidor ou em todos, se houve <em>multicast</em>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Acordo</strong></td>
+<td>Os gerenciadores chegam a um <strong>consenso</strong> sobre aceitar ou cancelar</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Resposta</strong></td>
+<td>Um ou mais gerenciadores respondem ao FE; o FE pode pegar a <strong>primeira resposta</strong> e descartar as outras, ou esperar todas</td>
+</tr>
+</tbody>
+</table>
+<p>Nem toda aplicação executa todas as fases. <strong>Exemplo do material:</strong> aplicativo de <em>smartphone</em> com dados salvos localmente para uso sem internet — o FE não consegue falar com outros gerenciadores, &quot;pula&quot; para execução e resposta o mais rápido possível, e <strong>replica depois</strong> quando o usuário voltar a ter conexão.</p>
+<hr />
+<h3 id="34-classificação-das-estratégias-de-replicação-infográfico">3.4 Classificação das estratégias de replicação (Infográfico)</h3>
+<table>
+<thead>
+<tr>
+<th>Eixo</th>
+<th>Opção A</th>
+<th>Opção B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Processo</strong></td>
+<td><strong>Ativo:</strong> operações realizadas em <strong>todos</strong> os gerenciadores de réplicas</td>
+<td><strong>Passivo:</strong> cópias <strong>primárias e secundárias</strong>; atualização no primário e depois replicada aos demais</td>
+</tr>
+<tr>
+<td><strong>Fluxo</strong></td>
+<td><strong>Síncrono:</strong> todas as cópias atualizadas em <strong>uma única transação</strong>; bloqueia o usuário até todos aplicarem</td>
+<td><strong>Assíncrono:</strong> <strong>fila</strong> de atualizações a replicar; transação mais curta, mas fica mais difícil manter ordem e evitar atrasos</td>
+</tr>
+<tr>
+<td><strong>Direção</strong></td>
+<td><strong>Unidirecional:</strong> do primário para os secundários</td>
+<td><strong>Bidirecional:</strong> operações nos dois sentidos; pode haver <strong>mais de um servidor primário</strong> que envia e recebe atualizações</td>
+</tr>
+<tr>
+<td><strong>Conexão</strong></td>
+<td><strong><em>On-line</em>:</strong> replica a cada operação (quase nenhum atraso)</td>
+<td><strong><em>Off-line</em>:</strong> replica a cada intervalo de tempo / quando houver conexão com o <em>cluster</em> (comum em aplicativos de <em>smartphone</em>)</td>
+</tr>
+</tbody>
+</table>
+<p>Os quatro eixos são <strong>independentes</strong>: uma implementação combina uma opção de cada eixo (por exemplo, passiva + assíncrona + unidirecional + <em>on-line</em>). <em>(Interpretação de estudo, derivada da estrutura do infográfico.)</em></p>
+<hr />
+<h3 id="35-replicação-passiva-backup-primário">3.5 Replicação passiva (<em>backup</em> primário)</h3>
+<p>Também chamada de <em>master/slave</em> (primário/secundários). É a <strong>mais comum</strong>. O FE conversa <strong>apenas com o gerenciador primário</strong>, que replica as operações para os secundários. Se o primário falha, um novo é <strong>eleito</strong>.</p>
+<p><strong>Sequência (Fig. 2):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Passo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requisição</td>
+<td>FE → primário (pode levar um <strong>identificador único</strong>)</td>
+</tr>
+<tr>
+<td>Coordenação</td>
+<td>O primário verifica, pelo identificador, se a requisição já foi feita (exige <strong>registro histórico</strong> das requisições atendidas)</td>
+</tr>
+<tr>
+<td>Execução</td>
+<td>O primário executa e <strong>armazena a resposta</strong> (garante atomicidade e permite replicar a operação)</td>
+</tr>
+<tr>
+<td>Acordo</td>
+<td>Em caso de atualização, o primário manda os secundários executarem; eles <strong>confirmam</strong></td>
+</tr>
+<tr>
+<td>Resposta</td>
+<td>O primário responde ao FE, que devolve ao cliente</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pontos de atenção do modelo (material):</strong></p>
+<ul>
+<li>Se o sistema é <strong>síncrono</strong>, a etapa de acordo pode causar <strong>lentidão</strong>, dependendo do nº de secundários.</li>
+<li>Se o primário falha, <strong>um</strong> <em>backup</em> assume; se mais de um assumir, causa falha no sistema. Os <em>backups</em> remanescentes precisam concordar com o novo primário e com o <strong>histórico de execuções</strong>.</li>
+<li>Para tolerar até <strong>F falhas</strong>, são necessários <strong>F + 1</strong> gerenciadores — implantação possivelmente cara.</li>
+<li><strong>Não tolera falhas bizantinas.</strong></li>
+<li>O FE tolera falhas com facilidade: ao detectar a falha, basta buscar o novo endereço do primário.</li>
+<li><strong>Sobrecarga no primário</strong> (todas as requisições chegam a ele). <strong>Variação:</strong> permitir <strong>consultas</strong> (que não alteram dados) nos <em>backups</em>.</li>
+</ul>
+<blockquote>
+<p><em>Falhas bizantinas</em> (quadro &quot;Saiba mais&quot; do material): aquelas em que os gerenciadores não conseguem concordar com uma estratégia para falhas catastróficas no processo de replicação.</p>
+</blockquote>
+<hr />
+<h3 id="36-replicação-ativa">3.6 Replicação ativa</h3>
+<p>Os gerenciadores são organizados em <strong>grupos</strong>. O FE envia a requisição a <strong>todos</strong> os do grupo por <em><strong>multicast</strong></em> e cada nó processa de forma <strong>independente</strong>, respondendo ao FE. Se alguns falharem, <strong>não há impacto</strong> na operação; só há erro em caso de colapso geral.</p>
+<p><strong>Sequência (Fig. 3):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Fase</th>
+<th>Passo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requisição</td>
+<td>FE envia via <em>multicast</em> <strong>totalmente ordenado e confiável</strong> a todos os gerenciadores</td>
+</tr>
+<tr>
+<td>Coordenação</td>
+<td>Um sistema de comunicação em grupo entrega a requisição a cada gerenciador <strong>na mesma ordem</strong></td>
+</tr>
+<tr>
+<td>Execução</td>
+<td>Todos executam a mesma requisição de forma similar → ao final, <strong>mesmo estado</strong> (consistência)</td>
+</tr>
+<tr>
+<td>Acordo</td>
+<td><strong>Não é necessário</strong>: a distribuição total já garante a ordem</td>
+</tr>
+<tr>
+<td>Resposta</td>
+<td>Cada gerenciador responde ao FE com o identificador da requisição (os que falharam não respondem)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pontos de atenção:</strong></p>
+<ul>
+<li>O conceito de <strong>falha é relativo à aplicação</strong>: pode-se considerar falha se <strong>um</strong> gerenciador não responder, ou só se <strong>todos</strong> (ou boa parte) não responderem.</li>
+<li>O FE pode adotar a política de <strong>aceitar a primeira resposta</strong> (ganho de desempenho).</li>
+<li>O sucesso depende de um algoritmo de <em>multicast</em> totalmente ordenado e confiável.</li>
+<li>Com ao menos <strong>2F + 1</strong> gerenciadores, o modelo suporta até <strong>F falhas bizantinas</strong>. Para tolerância mais rígida, pode-se <strong>assinar digitalmente</strong> as respostas.</li>
+</ul>
+<h3 id="37-passiva--ativa-síntese">3.7 Passiva × ativa (síntese)</h3>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Passiva (<em>backup</em> primário)</th>
+<th>Ativa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quem recebe a requisição</td>
+<td>Só o primário</td>
+<td><strong>Todos</strong> (via <em>multicast</em>)</td>
+</tr>
+<tr>
+<td>Quem executa</td>
+<td>O primário; depois replica</td>
+<td><strong>Todos</strong>, de forma independente</td>
+</tr>
+<tr>
+<td>Fase de acordo</td>
+<td>Sim (primário → secundários, com confirmação)</td>
+<td>Não necessária (ordem total)</td>
+</tr>
+<tr>
+<td>Falha do nó principal</td>
+<td>Exige <strong>eleição</strong> de novo primário</td>
+<td>Sem impacto enquanto restarem nós</td>
+</tr>
+<tr>
+<td>Nº de gerenciadores</td>
+<td>F + 1 para F falhas (sem bizantinas)</td>
+<td>2F + 1 para F falhas bizantinas</td>
+</tr>
+<tr>
+<td>Ponto fraco</td>
+<td>Sobrecarga/gargalo no primário; lentidão no acordo síncrono</td>
+<td>Depende de <em>multicast</em> ordenado e confiável (custo de coordenação)</td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong> <em>(complementação)</em></td>
+<td>Maioria dos sistemas; quando se aceita uma troca de primário e se quer simplicidade</td>
+<td>Quando <strong>não se pode parar</strong> nem por um instante e se aceita pagar mais recursos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="38-aplicações-dos-modelos-de-replicação">3.8 Aplicações dos modelos de replicação</h3>
+<p><strong>a) Microsserviços — replicar um serviço, não dados (Fig. 4).</strong></p>
+<ul>
+<li><strong>Microsserviço:</strong> um projeto completo com <strong>uma única funcionalidade</strong> (ex.: enviar <em>e-mail</em> quando um evento ocorre), reutilizável e de fácil manutenção.</li>
+<li>No serviço de <em>e-mail</em> <strong>não há dados a replicar</strong>: as informações necessárias seguem na própria requisição do FE → não há problema de consistência.</li>
+<li>Fluxo: clientes (celular, <em>desktop</em>, <em>tablet</em>, <em>notebook</em>) → FE → <strong>gerenciador primário (<em>proxy</em>)</strong> → uma das instâncias do microsserviço.</li>
+<li>O <em>proxy</em> tem políticas de <strong>balanceamento de carga</strong>; se um servidor não devolve mensagem de êxito, reatribui a requisição a outro. Como o envio de <em>e-mail</em> é <strong>assíncrono</strong>, o cliente não fica bloqueado.</li>
+<li>É uma implementação do <strong>modelo passivo</strong>, exceto por não manter um conjunto de dados. Se o <em>proxy</em> falhar, outro é eleito. Os gerenciadores podem ser <strong>máquinas virtuais ou contêineres</strong>, ligados/desligados com facilidade.</li>
+</ul>
+<p><strong>b) Arquitetura <em>gossip</em> (fofoca) — Ladin <em>et al.</em>, 1992 (Figs. 5).</strong></p>
+<ul>
+<li>Os gerenciadores trocam <strong>mensagens de &quot;fofoca&quot; de tempos em tempos</strong> para propagar atualizações às réplicas. Implementa replicação, consistência e sincronização.</li>
+<li>Dois tipos de operação: <strong>consulta</strong> (cliente espera o estado da réplica) e <strong>atualização</strong> (nada é devolvido além do identificador; só ela modifica o estado).</li>
+<li>O FE manda requisições a <strong>qualquer gerenciador disponível</strong> (não precisa ser todos nem um primário) → escolhe um que responda em tempo razoável.</li>
+<li>Cada cliente tem seu próprio gerenciador ou <em>cluster</em> → separação por <strong>geolocalização</strong> reduz a latência.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Fase (gossip)</th>
+<th>Como funciona</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requisição</td>
+<td>O FE fala com um servidor; se ele falha, procura outro. Na atualização, devolve ao cliente assim que entregue ao FE; segue em <strong>segundo plano</strong></td>
+</tr>
+<tr>
+<td>Resposta de atualização</td>
+<td>O gerenciador responde assim que recebe</td>
+</tr>
+<tr>
+<td>Coordenação</td>
+<td>As mensagens de fofoca são a <strong>única</strong> coordenação; um gerenciador só processa quando já pode aplicar (outros nós podem precisar receber atualizações antes)</td>
+</tr>
+<tr>
+<td>Execução</td>
+<td>O gerenciador executa a requisição</td>
+</tr>
+<tr>
+<td>Resposta de consulta</td>
+<td>Só para consultas</td>
+</tr>
+<tr>
+<td>Acordo</td>
+<td>Por mensagens de fofoca, de forma <strong>&quot;preguiçosa&quot;</strong> (<em>lazy</em>): não a cada requisição, e sim ocasionalmente ou quando um servidor percebe que está desatualizado</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Consistência <strong>causal/mais flexível</strong>: um cliente pode acessar dado antigo em relação a outro. O modelo <strong>não define</strong> como propagar atualizações (varia por aplicação).</li>
+<li><strong>Exemplo — rede social:</strong> usuário europeu com amigos europeus → dados no <em>cluster</em> da Europa. Um usuário no Brasil que veja o perfil dele pode ver informação <strong>desatualizada</strong>, pois o gerenciador da região não envia fofocas com tanta frequência a outros continentes. Consultas são mais frequentes que atualizações e <strong>a disponibilidade vem antes da consistência</strong>.</li>
+<li><strong>TAO (<em>The Associations and Objects</em>, Facebook; Bronson <em>et al.</em>, 2013):</strong> design <em>master/slave</em> que garante consultas atendidas dentro da região, com risco de dados obsoletos.</li>
+</ul>
+<p><strong>c) Sistemas de arquivos distribuídos.</strong> <strong>GFS</strong> (Google File System) usa replicação <strong>passiva</strong> (cópias primárias e secundárias); <strong>Hadoop (HDFS)</strong> — de acordo com o material, pode fazer várias cópias de um dado (ver ponto de atenção 5.14).</p>
+<p><strong>Conclusão do capítulo:</strong> replicação permite alta disponibilidade, tolerância a falhas e confiabilidade, mas <strong>apenas usar replicação não garante</strong> esses requisitos — é preciso escolher o modelo adequado à aplicação.</p>
+<hr />
+<h3 id="39-o-que-é-sharding-brandão-e-pereira">3.9 O que é <em>sharding</em> (Brandão e Pereira)</h3>
+<p><em><strong>Sharding</strong></em> (fragmentação/particionamento horizontal) é um padrão de arquitetura de sistemas distribuídos em que a base é dividida em dois ou mais blocos menores, os <em><strong>shards</strong></em>. <strong>Cada partição tem o mesmo esquema e as mesmas colunas, mas linhas (registros) totalmente diferentes.</strong> Juntos, os <em>shards</em> representam o conjunto lógico inteiro.</p>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><em>Shard</em> lógico</strong></td>
+<td>Cada fragmento lógico dos dados</td>
+</tr>
+<tr>
+<td><strong><em>Shard</em> físico</strong></td>
+<td>Nó de banco de dados que hospeda um ou vários <em>shards</em> lógicos</td>
+</tr>
+<tr>
+<td><strong>Banco particionado (SDB, <em>Sharded DataBase</em>)</strong></td>
+<td>União dos <em>shards</em>, gerenciados coletiva ou individualmente; parece único, e o número de <em>shards</em> e a distribuição são <strong>transparentes</strong> para as aplicações</td>
+</tr>
+<tr>
+<td><strong><em>Shared Nothing</em> (SN)</strong></td>
+<td>Arquitetura &quot;nada compartilhada&quot;: sem centralização; cada fragmento é <strong>autônomo/independente</strong> (não compartilha dados nem recursos de computação)</td>
+</tr>
+<tr>
+<td><strong>Chave de fragmentação (<em>shard key</em>)</strong></td>
+<td>Campo(s) usado(s) para decidir em qual <em>shard</em> cada registro fica</td>
+</tr>
+<tr>
+<td><strong>Tabelas de referência</strong></td>
+<td>Em alguns casos, replica-se uma tabela pequena em <strong>cada</strong> <em>shard</em> (ex.: tabela de taxas de conversão), para que as consultas tenham tudo à mão — uma forma de balanço de carga</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Características que diferem do relacional tradicional (Brandão):</strong></p>
+<ol>
+<li><strong>Dados desnormalizados:</strong> guardam-se juntos dados usados juntos (ex.: perfil do usuário recuperado como um todo) — abordagem muito rápida.</li>
+<li><strong>Dados em várias instâncias físicas:</strong> em vez de crescer só aumentando máquinas num <em>datacenter</em>, os dados são paralelos e crescem de forma <strong>linear</strong>; muito mais trabalho acontece em <strong>processamento paralelo</strong>.</li>
+<li><strong>Dados &quot;pequenos&quot;:</strong> quanto maior o conjunto de dados de um servidor, mais difícil obter retorno inteligente (muita RAM para <em>cache</em>). Isolando em fragmentos menores, é <strong>mais provável que os dados acessados permaneçam em <em>cache</em></strong>.</li>
+</ol>
+<p><strong>Particionamento horizontal × vertical (material):</strong></p>
+<ul>
+<li><strong>Vertical:</strong> <strong>colunas inteiras</strong> são separadas e colocadas em tabelas novas/distintas.</li>
+<li><strong>Horizontal (<em>sharding</em>):</strong> <strong>linhas</strong> são distribuídas entre <em>shards</em>.</li>
+<li>O horizontal deve <strong>complementar</strong> o vertical e o funcional (Pereira).</li>
+</ul>
+<p><strong>Co-residente × remoto (Pereira):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Onde ficam os <em>shards</em></th>
+<th>Vantagem citada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><strong>Coresident</strong></em></td>
+<td>Na <strong>mesma</strong> máquina</td>
+<td>Reduz o tamanho dos <strong>índices individuais</strong> e a quantidade de E/S na atualização de registros</td>
+</tr>
+<tr>
+<td><strong>Remoto</strong></td>
+<td>Em máquinas <strong>diferentes</strong></td>
+<td>Aumenta a <strong>largura de banda</strong> de acesso (mais RAM, mais interfaces de rede e canais de E/S de disco)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Onde implementar:</strong> muitas vezes <strong>no nível do aplicativo</strong> (o código define em qual <em>shard</em> ler/gravar); alguns sistemas de arquivos distribuídos têm <em>sharding</em> <strong>integrado</strong>. Também há ferramentas de terceiros:</p>
+<table>
+<thead>
+<tr>
+<th>Ferramenta</th>
+<th>O que é (segundo o material)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hibernate Shards</strong></td>
+<td>Extensão do <em>Hibernate Core</em> para encapsular a complexidade de dados particionados horizontalmente; duas áreas: <strong>lógica de <em>sharding</em> generalizada</strong> (consulta/transação via API do <em>Hibernate Core</em>) e <strong>específica do aplicativo</strong> (regras próprias de distribuição, via interfaces)</td>
+</tr>
+<tr>
+<td><strong>Apache Slice</strong></td>
+<td><em>Plug-in</em> que estende o <strong>OpenJPA</strong> (Java) para armazenamento distribuído, possivelmente heterogêneo e particionado; fica entre OpenJPA e <strong>JDBC</strong>; os dados são &quot;fatiados&quot; em <em><strong>slices</strong></em> (mesma ideia dos <em>shards</em>)</td>
+</tr>
+<tr>
+<td><strong>WebSphere ObjectGrid (IBM)</strong></td>
+<td>Armazenamento de objetos Java em memória (<em>cache</em>) para escalabilidade, resiliência e alto desempenho; pode ser banco em memória ou distribuir dados pela rede; arquitetura de segurança para autenticar e autorizar clientes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vantagens do escalonamento horizontal (Pereira):</strong> ganho de desempenho, alta disponibilidade, tolerância a falhas, segurança, <strong>paralelização</strong> de <em>backup</em>, restauração e sincronização inicial. Bancos que usam: Cassandra, MongoDB, HBase e o sistema de arquivos HDFS (Hadoop). O custo: <strong>gargalo é a complexidade operacional</strong> — gerenciar várias máquinas ao mesmo tempo; funções como pesquisa de texto e análise de dados saem beneficiadas.</p>
+<hr />
+<h3 id="310-estratégias-de-sharding">3.10 Estratégias de <em>sharding</em></h3>
+<p>O material apresenta duas listas que se sobrepõem: as <strong>três estratégias mais comuns</strong> (Carpenter e Hewitt, 2016 — via Pereira) e as <strong>três opções do MongoDB</strong> (Keep e Ingo, 2020 — via Brandão).</p>
+<table>
+<thead>
+<tr>
+<th>Estratégia</th>
+<th>Como funciona</th>
+<th>Vantagem</th>
+<th>Desvantagem / cuidado</th>
+<th>Quando usar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Por <em>hash</em> (por chave)</strong></td>
+<td>Usa valores constantes do dado para gerar um <strong><em>hash</em>/<em>token</em></strong> que identifica o <em>shard</em></td>
+<td>Boa <strong>distribuição</strong> uniforme; ótima para <strong>operações direcionadas</strong> e para <strong>ingestão de <em>stream</em> de dados e dados de eventos</strong></td>
+<td>O cálculo do <em>hash</em> adiciona carga; <strong>difícil adicionar/remover servidores</strong> dinamicamente; consultas por faixa tendem a atingir vários <em>shards</em></td>
+<td>Chave de acesso pontual (buscar por ID); escrita em alto volume que precisa ser espalhada</td>
+</tr>
+<tr>
+<td><strong>Por intervalo (faixa)</strong></td>
+<td>Particiona por <strong>intervalos da chave</strong>; dados com chaves parecidas ficam no <strong>mesmo <em>shard</em></strong></td>
+<td>Implementação relativamente <strong>fácil</strong>; boa para <strong>consultas sequenciais/por faixa</strong> (a consulta cai em <strong>um</strong> <em>shard</em>); costuma ser a estratégia <strong>padrão</strong></td>
+<td><strong>Desequilíbrio de carga</strong> (intervalos podem ter quantidades diferentes de itens)</td>
+<td>Consultas por faixa (preço, idade, data)</td>
+</tr>
+<tr>
+<td><strong>Por diretório</strong></td>
+<td>Um <strong>serviço de pesquisa estática</strong> (mapa) diz qual <em>shard</em> guarda quais dados; o cliente consulta o serviço antes</td>
+<td><strong>Flexibilidade</strong>: qualquer sistema/algoritmo para atribuir dados; mapeamento <em>shard</em> virtual ↔ partição física muda sem alterar o código; fácil adicionar <em>shards</em> dinâmicos</td>
+<td>Se o sistema de busca for <strong>corrompido</strong>, afeta gravação e acesso (ponto único de falha)</td>
+<td>Regras de alocação complexas ou que mudam com frequência</td>
+</tr>
+<tr>
+<td><strong>Por zona</strong> (MongoDB)</td>
+<td>O desenvolvedor define <strong>regras</strong> que orientam onde os dados ficam</td>
+<td>Permite, por exemplo, separar dados de <strong>filiais</strong> em <em>shards</em> diferentes</td>
+<td>Exige planejamento das regras</td>
+<td>Requisitos de localização, prioridade ou privacidade de acesso</td>
+</tr>
+</tbody>
+</table>
+<p>Outras formas citadas: baseado em <strong>colunas</strong> (útil em bancos orientados a coluna como o HBase), <strong><em>sharding</em> dinâmico</strong> (o cliente determina onde o <em>shard</em> será armazenado) e <strong>algorítmico</strong> (uma função aloca os dados). Pode-se ainda fragmentar por carga de trabalho, localização, prioridade e privacidade de acesso.</p>
+<p><strong>Exemplos do material:</strong></p>
+<ul>
+<li><em>Intervalo</em> (Fig. 2, Brandão): idade das pessoas divide a tabela em três <em>shards</em>: 0–29, 30–59 e ≥ 60 (resultado em 4.2).</li>
+<li><em>Intervalo</em> (Pereira): loja em um <em>shopping</em> dividida por <strong>faixas de preço</strong>; a consulta por preço vai a um único <em>shard</em>.</li>
+<li><em>Hash</em> (Pereira): tabela cuja primeira coluna tem o nome completo de pessoas sem repetição → essa coluna vira chave de fragmentação transformada em <em>hash</em>.</li>
+</ul>
+<blockquote>
+<p><strong>&quot;O que é <em>hash</em>&quot;</strong> (quadro do material): sequência de bits que representa dados por letras e números de comprimento fixo; transforma uma grande quantidade de dados em uma pequena. O capítulo inteiro, por exemplo, pode ser representado por um <em>hash</em>.</p>
+</blockquote>
+<p><strong>Cuidados antes de escolher (Pereira):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Cuidado</th>
+<th>Por que importa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Escolha da chave</strong></td>
+<td>Deve ser <strong>estável, pouco volátil</strong>, preferencialmente <strong>invariável e exclusiva</strong>; se muda, talvez seja preciso <strong>mover</strong> o fragmento (mais atualizações e movimentação de dados)</td>
+</tr>
+<tr>
+<td><strong>Equilíbrio e redimensionamento</strong></td>
+<td><em>Shards</em> devem ter volume semelhante; como há inserções e remoções, é preciso <strong>rebalanceamento periódico</strong> (processo oneroso → planejar o crescimento e ter equipe capaz de reequilibrar rapidamente)</td>
+</tr>
+<tr>
+<td><strong>Eficiência das consultas</strong></td>
+<td>Consultas que acessam <strong>um</strong> <em>shard</em> são mais eficientes que as que juntam vários; é preciso conhecer os dados e as buscas prováveis</td>
+</tr>
+<tr>
+<td><strong>Referências entre objetos</strong></td>
+<td>Pode-se incluir a chave de fragmentação de um objeto no esquema de outro. <strong>Exemplo:</strong> exames de sangue de um paciente ao longo dos anos em banco dividido por ano → referenciar todos os resultados do mesmo paciente</td>
+</tr>
+<tr>
+<td><strong>Não mudar a chave depois</strong></td>
+<td>Não se pode alterar a chave de fragmento após o fragmento, nem desfazer uma coleção de fragmentos (Brandão)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="311-sharding-em-clusters-brandão">3.11 <em>Sharding</em> em <em>clusters</em> (Brandão)</h3>
+<p><strong>Cluster</strong> (&quot;aglomeração&quot;): sistema que <strong>une vários computadores</strong> para funcionar como <strong>uma única máquina</strong> com a soma das capacidades (Gomes, 2015). Esquema (Fig. 3, Hadoop): um <strong>nó mestre</strong> (<em>master</em>, com um <em>secondary master</em>) e vários <strong>nós</strong> (<em>slaves</em>); externamente é visto como uma só máquina. Todo membro do <em>cluster</em> fragmentado deve poder se conectar a todos os demais, incluindo <em>shards</em> e servidores de configuração (atenção a rede, segurança, interfaces e <em>firewalls</em>).</p>
+<p><strong>Usos de <em>cluster</em>:</strong> sistemas distribuídos, fragmentação de dados, <strong>supercomputadores</strong> (algoritmos complexos com grandes volumes, comuns em projetos de IA) e <strong>mineração de dados</strong> (análise de agrupamento — <em>clustering</em> — como método para classificar itens em aglomerados). Em geral, melhoram desempenho e disponibilidade e são mais econômicos que computadores individuais de velocidade equivalente; surgiram da convergência de microprocessadores baratos, redes de alta velocidade e <em>software</em> de computação distribuída.</p>
+<p><strong>Balanceamento de carga (<em>load balancing</em>):</strong> direcionar cada requisição a um nó diferente para <strong>não sobrecarregar sempre a mesma máquina</strong>. Uso comum: servidores <em>web</em> ou <em>proxy</em> em rede local.</p>
+<p><strong>Cluster local × remoto:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th><em>Cluster</em> <strong>local</strong></th>
+<th><em>Cluster</em> <strong>remoto</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onde</td>
+<td>Rede local (tipo <strong>LAN</strong>)</td>
+<td>Acesso externo; conexão por meio de <em>clusters</em> na camada de transporte; inclui serviços em <strong>nuvem</strong> (Google, Amazon, Microsoft)</td>
+</tr>
+<tr>
+<td>Segurança</td>
+<td>Mais fácil de garantir (acesso limitado a quem está na rede local); ainda é preciso monitorar ataques vindos de <strong>usuário local autorizado</strong> invadindo externamente</td>
+<td>Alvo de invasores; exige proteção reforçada</td>
+</tr>
+<tr>
+<td>Custo</td>
+<td>Infraestrutura própria</td>
+<td>Custo diminui (energia e manutenção física terceirizadas); a equipe de TI foca nas soluções de armazenamento e transação</td>
+</tr>
+<tr>
+<td>Característica</td>
+<td>—</td>
+<td>Módulo de <em>cluster</em> remoto: conexões <strong>unidirecionais</strong> usadas na <strong>replicação</strong> e na <strong>pesquisa entre <em>clusters</em></strong> (<em>cross-cluster</em>); cada <em>cluster</em> é referenciado por nome e lista de <strong>nós-semente</strong>; até <strong>três nós de <em>gateway</em></strong> são selecionados para conexão</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>&quot;Fique atento&quot; do material:</strong> antes dos <em>clusters</em>, <strong>mainframes</strong> eram usados como uma grande máquina com redundância modular; o menor custo inicial e o aumento da velocidade das redes favoreceram os <em>clusters</em>. Algumas empresas ainda usam mainframes, mas o número cai a cada ano.</p>
+</blockquote>
+<p><strong>Servidor tradicional × clusterizado na nuvem (Quadro 1, Applied Innovations):</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Servidores <em>cloud</em> padrão</th>
+<th>Servidores <em>cloud</em> clusterizados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nº de servidores físicos</td>
+<td>1</td>
+<td>12–15</td>
+</tr>
+<tr>
+<td>Tipo de armazenamento</td>
+<td>RAID-10</td>
+<td>SAN (<em>Storage Area Network</em>)</td>
+</tr>
+<tr>
+<td><strong><em>Failover</em> automático</strong></td>
+<td>Não</td>
+<td>Sim</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Failover</em>:</strong> reconfiguração automática do sistema para colocar um novo nodo em serviço quando outro falha.</p>
+<p><strong>Kubernetes:</strong> sistema que facilita a <strong>orquestração de contêineres</strong> (como Docker), criando <em>clusters</em> virtualizados. É transparente para o usuário em qual máquina o processo roda; pode haver mais de um nodo por máquina física ou nodos divididos pelo <em>cluster</em>. <strong>Exemplo (Fig. 4): Google Kubernetes Engine (GKE)</strong> — plano de controle (servidor de API, controlador de recursos, agendador, armazenamento), nós com <em>pods</em> de usuário e contêineres, e serviços da Google Cloud conectados (rede VPC, disco persistente, <em><strong>Load Balancer</strong></em>, monitoramento).</p>
+<p><strong><em>Shards</em> em <em>cluster</em>:</strong> exige sistemas distribuídos com capacidade de usar <em>sharding</em>. Cada <em>shard</em> contém um <strong>subconjunto</strong> dos dados e pode ser implantado como um <strong>conjunto de réplicas</strong>. O sistema distribuído atua como <strong>roteador de consulta</strong> (interface entre aplicativo cliente e <em>cluster</em> fragmentado); os <strong>servidores de configuração</strong> guardam <strong>metadados</strong> e definições do <em>cluster</em>.</p>
+<blockquote>
+<p><strong>Exemplo do material — ElasticSearch:</strong> ferramenta que usa <em>sharding</em> para distribuir dados em <em>cluster</em>. Normalmente considerado NoSQL, mas criado como <strong>motor de busca</strong> (como os da Google e Yahoo). A Elastic oferece Logstash e Beats (coleta, agregação e enriquecimento de dados) e o <strong>Kibana</strong> (explorar/visualizar/gerenciar a <em>stack</em>). No ElasticSearch ocorrem indexação, fragmentação, pesquisa e análise.</p>
+</blockquote>
+<hr />
+<h3 id="312-relação-entre-sharding-e-índices-brandão">3.12 Relação entre <em>sharding</em> e índices (Brandão)</h3>
+<p><strong>Índice (relacional):</strong> organiza os registros para recuperação eficiente de todos os registros que satisfazem uma condição de pesquisa nos campos-chave (Ramakrishnan e Gehrke, 2011); funciona como <strong>ponteiro direto</strong> para o registro, diminuindo o tempo de acesso. Pode ajudar em consultas com <code>WHERE</code> e operadores <code>NOT</code>, <code>AND</code>, <code>OR</code> (Bianchi, 2007). Tipos citados: booleano, de <em>hashing</em>, <em>bitmap</em>, de várias tabelas, <strong>árvore B (B-<em>tree</em>)</strong> e funcional.</p>
+<p><strong>Figura 5 (índice não clusterizado B-<em>tree</em> sobre <code>Nome</code>):</strong> raiz <strong>A–Z</strong> → nós intermediários <strong>A–G</strong>, <strong>H–N</strong>, <strong>O–Z</strong> → <strong>folhas</strong> com pares <em>Chave / RowId</em> (Alberto 123564, Ana 123698, Antonio 142986…). <strong>Exemplo do material:</strong> buscar &quot;Maria&quot; com <code>WHERE</code> → a consulta parte do nó mestre (raiz), que aponta ao intermediário <strong>H–N</strong>, onde estaria a letra <strong>M</strong>.</p>
+<blockquote>
+<p>Ver <strong>Aula 02 §3.7</strong> (conceito e vantagens), <strong>§3.7.2</strong> (agrupado, primário e secundário), <strong>§3.7.3</strong> (estrutura B-<em>tree</em>) e <strong>Anexos A e B</strong> (explicação simples do índice por nome e quadro de termos). O que há de novo nesta aula é a <strong>comparação</strong> com o <em>sharding</em>.</p>
+</blockquote>
+<p><strong>Quadro 2 — Índices × <em>sharding</em> (Oracle, adaptado):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Índices</th>
+<th><em>Sharding</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Melhora as consultas na maioria dos casos</td>
+<td>Realiza o <strong>balanceamento de carga</strong> em servidores</td>
+</tr>
+<tr>
+<td>Requer <strong>menos estrutura</strong> (tabela inteira em um mesmo servidor)</td>
+<td>Usado em servidor <strong>clusterizado</strong> (várias máquinas interligadas em conjunto)</td>
+</tr>
+<tr>
+<td>Permite acesso a dados <strong>ordenados</strong> sem precisar ordenar (dados já guardados de forma ordenada)</td>
+<td>Permite replicação com <strong><em>shards</em> redundantes</strong> (alguns <em>shards</em> com o mesmo dado de outro, para garantir disponibilidade) <em>(ver ponto de atenção 5.7)</em></td>
+</tr>
+<tr>
+<td>Acesso feito por um dos três tipos de campo: chave primária, chave estrangeira e <em>constraint unique</em> <em>(ver ponto de atenção 5.8)</em></td>
+<td>Acesso feito por <em><strong>shard keys</strong></em> (chaves de partição)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Desvantagens dos índices (&quot;Fique atento&quot;):</strong> a tabela virtual de índices <strong>aumenta o espaço em disco</strong>; toda alteração no índice exige alterar a tabela de índices; em alguns casos pode <strong>piorar</strong> o desempenho, pois pode demorar mais procurando a partição onde está o dado do que numa consulta direta.</p>
+<p><strong>Conclusão do capítulo:</strong> índices e <em>sharding</em> melhoram o desempenho das consultas, mas é preciso pesar a <strong>escalabilidade dos <em>clusters</em></strong> contra a <strong>simplicidade do armazenamento único</strong> não distribuído. Para <em>big data</em>, trabalhar com <em>clusters</em> é o mais indicado.</p>
+<p><strong>Comparação de uso <em>(síntese de estudo, complementação)</em>:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Índice</th>
+<th><em>Sharding</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tabela cabe em <strong>um</strong> servidor, mas as buscas estão lentas</td>
+<td><strong>Primeira escolha</strong></td>
+<td>Desnecessário (adiciona complexidade)</td>
+</tr>
+<tr>
+<td>Dados e carga passam da capacidade de <strong>um</strong> servidor</td>
+<td>Ajuda dentro de cada <em>shard</em>, mas não resolve o limite</td>
+<td><strong>Necessário</strong></td>
+</tr>
+<tr>
+<td>Busca pontual numa tabela enorme <strong>já fragmentada</strong></td>
+<td>Índice <strong>dentro</strong> de cada <em>shard</em></td>
+<td>Chave de fragmentação leva ao <em>shard</em> certo</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Os dois <strong>não competem</strong>: o material mostra que, em bancos fragmentados (ex.: MongoDB), a chave de fragmento depende do índice de suporte (ver 3.15).</p>
+</blockquote>
+<hr />
+<h3 id="313-sharding--replicação-pereira">3.13 <em>Sharding</em> × replicação (Pereira)</h3>
+<p><strong>Diferença central:</strong> <em>sharding</em> = particionamento em fragmentos, e os <em>shards</em> armazenam <strong>subconjuntos</strong> dos dados; replicação = <strong>cópia exata dos dados inteiros</strong>. Sem replicação há ponto de falha: se um nó do <em>cluster</em> ficar inativo, parte dos dados fica indisponível. <strong>Só a integração</strong> entre particionamento e replicação gera um sistema de banco eficaz.</p>
+<table>
+<thead>
+<tr>
+<th>Replicação</th>
+<th>Particionamento (<em>sharding</em>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Armazena <strong>cópias</strong> dos dados em várias máquinas</td>
+<td>Armazena <strong>partes</strong> dos dados em várias máquinas</td>
+</tr>
+<tr>
+<td>Melhora o desempenho de <strong>leitura</strong>, mas é preciso repetir a escrita/gravação</td>
+<td>Melhora o desempenho de <strong>leitura e escrita</strong></td>
+</tr>
+<tr>
+<td>Conjunto de réplicas: o <strong>primário</strong> é o único capaz de receber gravações</td>
+<td><em>Shard</em> primário é composto pelos conjuntos de réplicas que formam um fragmento</td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong> <em>(complementação)</em>: disponibilidade, tolerância a falhas, leitura em escala</td>
+<td><strong>Quando usar</strong> <em>(complementação)</em>: volume ou carga de escrita acima de um servidor</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>O Quadro 1 do material traz, na fonte, duas linhas aparentemente <strong>invertidas</strong> (&quot;replicação possibilita o dimensionamento&quot; / &quot;sharding possibilita a redundância&quot;). A tabela acima segue o texto do próprio capítulo (replicação → tolerância a falhas; <em>sharding</em> → armazenar subconjuntos para escalar). Ver ponto de atenção 5.6.</p>
+</blockquote>
+<hr />
+<h3 id="314-sharding-no-apache-cassandra-pereira--infográfico">3.14 <em>Sharding</em> no Apache Cassandra (Pereira + infográfico)</h3>
+<p><strong>Visão geral:</strong> banco <strong>distribuído</strong> para <em>big data</em>, projetado com base no <strong>DynamoDB</strong> (Amazon) e no <strong>BigTable</strong> (Google), com alta escalabilidade e tolerância a falhas. Arquitetura <strong>SN</strong>: <strong>sem controlador central</strong> e <strong>sem relação mestre/escravo</strong> entre os nós — <strong>todos são iguais</strong> (Carpenter e Hewitt, 2016).</p>
+<p><strong>Modelo de dados:</strong> cada linha é referenciada por uma <strong>chave primária</strong> (chave de linha); o nº de colunas pode <strong>variar entre linhas</strong> (linha 1 com cinco colunas, linha 2 com três). <strong>CQL</strong> (<em>Cassandra Query Language</em>) é baseada em SQL (tabelas, linhas, colunas). A chave primária é composta pela <strong>chave de partição</strong> e, opcionalmente, por colunas de <em>clustering</em>. Cada tabela possui uma chave de partição (simples ou composta) que <strong>determina a localidade dos dados</strong>; ela deve criar partições de tamanho ideal para minimizar movimentação de dados no redimensionamento. Tamanho recomendado pelo material: ≤ <strong>10 MB</strong>, podendo chegar a 100 MB.</p>
+<p><strong>Como o <em>sharding</em> funciona:</strong></p>
+<ul>
+<li>Cada servidor é um <em>shard</em>, com dados <strong>replicados em outros servidores</strong>; a estrutura usada é <strong>chave/<em>hash</em></strong>, chamado <em><strong>token</strong></em>.</li>
+<li>Os objetos são atribuídos a cada <em>shard</em> em <strong>partes iguais</strong>, distribuídos uniformemente no <em>cluster</em>; as réplicas seguem o fator de replicação configurado.</li>
+<li>O balanceamento é simplificado: os <strong>intervalos de <em>hash</em></strong> que definem cada <em>shard</em> deixam, em média, <strong>igual número de linhas</strong>.</li>
+</ul>
+<p><strong>Partitioners (mecanismos que geram o <em>token</em>):</strong></p>
+<table>
+<thead>
+<tr>
+<th><em>Partitioner</em></th>
+<th>Como gera a chave</th>
+<th>Características (segundo o material)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Murmur3Partitioner</strong> (padrão)</td>
+<td><em>Hash</em> <strong>MurmurHash</strong></td>
+<td>Distribuição <strong>uniforme</strong>; pode melhorar o desempenho de 3 a 5 vezes em relação aos outros</td>
+</tr>
+<tr>
+<td><strong>RandomPartitioner</strong></td>
+<td><em>Hash</em> <strong>MD5</strong> (criptográfico)</td>
+<td>Mesma função, mas a geração das chaves <strong>demora mais</strong></td>
+</tr>
+<tr>
+<td><strong>ByteOrderedPartitioner</strong></td>
+<td><strong>Bytes-chave em ordem léxica</strong></td>
+<td>Mantém distribuição <strong>ordenada</strong>; <strong>pouco utilizado</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Os particionadores <strong>não são compatíveis entre si</strong>: dados particionados por um dificilmente serão convertidos corretamente para outro.</p>
+<p><strong>Hash consistente (anel):</strong> em vez de alocar chaves em &quot;baldes&quot; (<em>buckets</em>), o Cassandra as armazena num <strong>anel contínuo</strong>. Ao adicionar objetos/nós <strong>não é preciso remapear todos os <em>hashes</em></strong>: o <em>hash</em> simplesmente é movido para a <strong>próxima posição</strong>. Um grande nº de intervalos de <em>tokens</em> é distribuído igualmente entre os servidores; ao entrar um servidor, fragmentos migram lentamente → <strong>menos movimentação de dados</strong>. Ao iniciar o <em>cluster</em>, cada nó recebe um intervalo de <em>token</em> proporcional; pode haver até <strong>255 <em>tokens</em> por nó</strong>.</p>
+<blockquote>
+<p><strong>Exemplo (Fig. 2):</strong> anel com 4 nós — nó 1: 1–35; nó 2: 36–70; nó 3: 71–105; nó 4: 106–139. Um fragmento com <strong><em>token</em> 127</strong> é armazenado no <strong>nó 4</strong>.<br />
+Ver <strong>Aula 01 §3.4</strong> (<em>Sharding e hash consistente</em>: anel, nós virtuais, fator de replicação). Aqui o material mostra a <strong>aplicação concreta no Cassandra</strong>.</p>
+</blockquote>
+<p><strong>Passos quando um nó recebe uma leitura/gravação:</strong></p>
+<ol>
+<li>Identifica os nós cujos dados têm chaves correspondentes à busca.</li>
+<li>Encaminha a solicitação a esses nós e espera a resposta.</li>
+<li>Se não houver retorno dentro de um <strong>tempo limite</strong> pré-configurado, devolve &quot;falha na solicitação&quot; ao cliente.</li>
+<li>Se houver retorno, determina a <strong>resposta mais recente</strong> pelos registros de data e hora.</li>
+<li>Agenda o <strong>reparo dos dados nas réplicas</strong>, se houver modificações.</li>
+</ol>
+<p><strong>Replicação no Cassandra:</strong> acontece dentro do anel; cada fragmento é replicado em <strong>N hosts</strong> (N = fator de replicação, configurado &quot;por instância&quot;); cada chave é atribuída a um <strong>nó coordenador</strong>, responsável pela replicação dos fragmentos do seu alcance. O material afirma que o Cassandra <strong>elege um líder</strong> com o <strong>Zookeeper</strong> e que os metadados ficam em <em>cache</em> local de cada nó (ver ponto de atenção 5.10).</p>
+<p><strong>Detecção de falhas — protocolo de fofocas (<em>gossip</em>):</strong> informações sobre se um <em>shard</em> está vivo/inativo são compartilhadas por detecção de falhas baseada em <strong>fofocas</strong>; cada nó recebe estado de outros nós interligados (máximo de três) e evita tentar comunicar-se com nós inacessíveis. A fofoca também informa <strong>posição do nó, metadados e esquematização</strong>; ocorre <strong>a cada segundo</strong>, com cada nó escolhendo outro <strong>aleatoriamente</strong> para trocar o estado de atividade.</p>
+<p><strong>Arquitetura simplificada (uma máquina)</strong> exige quatro módulos: <strong>particionamento</strong>, <strong>associação de <em>cluster</em></strong>, <strong>detecção de falhas</strong> e <strong>mecanismo de armazenamento</strong>.</p>
+<p><strong>Infográfico — <em>Sharding</em> no Apache Cassandra:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Resumo do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hash consistente</td>
+<td>Usado na <strong>replicação (3×)</strong> e no particionamento; <em>hashes</em> organizados em <strong>anel de <em>tokens</em></strong></td>
+</tr>
+<tr>
+<td>Mecanismo de busca</td>
+<td>Dados <strong>desnormalizados e duplicados</strong>: várias versões de uma mesma tabela, o que facilita a consulta</td>
+</tr>
+<tr>
+<td>Escalabilidade</td>
+<td>&quot;Quase infinita&quot;: <strong>dobrando o nº de nós</strong>, o sistema lida com quase o <strong>dobro</strong> de leituras e gravações</td>
+</tr>
+<tr>
+<td>Resultado</td>
+<td>Alta disponibilidade, rápida leitura e escrita, potencial de escalabilidade <strong>linear</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resumo de vantagens:</strong> alta escalabilidade, alto desempenho, ampla aplicabilidade, <strong>alta taxa de atualização com baixa latência</strong>.</p>
+<blockquote>
+<p>Ver <strong>Aula 01 §3.7</strong> (Cassandra: peer-to-peer, sem SPoF, escala linear, CQL; <em>keyspace</em> ≈ database; <em>column family</em> ≈ tabela; <em>row key</em> ≈ chave primária) e <strong>§3.4</strong> (gossip).</p>
+</blockquote>
+<hr />
+<h3 id="315-sharding-no-mongodb-pereira--brandão">3.15 <em>Sharding</em> no MongoDB (Pereira + Brandão)</h3>
+<p><strong>Visão geral:</strong> banco <strong>distribuído, baseado em documentos, de propósito geral</strong> (definição dos desenvolvedores). Suporta <strong>particionamento automático</strong>, usando a estrutura chave/<em>hash</em>; <strong>automatiza o balanceamento</strong> entre <em>shards</em> e facilita <strong>adicionar/remover máquinas</strong>.</p>
+<p><strong>Três componentes principais (Fig. 3):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><strong>Shards</strong></em></td>
+<td><strong>Conjuntos de réplicas</strong> de servidores que armazenam subconjuntos dos dados</td>
+</tr>
+<tr>
+<td><strong>Roteadores de consulta (<em>mongos</em>)</strong></td>
+<td><strong>Interface</strong> entre aplicativo cliente e <em>shards</em>; usam as informações dos servidores de configuração para achar o <em>shard</em> certo</td>
+</tr>
+<tr>
+<td><strong>Servidores de configuração</strong></td>
+<td>Armazenam <strong>apenas metadados</strong>: localização de cada dado e configurações gerais (BRADSHAW; BRAZIL; CHODOROW, 2019)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Funcionamento do cluster fragmentado:</strong></p>
+<ul>
+<li>Para cada conjunto de dados há um <strong><em>shard</em> primário</strong> (com a informação <strong>não fragmentada</strong>); após a fragmentação surgem <strong><em>shards</em> secundários</strong>, cada um com um conjunto de réplicas. Cada <em>cluster</em> com <em>shard</em> primário e conjunto de réplicas deve ter o <strong>próprio servidor de configuração</strong>, pois operações nele afetam desempenho e disponibilidade (ver ponto de atenção 5.12).</li>
+<li>Se o <em>cluster</em> do servidor de configuração <strong>perder o primário</strong>, os metadados ficam <strong>somente leitura</strong>: dá para <strong>ler e gravar</strong> nos <em>shards</em>, mas <strong>migração e divisão de fragmentos</strong> só voltam quando um novo primário for eleito.</li>
+<li><strong>Papel dos <em>mongos</em>:</strong>
+<ol>
+<li><strong>Rotear</strong> a consulta: consultam os <strong>metadados</strong> de cada partição para reduzir a busca. <strong>Exemplo (universidade, Pereira):</strong> <em>shards</em> divididos a cada <strong>1000 registros</strong> em ordem crescente pelo CPF dos alunos; se o número buscado começa com 3, a busca se restringe a certos <em>shards</em>. Como os metadados mudam (redistribuição de dados), <strong>a cada consulta os <em>mongos</em> acessam os metadados</strong>, mesmo que a consulta já tenha sido feita antes.</li>
+<li><strong>Mesclar</strong> resultados: se a busca for por <strong>valor de mensalidade X</strong> (campo que não é a chave), ela é executada em <strong>todos os <em>shards</em></strong>; cada um envia resultados aos <em>mongos</em>, que <strong>reúnem e ordenam</strong> (se preciso) e devolvem ao cliente <strong>como se fosse um único banco</strong>.</li>
+</ol>
+</li>
+<li><strong>Estratégias:</strong> suporta <strong>chave/<em>hash</em></strong> e <strong>intervalo</strong>, que devem ser escolhidas <strong>antes</strong> da fragmentação, pois o campo da chave é <strong>imutável</strong>; a escolha afeta desempenho, eficiência e escalabilidade, e o <strong>índice de suporte</strong> da chave também influencia.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><em>Hash</em></th>
+<th>Intervalo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cálculo</td>
+<td>O sistema calcula os <em>hashes</em> automaticamente → <strong>custo de sobrecarga</strong></td>
+<td>Menor sobrecarga; <strong>estratégia padrão</strong></td>
+</tr>
+<tr>
+<td>Localidade</td>
+<td>Menor chance de os dados buscados estarem num <strong>único</strong> fragmento → busca em mais de um <em>shard</em></td>
+<td>Maior chance de achar tudo no <strong>mesmo <em>shard</em></strong> se a busca é limitada a um intervalo</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Ver <strong>Aula 01 §3.7</strong> (MongoDB: BSON, auto-<em>sharding</em>, replicação e <em>failover</em>) e <strong>§3.4</strong> (CAP: classificado como CP).</p>
+</blockquote>
+<p><strong>Tolerância e disponibilidade:</strong> o <em>cluster</em> fragmentado continua executando operações <strong>parciais</strong> de leitura e gravação mesmo com um ou mais <em>shards</em> inativos — mas os fragmentos desses <em>shards</em> <strong>não podem ser acessados</strong> se não houver réplicas. Com um conjunto de réplicas do servidor de configuração (<strong>CSRS</strong>, <em>Config Server Replica Set</em>), leituras e gravações continuam enquanto a <strong>maioria</strong> do conjunto estiver disponível. Por isso é importante manter o conjunto de réplicas (Boaglio, 2015).</p>
+<h3 id="316-cassandra--mongodb-síntese-do-material">3.16 Cassandra × MongoDB (síntese do material)</h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Apache Cassandra</th>
+<th>MongoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O que é um <em>shard</em></td>
+<td><strong>Um único servidor</strong></td>
+<td><strong>Um conjunto de réplicas</strong> (vários servidores)</td>
+</tr>
+<tr>
+<td>Onde fica cada objeto</td>
+<td>Armazenado em <strong>vários <em>shards</em></strong> (réplicas em outros nós)</td>
+<td>Contido em <strong>um só <em>shard</em></strong>, replicado várias vezes dentro dele</td>
+</tr>
+<tr>
+<td>Falha de um servidor</td>
+<td><strong>Outro <em>shard</em></strong> terá os dados</td>
+<td><strong>Outra unidade do conjunto de réplicas</strong> do próprio <em>shard</em> o substitui</td>
+</tr>
+<tr>
+<td>Movimentação de dados após falha</td>
+<td><strong>Maior</strong></td>
+<td><strong>Menor</strong></td>
+</tr>
+<tr>
+<td>Desempenho</td>
+<td>Menos estável <em>(segundo o material)</em></td>
+<td>Mais estável <em>(segundo o material)</em></td>
+</tr>
+<tr>
+<td>Arquitetura</td>
+<td>SN, <strong>sem mestre</strong>; todos os nós iguais</td>
+<td><strong>Roteadores + servidores de configuração + <em>shards</em></strong></td>
+</tr>
+<tr>
+<td>Estratégia de partição</td>
+<td>Chave/<em>hash</em> (<em><strong>token</strong></em>, anel, hash consistente)</td>
+<td>Chave/<em>hash</em> ou <strong>intervalo</strong> (chave imutável)</td>
+</tr>
+<tr>
+<td>Detecção de falhas</td>
+<td>Protocolo de fofocas</td>
+<td>Eleição de novo primário no conjunto de réplicas <em>(complementação a partir do material)</em></td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong> <em>(complementação)</em></td>
+<td>Escrita em altíssimo volume, muitos nós, sem ponto único de coordenação</td>
+<td>Documentos com esquema flexível e consultas variadas, com necessidade de balanceamento automático</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusão do capítulo:</strong> o foco do particionamento é melhorar <strong>desempenho e escalabilidade</strong> e, de brinde, a <strong>disponibilidade</strong>, a depender de como os dados são divididos <strong>e replicados</strong>. Se uma partição falha, o cliente não necessariamente fica sem acesso, pois os dados podem estar em outras partições. Ao estudar <em>sharding</em>, é preciso olhar as formas de <strong>replicação</strong> que o banco permite.</p>
+<hr />
+<h3 id="317-sharding-no-bigtable-infográfico">3.17 <em>Sharding</em> no BigTable (infográfico)</h3>
+<ul>
+<li><strong>BigTable (Google):</strong> serviço de banco de dados para <em>big data</em>, o mesmo NoSQL usado em serviços como <strong>Gmail, Maps, Pesquisa e Analytics</strong>.</li>
+<li><strong>Funcionamento:</strong> no <em>cloud</em> do BigTable, uma tabela é fragmentada em <strong>blocos, que são conjuntos de linhas contíguas</strong> (isto é, <em>sharding</em> por <strong>intervalo de linhas</strong>); a fragmentação ajuda no balanceamento da carga das consultas.</li>
+<li><strong>Cluster:</strong> a equipe define quantos <strong>nós</strong> existirão, compartilhando os dados (partições) e até replicando; <em>backups</em> quase em tempo real podem ser criados automaticamente.</li>
+<li><strong>Indicação de uso:</strong> processamento de dados <strong>não estruturados</strong> em grande volume, relatórios e visualizações, <strong>séries temporais</strong> de marketing ou financeiro, gráficos.</li>
+<li><strong>Conexão com outros SGBDs:</strong> o infográfico diz que se conecta a Cassandra, HBase e MongoDB (ver ponto de atenção 5.15).</li>
+</ul>
+<hr />
+<h3 id="318-complemento-capítulo-sharding-soares--versão-reenviada">3.18 Complemento: capítulo <em>Sharding</em> (Soares) — versão reenviada</h3>
+<p><em>Este capítulo (SOARES, J. A. — <em>Framework de Big Data</em>, SAGAH; objetivos: definir <em>sharding</em>, explicar seu uso em <em>clusters</em> locais e remotos e compará-lo com índices) trata do mesmo tema de 3.9–3.13, com outra organização e outras fontes (Hussain e Hussain, 2024; Kleppmann, 2017; Fowler, 2015; Elmasri e Navathe, 2018; MongoDB, 2026; Zhou et al., 2023). Para não repetir, aqui entram <strong>apenas os pontos novos ou que mudam a ênfase</strong>; o que já foi explicado aparece como ponteiro.</em></p>
+<h4 id="a-fundamentos-o-que-o-capítulo-acrescenta">a) Fundamentos: o que o capítulo acrescenta</h4>
+<ul>
+<li><strong><em>Sharding</em> = particionamento horizontal</strong> para escalar o armazenamento e o processamento entre nós. Cada registro, em geral, pertence a <strong>um</strong> fragmento, que pode ter <strong>cópias</strong> em outros servidores (tolerância a falhas). Ver 3.9.</li>
+<li><strong>Em cada modelo (Elmasri e Navathe, 2018):</strong> no relacional, o fragmento horizontal reúne <strong>parte das linhas</strong> mantendo <strong>todos os atributos</strong>; no <strong>vertical</strong>, a divisão é por <strong>colunas</strong> e exige <strong>atributos comuns</strong> para reconstruir os registros; em bancos de <strong>documentos</strong>, distribuem-se os documentos de uma coleção.</li>
+<li><strong>Equilíbrio:</strong> o objetivo é evitar que um único nó receba muitos registros novos e fique sobrecarregado (Fowler, 2015); depende da <strong>regra de distribuição</strong> e dos <strong>padrões de acesso</strong>.</li>
+<li><strong>Fig. 1 (pedidos por identificador do cliente):</strong> Servidor A / <em>Shard</em> 1 → clientes <strong>1 a 1.000</strong>; Servidor B / <em>Shard</em> 2 → <strong>1.001 a 2.000</strong>; Servidor C / <em>Shard</em> 3 → <strong>2.001 a 3.000</strong>.</li>
+<li><strong>A chave de fragmentação não precisa ser a chave primária:</strong> identificar um registro e definir <strong>sua localização</strong> são funções diferentes. A escolha deve considerar dados, consultas, relações entre tabelas e <strong>custos de comunicação</strong> (manter juntos os dados acessados juntos).</li>
+<li><strong>Um <em>shard</em> não é necessariamente um servidor:</strong> um nó pode guardar <strong>vários fragmentos</strong> e um fragmento pode ter <strong>réplicas</strong> em vários nós (Kleppmann, 2017).</li>
+<li><strong>Exemplo bancário (Zhou <em>et al.</em>, 2023):</strong> ambiente real com mais de <strong>20 mil tabelas</strong>, a maior com mais de <strong>50 bilhões de registros</strong>, particionado em um banco distribuído de <strong>60 nós</strong>; mostra que a chave deve considerar as consultas e o <strong>tamanho das tabelas</strong> para reduzir transferência entre nós.</li>
+</ul>
+<p><strong>Exemplo dos sensores — a escolha da chave muda a leitura e a escrita:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Chave de distribuição</th>
+<th>Ajuda</th>
+<th>Custo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Só a data</strong></td>
+<td>Consultas <strong>por período</strong></td>
+<td>Novas medições se concentram no fragmento <strong>atual</strong>; dados antigos ficam espalhados e as gravações recentes, em um nó</td>
+</tr>
+<tr>
+<td><strong>Data + identificador do dispositivo</strong></td>
+<td><strong>Distribui as gravações</strong> entre mais fragmentos</td>
+<td>Muda a forma de localizar os dados nas consultas: reunir as medições de vários dispositivos num período pode exigir acesso a mais fragmentos</td>
+</tr>
+</tbody>
+</table>
+<p><em>&quot;Fique atento&quot; do material:</em> dividir só por dia seria suficiente para distribuir as gravações simultâneas de milhares de sensores? O que mudaria se o identificador do dispositivo fizesse parte da chave? A resposta exige considerar <strong>escrita e leitura</strong> e as <strong>operações mais frequentes</strong>.</p>
+<h4 id="b-intervalo--hash-e-o-problema-do-hotspot">b) Intervalo × <em>hash</em> e o problema do <em>hotspot</em></h4>
+<p>(Estratégias em 3.10; aqui, o ponto de vista de Soares.)</p>
+<table>
+<thead>
+<tr>
+<th>Estratégia</th>
+<th>Comportamento</th>
+<th>Consequência para as consultas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intervalos</strong></td>
+<td>Cada fragmento recebe uma <strong>faixa</strong> de valores, <strong>mantendo a ordem</strong></td>
+<td>Facilita consultas <strong>por intervalo</strong></td>
+</tr>
+<tr>
+<td><em><strong>Hash</strong></em></td>
+<td>Uma função transforma o valor da chave no fragmento de destino; tende a <strong>distribuir valores distintos</strong> entre fragmentos</td>
+<td><strong>Valores próximos</strong> na chave original podem cair em servidores diferentes; uma consulta por faixa <strong>precisa acessar vários fragmentos</strong> (conforme a implementação)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong><em>Hotspot</em>:</strong> quantidades semelhantes de registros <strong>não</strong> significam cargas semelhantes. Quando muitas solicitações se concentram em um fragmento, surge um ponto de sobrecarga. <strong>O particionamento por <em>hash</em> não elimina o <em>hotspot</em></strong> se as operações usam a <strong>mesma chave</strong>, pois valores iguais continuam indo para o mesmo destino.</li>
+<li><strong>Fig. 2:</strong> os três servidores têm <strong>volume semelhante</strong>, mas o Servidor A tem <strong>carga elevada</strong> (uma conta muito popular numa rede social), enquanto B e C ficam pouco usados. <strong>Acrescentar máquinas pode não resolver</strong> se as solicitações continuam indo ao mesmo fragmento.</li>
+<li>A distribuição pode <strong>perder o equilíbrio</strong> durante o funcionamento e exigir <strong>rebalanceamento</strong>; é preciso acompanhar o crescimento dos dados e a forma de acesso.</li>
+<li><strong>Capacidade ≠ desempenho:</strong> o <em>sharding</em> aumenta a capacidade e permite operações independentes em paralelo, mas <strong>não garante</strong> que todas as consultas fiquem mais rápidas nem que o desempenho cresça na proporção do número de servidores. Consultas que acessam vários fragmentos exigem <strong>comunicação e reunião de resultados</strong>.</li>
+</ul>
+<h4 id="c-roteamento-e-rebalanceamento">c) Roteamento e rebalanceamento</h4>
+<ul>
+<li><strong>Roteamento:</strong> encaminha leituras e gravações aos nós responsáveis; depende das <strong>informações de localização</strong> dos fragmentos e pode ser feito por uma <strong>camada intermediária</strong>, pelos <strong>próprios nós</strong> ou pelo <strong>cliente</strong>. Quando as condições da consulta não permitem identificar os fragmentos, pode ser preciso <strong>consultar vários servidores</strong> e reunir as respostas; a localização deve ser <strong>atualizada sempre que a distribuição mudar</strong>.</li>
+<li><strong>Três formas de encaminhamento (Kleppmann, 2017):</strong> (1) roteador intermediário; (2) cliente que conhece o mapeamento dos fragmentos; (3) o nó que recebe a solicitação a envia ao responsável.</li>
+<li><strong>Rebalanceamento:</strong> transferir fragmentos (ou parte das responsabilidades) entre nós usa rede, armazenamento e processamento e <strong>pode afetar as operações em andamento</strong>. Recomenda-se acompanhar a distribuição e planejar <strong>como acrescentar capacidade e reorganizar os dados sem sobrecarregar os servidores</strong> durante a mudança (Hussain e Hussain, 2024).</li>
+</ul>
+<h4 id="d-sharding--replicação-e-quando-adotar">d) <em>Sharding</em> × replicação e quando adotar</h4>
+<ul>
+<li>Ver 3.13. Soares reforça que o <strong><em>sharding</em> sozinho não garante</strong> que os dados continuem acessíveis quando um servidor falha: a <strong>disponibilidade</strong> depende também das <strong>réplicas</strong>, dos procedimentos de <strong>recuperação</strong> e do <strong>redirecionamento</strong> das solicitações (Elmasri e Navathe, 2018).</li>
+<li><strong>Três objetivos distintos</strong> (Hussain e Hussain, 2024): <strong>escalabilidade horizontal</strong> (acompanhar a demanda), <strong>disponibilidade</strong> (acesso ao serviço, inclusive diante de falhas) e <strong>otimização de consultas</strong> (reduzir o trabalho para executar as operações). Ampliar a capacidade não garante a continuidade do serviço após uma falha nem a eficiência de todas as consultas.</li>
+<li><strong>Quando adotar:</strong> o <em>sharding</em> deve atender a uma necessidade real (crescimento da base, aumento da demanda, possibilidade de distribuir as operações); <strong>uma consulta lenta, sozinha, não basta</strong> para justificar o uso. Antes, identificar se a dificuldade está no <strong>armazenamento</strong>, no <strong>processamento</strong> ou na <strong>concentração de acessos</strong>; avaliar se as operações podem ocorrer em <strong>fragmentos independentes</strong> e estimar o custo de <strong>reunir dados de vários servidores</strong>.</li>
+</ul>
+<h4 id="e-clusters-locais-e-remotos-o-que-o-capítulo-acrescenta">e) <em>Clusters</em> locais e remotos: o que o capítulo acrescenta</h4>
+<p>(Definições e quadro em 3.11.)</p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Local</th>
+<th>Remoto (geograficamente distribuído)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onde</td>
+<td>Nós no <strong>mesmo ambiente</strong> (ex.: <em>datacenter</em>), em rede local</td>
+<td>Nós em <strong>localidades diferentes</strong></td>
+</tr>
+<tr>
+<td>O que pesa</td>
+<td>—</td>
+<td><strong>Latência</strong> e possíveis <strong>falhas de comunicação</strong> entre os nós</td>
+</tr>
+</tbody>
+</table>
+<p>Servidores convencionais também podem compor um <em>cluster</em>, desde que tenham recursos para a carga prevista; a organização serve ao relacional e ao NoSQL, com recursos de roteamento.</p>
+<p><strong>MongoDB em <em>cluster</em> local (Fig. 3):</strong> a aplicação fala com o roteamento <em><strong>mongos</strong></em>; os <em><strong>shards</strong></em> são <strong>conjuntos de réplicas</strong> (cada um guarda parte dos pedidos); a <strong>configuração</strong> guarda os <strong>metadados replicados</strong> sobre a organização do <em>cluster</em> (MongoDB, 2026a). Ver 3.15.</p>
+<ul>
+<li><strong>Consulta que identifica os fragmentos</strong> → vai só à parte necessária (ex.: busca pelos pedidos de <strong>um cliente</strong>, se a chave for o cliente). <strong>Consulta ampla</strong> → acessa <strong>todos</strong> os <em>shards</em> e reúne as respostas (<em><strong>scatter/gather</strong></em>), cada <em>shard</em> podendo usar índices compatíveis. A avaliação deve considerar <strong>localização dos registros</strong> e <strong>comunicação</strong> entre os componentes.</li>
+<li><strong>Relacionar dados em nós diferentes</strong> pode exigir coordenação, transferência e redistribuição de registros. Se os dados forem distribuídos pelo <strong>identificador do cliente</strong>, o <strong>histórico de um cliente</strong> fica em um fragmento; já o <strong>faturamento de todos os clientes</strong> exige acesso a <strong>vários <em>shards</em></strong> e soma dos resultados.</li>
+</ul>
+<p><strong>Disponibilidade em <em>clusters</em> com líder e seguidores (Kleppmann, 2017):</strong></p>
+<ul>
+<li>Se um fragmento tem <strong>apenas uma cópia</strong>, a falha do servidor o torna inacessível.</li>
+<li>Em arquiteturas com <strong>líder e seguidores</strong>, outro nó pode assumir o papel de líder, mas o sistema precisa <strong>detectar a falha, escolher um substituto e redirecionar as operações</strong>; o atendimento depende dos dados disponíveis nesse nó e das garantias do sistema.</li>
+<li>As <strong>réplicas</strong> podem atender <strong>leituras</strong> e permitir mais operações em paralelo, mas podem ficar <strong>temporariamente desatualizadas</strong> quando a atualização é <strong>assíncrona</strong> (Fowler, 2015). Escolher entre <strong>consistência</strong> e <strong>latência</strong> conforme a aplicação (ver 3.4 e 3.2).</li>
+</ul>
+<p><strong>Ambiente geográfico (Fig. 4):</strong> a <strong>Região A</strong> tem a aplicação, o <em>Shard</em> A e a <strong>réplica do <em>Shard</em> B</strong>; a <strong>Região B</strong>, o inverso. Setas contínuas indicam o <strong>acesso</strong> da aplicação e setas tracejadas, a <strong>replicação</strong>. Concentrar os dados mais usados perto dos usuários reduz a comunicação remota, mas <strong>não garante</strong> acesso se todo o ambiente local falhar; por isso a localização dos <em>shards</em> e das réplicas deve ser <strong>planejada em conjunto</strong>, conforme as falhas que o sistema precisa suportar.</p>
+<table>
+<thead>
+<tr>
+<th>Replicação entre regiões</th>
+<th>O que acontece</th>
+<th>Risco / custo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Síncrona</strong></td>
+<td>A confirmação pode depender da resposta da <strong>réplica remota</strong></td>
+<td><strong>Maior tempo de espera</strong></td>
+</tr>
+<tr>
+<td><strong>Assíncrona</strong></td>
+<td>O cliente recebe a confirmação <strong>antes</strong> de a réplica ser atualizada</td>
+<td>Falha nesse intervalo: alterações recentes podem <strong>não estar na cópia</strong> usada na recuperação</td>
+</tr>
+</tbody>
+</table>
+<p>O planejamento deve definir <strong>quanto atraso ou perda de dados</strong> a aplicação aceita e quais garantias de recuperação são necessárias (Kleppmann, 2017). Ver 3.4 (síncrono × assíncrono).</p>
+<blockquote>
+<p><strong>Saiba mais (do material):</strong> transações que acessam <strong>diferentes <em>shards</em></strong> também precisam de comunicação e coordenação entre nós. Zhuang <em>et al.</em> (2024) estudam isso no <strong>GeoTP</strong>, proposta implementada sobre o <strong>Apache ShardingSphere</strong> para transações geograficamente distribuídas: reduzir etapas de comunicação e organizar a execução considerando a <strong>latência</strong>. O estudo mostra que distribuir os dados em ambiente remoto exige avaliar como o tempo de comunicação afeta as transações simultâneas.</p>
+</blockquote>
+<p><strong>Integridade, <em>backup</em> e segurança</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>O que o capítulo diz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Integridade e transações</strong></td>
+<td>Preservar a integridade durante o funcionamento e as mudanças (regras de validade, identificadores, relações). Uma transação que altera vários <em>shards</em> deve ter <strong>todas as alterações aplicadas ou nenhuma mantida</strong>; o <strong>isolamento</strong> controla a interação entre transações simultâneas</td>
+</tr>
+<tr>
+<td><strong>Replicação ≠ <em>backup</em></strong></td>
+<td>A replicação ajuda a manter dados disponíveis, mas <strong>não substitui <em>backups</em></strong>: uma exclusão ou alteração indevida também pode ser copiada para as réplicas. <em>Backups</em> permitem recuperar dados de um momento anterior e precisam passar por <strong>testes de restauração</strong>; a recuperação em <em>clusters</em> fragmentados deve manter a <strong>consistência entre os fragmentos</strong></td>
+</tr>
+<tr>
+<td><strong>Segurança</strong></td>
+<td>Em todo o <em>cluster</em>: <strong>autenticação</strong> (quem acessa) e <strong>autorização</strong> (operações permitidas); permissões limitadas ao necessário, abrangendo servidores de dados, roteadores e componentes de configuração; <strong>criptografia em trânsito</strong> e <strong>em repouso</strong>; restrições de rede e <strong>registros de auditoria</strong>; aplicar também aos <strong>novos nós</strong> (MongoDB, 2026c)</td>
+</tr>
+<tr>
+<td><strong>Crescimento do ambiente</strong></td>
+<td>Ao incluir nós, a carga pode perder o equilíbrio e exigir rebalanceamento; ao transferir dados é preciso <strong>atualizar os metadados de localização</strong>, <strong>conferir os registros transferidos</strong> e verificar se as consultas continuam encontrando os dados; avaliar garantias de transação e desempenho com <strong>operações representativas e testes de carga</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Checklist de avaliação da arquitetura</strong> <em>(organização de estudo a partir do texto)</em></p>
+<table>
+<thead>
+<tr>
+<th>Pergunta</th>
+<th>O que verificar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Os novos <em>shards</em> atendem ao crescimento?</td>
+<td>Capacidade de armazenamento e processamento</td>
+</tr>
+<tr>
+<td>As réplicas e a recuperação retomam o serviço após as falhas previstas?</td>
+<td>Disponibilidade e procedimentos de recuperação</td>
+</tr>
+<tr>
+<td>As consultas mais frequentes acessam <strong>poucos</strong> fragmentos?</td>
+<td>Escalabilidade e otimização de consultas</td>
+</tr>
+</tbody>
+</table>
+<h4 id="f-sharding-e-indexação-o-que-o-capítulo-acrescenta">f) <em>Sharding</em> e indexação: o que o capítulo acrescenta</h4>
+<p>(Índices em 3.12 e Aula 02 §3.7; o ponto novo é a <strong>comparação detalhada</strong> e a distinção <strong>índice local × global</strong>.)</p>
+<ul>
+<li><strong>Para que serve cada um:</strong> o <strong>índice</strong> ajuda a <strong>localizar os registros</strong>; o <em><strong>sharding</strong></em> <strong>divide os dados e distribui o trabalho</strong>. Eles atuam em <strong>partes diferentes</strong> do acesso e <strong>não são equivalentes</strong>: criar índices não aumenta a capacidade de armazenamento de um nó, e acrescentar <em>shards</em> não garante caminhos de acesso eficientes (Kleppmann, 2017).</li>
+<li><strong>Estruturas de índice citadas:</strong> <strong>árvores B</strong> (chaves ordenadas; buscas por <strong>igualdade e por intervalo</strong>), índices baseados em <em><strong>hash</strong></em> (associam chaves à localização; favorecem buscas por <strong>igualdade</strong>) e <strong>índices secundários</strong> (buscar por atributos diferentes da chave primária). Podem ser criados em banco centralizado ou <strong>dentro dos fragmentos</strong>; a escolha depende de filtros, ordenação e relacionamentos mais usados. Ver Aula 02 §3.7.</li>
+</ul>
+<p><strong>Quadro 1 (Soares) — <em>sharding</em> × indexação</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th><em>Sharding</em></th>
+<th>Indexação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Propósito</strong></td>
+<td>Distribuir registros e processamento</td>
+<td>Organizar caminhos de acesso</td>
+</tr>
+<tr>
+<td><strong>Organização</strong></td>
+<td>Fragmentos horizontais atribuídos a nós</td>
+<td>Chaves, referências ou dados organizados para busca</td>
+</tr>
+<tr>
+<td><strong>Critério de projeto</strong></td>
+<td>Chave de distribuição, volume e padrões de acesso</td>
+<td>Filtros, ordenação e relacionamentos das consultas</td>
+</tr>
+<tr>
+<td><strong>Benefício esperado</strong></td>
+<td>Ampliar a capacidade e repartir operações</td>
+<td>Reduzir o trabalho de localização de registros</td>
+</tr>
+<tr>
+<td><strong>Custos de escrita</strong></td>
+<td>Roteamento e eventual coordenação entre <em>shards</em></td>
+<td>Atualização dos índices afetados</td>
+</tr>
+<tr>
+<td><strong>Administração</strong></td>
+<td>Monitoramento e rebalanceamento</td>
+<td>Espaço, criação e manutenção das estruturas</td>
+</tr>
+<tr>
+<td><strong>Limitação</strong></td>
+<td>Consultas amplas podem acessar muitos nós</td>
+<td>Nem toda consulta se beneficia de um índice</td>
+</tr>
+<tr>
+<td><strong>Uso combinado</strong></td>
+<td>Cada fragmento pode ter índices</td>
+<td>Índices apoiam buscas nos dados fragmentados</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Uso combinado (exemplo do material):</strong> buscar os pedidos de um cliente em um período → o <strong>identificador do cliente</strong> leva ao fragmento correspondente e um <strong>índice por cliente e data</strong> facilita localizar os registros dentro dele. O sistema precisa <strong>selecionar os <em>shards</em></strong> e <strong>escolher o caminho de acesso</strong> (MongoDB, 2026b).</li>
+<li><strong>Duas situações-problema do material:</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Diagnóstico do material</th>
+<th>Solução</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loja com banco centralizado e capacidade suficiente</strong>, mas a consulta pelo <strong>e-mail</strong> do cliente examina a tabela inteira</td>
+<td>O problema está em <strong>como localizar</strong> o cliente</td>
+<td>Analisar um <strong>índice sobre o e-mail</strong>, mais adequado que <em>sharding</em> (se o custo e os recursos permitirem)</td>
+</tr>
+<tr>
+<td><strong>Plataforma com índices adequados</strong>, mas que acumula registros e gravações e o servidor se aproxima dos limites de armazenamento e processamento</td>
+<td>A falta é de <strong>capacidade</strong></td>
+<td>Acrescentar índices <strong>não resolve</strong>; <strong>distribuir dados e operações</strong> entre servidores contribui para a escalabilidade horizontal</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Índice não garante melhora em todas as consultas:</strong> uma consulta que retorna <strong>grande parte dos registros</strong> tem menos benefício que uma busca seletiva; alterações nos valores indexados exigem <strong>atualizar o índice</strong>, aumentam o <strong>espaço</strong> e o trabalho de manutenção — equilibrar <strong>ganho de leitura × custo de escrita</strong>.</li>
+<li><strong>Distribuição inadequada</strong> concentra solicitações em poucos fragmentos e deixa outros ociosos; tanto a distribuição quanto os índices devem ser avaliados conforme os <strong>gargalos</strong> da aplicação (Zhou <em>et al.</em>, 2023).</li>
+</ul>
+<p><strong>Índice local × índice global em dados fragmentados (Quadro 2 de Soares)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Índice <strong>local</strong></th>
+<th>Índice <strong>global</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Abrangência</strong></td>
+<td>Registros do <strong>próprio fragmento</strong></td>
+<td>Registros de <strong>diferentes fragmentos</strong></td>
+</tr>
+<tr>
+<td><strong>Busca secundária</strong></td>
+<td>Pode exigir consulta a <strong>todos os <em>shards</em></strong> (<em>scatter/gather</em>)</td>
+<td>Pode <strong>direcionar a busca</strong> às partições do índice</td>
+</tr>
+<tr>
+<td><strong>Manutenção</strong></td>
+<td>Vinculada aos dados do fragmento</td>
+<td>Pode envolver <strong>outros nós e partições</strong></td>
+</tr>
+<tr>
+<td><strong>Resultado</strong></td>
+<td>Atende aos registros armazenados no <em>shard</em></td>
+<td>Pode exigir buscar os dados completos em <strong>outros <em>shards</em></strong></td>
+</tr>
+<tr>
+<td><strong>Atualização</strong></td>
+<td>Segue os procedimentos de atualização do próprio fragmento</td>
+<td>Pode exigir <strong>coordenação</strong> ou apresentar <strong>atraso</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>O <strong>índice global</strong> pode ser particionado por <strong>critério diferente</strong> do usado nos dados originais e <strong>também pode ser distribuído</strong> entre vários nós; alterar um registro pode exigir atualizar entradas em <strong>outros nós</strong>, e se a atualização for assíncrona o índice pode ficar <strong>temporariamente desatualizado</strong>.</li>
+<li><strong>&quot;Local&quot; refere-se à abrangência do índice</strong>, e não à localização geográfica do servidor.</li>
+<li><strong>Diagnóstico de lentidão:</strong> antes de concluir que os índices não funcionam, medir quanto tempo se gasta para <strong>localizar os registros em cada <em>shard</em></strong>, quanto para <strong>transferir e reunir as respostas</strong>, e se um <strong>índice global</strong> ajudaria (considerando o custo adicional nas gravações). Verificar quais <em>shards</em> participaram da consulta e quanto trabalho foi necessário, com observação e testes (Hussain e Hussain, 2024).</li>
+<li><strong>Desempenho ≠ disponibilidade:</strong> índices facilitam o acesso e o <em>sharding</em> distribui dados e trabalho, mas <strong>nenhum dos dois garante</strong> recuperação após falhas nem proteção contra acessos indevidos; replicação, <em>backups</em>, gerenciamento de transações e controles de segurança devem acompanhar a arquitetura.</li>
+</ul>
+<p><strong>Conclusão do capítulo:</strong> o <em><strong>sharding</strong></em> distribui os dados e a carga e amplia a capacidade conforme a demanda cresce, mas exige planejamento da <strong>chave de distribuição</strong> e da organização dos <em>clusters</em>; os <strong>índices</strong> complementam facilitando a localização; <strong>replicação, <em>backups</em> e controles de segurança</strong> mantêm os dados acessíveis, íntegros e protegidos.</p>
+<blockquote>
+<p>Ver <strong>Aula 04 §3.10</strong>: o <strong>ElasticSearch</strong> aplica <em>shards</em> e réplicas ao <strong>índice de busca</strong>.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</h2>
+<p><em>Esta aula não traz código nem comandos; o material é conceitual, com figuras e quadros. Por isso não foi gerado arquivo <code>_PRATICO</code>.</em></p>
+<h3 id="41-aplicações-citadas-no-material">4.1 Aplicações citadas no material</h3>
+<table>
+<thead>
+<tr>
+<th>Sistema / empresa</th>
+<th>Técnica</th>
+<th>Como aparece no material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cache do navegador</strong></td>
+<td>Replicação</td>
+<td>Cópia local da página: melhora desempenho</td>
+</tr>
+<tr>
+<td><strong>Rede social (perfil e geolocalização)</strong></td>
+<td>Replicação <em>gossip</em></td>
+<td>Consistência relaxada; usuário europeu × brasileiro</td>
+</tr>
+<tr>
+<td><strong>TAO (Facebook)</strong></td>
+<td>Replicação <em>master/slave</em></td>
+<td>Consultas atendidas na região; risco de dado obsoleto</td>
+</tr>
+<tr>
+<td><strong>GFS / Hadoop (HDFS)</strong></td>
+<td>Replicação (passiva no GFS)</td>
+<td>Alta disponibilidade de grandes volumes</td>
+</tr>
+<tr>
+<td><strong>Serviço de <em>e-mail</em> (microsserviço)</strong></td>
+<td>Replicação de <strong>serviço</strong> + <em>proxy</em></td>
+<td>Balanceamento de carga; sem consistência de dados a manter</td>
+</tr>
+<tr>
+<td><strong>Aplicativo de <em>smartphone</em> sem internet</strong></td>
+<td>Replicação <em>off-line</em></td>
+<td>Replica quando voltar a conectar</td>
+</tr>
+<tr>
+<td><strong>Sistema bancário</strong></td>
+<td>Replicação com ordem estrita</td>
+<td>Crédito/débito na ordem certa</td>
+</tr>
+<tr>
+<td><strong>Controle de tráfego aéreo</strong></td>
+<td>Replicação com consistência rígida</td>
+<td>Dado correto em tempo curto</td>
+</tr>
+<tr>
+<td><strong>Facebook, Twitter, Friendster, Flickr</strong></td>
+<td><em>Sharding</em></td>
+<td>&quot;Já usam há algum tempo&quot;</td>
+</tr>
+<tr>
+<td><strong>BigTable (Google)</strong></td>
+<td><em>Sharding</em> por linhas contíguas</td>
+<td>Gmail, Maps, Pesquisa, Analytics</td>
+</tr>
+<tr>
+<td><strong>ElasticSearch (Elastic)</strong></td>
+<td><em>Sharding</em> em <em>cluster</em></td>
+<td>Indexação, busca e análise (Logstash, Beats, Kibana)</td>
+</tr>
+<tr>
+<td><strong>Cassandra / MongoDB / HBase / HDFS</strong></td>
+<td><em>Sharding</em></td>
+<td>Bancos que usam escalonamento horizontal</td>
+</tr>
+<tr>
+<td><strong>GKE (Google Cloud)</strong></td>
+<td><em>Cluster</em> remoto com Kubernetes</td>
+<td>Contêineres, <em>load balancer</em></td>
+</tr>
+<tr>
+<td><strong>Pedidos por cliente (Soares, Fig. 1)</strong></td>
+<td><em>Sharding</em> por intervalo</td>
+<td>Clientes 1–1.000, 1.001–2.000 e 2.001–3.000 em três servidores</td>
+</tr>
+<tr>
+<td><strong>Sensores (Soares)</strong></td>
+<td>Escolha da chave de <em>sharding</em></td>
+<td>Só data × data + dispositivo (3.18a)</td>
+</tr>
+<tr>
+<td><strong>Conta popular em rede social (Soares, Fig. 2)</strong></td>
+<td><em>Hotspot</em></td>
+<td>Volumes iguais, carga desigual (3.18b)</td>
+</tr>
+<tr>
+<td><strong>Banco com 60 nós (Zhou <em>et al.</em>, 2023)</strong></td>
+<td><em>Sharding</em> em banco distribuído</td>
+<td>+20 mil tabelas; maior com +50 bilhões de registros</td>
+</tr>
+<tr>
+<td><strong>Regiões A e B (Soares, Fig. 4)</strong></td>
+<td><em>Cluster</em> remoto com réplicas cruzadas</td>
+<td><em>Shard</em> A + réplica de B na região A, e vice-versa</td>
+</tr>
+<tr>
+<td><strong>GeoTP / Apache ShardingSphere (Zhuang <em>et al.</em>, 2024)</strong></td>
+<td>Transações geodistribuídas</td>
+<td>Menos etapas de comunicação (3.18e)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-resultados-dos-exemplos-numéricos-do-material">4.2 Resultados dos exemplos numéricos do material</h3>
+<table>
+<thead>
+<tr>
+<th>Exemplo</th>
+<th>Regra</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fig. 2 — <em>sharding</em> por intervalo (idade)</strong></td>
+<td><em>Shard</em> 1: 0–29; <em>shard</em> 2: 30–59; <em>shard</em> 3: ≥ 60</td>
+<td>Maria (15) e Nathan (5) → <em>shard</em> 1; Célia (55) e Ciro (38) → <em>shard</em> 2; Cláudio (72) → <em>shard</em> 3</td>
+</tr>
+<tr>
+<td><strong>IDs de 1 a 1000 em 4 <em>shards</em></strong></td>
+<td>Faixas ordenadas</td>
+<td>S1: 1–250; S2: 251–500; S3: 501–750; S4: 751–1000</td>
+</tr>
+<tr>
+<td><strong>Fig. 2 (Cassandra) — anel de <em>tokens</em></strong></td>
+<td>Nó 1: 1–35; nó 2: 36–70; nó 3: 71–105; nó 4: 106–139</td>
+<td><em>Token</em> 127 → <strong>nó 4</strong></td>
+</tr>
+<tr>
+<td><strong>CPF por blocos de 1000 (MongoDB)</strong></td>
+<td><em>Shards</em> por faixa de CPF</td>
+<td>Busca por número iniciado com 3 limita os <em>shards</em> consultados</td>
+</tr>
+<tr>
+<td><strong>Busca por mensalidade X</strong></td>
+<td>Campo que <strong>não</strong> é a chave de fragmentação</td>
+<td>Consulta em <strong>todos</strong> os <em>shards</em>; <em>mongos</em> mesclam o resultado</td>
+</tr>
+<tr>
+<td><strong>Fig. 5 — índice B-<em>tree</em> por nome</strong></td>
+<td>Raiz A–Z → H–N</td>
+<td>&quot;Maria&quot; (inicial M) é buscada no nó intermediário <strong>H–N</strong></td>
+</tr>
+<tr>
+<td><strong>Fig. 1 (Soares) — pedidos por cliente</strong></td>
+<td><em>Shard</em> 1: 1–1.000; <em>shard</em> 2: 1.001–2.000; <em>shard</em> 3: 2.001–3.000</td>
+<td>Cliente 1.500 → <strong>servidor B / <em>shard</em> 2</strong> <em>(aplicação da regra, exemplo de estudo)</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.3 Cenários de aplicação <em>(complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</em></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Imagine que você tem este problema…</th>
+<th>Técnica indicada</th>
+<th>Por quê</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Um <em>e-commerce</em> cuja leitura de catálogo ficou lenta nos horários de pico, mas o banco ainda cabe em um servidor</strong></td>
+<td><strong>Replicação</strong> (réplicas de leitura) + índices</td>
+<td>Distribui leituras sem dividir os dados (ver 3.2 e 3.12)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Uma plataforma de telemetria que recebe bilhões de eventos por dia e uma única máquina já não aguenta a gravação</strong></td>
+<td><strong><em>Sharding</em> por <em>hash</em></strong></td>
+<td>Espalha escrita uniformemente; ingestão de eventos é o caso citado para <em>hash</em></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Um sistema que consulta vendas sempre por faixa de data</strong></td>
+<td><strong><em>Sharding</em> por intervalo</strong></td>
+<td>A consulta cai em poucos <em>shards</em>; atenção ao <em>shard</em> &quot;mais recente&quot; que concentra a escrita (ponto de equilíbrio, 3.10)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Uma rede de lojas em que os dados de cada filial devem ficar em servidores separados por exigência interna</strong></td>
+<td><strong><em>Sharding</em> por zona</strong></td>
+<td>Regras definidas pelo desenvolvedor para separar filiais</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Um aplicativo de campo usado em áreas sem sinal</strong></td>
+<td>Replicação <em><strong>off-line</strong></em> e assíncrona</td>
+<td>Replica quando a conexão volta (3.4)</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Um sistema de pagamentos em que a ordem das operações não pode inverter</strong></td>
+<td>Replicação <strong>passiva síncrona</strong> (primário) ou ativa com ordem total</td>
+<td>Garante a mesma ordem; custo em latência (3.5 e 3.6)</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Um serviço de envio de <em>e-mail</em> que precisa escalar sem guardar dados</strong></td>
+<td>Replicação de <strong>serviço</strong> com <em>proxy</em></td>
+<td>Sem estado a sincronizar (3.8a)</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Uma aplicação global em que usuários de cada continente acessam principalmente dados da própria região</strong></td>
+<td>Replicação <em>gossip</em> por <strong>geolocalização</strong></td>
+<td>Disponibilidade e baixa latência acima da consistência imediata (3.8b)</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>Uma plataforma de sensores em que as gravações simultâneas de milhares de dispositivos sobrecarregam o fragmento &quot;de hoje&quot;</strong></td>
+<td><em>Sharding</em> com chave <strong>data + dispositivo</strong></td>
+<td>Distribui as gravações; custo: consultas por período acessam mais fragmentos (3.18a)</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>Uma loja com banco centralizado em que a busca do cliente por e-mail varre a tabela inteira, mas o servidor tem folga</strong></td>
+<td><strong>Índice</strong> sobre o e-mail (não <em>sharding</em>)</td>
+<td>O problema é de <strong>localização</strong>, não de capacidade (3.18f)</td>
+</tr>
+<tr>
+<td>11</td>
+<td><strong>Uma rede social em que uma conta muito popular sobrecarrega um único fragmento, embora todos tenham o mesmo volume</strong></td>
+<td>Rever a chave/regra de distribuição e <strong>rebalancear</strong> (3.18b)</td>
+<td><em>Hotspot</em>: <em>hash</em> sozinho não resolve se as operações usam a mesma chave; adicionar máquinas pode não ajudar</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>Um banco fragmentado em que a busca por um atributo que não é a chave de fragmentação ficou lenta</strong></td>
+<td><strong>Índice local</strong> (consulta em todos os <em>shards</em>) ou <strong>índice global</strong> (direciona a busca)</td>
+<td>Local = <em>scatter/gather</em>; global = busca direcionada, com custo de manutenção e possível atraso (3.18f)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</h2>
+<ol>
+<li><strong>Caráter do material:</strong> a unidade junta <strong>quatro capítulos de livros diferentes</strong> (Mengato Junior; Brandão; Pereira; e, reenviado depois, Soares — ver 5.25). Há <strong>termos usados de forma diferente</strong> entre eles (por exemplo, &quot;<em>shard</em>&quot; e &quot;primário/secundário&quot;) e uma contradição de datação (ver 5.2). Foram mantidas as formulações originais e sinalizadas as divergências.</li>
+<li><strong>&quot;Sharding é novo&quot; × &quot;é antigo&quot;:</strong> Brandão afirma que <em>sharding</em> é &quot;uma arquitetura de <em>big data</em> <strong>relativamente nova</strong>&quot;; Pereira diz que o conceito e a aplicação do <em>sharding</em> &quot;<strong>são antigos</strong>&quot;. As afirmações se contradizem; deve-se anotar a divergência. <em>(Complementação:</em> a ideia de particionar dados entre nós é anterior ao <em>big data</em>; o que é recente é a popularização com bancos NoSQL.)*</li>
+<li><strong>&quot;Os dados de cada nó não são exclusivos, sendo totalmente independentes&quot; (Brandão):</strong> a frase se contradiz — se são independentes e autônomos, <strong>não</strong> compartilham dados. Mais adiante o mesmo capítulo afirma que os fragmentos &quot;não compartilham nenhum dos mesmos dados&quot;. Interpretação adotada: <strong>cada <em>shard</em> tem registros distintos e é independente</strong>.</li>
+<li><strong>Partição vertical (Brandão):</strong> o material diz que os dados de uma partição vertical têm &quot;linhas e colunas distintas&quot;. <em>Complementação:</em> na partição vertical, as <strong>linhas</strong> são, em geral, as mesmas (ligadas pela chave) e só as <strong>colunas</strong> são separadas.</li>
+<li><strong>Figura 2 do <em>sharding</em> por intervalo:</strong> o terceiro intervalo está rotulado como &quot;<strong>Shard 2</strong>: &gt;= 60&quot;; pelo texto (&quot;três <em>shards</em>&quot;) e pela figura, deve ser <strong>Shard 3</strong>.</li>
+<li><strong>Quadro 1 de Pereira (replicação × particionamento) com linhas aparentemente invertidas:</strong> a tabela diz que a replicação &quot;possibilita o <strong>dimensionamento</strong>&quot; e o particionamento &quot;possibilita a <strong>redundância</strong>&quot;, o que <strong>contradiz o texto imediatamente anterior</strong> (replicação torna o sistema tolerante a falhas; <em>sharding</em> armazena subconjuntos para escalar). Na tabela de 3.13, foi seguido o texto. Vale confirmar com o professor qual leitura será cobrada.</li>
+<li><strong>Quadro 2 (Oracle): &quot;<em>sharding</em> permite <em>shards</em> redundantes&quot;:</strong> conflita com a definição do mesmo material de que os <em>shards</em> são <strong>autônomos e não compartilham dados</strong>. A redundância vem da <strong>replicação</strong> combinada ao <em>sharding</em> (ver 3.13).</li>
+<li><strong>Quadro 2: índice acessado apenas por &quot;chave primária, chave estrangeira e <em>constraint unique</em>&quot;:</strong> isso <strong>não confere</strong> com a Aula 02, em que índices são criados também sobre colunas comuns (ex.: índice sobre <code>nome</code>, Aula 02 Anexo A, e os exemplos do capítulo de Andrade). <em>Complementação:</em> chaves primárias e <code>UNIQUE</code> criam índices automaticamente, mas <strong>qualquer coluna</strong> pode ser indexada.</li>
+<li><strong>Hash × intervalo (Pereira):</strong> a seção &quot;<em>Sharding</em> baseado em <em>hash</em>&quot; ilustra com <strong>IDs de 1 a 1000 em 4 faixas ordenadas (S1: 1–250…)</strong>, que é, na prática, <strong>divisão por intervalo</strong>, e fala em &quot;limite inferior inclusivo e exclusivo&quot;, que também é vocabulário de intervalo. O exemplo não demonstra o <em>hash</em>. <em>Complementação:</em> no <em>hash</em>, o valor é transformado e as faixas são sobre o <strong>resultado do <em>hash</em></strong>, não sobre o ID original.</li>
+<li><strong>Cassandra: &quot;sem controlador central&quot; × &quot;elege um líder com Zookeeper&quot;:</strong> o material afirma que a arquitetura não tem controlador central nem mestre/escravo e, no parágrafo da replicação, que o Cassandra elege um líder entre os nós <strong>com o Zookeeper</strong>. As duas afirmações são difíceis de conciliar. <em>Complementação (conferir na documentação):</em> segundo meu conhecimento, as versões atuais do Cassandra <strong>não dependem do Zookeeper</strong> e coordenam membership/falhas por <em>gossip</em>; a referência a Zookeeper parece vir do artigo original (Lakshman e Malik, 2010).</li>
+<li><strong>Terminologia do Cassandra:</strong> o material fala em &quot;colunas do <em>cluster</em>&quot; na chave primária. <em>Complementação:</em> o termo técnico é <strong>colunas de <em>clustering</em></strong> (que ordenam as linhas <strong>dentro</strong> da partição), sem relação com o <em>cluster</em> de máquinas. Também o infográfico diz que a arquitetura se baseia &quot;no BigTable, <strong>no Amazon Web Service</strong> e no DynamoDB&quot;; o que se costuma citar é o <strong>Dynamo</strong> (distribuição) e o <strong>BigTable</strong> (modelo de dados).</li>
+<li><strong>MongoDB: &quot;<em>shard</em> primário&quot; e &quot;secundário&quot;:</strong> o texto usa &quot;primário/secundário&quot; tanto para <em>shards</em> quanto para réplicas e diz que o <em>shard</em> primário &quot;contém toda a informação não fragmentada&quot;. <em>Complementação:</em> em MongoDB, o <em>primary shard</em> de um banco guarda as coleções <strong>não fragmentadas</strong> dele; já &quot;primário/secundário&quot; dentro de cada <em>shard</em> se refere aos <strong>membros do conjunto de réplicas</strong>.</li>
+<li><strong>MongoDB: &quot;os <em>mongos</em> usam as chaves primárias&quot; (exemplo do CPF):</strong> <em>Complementação:</em> o roteamento usa a <strong>chave de fragmentação</strong> (<em>shard key</em>), que pode ser ou não a chave primária. O exemplo de CPF funciona como intervalo, mas a explicação mistura os conceitos. Além disso, o material diz que a chave de fragmento é <strong>imutável</strong> — <em>conferir:</em> o texto é de 2020 e, segundo meu conhecimento, <strong>versões mais recentes do MongoDB</strong> passaram a permitir refinar a chave ou refragmentar (<em>resharding</em>); verificar na documentação da versão usada.</li>
+<li><strong>Hadoop &quot;várias cópias de um dado em um mesmo servidor&quot; (Gemayel, 2016):</strong> <em>Complementação (conferir na fonte):</em> no comportamento padrão do HDFS, as <strong>réplicas são colocadas em nós (DataNodes) diferentes</strong>, justamente para tolerar falhas de nó; manter cópias no mesmo servidor não protegeria contra a falha dele.</li>
+<li><strong>BigTable &quot;se conecta a Cassandra, HBase e MongoDB&quot; (infográfico):</strong> afirmação genérica. <em>Complementação (conferir):</em> o Cloud Bigtable oferece <strong>API compatível com HBase</strong>; com outros bancos a integração costuma se dar por <strong>conectores/ferramentas de migração</strong>, não por &quot;conexão direta&quot; como característica do produto.</li>
+<li><strong>&quot;Cluster remoto&quot; (3.11):</strong> os termos <strong>nós-semente</strong>, <strong>nós de <em>gateway</em></strong> e &quot;pesquisa de <em>cluster</em> cruzado&quot; soam como descrição de um produto específico (o texto aparece logo após o ElasticSearch), embora o material os apresente como característica geral de <em>clusters</em> remotos. <em>Complementação:</em> conferir se a regra &quot;até três nós de <em>gateway</em>&quot; vale fora do contexto original.</li>
+<li><strong>Fatores numéricos do material sem fonte direta no texto:</strong> &quot;Murmur3 de 3 a 5 vezes mais rápido&quot;, &quot;partição ≤ 10 MB (até 100 MB)&quot; e &quot;até 255 <em>tokens</em> por nó&quot; são apresentados como fatos, mas dependem de versão/configuração. Mantidos como no material.</li>
+<li><strong>Número de réplicas e falhas bizantinas (2F+1):</strong> <em>Complementação:</em> na literatura de tolerância a falhas bizantinas, protocolos clássicos sem assinaturas exigem <strong>3F+1</strong> réplicas; o <strong>2F+1</strong> do material pressupõe votação no FE e respostas assinadas. Registrar como pressuposto.</li>
+<li><strong>&quot;Saiba mais — falhas bizantinas&quot;:</strong> a definição do quadro (&quot;não conseguem concordar com uma estratégia para falhas catastróficas&quot;) é informal. <em>Complementação:</em> falha bizantina é aquela em que um componente se comporta de forma <strong>arbitrária ou maliciosa</strong>, inclusive enviando informações conflitantes a diferentes nós.</li>
+<li><strong>Infográfico de replicação, &quot;Passivo: os dados são divididos em cópias primárias e secundárias&quot;:</strong> &quot;divididos&quot; pode confundir com <em>sharding</em>; no modelo passivo os dados são <strong>copiados</strong> (cada secundário tem a cópia completa), não repartidos.</li>
+<li><strong>Replicação ativa e Cassandra/Mongo:</strong> o material estuda <strong>replicação ativa e passiva</strong> no capítulo de Mengato, mas <strong>não diz qual modelo</strong> Cassandra e MongoDB adotam. Não foi atribuída classificação.</li>
+<li><strong>&quot;Hibernate Shards&quot;:</strong> o material o recomenda como estrutura &quot;bastante recomendada&quot;. <em>Complementação (conferir):</em> segundo meu conhecimento, é um projeto antigo, sem evolução nas versões recentes do Hibernate; tratar como exemplo histórico de <em>sharding</em> em camada de aplicação.</li>
+<li><strong>Materiais complementares não acessados:</strong> os <strong>QR codes/links</strong> das <em>Dicas do Professor</em> e dos <em>Saiba mais</em> <strong>não foram abertos</strong>; foram usados apenas os títulos e descrições do PDF (lista em 6). O texto da quarta <em>Dica</em> menciona <em>blockchain</em>, mas não traz conteúdo no PDF.</li>
+<li><strong>Atividade 3 (A3):</strong> o PDF inclui a atividade; por padrão do projeto, ela <strong>não</strong> foi incorporada a este arquivo.</li>
+<li><strong>Duas versões do capítulo <em>Sharding</em>:</strong> o capítulo reenviado (Soares) tem o <strong>mesmo título e o mesmo livro</strong> (<em>Framework de Big Data</em>) do usado inicialmente (Brandão), mas <strong>autoria, estrutura, exemplos e referências diferentes</strong> (as referências chegam a out. 2026). Não está claro se a unidade usa <strong>uma ou as duas</strong>. Foram <strong>mantidos</strong> os dois conteúdos: Brandão em 3.9–3.13 e Soares em 3.18, sem substituição. Confirmar na plataforma qual é a versão oficial.</li>
+<li><strong>Soares dá base no material a dois pontos antes marcados como complementação:</strong> (a) na partição <strong>vertical</strong> a divisão é por colunas com <strong>atributos comuns</strong> para reconstruir os registros (ver 5.4); (b) a chave de fragmentação <strong>não precisa ser a chave primária</strong> (ver 5.13). Os dois pontos passam a ter respaldo no próprio material.</li>
+<li><strong><em>Hash</em> (Soares × Pereira, ver 5.9):</strong> Soares descreve o <em>hash</em> como função que <strong>distribui valores distintos e separa valores próximos</strong>, o que torna consultas por faixa mais custosas. Essa descrição é coerente; o exemplo de Pereira (IDs 1–1000 em faixas) ilustra <strong>intervalo</strong>. Usar a descrição de Soares como referência para <em>hash</em>.</li>
+<li><strong>Índices (Soares × Quadro 2 da Oracle, ver 5.8):</strong> Soares afirma que a escolha do índice depende de <strong>filtros, ordenação e relacionamentos</strong> das consultas, e não de apenas chave primária, estrangeira e <em>unique</em>; isso é compatível com a Aula 02. A restrição a esses três tipos de campo fica restrita ao quadro adaptado da Oracle.</li>
+<li><strong>Fontes de Soares:</strong> o exemplo bancário (20 mil tabelas, 50 bilhões de registros, 60 nós) e o GeoTP (versão 3, 2024) vêm de <strong>trabalhos citados</strong> (o GeoTP é um <em><strong>preprint</strong></em>, sem revisão por pares confirmada no PDF). Mantidos como no material; os números não foram conferidos nas fontes.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões">6. Referências e conexões</h2>
+<h3 id="conexões-com-as-aulas-01-e-02-complementação--conceitos-explicados-antes-aqui-apenas-ponteiros">Conexões com as Aulas 01 e 02 <em>(complementação — conceitos explicados antes; aqui apenas ponteiros)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Tema desta aula</th>
+<th>Onde foi visto</th>
+<th>O que acrescenta agora</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Escalabilidade horizontal, <em>sharding</em> e hash consistente</td>
+<td><strong>Aula 01 §3.4</strong></td>
+<td>Detalhe das <strong>estratégias</strong> (hash, intervalo, diretório, zona) e dos <em>clusters</em></td>
+</tr>
+<tr>
+<td>CAP, consistência eventual, BASE</td>
+<td><strong>Aula 01 §3.4 e §3.5</strong></td>
+<td>Consistência × disponibilidade na <strong>replicação</strong> (bancário × rede social)</td>
+</tr>
+<tr>
+<td><em>Gossip</em> e <em>vector clocks</em></td>
+<td><strong>Aula 01 §3.4</strong></td>
+<td><em>Gossip</em> como <strong>arquitetura de replicação</strong> e como <strong>detecção de falhas</strong> no Cassandra</td>
+</tr>
+<tr>
+<td>Tipos de NoSQL: colunar, documentos</td>
+<td><strong>Aula 01 §3.6 e §3.7</strong></td>
+<td>Cassandra (colunar) e MongoDB (documentos) com o foco em <strong>distribuição</strong></td>
+</tr>
+<tr>
+<td>MapReduce e <em>scatter/gather</em></td>
+<td><strong>Aula 01 §3.4 e §3.9</strong></td>
+<td>A busca por mensalidade X em <strong>todos os <em>shards</em></strong> do MongoDB é um <em>scatter/gather</em> <em>(interpretação de estudo)</em></td>
+</tr>
+<tr>
+<td>Índices (B-<em>tree</em>, primário/secundário)</td>
+<td><strong>Aula 02 §3.7, Anexos A e B</strong></td>
+<td><strong>Comparação</strong> índice × <em>sharding</em>; índice de suporte da chave de fragmento</td>
+</tr>
+<tr>
+<td><code>GROUP BY</code>/agregações</td>
+<td><strong>Aula 02 §3.1–3.2</strong></td>
+<td>Em bases fragmentadas, agregações precisam de <strong>mesclagem</strong> entre <em>shards</em> (ver <em>mongos</em>)</td>
+</tr>
+<tr>
+<td>Índices: B-<em>tree</em>, <em>hash</em>, secundários</td>
+<td><strong>Aula 02 §3.7</strong></td>
+<td>Em dados fragmentados, <strong>índice local × global</strong> (3.18f)</td>
+</tr>
+<tr>
+<td>ElasticSearch (<em>shards</em> e réplicas do índice de busca)</td>
+<td><strong>Aula 04 §3.10</strong> <em>(adiante)</em></td>
+<td>O mesmo <em>sharding</em> aplicado a <strong>motores de busca</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dependência de ideias:</strong> replicação (3.2–3.8) → <em>sharding</em> (3.9–3.12) → combinação das duas em Cassandra e MongoDB (3.13–3.16). O capítulo de Soares (3.18) revisita <em>sharding</em>, <em>clusters</em> e índices com ênfase em <em>hotspot</em>, roteamento, disponibilidade geográfica e índice local × global.</p>
+<h3 id="aplicação-profissional-complementação">Aplicação profissional <em>(complementação)</em></h3>
+<ul>
+<li><strong>Arquitetura de dados e <em>cloud</em>:</strong> a escolha entre <strong>réplicas de leitura</strong>, <em>sharding</em> e serviços gerenciados em nuvem é decisão recorrente de projeto (ver 3.11: <em>clusters</em> remotos, Kubernetes/GKE).</li>
+<li><strong>IA/ML:</strong> clusters e armazenamento distribuído alimentam <em>pipelines</em> de dados e <em>feature stores</em> (a Aula 01 cita o caso da Uber com Cassandra); o material associa os <em>clusters</em> a <strong>supercomputadores</strong> para algoritmos de IA.</li>
+<li><strong>Operação:</strong> escolha da chave de fragmentação, rebalanceamento e monitoramento são trabalhos de <strong>planejamento e DBA/SRE</strong> (3.10).</li>
+</ul>
+<h3 id="referências-acadêmicas-do-material">Referências acadêmicas (do material)</h3>
+<ul>
+<li>COULOURIS, G. <em>et al.</em> <strong>Sistemas distribuídos</strong>: conceitos e projeto. 5. ed. Porto Alegre: Bookman, 2013.</li>
+<li>TANENBAUM, A. S.; STEEN, M. <strong>Sistemas distribuídos</strong>: princípios e paradigmas. 2. ed. São Paulo: Pearson Prentice Hall, 2008.</li>
+<li>TANENBAUM, A. S.; BOS, H. <strong>Sistemas operacionais modernos</strong>. 4. ed. São Paulo: Pearson, 2016.</li>
+<li>LADIN, R. <em>et al.</em> Providing high availability using lazy replication. <strong>ACM Transactions on Computer Systems</strong>, v. 10, n. 4, p. 360–391, 1992.</li>
+<li>BRONSON, N. <em>et al.</em> TAO: Facebook's Distributed Data Store for the Social Graph. <strong>USENIX ATC</strong>, 2013.</li>
+<li>GEMAYEL, N. Analyzing Google File System and Hadoop Distributed File System. <strong>Research Journal of Information Technology</strong>, v. 8, n. 3, p. 66–74, 2016.</li>
+<li>RAMAKRISHNAN, R.; GEHRKE, J. <strong>Sistemas de gerenciamento de banco de dados</strong>. 3. ed. Porto Alegre: AMGH, 2011.</li>
+<li>CARPENTER, J.; HEWITT, E. <strong>Cassandra</strong>: the definitive guide. 2. ed. O'Reilly, 2016.</li>
+<li>BRADSHAW, S.; BRAZIL, E.; CHODOROW, K. <strong>MongoDB</strong>: the definitive guide. 3. ed. O'Reilly, 2019.</li>
+<li>BOAGLIO, F. <strong>MongoDB</strong>: construa novas aplicações com novas tecnologias. Casa do Código, 2015.</li>
+<li>BHAMRA, K. <strong>A comparative analysis of MongoDB and Cassandra</strong>. Dissertação (Mestrado), University of Bergen, 2017.</li>
+<li>LAKSHMAN, A.; MALIK, P. Cassandra: a decentralized structured storage system. <strong>ACM SIGOPS Operating Systems Review</strong>, v. 44, n. 2, p. 35–40, 2010.</li>
+<li>NAZEER, H. <em>et al.</em> Real-time text analytics pipeline using open-source big data tools. <strong>Arxiv</strong>, 2017.</li>
+<li>KEEP, M.; INGO, H. Performance Best Practices: Sharding. <strong>MongoDB</strong>, 2020.</li>
+<li>GOMES, P. C. T. O que é e como funciona um cluster? <strong>OPServices</strong>, 2015.</li>
+<li>BIANCHI, W. Entendendo e usando índices: parte 1. <strong>DevMedia</strong>, 2007.</li>
+<li>REIS, F. dos. O que são índices em bancos de dados: indexação em tabelas. <strong>Bóson Treinamentos</strong>, 2019.</li>
+<li>VERAS, M. <strong>Virtualização</strong>: tecnologia central do datacenter. 2. ed. Rio de Janeiro: Brasport, 2016.</li>
+<li>FERREIRA (2020); CASTRO (2020); ORACLE (Oracle Sharding, 2020); HIBERNATE SHARDS; SLICE (OpenJPA); IBM (WebSphere); ELASTIC (ElasticSearch 7.6); APPLIED INNOVATIONS (<em>Cloud servers vs. clustered cloud servers</em>); GOOGLE CLOUD (<em>Cloud Bigtable</em>; <em>Arquitetura do cluster</em>); AMAZON WEB SERVICE (DynamoDB); APACHE (Cassandra, HBase, Hadoop, Zookeeper); MONGODB (<em>Sharding reference</em>) — conforme listadas nas referências dos capítulos.</li>
+<li><strong>Capítulo <em>Sharding</em> (Soares, reenviado):</strong> ELMASRI, R.; NAVATHE, S. B. <strong>Sistemas de banco de dados</strong>. 7. ed. São Paulo: Pearson, 2018. · FOWLER, A. <strong>NoSQL for dummies</strong>. Hoboken: John Wiley &amp; Sons, 2015. · HUSSAIN, K.; HUSSAIN, F. <strong>NoSQL essentials</strong>: navigating the world of non-relational databases. Sonar Publishing, 2024. · KLEPPMANN, M. <strong>Designing data-intensive applications</strong>. Sebastopol: O'Reilly Media, 2017. · MONGODB. Sharded cluster components (2026a); Routing with mongos (2026b); Security checklist for self-managed deployments (2026c). <strong>MongoDB Manual</strong>. · ZHOU, X. <em>et al.</em> Grep: a graph learning based database partitioning system. <strong>Proceedings of the ACM on Management of Data</strong>, v. 1, n. 1, art. 94, 2023. · ZHUANG, Q. <em>et al.</em> GeoTP: latency-aware geo-distributed transaction processing in database middlewares (extended version). v. 3, 2024. Preprint.</li>
+<li><strong>Leitura recomendada (material):</strong> LUZ, K. S.; ALMEIDA, T. V. M. <strong>Apache Cassandra</strong>. 2016 (Departamento de Ciência da Computação, UnB).</li>
+</ul>
+<h3 id="materiais-complementares-indicados-no-pdf-linksqr-codes-não-acessados--apenas-títulos-e-descrições-do-próprio-pdf">Materiais complementares indicados no PDF <em>(links/QR codes não acessados — apenas títulos e descrições do próprio PDF)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Título</th>
+<th>Descrição do PDF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dica do Professor</td>
+<td>CODA (sistema de arquivos distribuído)</td>
+<td>Funcionalidades para o compartilhamento de arquivos</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td><em>Cluster</em> de alta disponibilidade da informação com <em>software</em> livre</td>
+<td>Tecnologias livres para <em>clusters</em>, replicação e monitoramento de falhas</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>Administrando MongoDB: replicação/espelhamento</td>
+<td>Modelo de replicação no MongoDB</td>
+</tr>
+<tr>
+<td>Saiba mais (vídeo)</td>
+<td>Sistemas distribuídos — abordagens de consistência e replicação (Jó Uyeama)</td>
+<td>Consistência causal e sequencial; posicionamento de servidores de réplicas</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>Uma introdução ao Apache Kafka, lições aprendidas em um ambiente de varejo</td>
+<td>Kafka, replicação para desempenho no fluxo de dados (<em>stream</em>), caso de uso</td>
+</tr>
+<tr>
+<td>Dica do Professor</td>
+<td><em>Sharding</em> em servidores clusterizados em sistemas bancários</td>
+<td>Uso de <em>sharding</em> em <em>clusters</em> bancários</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>Padrões e diretrizes arquiteturais para escalabilidade</td>
+<td>Arquiteturas com foco em escalabilidade</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>O que são índices em bancos de dados — indexação em tabelas</td>
+<td>Conceito de índices no relacional; prós e contras</td>
+</tr>
+<tr>
+<td>Dica do Professor</td>
+<td><em>Sharding</em> e <em>blockchain</em></td>
+<td>Importância do <em>sharding</em> em sistemas de <em>blockchain</em></td>
+</tr>
+<tr>
+<td>Saiba mais (vídeo)</td>
+<td>Diferenças entre <em>sharding</em> e replicação</td>
+<td>Diferenças entre os dois e em relação ao <em>clustering</em></td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>Cassandra — um sistema de armazenamento NoSQL altamente escalável</td>
+<td>Arquitetura e estudos de caso em redes sociais</td>
+</tr>
+<tr>
+<td>Saiba mais</td>
+<td>Sistemas de Gerenciamento de Bancos de Dados (3ª ed.)</td>
+<td>Índices baseados em <em>hash</em>, seus tipos e utilizações</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="7-anexo-a--minhas-observações-e-dúvida-georredundância-no-azure-observação-da-dani-a-ligação-com-o-azure-é-complementação-não-faz-parte-do-material-da-fmu">7. Anexo A — Minhas observações e dúvida: georredundância no Azure <em>(observação da Dani; a ligação com o Azure é complementação, não faz parte do material da FMU)</em></h2>
+<p><strong>Tema principal destacado por mim nesta aula:</strong> <em>sharding</em>.</p>
+<p><strong>Dúvida:</strong> &quot;georredundância no Azure&quot; seria o eixo <strong>processo</strong> ou <strong>fluxo</strong> da classificação de replicação (3.4)? Conclusão a que cheguei: <strong>não é um eixo só — é uma característica que combina os quatro</strong>: <strong>passivo, assíncrono, unidirecional, <em>on-line</em></strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Eixo (3.4)</th>
+<th>Como a georredundância (ex.: Azure Storage GRS) se encaixa <em>(complementação)</em></th>
+<th>Por quê</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Processo</strong></td>
+<td><strong>Passivo</strong></td>
+<td>Há uma região <strong>primária</strong> que recebe as gravações; a região <strong>secundária</strong> é cópia (<em>backup</em>). Não é replicação ativa, em que todos executam</td>
+</tr>
+<tr>
+<td><strong>Fluxo</strong></td>
+<td><strong>Assíncrono</strong></td>
+<td>A gravação é confirmada na região primária e <strong>depois</strong> copiada à secundária, sem bloquear o cliente (por isso pode haver pequeno atraso)</td>
+</tr>
+<tr>
+<td><strong>Direção</strong></td>
+<td><strong>Unidirecional</strong></td>
+<td>Primária → secundária. Mesmo com leitura na secundária (RA-GRS), ela é <strong>somente leitura</strong></td>
+</tr>
+<tr>
+<td><strong>Conexão</strong></td>
+<td><em><strong>On-line</strong></em> (contínua)</td>
+<td>A cópia acontece de forma contínua, não em janelas agendadas. Ressalva: <em>on-line</em> aqui significa &quot;ao longo das operações&quot;, <strong>não</strong> &quot;sem atraso&quot;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Leitura da conclusão:</strong> os quatro eixos da classificação <strong>descrevem a mesma estratégia ao mesmo tempo</strong>, então &quot;georredundância&quot; não pertence a um eixo; ela <strong>é uma combinação</strong>. A escolha <strong>assíncrona</strong> tem custo: se a região primária falhar, a cópia secundária pode estar <strong>alguns instantes atrasada</strong> (perda possível dos últimos dados) — é o dilema disponibilidade × consistência da Aula 01 (§3.4) e de 3.2.</p>
+<blockquote>
+<p><em>Complementação (conferir na documentação do Azure):</em> segundo meu conhecimento, o armazenamento georredundante copia os dados de forma <strong>síncrona dentro da região primária</strong> (várias cópias) e <strong>assíncrona para a região secundária</strong>, sem SLA de tempo para essa cópia. O material da FMU não cita o Azure; a tabela é aplicação dos conceitos da aula.</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="8-anexo-b--pontos-de-discussão-sharding--fatos-e-dimensões-e-sharding--georredundância-levantados-pela-dani-análise-é-complementação-não-faz-parte-do-material-da-fmu">8. Anexo B — Pontos de discussão: <em>sharding</em> × fatos e dimensões, e <em>sharding</em> × georredundância <em>(levantados pela Dani; análise é complementação, não faz parte do material da FMU)</em></h2>
+<h3 id="81-o-infográfico-de-big-data-bigtable-é-o-mesmo-princípio-de-fatos-e-dimensões">8.1 O infográfico de Big Data (BigTable) é o mesmo princípio de fatos e dimensões?</h3>
+<p><strong>Hipótese da Dani:</strong> o princípio é o mesmo — distribuir em tabelas menores conectadas.<br />
+<strong>Avaliação:</strong> a intuição de &quot;partir o dado grande em partes menores&quot; é comum às duas ideias, mas o <strong>princípio é diferente</strong>. O parentesco mais próximo é com o <strong>particionamento vertical</strong> (3.9), não com o horizontal.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Fatos e dimensões (<em>star schema</em>)</th>
+<th><em>Sharding</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Como divide</strong></td>
+<td>Por <strong>assunto/colunas</strong>: cada tabela tem esquema próprio (venda, cliente, produto)</td>
+<td>Por <strong>linhas</strong>: todas as partes têm o <strong>mesmo esquema</strong></td>
+</tr>
+<tr>
+<td><strong>Como as partes se relacionam</strong></td>
+<td>Se <strong>complementam</strong> e são unidas por <em>join</em></td>
+<td>São <strong>intercambiáveis</strong>; a consulta vai a um <em>shard</em> ou a todos e os resultados são <strong>somados</strong> (<em>scatter/gather</em>, ver Aula 01 §3.4)</td>
+</tr>
+<tr>
+<td><strong>Objetivo</strong></td>
+<td>Modelagem para análise: clareza, desempenho do <em>join</em>, menos redundância</td>
+<td>Escalar armazenamento e carga em várias máquinas</td>
+</tr>
+<tr>
+<td><strong>Nível</strong></td>
+<td><strong>Lógico</strong> (modelo)</td>
+<td><strong>Físico</strong> (onde o dado fica)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sobre o infográfico em si (3.17):</strong></p>
+<ul>
+<li>O BigTable é <strong>colunar</strong> e não faz <em>join</em>: o infográfico mostra <strong>uma</strong> tabela dividida em <strong>faixas de linhas contíguas</strong>, e não tabelas conectadas.</li>
+<li>O infográfico do Cassandra (3.14) usa <strong>desnormalização e duplicação</strong> de tabelas por tipo de consulta, o oposto do modelo dimensional.</li>
+<li>Pode ter gerado a associação o fato de o BigTable ser indicado para <strong>relatórios, visualizações e séries temporais</strong> (uso analítico, como o DW) e o contraste com a Aula 02 (relacional).</li>
+</ul>
+<p><strong>Onde as duas ideias se encontram (<em>data warehouse</em> distribuído):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tabela</th>
+<th>Tratamento</th>
+<th>Por quê</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fatos</strong> (enorme)</td>
+<td><strong>Fragmentada</strong> (<em>sharding</em>)</td>
+<td>Não cabe/aguenta em um nó</td>
+</tr>
+<tr>
+<td><strong>Dimensões</strong> (pequenas)</td>
+<td><strong>Replicadas em cada nó</strong></td>
+<td>O <em>join</em> fica local, sem trafegar dado entre nós</td>
+</tr>
+</tbody>
+</table>
+<p>Isso corresponde às <strong>tabelas de referência replicadas em cada <em>shard</em></strong> descritas no material (3.9; exemplo: tabela de taxas de conversão). Padrão análogo existe em serviços como o Azure Synapse (tabelas distribuídas e replicadas) — <em>conferir na documentação</em>.</p>
+<h3 id="82-sharding--georredundância-do-azure">8.2 <em>Sharding</em> × georredundância do Azure</h3>
+<p><strong>Georredundância é replicação, não <em>sharding</em></strong>: copia os dados completos para outra região (passiva, assíncrona, unidirecional — Anexo A). Ninguém está dividindo os dados.</p>
+<p>A relação é de <strong>camadas</strong>, como o material mostra em Cassandra e MongoDB (3.16: no MongoDB, <em>shard</em> = conjunto de réplicas):</p>
+<table>
+<thead>
+<tr>
+<th>Camada</th>
+<th>O que resolve</th>
+<th>Exemplo no Azure <em>(conferir na documentação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em><strong>Sharding</strong></em></td>
+<td>Capacidade e carga acima de um servidor</td>
+<td>Cosmos DB: dados divididos por <strong>chave de partição</strong></td>
+</tr>
+<tr>
+<td><strong>Replicação local</strong></td>
+<td>Falha de nó ou disco</td>
+<td>Cópias dentro da região</td>
+</tr>
+<tr>
+<td><strong>Georredundância</strong></td>
+<td>Falha de uma região inteira</td>
+<td>Replicação para outra região (GRS no Storage; multirregião no Cosmos DB)</td>
+</tr>
+</tbody>
+</table>
+<p>O Cosmos DB reúne as três camadas; o Storage com GRS tem só a replicação local e a georredundância.</p>
+<p><strong>Frase-resumo:</strong> <em>sharding</em> responde &quot;cabe e aguenta?&quot;; georredundância responde &quot;sobrevive se a região cair?&quot;. São complementares (ver 3.13 e 3.16).</p>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d4-aula-02.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 2</a><a class="btn cheio" href="s1-d4-aula-04.html">Aula 4 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d4.html">← Banco de Dados Não Relacional</a> · </span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

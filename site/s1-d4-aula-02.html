@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 2 · SQL: agregação e agrupamento, consultas complexas e índices · Banco de Dados Não Relacional</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d4.html">Banco de Dados Não Relacional</a> <span>›</span> <span>Aula 2 · SQL: agregação e agrupamento, consultas complexas e índices</span></nav>
+    <span class="eyebrow">Aula 2 · Banco de Dados Não Relacional</span>
+    <h1>Aula 2 · SQL: agregação e agrupamento, consultas complexas e índices</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d4.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-02--sql-funções-de-agregação-e-agrupamento-consultas-complexas-e-índices">AULA 02 — SQL: Funções de Agregação e Agrupamento, Consultas Complexas e Índices</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</a></li><li class="n3"><a href="#31-funções-de-agregação">3.1 Funções de agregação</a></li><li class="n3"><a href="#32-agrupamento-de-dados-group-by-e-having">3.2 Agrupamento de dados: GROUP BY e HAVING</a></li><li class="n3"><a href="#33-ordem-conceitual-de-avaliação-e-where--having">3.3 Ordem conceitual de avaliação e WHERE × HAVING</a></li><li class="n3"><a href="#34-junções-e-ordenação">3.4 Junções e ordenação</a></li><li class="n3"><a href="#35-subconsultas-aninhamento-e-correlacionamento">3.5 Subconsultas: aninhamento e correlacionamento</a></li><li class="n3"><a href="#36-valores-null-e-lógica-de-três-valores">3.6 Valores NULL e lógica de três valores</a></li><li class="n3"><a href="#37-índices-em-banco-de-dados">3.7 Índices em banco de dados</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</a></li><li class="n3"><a href="#41-estudo-de-caso-clínica-médica-felizes-por-viver-paes">4.1 Estudo de caso: Clínica Médica &quot;Felizes por Viver&quot; (Paes)</a></li><li class="n3"><a href="#42-consultas-do-estudo-de-caso-e-resultados">4.2 Consultas do estudo de caso e resultados</a></li><li class="n3"><a href="#43-exemplos-do-capítulo-consultas-complexas-pichetti--esquema-elmasri-e-navathe">4.3 Exemplos do capítulo Consultas complexas (Pichetti — esquema Elmasri e Navathe)</a></li><li class="n3"><a href="#44-exemplos-de-índices-andrade--postgresql">4.4 Exemplos de índices (Andrade — PostgreSQL)</a></li><li class="n3"><a href="#45-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.5 Cenários de aplicação (complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</a></li><li class="n2"><a href="#5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</a></li><li class="n2"><a href="#6-referências-e-conexões">6. Referências e conexões</a></li><li class="n3"><a href="#conexões-com-a-aula-01-complementação--conceitos-explicados-na-aula-01-aqui-apenas-ponteiros">Conexões com a Aula 01 (complementação — conceitos explicados na Aula 01; aqui apenas ponteiros)</a></li><li class="n3"><a href="#aplicação-profissional-complementação">Aplicação profissional (complementação)</a></li><li class="n3"><a href="#referências-acadêmicas-do-material">Referências acadêmicas (do material)</a></li><li class="n2"><a href="#7-anexo-a--minha-dúvida-índice-em-linguagem-simples-pedido-da-dani-complementação-não-faz-parte-do-material-da-fmu">7. Anexo A — Minha dúvida: índice em linguagem simples (pedido da Dani; complementação, não faz parte do material da FMU)</a></li><li class="n2"><a href="#8-anexo-b--minha-dúvida-diferença-entre-árvore-b-hash-agrupado-primário-e-secundário-pedido-da-dani-síntese-com-base-no-material-organizada-em-tabela">8. Anexo B — Minha dúvida: diferença entre Árvore B, hash, agrupado, primário e secundário (pedido da Dani; síntese com base no material, organizada em tabela)</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-02--sql-funções-de-agregação-e-agrupamento-consultas-complexas-e-índices">AULA 02 — SQL: Funções de Agregação e Agrupamento, Consultas Complexas e Índices</h1></div>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e objetivos</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Informação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>Banco de Dados Não Relacional (262GGR6387A)</td>
+</tr>
+<tr>
+<td><strong>Curso</strong></td>
+<td>Graduação em Inteligência Artificial — FMU</td>
+</tr>
+<tr>
+<td><strong>Aula / Unidade</strong></td>
+<td>Aula 02 (Unidade 2)</td>
+</tr>
+<tr>
+<td><strong>Tema</strong></td>
+<td>Funções de agregação e agrupamento em SQL; consultas complexas (junção, ordenação, aninhamento, correlacionamento); índices em banco de dados (PostgreSQL)</td>
+</tr>
+<tr>
+<td><strong>Material acadêmico</strong></td>
+<td>Infográfico <em>Funções de agregação e agrupamento de dados em SQL</em>; capítulo <em>Funções de agregação e agrupamento de dados em SQL</em> (PAES, C. A. — <em>Consultas em Banco de Dados</em>, SAGAH); Infográfico <em>Consultas complexas em SQL</em>; capítulo <em>Consultas complexas em SQL</em> (PICHETTI, R. F. — <em>Banco de Dados</em>, SAGAH); Infográfico <em>Índices em banco de dados</em>; capítulo <em>Índices em banco de dados</em> (ANDRADE, G. L. — <em>Consultas em Banco de Dados</em>, SAGAH); Dicas do Professor; Saiba mais</td>
+</tr>
+</tbody>
+</table>
+<h3 id="objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</h3>
+<ul>
+<li>Definir o conceito de <strong>índices</strong> em banco de dados e identificar suas principais vantagens.</li>
+<li><strong>Criar, excluir e aplicar</strong> índices em consultas SQL.</li>
+<li>Identificar e utilizar <strong>funções de agregação e agrupamento</strong> de dados em SQL.</li>
+<li>Desenvolver consultas utilizando <strong>junção, agregação e ordenação</strong>.</li>
+<li>Produzir consultas avançadas empregando <strong>aninhamento e correlacionamento</strong>.</li>
+</ul>
+<blockquote>
+<p><strong>Nota de contexto:</strong> esta unidade trata do modelo <strong>relacional/SQL</strong> (exemplos em PostgreSQL, com menções a MySQL, Oracle e SQL Server). Na disciplina, funciona como a &quot;linha de base&quot; relacional para a comparação com o NoSQL feita na Aula 01 (ver §6).</p>
+</blockquote>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e contextualização</h2>
+<p>À medida que o volume de dados cresce, consultar de forma <strong>rápida, organizada e eficiente</strong> vira requisito. A unidade apresenta três blocos que se encadeiam:</p>
+<ol>
+<li><strong>Resumir dados</strong> — funções de <strong>agregação</strong> (COUNT, SUM, AVG, MIN, MAX) e <strong>agrupamento</strong> (GROUP BY, HAVING): analisam <em>grupos de linhas</em> em vez de linhas individuais.</li>
+<li><strong>Combinar e comparar dados</strong> — <strong>consultas complexas</strong>: junções (JOIN), ordenação (ORDER BY), <strong>subconsultas aninhadas</strong> e <strong>correlacionadas</strong>, além do tratamento de valores <strong>NULL</strong> (lógica de três valores).</li>
+<li><strong>Acelerar a busca</strong> — <strong>índices</strong>: estruturas de dados auxiliares que organizam os registros em disco para otimizar a recuperação, com custo de espaço e de escrita.</li>
+</ol>
+<p>As três partes se conectam por um ponto: <strong>a mesma consulta pode ser escrita de várias formas</strong>, e escolher bem a estrutura (agrupamento, subconsulta, índice) muda o resultado e o desempenho.</p>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</h2>
+<h3 id="31-funções-de-agregação">3.1 Funções de agregação</h3>
+<p><strong>Definição.</strong> Função de agregação é um procedimento que calcula <strong>um único valor de resultado a partir de um conjunto de valores de entrada</strong> (documentação do PostgreSQL, citada por Paes). Pode ser usada onde se usaria uma constante, na declaração do atributo do <code>SELECT</code> (Silberschatz, Korth e Sudarshan, 1999). Funções &quot;padrão&quot; (Mannino, 2008): <strong>COUNT, SUM, AVG, MAX, MIN</strong>.</p>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="o">&lt;</span><span class="n">função</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">agregação</span><span class="o">&gt;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nomeTabela</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">&lt;</span><span class="n">função</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">agregação</span><span class="o">&gt;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nomeTabela</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">;</span><span class="w">   </span><span class="c1">-- WHERE opcional</span>
+</pre></div>
+</code></pre>
+<p>Sintaxe geral (Manzano, 2017, citado por Pichetti): <code>NOME_FUNÇÃO ([ALL | DISTINCT] expressão)</code> — <code>ALL</code> aplica a função a todos os valores; <code>DISTINCT</code> aplica a ação <strong>uma única vez a cada valor distinto</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Função</th>
+<th>O que faz</th>
+<th>Tipo de coluna</th>
+<th><strong>Quando usar</strong></th>
+<th>Exemplo (material)</th>
+<th>Exemplo real <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>COUNT(*)</strong></td>
+<td>Conta <strong>todas as linhas</strong> do resultado (inclui nulos)</td>
+<td>Qualquer</td>
+<td>Medir volume de dados / nº de ocorrências</td>
+<td><code>SELECT COUNT(*) FROM paciente;</code> → 4</td>
+<td>Total de pedidos do dia</td>
+</tr>
+<tr>
+<td><strong>COUNT(coluna)</strong></td>
+<td>Conta só as linhas com valor <strong>não nulo</strong> na coluna</td>
+<td>Qualquer</td>
+<td>Saber quantos registros têm o campo preenchido</td>
+<td><code>COUNT(cidade)</code> → 2 (dois pacientes têm <code>null</code>)</td>
+<td>Quantos clientes informaram e-mail</td>
+</tr>
+<tr>
+<td><strong>COUNT(DISTINCT col)</strong></td>
+<td>Conta <strong>valores distintos</strong></td>
+<td>Qualquer</td>
+<td>Evitar contagem repetida</td>
+<td><code>COUNT(distinct a.idProcedimento)</code></td>
+<td>Nº de produtos diferentes vendidos</td>
+</tr>
+<tr>
+<td><strong>SUM</strong></td>
+<td>Soma os valores</td>
+<td><strong>Numérica</strong> (inteira/decimal)</td>
+<td>Totais (faturamento, quantidades)</td>
+<td><code>SUM(idade)</code> → 118; <code>SUM(preco)</code> → 370,00</td>
+<td>Receita do mês</td>
+</tr>
+<tr>
+<td><strong>AVG</strong></td>
+<td>Média dos valores</td>
+<td><strong>Numérica</strong></td>
+<td>Valor típico de um conjunto</td>
+<td><code>AVG(idade)</code> → 29,50</td>
+<td>Ticket médio</td>
+</tr>
+<tr>
+<td><strong>MIN</strong></td>
+<td>Menor valor</td>
+<td>Numérica (e <code>DATE</code>/<code>TIME</code>, ver nota)</td>
+<td>Mínimo / mais antigo</td>
+<td><code>MIN(idade)</code> → 25</td>
+<td>Menor preço praticado</td>
+</tr>
+<tr>
+<td><strong>MAX</strong></td>
+<td>Maior valor</td>
+<td>Numérica (e <code>DATE</code>/<code>TIME</code>)</td>
+<td>Máximo / mais recente</td>
+<td><code>MAX(idade)</code> → 35</td>
+<td>Maior venda do mês</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pontos do material:</strong></p>
+<ul>
+<li><strong><code>COUNT(*)</code> × <code>COUNT(coluna)</code></strong>: com <code>*</code> entram todas as linhas; com a coluna, só as que têm valor válido (não nulo).</li>
+<li><strong>NULL</strong> em SQL significa <strong>vazio/sem valor</strong>: não é zero e não é branco. Valores <code>NULL</code> são descartados quando as funções de agregação são aplicadas a uma coluna (Elmasri e Navathe, 2011).</li>
+<li><strong><code>DISTINCT</code></strong> pode acompanhar <code>COUNT</code>, <code>AVG</code> e <code>SUM</code> (Paes).</li>
+<li><strong><code>MAX</code> e <code>MIN</code></strong> também funcionam com domínios não numéricos que tenham <strong>ordenação total</strong> (ex.: <code>DATE</code>, <code>TIME</code>) (Elmasri e Navathe, 2011).</li>
+<li>Podem ser aplicadas a <strong>conjunto ou multiconjunto</strong> de valores.</li>
+<li><strong>Alias com <code>AS</code></strong>: o nome da coluna do resultado refere-se à função usada; <code>AS</code> dá um &quot;apelido&quot;: <code>SELECT MAX(idade) AS MaiorIdade FROM paciente;</code>.</li>
+<li>Com <code>WHERE</code>, os resultados passam a considerar só as linhas filtradas: <code>SELECT SUM(Salario), MAX(Salario), MIN(Salario), AVG(Salario) FROM COLABORADOR;</code> (ou restringindo por departamento).</li>
+</ul>
+<h3 id="32-agrupamento-de-dados-group-by-e-having">3.2 Agrupamento de dados: GROUP BY e HAVING</h3>
+<p><strong>Ideia.</strong> Agrupar é &quot;ajuntar&quot; linhas segundo um critério (analogia do material: bolas de cores diferentes formando ajuntamentos por tom). O agrupamento <strong>divide o resultado e gera uma linha para cada grupo</strong> (documentação Microsoft, citada por Paes). As funções de agrupamento <strong>selecionam um conjunto de linhas para uso das funções de agregação</strong>; a cada grupo, a agregação é executada e o resultado apresentado (Infográfico).</p>
+<table>
+<thead>
+<tr>
+<th>Cláusula</th>
+<th>Função</th>
+<th>Quando é aplicada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GROUP BY</strong></td>
+<td>Forma <strong>grupos de linhas</strong> com mesmo valor no(s) atributo(s) indicado(s) para executar as funções agregadas</td>
+<td>Sobre as linhas geradas pela seleção (<code>WHERE</code>)</td>
+</tr>
+<tr>
+<td><strong>HAVING</strong></td>
+<td>Impõe uma <strong>condição de seleção sobre os grupos</strong> resultantes do <code>GROUP BY</code></td>
+<td>Depois do agrupamento (processamento como subconsulta)</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="c1">-- GROUP BY</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">nomeAtributo</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">função</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">agregação</span><span class="o">&gt;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nomeTabela</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nomeAtributo</span><span class="p">;</span>
+
+<span class="c1">-- GROUP BY com WHERE (WHERE filtra ANTES de agrupar)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">nomeAtributo</span><span class="p">,</span><span class="w"> </span><span class="o">&lt;</span><span class="n">função</span><span class="w"> </span><span class="n">de</span><span class="w"> </span><span class="n">agregação</span><span class="o">&gt;</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nomeTabela</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">........</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nomeAtributo</span><span class="p">;</span>
+
+<span class="c1">-- HAVING (filtra DEPOIS de agrupar)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">nomeAtributo</span><span class="p">,</span><span class="w"> </span><span class="n">funçãoDeAgregacao</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nomeTabela</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nomeAtributo</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="n">condição</span><span class="p">;</span>
+</pre></div>
+</code></pre>
+<p><strong>Regras e observações do material:</strong></p>
+<ul>
+<li>O atributo usado na projeção do <code>SELECT</code> deve estar representado no <code>GROUP BY</code> (ex.: <code>SELECT cidade, AVG(idade) FROM estudante GROUP BY cidade;</code>).</li>
+<li>É possível usar <strong>todas as funções agregadas</strong> com <code>GROUP BY</code>; pode-se agrupar por mais de um atributo (<code>GROUP BY Projnumero, Projnome</code>).</li>
+<li>Se houver <code>NULL</code> no atributo de agrupamento, é criado <strong>um grupo separado</strong> para todas essas linhas (Elmasri e Navathe, 2011).</li>
+<li>Os <strong>resultados parciais</strong> do processamento não aparecem ao usuário: o processamento é interno e o armazenamento, em memória.</li>
+<li>Condição de junção pode ser usada junto com <code>GROUP BY</code>: agrupamento e funções são aplicados <strong>depois da junção</strong> das tabelas.</li>
+</ul>
+<p><strong>Exemplo-base do material (tabela <code>estudante</code>, 4 linhas: 3 no Rio de Janeiro, 1 em Niterói):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Consulta</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT cidade, COUNT(*) FROM estudante GROUP BY cidade;</code></td>
+<td>RIO DE JANEIRO = 3; NITERÓI = 1</td>
+</tr>
+<tr>
+<td><code>... WHERE idade &lt; 30 GROUP BY cidade;</code></td>
+<td>RIO DE JANEIRO = 2; NITERÓI = 1</td>
+</tr>
+<tr>
+<td><code>... GROUP BY cidade HAVING COUNT(*) &gt; 1;</code></td>
+<td>RIO DE JANEIRO = 3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exemplo do infográfico (tabela <code>atletas</code>):</strong> <code>SELECT count(*) FROM atletas GROUP BY esporte;</code> → VÔLEI 1, FUTEBOL 2; com <code>HAVING count(*) &gt; 1</code> fica só FUTEBOL 2 (o infográfico também mostra o <code>SELECT</code> com a coluna <code>esporte</code> junto ao <code>count</code>).</p>
+<h3 id="33-ordem-conceitual-de-avaliação-e-where--having">3.3 Ordem conceitual de avaliação e <code>WHERE</code> × <code>HAVING</code></h3>
+<p>Uma consulta pode ter até <strong>seis cláusulas</strong>; <strong>somente <code>SELECT</code> e <code>FROM</code> são obrigatórias</strong>; termina com <code>;</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Cláusula</th>
+<th>Papel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SELECT</code></td>
+<td>Lista os atributos a recuperar</td>
+</tr>
+<tr>
+<td><code>FROM</code></td>
+<td>Tabelas úteis à consulta e suas relações</td>
+</tr>
+<tr>
+<td><code>WHERE</code></td>
+<td>Condições de seleção das tuplas e <strong>condições de junção</strong></td>
+</tr>
+<tr>
+<td><code>GROUP BY</code></td>
+<td>Atributos de agrupamento</td>
+</tr>
+<tr>
+<td><code>HAVING</code></td>
+<td>Condição sobre os <strong>grupos</strong> selecionados</td>
+</tr>
+<tr>
+<td><code>ORDER BY</code></td>
+<td>Ordem de exibição do resultado</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Ordem conceitual</strong> (Elmasri e Navathe, 2011, p. 86): avalia-se primeiro <code>FROM</code> (identifica tabelas e materializa junções), depois <code>WHERE</code> (seleciona e junta tuplas), depois <code>GROUP BY</code> e <code>HAVING</code>; <strong><code>ORDER BY</code> é aplicado no final</strong>, para classificar o resultado.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><code>WHERE</code></th>
+<th><code>HAVING</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atua sobre</td>
+<td><strong>Tuplas individuais</strong> (ou tuplas de junção)</td>
+<td><strong>Grupos</strong> criados pelo <code>GROUP BY</code></td>
+</tr>
+<tr>
+<td>Momento</td>
+<td><strong>Antes</strong> do agrupamento</td>
+<td><strong>Depois</strong> do agrupamento</td>
+</tr>
+<tr>
+<td><strong>Quando usar</strong></td>
+<td>Restringir quais linhas entram na conta</td>
+<td>Restringir quais grupos aparecem no resultado (condição sobre agregação)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Armadilha explicada no material:</strong> combinar <code>WHERE</code> + <code>HAVING</code> na mesma consulta pode gerar resultado diferente do esperado. A consulta <strong>incorreta</strong> pretende &quot;departamentos com mais de 5 funcionários, cada um com salário &gt; R$ 5.000&quot;, mas <code>WHERE</code> roda primeiro e já restringe as tuplas a quem ganha mais de 5.000; só então <code>HAVING COUNT(*) &gt; 5</code> é aplicado. Solução: <strong>consulta aninhada</strong>, que consulta primeiro os departamentos com mais de cinco funcionários e depois filtra por salário (ver §3.5 e §4.3).</p>
+<p><strong>Flexibilidade × confusão:</strong> existem várias formas de escrever a mesma consulta (vantagem: escolher a técnica mais confortável; desvantagem: confusão sobre qual é a &quot;correta&quot; para cada situação). O ideal é o usuário <strong>especificar corretamente</strong> a consulta e deixar ao SGBD a escolha de como executá-la com eficiência.</p>
+<h3 id="34-junções-e-ordenação">3.4 Junções e ordenação</h3>
+<table>
+<thead>
+<tr>
+<th>Junção</th>
+<th>Comportamento</th>
+<th><strong>Quando usar</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Junção por igualdade em <code>WHERE</code></strong> (<code>FROM A, B WHERE A.chave = B.chave</code>)</td>
+<td>Iguala <strong>chave primária</strong> com <strong>chave estrangeira</strong></td>
+<td>Forma usada nos exemplos de Paes (estudo de caso da clínica)</td>
+</tr>
+<tr>
+<td><strong><code>INNER JOIN</code> / <code>JOIN ... ON</code></strong></td>
+<td>Junção interna: a tupla só entra se <strong>combinar com a outra relação</strong></td>
+<td>Quando só interessam registros presentes nas duas tabelas</td>
+</tr>
+<tr>
+<td><strong><code>NATURAL JOIN</code></strong></td>
+<td>Cada par de atributos de junção é incluído <strong>apenas uma vez</strong> na relação resultante; se os nomes dos atributos não coincidem, é possível <strong>renomeá-los</strong> antes</td>
+<td>Quando as colunas de junção têm o mesmo nome nas duas tabelas</td>
+</tr>
+<tr>
+<td><strong><code>LEFT OUTER JOIN</code></strong></td>
+<td><strong>Toda tupla da tabela da esquerda</strong> aparece; sem correspondência, preenche com nulos</td>
+<td>Manter todos os registros da esquerda, mesmo sem par</td>
+</tr>
+<tr>
+<td><strong><code>RIGHT OUTER JOIN</code></strong></td>
+<td><strong>Toda tupla da tabela da direita</strong> aparece; sem correspondência, preenche com nulos</td>
+<td>Manter todos os registros da direita</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Se o resultado da junção for nulo para uma das relações, a tupla é excluída (nas junções internas).</li>
+<li><strong><code>ORDER BY</code></strong> define a ordem de exibição (ex.: <code>ORDER BY Pnome, Unome</code>).</li>
+<li>Junção pode ser <strong>combinada com agregação</strong> (ex.: soma/máx/mín/média dos salários do departamento &quot;Compras&quot; via <code>JOIN</code>).</li>
+</ul>
+<h3 id="35-subconsultas-aninhamento-e-correlacionamento">3.5 Subconsultas: aninhamento e correlacionamento</h3>
+<p><strong>Consulta aninhada</strong> = bloco <code>SELECT-FROM-WHERE</code> <strong>completo dentro da cláusula <code>WHERE</code></strong> de outra consulta. A de fora é a <strong>consulta externa</strong>; a embutida é a <strong>subconsulta</strong> (Elmasri e Navathe, 2011). Segundo Ramakrishnan e Gehrke, é um dos recursos mais poderosos da SQL.</p>
+<table>
+<thead>
+<tr>
+<th>Conceito</th>
+<th>Regra do material</th>
+<th><strong>Quando usar</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Subconsulta com <code>IN</code></strong></td>
+<td>A subconsulta devolve um conjunto/multiconjunto de tuplas; a externa testa se o valor pertence a ele</td>
+<td>Comparar um valor com <strong>um conjunto</strong> de valores</td>
+</tr>
+<tr>
+<td><strong>Subconsulta com <code>=</code></strong></td>
+<td>Se a subconsulta retorna <strong>um único atributo e uma única tupla</strong> (valor único), pode-se usar <code>=</code> em vez de <code>IN</code></td>
+<td>Comparação com um valor escalar (ex.: <code>MIN(idade)</code>)</td>
+</tr>
+<tr>
+<td><strong>Aninhamento em vários níveis</strong></td>
+<td>As consultas podem estar aninhadas em vários níveis</td>
+<td>Perguntas compostas</td>
+</tr>
+<tr>
+<td><strong>Ambiguidade de nomes</strong></td>
+<td>Referência a atributo <strong>não qualificado</strong> refere-se à relação declarada na <strong>consulta mais interna</strong> (regra semelhante ao escopo de variáveis em linguagens de programação)</td>
+<td>Evitar erros: criar <strong>variáveis de tupla (aliases)</strong> para todas as referências</td>
+</tr>
+<tr>
+<td><strong>Consulta correlacionada</strong></td>
+<td>Uma condição do <code>WHERE</code> da subconsulta <strong>referencia um atributo de uma relação declarada na consulta externa</strong>; a interna é avaliada <strong>uma vez para cada tupla</strong> da externa</td>
+<td>Quando a comparação depende da linha corrente da consulta externa</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Toda consulta escrita com blocos aninhados <code>SELECT-FROM-WHERE</code> usando <code>=</code> ou <code>IN</code> <strong>sempre pode ser definida com uma única consulta em bloco</strong> (Elmasri e Navathe, 2011).</p>
+</blockquote>
+<p><strong>Subconsulta com função de agregação (Paes):</strong> &quot;nome do paciente mais novo&quot;: <code>SELECT nome FROM paciente WHERE idade IN (SELECT MIN(idade) FROM paciente);</code> — a subconsulta retorna 67 (menor idade) e a externa compara a idade de cada paciente com esse valor → <strong>ANTONIO MANOEL</strong>. Equivalente com <code>=</code>: <code>WHERE idade = (SELECT MIN(idade) FROM paciente);</code>.</p>
+<h3 id="36-valores-null-e-lógica-de-três-valores">3.6 Valores NULL e lógica de três valores</h3>
+<ul>
+<li><strong>NULL</strong> identifica valores faltantes: <strong>desconhecidos, não disponíveis ou não aplicáveis</strong>. Cada <code>NULL</code> é considerado <strong>diferente</strong> de qualquer outro.</li>
+<li>Por isso a SQL usa <strong>lógica de três valores</strong>: <code>TRUE</code>, <code>FALSE</code> e <code>UNKNOWN</code> (quando um <code>NULL</code> participa de uma comparação, o resultado é <code>UNKNOWN</code>).</li>
+<li>Para testar nulos usam-se <strong><code>IS NULL</code> / <code>IS NOT NULL</code></strong>; comparar com <code>=</code> não é apropriado.</li>
+</ul>
+<p><strong>Quadro 1 (Elmasri e Navathe, 2011) — conectivos lógicos:</strong></p>
+<table>
+<thead>
+<tr>
+<th>AND</th>
+<th>TRUE</th>
+<th>FALSE</th>
+<th>UNKNOWN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TRUE</strong></td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>UNKNOWN</td>
+</tr>
+<tr>
+<td><strong>FALSE</strong></td>
+<td>FALSE</td>
+<td>FALSE</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td><strong>UNKNOWN</strong></td>
+<td>UNKNOWN</td>
+<td>FALSE</td>
+<td>UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>OR</th>
+<th>TRUE</th>
+<th>FALSE</th>
+<th>UNKNOWN</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TRUE</strong></td>
+<td>TRUE</td>
+<td>TRUE</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td><strong>FALSE</strong></td>
+<td>TRUE</td>
+<td>FALSE</td>
+<td>UNKNOWN</td>
+</tr>
+<tr>
+<td><strong>UNKNOWN</strong></td>
+<td>TRUE</td>
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>NOT</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TRUE</td>
+<td>FALSE</td>
+</tr>
+<tr>
+<td>FALSE</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>UNKNOWN</td>
+</tr>
+</tbody>
+</table>
+<h3 id="37-índices-em-banco-de-dados">3.7 Índices em banco de dados</h3>
+<h4 id="371-conceito-e-vantagens">3.7.1 Conceito e vantagens</h4>
+<ul>
+<li><strong>Analogia do material:</strong> buscar um tema em um livro percorrendo todas as páginas seria lento; o <strong>índice do livro</strong> indica a página. O índice de banco de dados é semelhante, exceto que é usado para encontrar <strong>linhas específicas de uma tabela</strong> (Price, 2009).</li>
+<li><strong>Definição formal:</strong> <em>&quot;Um índice é uma estrutura de dados que organiza registros de dado em disco para otimizar determinados tipos de operações de recuperação. Um índice nos permite recuperar de forma eficiente todos os registros que satisfaçam às condições de pesquisa nos campos de chave de pesquisa do índice&quot;</em> (Ramakrishnan e Gehrke, 2008, p. 228).</li>
+<li>Os índices contêm <strong>ponteiros para a tabela</strong> com os dados reais (busca e recuperação mais rápidas e eficientes).</li>
+<li><strong>Vantagem principal:</strong> consulta otimizada.</li>
+<li><strong>Desvantagens:</strong> demora maior na <strong>inserção</strong> de registros (é preciso atualizar o índice) e <strong>sobrecarga</strong> no sistema de banco de dados como um todo → devem ser usados <strong>com sensatez</strong> (PostgreSQL, 2020; Price, 2009).</li>
+</ul>
+<p><strong>Quando criar um índice e em qual coluna:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Regra do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quando criar</td>
+<td>Quando a consulta recupera <strong>um pequeno número de linhas</strong> de uma tabela grande; regra geral: <strong>10% ou menos</strong> do total de linhas (Price, 2009)</td>
+</tr>
+<tr>
+<td>Boa candidata</td>
+<td>Coluna da <strong>chave primária</strong> (geralmente numérica, facilita a indexação — Barbosa e Freitas, 2018); coluna com <strong>valor exclusivo por linha</strong> (ex.: matrícula do aluno)</td>
+</tr>
+<tr>
+<td>Má candidata</td>
+<td>Coluna com <strong>poucos valores distintos</strong> (ex.: sexo: feminino/masculino)</td>
+</tr>
+<tr>
+<td>Múltiplas colunas</td>
+<td>Índices podem ser criados sobre <strong>várias colunas</strong>, não só uma (Price, 2009)</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Fique atento (material):</strong> em banco relacional, a chave primária é uma coluna (ou combinação) de valores <strong>únicos</strong> por linha. Boas práticas sugerem que corresponda a um valor <strong>numérico</strong> para facilitar o índice; ao definir uma PK <strong>não se está definindo nenhum caminho de acesso</strong>, e sim apenas uma <strong>restrição de integridade</strong> (unicidade) (Heuser, 2009).</p>
+</blockquote>
+<blockquote>
+<p>Explicação simples com tabela hipotética 5×5 e desenho: ver <strong>Anexo A (§7)</strong>. Comparativo entre algoritmo (Árvore B, <em>hash</em>) e classificação (agrupado, primário, secundário): ver <strong>Anexo B (§8)</strong>.</p>
+</blockquote>
+<h4 id="372-índices-agrupados-primários-e-secundários">3.7.2 Índices agrupados, primários e secundários</h4>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agrupado (clustered)</strong></td>
+<td>Índice sobre uma coluna é agrupado se a organização dos registros de dados é <strong>igual ou parecida com a ordenação das entradas do índice</strong>; caso contrário, é <strong>não agrupado</strong>. Na prática raramente acontece, pois ordenar os dados conforme sua atualização é muito custoso</td>
+</tr>
+<tr>
+<td><strong>Primário / ordenado</strong></td>
+<td>Índice sobre a coluna da <strong>chave primária</strong> (registros ordenados pela PK)</td>
+</tr>
+<tr>
+<td><strong>Secundário</strong></td>
+<td>Contempla os demais tipos de índice (a definição &quot;não está bem delimitada na literatura&quot; — Ramakrishnan e Gehrke, 2008)</td>
+</tr>
+<tr>
+<td><strong>No PostgreSQL</strong></td>
+<td><strong>Todos os índices são ditos secundários</strong>; o índice é armazenado <strong>separadamente</strong> dos registros da tabela indexada (chamada de <strong>pilha/heap</strong>) (PostgreSQL, 2020)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="373-estrutura-de-dados-do-índice">3.7.3 Estrutura de dados do índice</h4>
+<table>
+<thead>
+<tr>
+<th>Estrutura</th>
+<th>Como funciona (material)</th>
+<th>Característica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hashing</strong></td>
+<td>Aplica uma função <em>hash</em> à <strong>chave de pesquisa</strong> para saber a qual <em><strong>bucket</strong></em> (página primária + páginas adicionais encadeadas) o registro pertence. Inserção coloca o registro no <em>bucket</em> apropriado; a consulta aplica o <em>hash</em> e examina as páginas do <em>bucket</em>. Pode recuperar a página em <strong>1 ou 2 E/S</strong> de disco</td>
+<td>Só serve para <strong>igualdade</strong>. A chave de pesquisa pode ser qualquer sequência de uma ou mais colunas, não precisa ser única</td>
+</tr>
+<tr>
+<td><strong>Árvore</strong></td>
+<td>Registros dispostos de forma <strong>ordenada</strong> em estrutura hierárquica; cada nó é uma página física; o nível <strong>folha</strong> (L1, L2, L3...) contém os registros</td>
+<td>Localiza com eficiência registros em um <strong>intervalo</strong> de valores</td>
+</tr>
+<tr>
+<td><strong>B-tree</strong></td>
+<td>Árvore <strong>balanceada pela altura</strong>: todos os caminhos do nó raiz até o nó folha têm o mesmo comprimento</td>
+<td>Suportada por muitos SGBD, como o PostgreSQL</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Figura 1 (Ramakrishnan e Gehrke, 2008):</strong> índice <em>hash</em> sobre <code>idade</code> com índice auxiliar sobre <code>salário</code> (pares <code>&lt;salário, rid&gt;</code>, em que <code>rid</code> = <em>record id</em>, ponteiro para o registro). A função <code>h</code> do exemplo converte a chave em binário e usa os <strong>dois bits menos significativos</strong> como identificador do <em>bucket</em>.</p>
+<p><strong>Figura 2:</strong> os mesmos registros indexados por árvore sobre <code>idade</code>. A pesquisa começa na raiz e segue ponteiros: o ponteiro à direita de um valor <code>k</code> aponta para subárvore com valores <strong>≥ k</strong>; à esquerda, valores <strong>&lt; k</strong>. Para <code>33 &lt; idade &lt; 44</code>: raiz → direita do nó 12 → direita do nó 19 → esquerda do nó 44.</p>
+<h4 id="374-tipos-de-índice-no-postgresql">3.7.4 Tipos de índice no PostgreSQL</h4>
+<p>Por padrão, o PostgreSQL cria índices <strong>B-tree</strong>; cada tipo usa um <strong>algoritmo diferente</strong> e é indicado para determinado tipo de consulta sobre determinado tipo de dado. Antes de escolher o tipo e as colunas, deve-se perguntar <strong>qual consulta será necessária</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Característica (material)</th>
+<th>Operadores / suporte</th>
+<th><strong>Quando usar</strong></th>
+<th>Exemplo do material</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>B-tree (Árvore B)</strong></td>
+<td><strong>Padrão</strong> quando o tipo não é definido; indexa <strong>todos os tipos de dados</strong>; usada em igualdade, <strong>intervalos</strong> e predicados nulos; recupera dados <strong>classificados em ordem</strong></td>
+<td><code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;=</code>, <code>&gt;</code></td>
+<td>Uso geral; consultas por <strong>intervalo</strong>; ordenação</td>
+<td><code>idade &gt;= 30 AND idade &lt;= 80</code></td>
+</tr>
+<tr>
+<td><strong>Hash</strong></td>
+<td>Suportado a partir da versão 10 (infográfico); só <strong>comparações simples de igualdade</strong></td>
+<td><code>=</code></td>
+<td>Busca por <strong>valor exato</strong></td>
+<td><code>idade = 20</code></td>
+</tr>
+<tr>
+<td><strong>GIN</strong></td>
+<td>Acelera consultas em <strong>estruturas complexas</strong> (matrizes, pesquisa em texto completo); útil quando <strong>vários valores</strong> mapeiam para uma linha da tabela; consulta ~<strong>3× mais rápida</strong> que GiST (infográfico). Coluna deve ser <code>tsvector</code></td>
+<td><code>&lt;@</code>, <code>@&gt;</code>, <code>=</code>, <code>&amp;&amp;</code></td>
+<td><strong>Texto completo</strong> / arrays com foco em velocidade de leitura</td>
+<td>índice sobre <code>titulo || ' ' || corpo</code></td>
+</tr>
+<tr>
+<td><strong>GiST</strong></td>
+<td><strong>Dados geométricos</strong> bidimensionais (ex.: <code>point</code>) e texto completo; ~<strong>3× menor</strong> que GIN e ~<strong>10× mais rápido de atualizar</strong> (infográfico). Coluna <code>tsvector</code> ou <code>tsquery</code></td>
+<td><code>&lt;&lt;</code>, <code>&amp;&lt;</code>, <code>&amp;&gt;</code>, <code>&gt;&gt;</code>, <code>&lt;&lt;|</code>, <code>&amp;&lt;|</code>, <code>|&amp;&gt;</code>, <code>|&gt;&gt;</code>, <code>@&gt;</code>, <code>&lt;@</code>, <code>~=</code>, <code>&amp;&amp;</code></td>
+<td>Dados geométricos; texto com muita atualização; busca por <strong>vizinhos mais próximos</strong> (<code>&lt;-&gt;</code>)</td>
+<td>6 pontos mais próximos de <code>(0,1)</code></td>
+</tr>
+<tr>
+<td><strong>SP-GiST</strong></td>
+<td>Similar ao GiST; projetado para <strong>tipos complexos definidos pelo usuário</strong>; exige mais conhecimento técnico (infográfico)</td>
+<td><code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>~=</code>, <code>&lt;@</code>, <code>&lt;^</code>, <code>&gt;^</code></td>
+<td>Ex.: indexar dois pontos em um plano</td>
+<td><code>USING SPGIST (ponto)</code></td>
+</tr>
+<tr>
+<td><strong>BRIN</strong></td>
+<td>Para <strong>tabelas muito grandes</strong> em que colunas têm <strong>correlação natural com a localização física</strong>; parâmetro <code>pages_per_range</code> (blocos por entrada; <strong>padrão 128</strong>); suportado a partir da v9.5; consulta <strong>mais lenta que B-tree</strong>, mas <strong>ocupa menos espaço</strong></td>
+<td>—</td>
+<td><strong>Big data</strong> / tabelas gigantes (ex.: campo de data)</td>
+<td><code>USING BRIN (data) WITH (pages_per_range = 128)</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Fique atento (material):</strong> o PostgreSQL oferece muitos operadores de seleção — <code>=</code> igual, <code>&lt;&gt;</code> diferente, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>@&gt;</code> contém o elemento, <code>&lt;@</code> elemento contido por, <code>&amp;&amp;</code> sobreposição, <code>&lt;&lt;</code> estritamente à esquerda de, <code>&gt;&gt;</code> estritamente à direita de, <code>&amp;&lt;</code> não se estende à direita de, <code>&amp;&gt;</code> não se estende à esquerda de, <code>-|-</code> adjacente a, <code>+</code> união, <code>*</code> interseção, <code>-</code> diferença.</p>
+</blockquote>
+<h4 id="375-criação-variações-e-exclusão">3.7.5 Criação, variações e exclusão</h4>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="c1">-- Sintaxe básica (B-tree por padrão)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">nome</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">tabela</span><span class="w"> </span><span class="p">(</span><span class="n">coluna</span><span class="p">);</span>
+
+<span class="c1">-- Com tipo explícito</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">nome</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">tabela</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">TIPO</span><span class="w"> </span><span class="p">(</span><span class="n">coluna</span><span class="p">);</span>
+
+<span class="c1">-- Exclusão</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">nome</span><span class="p">;</span>
+</pre></div>
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Variação</th>
+<th>Comando (material)</th>
+<th>Observação</th>
+<th><strong>Quando usar</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Múltiplas colunas</strong></td>
+<td><code>CREATE INDEX nome ON tabela (coluna1, coluna2, ...);</code></td>
+<td>Só <strong>B-tree, GiST, GIN e BRIN</strong> (PostgreSQL 12.2); até <strong>32 colunas</strong></td>
+<td>Buscas que filtram por várias colunas juntas</td>
+</tr>
+<tr>
+<td><strong>Ordenado</strong></td>
+<td><code>... (coluna NULLS FIRST);</code> / <code>... (coluna DESC NULLS LAST);</code></td>
+<td>Só <strong>B-tree</strong>; opções <code>ASC</code>, <code>DESC</code>, <code>NULLS FIRST</code>, <code>NULLS LAST</code>; por padrão nulos ficam <strong>por último</strong></td>
+<td>Consultas com <code>ORDER BY</code> frequente</td>
+</tr>
+<tr>
+<td><strong>Único (UNIQUE)</strong></td>
+<td><code>CREATE UNIQUE INDEX nome ON tabela (coluna [, ...]);</code></td>
+<td>Só <strong>B-tree</strong>; garante <strong>unicidade</strong> da coluna (ou da combinação)</td>
+<td>Impor unicidade</td>
+</tr>
+<tr>
+<td><strong>Funcional</strong></td>
+<td><code>CREATE INDEX nome ON tabela (lower(coluna));</code></td>
+<td>Índice é o resultado de uma <strong>função</strong> aplicada a colunas; <code>lower</code> aplica-se a cadeia de caracteres (ex.: <code>varchar</code>) e converte para minúsculas</td>
+<td>Buscas sem diferenciar maiúsculas/minúsculas</td>
+</tr>
+<tr>
+<td><strong>Parcial</strong></td>
+<td><code>CREATE INDEX nome ON tabela (idade) WHERE idade &gt;= 50 AND idade &lt;= 80;</code></td>
+<td>Índice sobre um <strong>subconjunto</strong> definido por predicado condicional (após <code>WHERE</code>); evita indexar <strong>valores comuns</strong>, reduz o índice e acelera consultas e atualizações. Pode ser combinado com <code>UNIQUE</code></td>
+<td>Quando poucas linhas são as mais acessadas (ex.: pedidos não faturados)</td>
+</tr>
+<tr>
+<td><strong><code>CONCURRENTLY</code></strong></td>
+<td><code>CREATE INDEX CONCURRENTLY nome ON tabela (coluna);</code></td>
+<td>A criação de índice <strong>bloqueia inserções, exclusões e atualizações</strong> na tabela; <code>CONCURRENTLY</code> constrói <strong>sem bloquear gravações</strong></td>
+<td>Tabelas em produção com escrita contínua (ex.: vendas)</td>
+</tr>
+<tr>
+<td><strong><code>COLLATE</code></strong></td>
+<td><code>CREATE INDEX collate_index ON exemplo4 (conteudo);</code></td>
+<td>Um índice só suporta <strong>um agrupamento (collation) por coluna</strong>; vários agrupamentos exigem vários índices</td>
+<td>Consultas com regras de ordenação diferentes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="376-verificar-o-uso-de-índices">3.7.6 Verificar o uso de índices</h4>
+<ul>
+<li><strong><code>EXPLAIN</code></strong> examina o uso do índice em uma consulta individual: <code>EXPLAIN SELECT * FROM tabela WHERE coluna = constante;</code>.</li>
+<li><strong><code>ANALYZE</code></strong> coleta <strong>estatísticas</strong> sobre a distribuição dos valores na tabela para <strong>estimar o nº de linhas</strong> retornadas. Sem parâmetros, examina <strong>todas as tabelas</strong> do banco atual; com parâmetro, só a tabela desejada: <code>ANALYZE tabela;</code> ou <code>ANALYZE tabela (coluna);</code>.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</h2>
+<blockquote>
+<p>Os scripts completos (DDL, dados, consultas e versões corrigidas) estão no arquivo complementar <strong><code>AULA_02_SQL_INDICES_PRATICO.md</code></strong>.</p>
+</blockquote>
+<h3 id="41-estudo-de-caso-clínica-médica-felizes-por-viver-paes">4.1 Estudo de caso: Clínica Médica &quot;Felizes por Viver&quot; (Paes)</h3>
+<p>Clínica <strong>hipotética</strong> geriátrica, funciona 7 dias/semana × 24 h, com atendimentos de emergência e de rotina. O paciente é registrado na entrada; registra-se uma <strong>consulta</strong> (que também pode ser <strong>agendada</strong>); os médicos registram os <strong>atendimentos</strong>, classificando-os pelos <strong>procedimentos</strong> realizados.</p>
+<p><strong>Modelo (Figura 1 — ER):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Entidade</th>
+<th>Atributos</th>
+<th>Relacionamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>paciente</code></td>
+<td>CPF (PK), nome, e-mail, idade</td>
+<td>paciente <strong>comparece</strong> à consulta (1,1)–(0,n)</td>
+</tr>
+<tr>
+<td><code>medico</code></td>
+<td>CRM (PK), nome, e-mail</td>
+<td>médico <strong>atende</strong> a consulta (1,1)–(0,n)</td>
+</tr>
+<tr>
+<td><code>consulta</code></td>
+<td>ID (PK), data, hora, CRM do médico (FK), CPF do paciente (FK), situação ∈ {agendada, realizada, cancelada}</td>
+<td>consulta <strong>realiza</strong> atendimento (1,1)–(0,n)</td>
+</tr>
+<tr>
+<td><code>atendimento</code></td>
+<td>ID da consulta (PK/FK), ID do atendimento (PK), ID do procedimento (FK)</td>
+<td>atendimento <strong>usa</strong> procedimento (0,n)–(1,1)</td>
+</tr>
+<tr>
+<td><code>procedimento</code></td>
+<td>código (PK), descrição, preço</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dados:</strong> <code>procedimento</code> — 1 CONSULTA 150,00; 2 APLICAÇÃO INJEÇÃO 60,00; 3 CURATIVO 40,00; 4 REVISÃO EXAMES 80,00. <code>paciente</code> — ANTONIO MANOEL (67), MARIA JOAQUINA (70), JULIA SILVA (80). <code>medico</code> — MARCELO ARAÚJO, ALEXANDRE SOUZA, JUNIA TRINDADE. <code>consulta</code> — 8 linhas (6 realizadas, 1 agendada, 1 cancelada; as duas últimas sem médico). <code>atendimento</code> — 8 linhas.</p>
+<h3 id="42-consultas-do-estudo-de-caso-e-resultados">4.2 Consultas do estudo de caso e resultados</h3>
+<table>
+<thead>
+<tr>
+<th>Necessidade</th>
+<th>Consulta (como no material)</th>
+<th>Resultado</th>
+<th>Conceito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Quantidade de pacientes</td>
+<td><code>SELECT COUNT(*) FROM paciente;</code></td>
+<td>3</td>
+<td>COUNT, 1 tabela</td>
+</tr>
+<tr>
+<td>Maior idade</td>
+<td><code>SELECT MAX(idade) FROM paciente;</code></td>
+<td>80</td>
+<td>MAX</td>
+</tr>
+<tr>
+<td>Média de idade dos pacientes atendidos pelo médico ALEXANDRE SOUZA</td>
+<td><code>SELECT AVG(idade) FROM PACIENTE p, MEDICO m, CONSULTA c WHERE ...</code> (junção PK=FK + filtro por nome)</td>
+<td>75</td>
+<td>AVG + junção em 3 tabelas</td>
+</tr>
+<tr>
+<td>Faturamento de janeiro/2020</td>
+<td><code>SELECT SUM(preco) FROM procedimento p, consulta c, atendimento a WHERE a.idconsulta = c.id AND p.codigo = a.idProcedimento AND data &gt;= ... AND data &lt;= ...</code></td>
+<td><strong>370,00</strong> (= 150+60+60+40+60)</td>
+<td>SUM + junção + filtro de período</td>
+</tr>
+<tr>
+<td>Consultas por situação</td>
+<td><code>SELECT situacao, COUNT(*) FROM consulta GROUP BY situacao;</code></td>
+<td>agendada 1; realizada 6; cancelada 1</td>
+<td>GROUP BY</td>
+</tr>
+<tr>
+<td>Consultas realizadas por CRM</td>
+<td><code>SELECT crmmedico, COUNT(*) FROM consulta WHERE situacao = &quot;realizada&quot; GROUP BY crmmedico;</code></td>
+<td>567890 → 3; 234891 → 2; 167384 → 1</td>
+<td>WHERE + GROUP BY</td>
+</tr>
+<tr>
+<td>Paciente de menor idade por médico</td>
+<td><code>SELECT m.nome, MIN(idade) FROM paciente p, medico m, consulta c WHERE p.cpf = c.cpfpaciente AND m.crm = c.crmmedico GROUP BY m.nome;</code></td>
+<td>MARCELO 67; ALEXANDRE 70; JUNIA 80</td>
+<td>MIN + GROUP BY + junção</td>
+</tr>
+<tr>
+<td>Médicos que usaram <strong>mais de um procedimento</strong></td>
+<td><code>... GROUP BY m.nome HAVING COUNT(*) &gt; 1;</code></td>
+<td>Agrupado: MARCELO 5; ALEXANDRE 2; JUNIA 1. Com HAVING: <strong>MARCELO 5; ALEXANDRE 2</strong></td>
+<td>HAVING</td>
+</tr>
+<tr>
+<td>Qtde de consultas <strong>e</strong> de procedimentos <strong>distintos</strong> por médico</td>
+<td><code>COUNT(*) AS qtdeConsultas, COUNT(DISTINCT a.idProcedimento) AS qtdeProc ... GROUP BY m.nome</code></td>
+<td>MARCELO 5 / 4; ALEXANDRE 2 / 2; JUNIA 1 / 1</td>
+<td>COUNT DISTINCT</td>
+</tr>
+<tr>
+<td>Paciente mais novo</td>
+<td><code>... WHERE idade IN (SELECT MIN(idade) FROM paciente);</code></td>
+<td>ANTONIO MANOEL</td>
+<td>Subconsulta</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Os pontos em que a consulta impressa não bate com o esquema estão na §5.)</em></p>
+<h3 id="43-exemplos-do-capítulo-consultas-complexas-pichetti--esquema-elmasri-e-navathe">4.3 Exemplos do capítulo <em>Consultas complexas</em> (Pichetti — esquema Elmasri e Navathe)</h3>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="c1">-- Funções de agregação (resumo dos salários)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">Salario</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">COLABORADOR</span><span class="p">;</span>
+
+<span class="c1">-- COUNT com junção e filtro</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">COLABORADOR</span><span class="p">,</span><span class="w"> </span><span class="n">DEPARTAMENTO</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dnumero</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Dnome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Faturamento'</span><span class="p">;</span>
+
+<span class="c1">-- GROUP BY: nº do departamento, nº de colaboradores e salário médio</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Dnr</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">Salario</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Dnr</span><span class="p">;</span>
+
+<span class="c1">-- GROUP BY com condição de junção (nº, nome do projeto e nº de colaboradores)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Projnumero</span><span class="p">,</span><span class="w"> </span><span class="n">Projnome</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">PROJETO</span><span class="p">,</span><span class="w"> </span><span class="n">TRABALHA_EM</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Projnumero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Pnr</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Projnumero</span><span class="p">,</span><span class="w"> </span><span class="n">Projnome</span><span class="p">;</span>
+
+<span class="c1">-- JOIN com ORDER BY</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Pnome</span><span class="p">,</span><span class="w"> </span><span class="n">Unome</span><span class="p">,</span><span class="w"> </span><span class="n">Endereco</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">DEPARTAMENTO</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dnumero</span><span class="p">)</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Dnome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Compras'</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Pnome</span><span class="p">,</span><span class="w"> </span><span class="n">Unome</span><span class="p">;</span>
+
+<span class="c1">-- NATURAL JOIN com renomeação de atributos</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Pnome</span><span class="p">,</span><span class="w"> </span><span class="n">Unome</span><span class="p">,</span><span class="w"> </span><span class="n">Endereco</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">NATURAL</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="n">DEPARTAMENTO</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DEP</span><span class="w"> </span><span class="p">(</span><span class="n">Dnome</span><span class="p">,</span><span class="w"> </span><span class="n">Dnr</span><span class="p">,</span><span class="w"> </span><span class="n">Cpf_gerente</span><span class="p">)))</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Dnome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Compras'</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Pnome</span><span class="p">,</span><span class="w"> </span><span class="n">Unome</span><span class="p">;</span>
+
+<span class="c1">-- Junção + agregação</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Salario</span><span class="p">),</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">Salario</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">DEPARTAMENTO</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dnumero</span><span class="p">)</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Dnome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Compras'</span><span class="p">;</span>
+
+<span class="c1">-- Consulta aninhada (IN + OR): projetos com funcionário "Silva" como gerente ou trabalhador</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Projnumero</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">PROJETO</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Projnumero</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">Projnumero</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">PROJETO</span><span class="p">,</span><span class="w"> </span><span class="n">DEPARTAMENTO</span><span class="p">,</span><span class="w"> </span><span class="n">FUNCIONARIO</span>
+<span class="w">                     </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Dnum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dnumero</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Cpf_gerente</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cpf</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Unome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Silva'</span><span class="p">)</span>
+<span class="w">   </span><span class="k">OR</span><span class="w"> </span><span class="n">Projnumero</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">Pnr</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">TRABALHA_EM</span><span class="p">,</span><span class="w"> </span><span class="n">FUNCIONARIO</span>
+<span class="w">                     </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Fcpf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cpf</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Unome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Silva'</span><span class="p">);</span>
+
+<span class="c1">-- Aninhada correlacionada + aliases (colaboradores com dependente de mesmo nome e sexo)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">C</span><span class="p">.</span><span class="n">Pnome</span><span class="p">,</span><span class="w"> </span><span class="k">C</span><span class="p">.</span><span class="n">Unome</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">C</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">C</span><span class="p">.</span><span class="n">Cpf</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">D</span><span class="p">.</span><span class="n">Ccpf</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DEPENDENTE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">D</span>
+<span class="w">                </span><span class="k">WHERE</span><span class="w"> </span><span class="k">C</span><span class="p">.</span><span class="n">Pnome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D</span><span class="p">.</span><span class="n">Nome_dependente</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">C</span><span class="p">.</span><span class="n">Sexo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">D</span><span class="p">.</span><span class="n">Sexo</span><span class="p">);</span>
+</pre></div>
+</code></pre>
+<p><strong>Tabela de grupos (figura do material):</strong> colaboradores por <code>Dnr</code> — Dnr 5: salários 3.000 / 2.000 / 10.000 → COUNT 3, AVG 5.000; Dnr 4: 7.500 / 4.500 / 6.000 → COUNT 3, AVG 6.000; Dnr 1: 15.000 → COUNT 1, AVG 15.000.</p>
+<p><strong>Consulta incorreta × correta (WHERE + HAVING):</strong></p>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="c1">-- INCORRETA (como no material): WHERE roda antes e distorce o HAVING</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Dnome</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DEPARTAMENTO</span><span class="p">,</span><span class="w"> </span><span class="n">COLABORADOR</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Dnumero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Salario</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">.</span><span class="mi">000</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Dnome</span><span class="p">;</span><span class="w"> </span><span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">-- CORRETA (ideia do material): consultar primeiro os departamentos com mais de 5 funcionários</span>
+<span class="c1">-- e depois filtrar departamento + salário (consulta aninhada com HAVING na subconsulta)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">Dnumero</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">DEPARTAMENTO</span><span class="p">,</span><span class="w"> </span><span class="n">COLABORADOR</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Dnumero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Salario</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5000</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">COLABORADOR</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Dnr</span><span class="w"> </span><span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Dnumero</span><span class="p">;</span><span class="w">   </span><span class="c1">-- (reescrita equivalente; ver §5, item 7)</span>
+</pre></div>
+</code></pre>
+<h3 id="44-exemplos-de-índices-andrade--postgresql">4.4 Exemplos de índices (Andrade — PostgreSQL)</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Tabela / situação</th>
+<th>Comandos (material)</th>
+<th>Resultado / ideia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>exemplo1(nome varchar, idade integer)</code> — 6 pessoas (Bruna 26, Carla 41, Deiva 78, Fernando 20, Gilberto 24, Ilmo 34)</td>
+<td><code>CREATE INDEX id_indice_hash ON exemplo1 USING HASH (idade);</code> → <code>SELECT * FROM exemplo1 WHERE idade = 20;</code> · <code>CREATE INDEX id_indice_B ON exemplo1 (idade);</code> → <code>... WHERE idade &gt;= 30 AND idade &lt;= 80;</code></td>
+<td><em>Hash</em>: só igualdade. B-tree: igualdade <strong>e intervalo</strong> → retorna Carla (41), Deiva (78), Ilmo (34)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>exemplo2(ponto point)</code> — 11 pontos 2D</td>
+<td><code>CREATE INDEX ponto_index_gist ON exemplo2 USING GIST (ponto);</code> e <code>... USING SPGIST (ponto);</code> → <code>SELECT * FROM exemplo2 ORDER BY ponto &lt;-&gt; point '(0,1)' LIMIT 6;</code></td>
+<td>Índice GiST para achar os <strong>6 pontos mais próximos</strong> de (0,1): (0,1), (0,2), (1,1), (1,2), (2,1), (3,2)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>exemplo3(nome, sobrenome, maior float, menor float)</code> — vendedores</td>
+<td><code>CREATE INDEX index_multi ON exemplo3 (maior, menor);</code> · <code>CREATE INDEX index_f ON exemplo3 ((nome || ' ' || sobrenome));</code> → <code>... WHERE (nome || ' ' || sobrenome) = 'Joana Lopes';</code></td>
+<td><strong>Múltiplas colunas</strong> e índice <strong>funcional</strong> (retorna Joana Lopes, 3900 / 450)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Tabela <code>pedidos</code> (faturados e não faturados; os <strong>não faturados</strong> são poucos e os mais acessados)</td>
+<td><code>CREATE INDEX nfaturado_indice ON pedidos (num_pedidos) WHERE faturado IS NOT TRUE;</code> · versão <code>CONCURRENTLY</code> · para tabela com milhares de registros: <code>USING BRIN (data) WITH (pages_per_range = 128)</code></td>
+<td><strong>Índice parcial</strong> só nas linhas não faturadas; <code>CONCURRENTLY</code> para não bloquear inserções; com milhares de registros o parcial deixa de compensar → <strong>BRIN</strong> sobre a data</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>exemplo4(id integer, conteudo varchar COLLATE &quot;x&quot;)</code></td>
+<td><code>CREATE INDEX collate_index ON exemplo4 (conteudo); SELECT * FROM exemplo4 WHERE conteudo &gt; 10;</code> · índice adicional com <code>COLLATE &quot;y&quot;</code></td>
+<td>O índice usa o agrupamento da coluna por padrão; outro agrupamento exige <strong>outro índice</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>exemplo6(id integer, titulo tsvector, corpo tsvector)</code> — 8 livros</td>
+<td><code>CREATE INDEX indice_gin ON exemplo6 USING GIN ((titulo || ' ' || corpo));</code> → <code>SELECT * FROM exemplo6 WHERE (titulo || ' ' || corpo) = 'Dear John ...';</code></td>
+<td><strong>Busca em texto completo</strong> com GIN (ou GiST) → retorna o livro 4 (<em>Dear John</em>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.5 Cenários de aplicação <em>(complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</em></h3>
+<blockquote>
+<p>Formato: &quot;Imagine que você tem este problema ___, será analisado por tal metodologia ___, porque ___&quot;.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problema</th>
+<th>Metodologia / recurso</th>
+<th>Porque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Imagine que você tem <strong>uma tabela de clientes com milhões de linhas e consultas por faixa de idade (30 a 80 anos)</strong></td>
+<td><strong>Índice B-tree</strong> sobre <code>idade</code></td>
+<td>B-tree suporta intervalos e ordenação; <em>hash</em> só atenderia igualdade</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Imagine que você tem <strong>buscas exatas por número de pedido</strong> em uma tabela enorme</td>
+<td><strong>Índice hash</strong> (ou B-tree) sobre o número do pedido</td>
+<td>Consulta só por igualdade; <em>hash</em> vai direto ao <em>bucket</em></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Imagine que você tem <strong>um campo de descrição de produtos onde o usuário pesquisa por palavras</strong></td>
+<td><strong>Índice GIN</strong> sobre <code>tsvector</code></td>
+<td>GIN é voltado a texto completo e a valores múltiplos por linha, com leitura mais rápida</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Imagine que você tem <strong>uma tabela de pedidos em que só 2% estão &quot;não faturados&quot; e são os mais consultados</strong></td>
+<td><strong>Índice parcial</strong> (<code>WHERE faturado IS NOT TRUE</code>)</td>
+<td>Índice menor, consultas e atualizações mais rápidas</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Imagine que você tem <strong>bilhões de registros de log inseridos em ordem cronológica</strong></td>
+<td><strong>Índice BRIN</strong> sobre a data</td>
+<td>Correlação natural com a localização física; ocupa pouco espaço</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Imagine que você quer <strong>indexar a coluna &quot;sexo&quot; (2 valores)</strong></td>
+<td><strong>Não indexar</strong></td>
+<td>Pouca variedade de valores: a consulta recuperaria muito mais que ~10% das linhas</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Imagine que você precisa <strong>saber quantas consultas existem por situação</strong></td>
+<td><strong><code>COUNT(*)</code> + <code>GROUP BY situacao</code></strong></td>
+<td>Resumo por grupo de linhas</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Imagine que você só quer <strong>ver os médicos que usaram mais de um procedimento</strong></td>
+<td><strong><code>GROUP BY</code> + <code>HAVING COUNT(*) &gt; 1</code></strong></td>
+<td>A condição é sobre o resultado da agregação, que só existe após o agrupamento</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Imagine que você precisa <strong>departamentos com mais de 5 funcionários e só contar quem ganha &gt; R$ 5.000</strong></td>
+<td><strong>Consulta aninhada</strong> (<code>IN</code> + subconsulta com <code>HAVING</code>)</td>
+<td><code>WHERE</code> roda antes do <code>HAVING</code>; a subconsulta separa as duas condições</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Imagine que você precisa <strong>funcionários com dependente do mesmo nome e sexo</strong></td>
+<td><strong>Subconsulta correlacionada</strong> com aliases</td>
+<td>A condição da interna depende da linha da externa</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Imagine que você precisa <strong>listar todos os departamentos, mesmo os sem funcionários</strong></td>
+<td><strong><code>LEFT OUTER JOIN</code></strong></td>
+<td>Mantém toda tupla da tabela da esquerda; preenche com nulos</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Imagine que você precisa <strong>achar registros sem e-mail preenchido</strong></td>
+<td><strong><code>IS NULL</code></strong></td>
+<td><code>NULL</code> é diferente de qualquer valor; <code>=</code> resultaria em <code>UNKNOWN</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Imagine que você criou um índice e <strong>quer saber se a consulta o está usando</strong></td>
+<td><strong><code>EXPLAIN</code></strong> (e <code>ANALYZE</code> para as estatísticas)</td>
+<td>Mostra o uso do índice na consulta</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</h2>
+<blockquote>
+<p>Sinalizados conforme a regra de não alterar silenciosamente o conteúdo acadêmico. Os resultados impressos das consultas da clínica foram <strong>conferidos executando</strong> os dados do material; os resultados batem.</p>
+</blockquote>
+<ol>
+<li><strong>Esquema da clínica inconsistente com o modelo (Paes, Figura 1 × tabelas):</strong> o ER mostra <code>CPFMEDICO (fk)</code> em <code>consulta</code> e <code>CPF (pk)</code> em <code>medico</code>, mas as tabelas usam <strong>CRM</strong> (<code>CRMMEDICO</code> / <code>CRM (PK)</code>). A consulta da média de idade de ALEXANDRE SOUZA está impressa com <code>p.cpf = c.cpf and m.cpf = c.cpf</code>, que <strong>não corresponde às colunas</strong> das tabelas (<code>c.cpfpaciente</code>, <code>m.crm = c.crmmedico</code>); usa também aspas duplas em <code>&quot;ALEXANDRE SOUZA&quot;</code> (o padrão SQL é aspas simples). O resultado (75) está certo para a lógica pretendida.</li>
+<li><strong>Consultas com <code>HAVING</code> e agrupamento por médico estão incompletas:</strong> nas consultas de &quot;médicos com mais de um procedimento&quot; e de &quot;qtdeConsultas/qtdeProc&quot;, o <code>SELECT</code> usa <code>m.nome</code> e o <code>GROUP BY m.nome</code>, mas a tabela <code>medico m</code> <strong>não aparece no <code>FROM</code></strong> e falta a condição de junção <code>c.crmmedico = m.crm</code>. Há também uma <strong>vírgula sobrando</strong> após <code>GROUP BY m.nome,</code> antes do <code>HAVING</code>. As tabelas de resultado estão corretas (conferido), então o texto da consulta parece ter perdido linhas.</li>
+<li><strong>Rótulo <code>qtdeConsultas</code> impreciso:</strong> <code>COUNT(*)</code> conta as <strong>linhas da junção</strong> (atendimentos), não consultas. Para MARCELO ARAÚJO o resultado é 5, mas ele fez <strong>3 consultas</strong> (1, 3 e 4); as 5 linhas são atendimentos. <em>Complementação:</em> para contar consultas reais usaria <code>COUNT(DISTINCT c.id)</code> (confirmado na execução: MARCELO 3, ALEXANDRE 2, JUNIA 1).</li>
+<li><strong>&quot;Paciente com a maior idade&quot;:</strong> o texto pede o <strong>paciente</strong>, mas <code>SELECT MAX(idade) FROM paciente;</code> devolve apenas o <strong>valor</strong> (80), não quem é. O mesmo vale para o rótulo &quot;o paciente com menor idade, atendido por médico&quot;, em que o resultado traz a menor idade <strong>por médico</strong>. <em>Complementação:</em> para obter o nome, usaria subconsulta (<code>WHERE idade = (SELECT MAX(idade) FROM paciente)</code>).</li>
+<li><strong><code>paciente</code> com duas estruturas:</strong> na seção de agregação, <code>paciente</code> tem (CPF, NOME, CIDADE, SEXO, IDADE); no estudo de caso da clínica, (CPF, NOME, E-MAIL, IDADE). São tabelas diferentes com o mesmo nome. Outro detalhe: a coluna do resultado de <code>COUNT(cidade)</code> está rotulada como <code>COUNT(*)</code>.</li>
+<li><strong>Consulta de faturamento:</strong> o texto diz &quot;junção entre <code>procedimento</code> e <code>consulta</code>&quot;, mas a consulta junta <strong>três</strong> tabelas (<code>procedimento</code>, <code>consulta</code>, <code>atendimento</code>). As datas estão como <code>&quot;01/01/2020&quot;</code> (texto); o formato de data depende do SGBD (<em>complementação:</em> o formato ISO <code>AAAA-MM-DD</code> é o mais portável).</li>
+<li><strong>Capítulo Pichetti (consulta &quot;correta&quot;):</strong> o texto impresso da consulta correta parece ter erros de transcrição: <code>AND (SELECT Dnr IN FROM COLABORADOR GROUP BY DnR HAVING COUNT(*) &gt; 5);</code> — <code>IN</code> fora de lugar, parênteses desencontrados, <code>DnR</code> com grafia diferente de <code>Dnr</code>. A ideia explicada é <code>Dnr IN (SELECT Dnr FROM COLABORADOR GROUP BY Dnr HAVING COUNT(*) &gt; 5)</code>, que foi a forma usada acima (reescrita marcada). A consulta &quot;incorreta&quot; tem ainda <code>;</code> sobrando após <code>GROUP BY Dnome</code> e <code>Salario&gt;5.000</code> com ponto como separador de milhar (em SQL, <code>5000</code>). O texto junta <code>Dnumero=Dnr</code> e, na explicação, usa <code>Dnumero</code> na projeção.</li>
+<li><strong>Nomes de tabelas e colunas variam no capítulo:</strong> <code>COLABORADOR</code> (maior parte) × <code>FUNCIONARIO</code> (exemplo da consulta aninhada); <code>Niome_dependente</code> (provável erro de <code>Nome_dependente</code>); <code>Cpf_gerente</code>, <code>Fcpf</code>, <code>Ccpf</code> sem esquema completo no material.</li>
+<li><strong>Exemplo de <code>HAVING</code> em projetos:</strong> o texto descreve a situação &quot;projetos com mais de dois colaboradores&quot; e explica o <code>HAVING</code>, mas <strong>não mostra o código</strong> da consulta com <code>HAVING</code>.</li>
+<li><strong>Junções externas:</strong> <code>LEFT/RIGHT OUTER JOIN</code> são <strong>descritos</strong>, mas o material não traz exemplo de código; os exemplos usam <code>JOIN ... ON</code> e <code>NATURAL JOIN</code>.</li>
+<li><strong>Capítulo de índices (Andrade) — erros de redação/código:</strong> no Exemplo 3 a consulta é <code>WHERE maior = 100 AND menor = 9</code>, mas a tabela tem <code>menor = 90</code> para Fernando (provável erro de digitação); o texto fala em criar índice B-tree &quot;sobre o índice <code>id_indice_B</code>&quot;, enquanto o código cria sobre a coluna <code>idade</code>; nas opções de ordenação aparece <code>NULL FIRST</code> (o comando correto é <code>NULLS FIRST</code>); no Exemplo 4 há <code>faturado</code> / <code>faturados</code> e <code>num_pedidos</code> / <code>num_pedido</code> alternando; um <code>CREATE INDEX * ON pedidos USING BRIN ...</code> tem um <code>*</code> no lugar do nome do índice; no Exemplo 5 aparecem <code>exemplo4</code> e <code>exemplo</code>, e <code>conteudo</code> e <code>content</code>.</li>
+<li><strong>Busca textual no Exemplo 6:</strong> o material compara o <code>tsvector</code> com <code>=</code> e uma string. <em>Complementação:</em> em PostgreSQL a busca de texto completo costuma usar <code>@@</code> com <code>to_tsquery</code>; o material não explica essa parte. O índice GIN também é descrito como exigindo <code>tsvector</code>.</li>
+<li><strong>Hash &quot;a partir da versão 10&quot;:</strong> o infográfico afirma que o <em>hash</em> é suportado a partir da v10. <em>Complementação (não consta do material):</em> o tipo existia antes, mas só a partir da v10 passou a ser seguro contra falhas (registrado no log de transações); vale confirmar com o professor.</li>
+<li><strong>Infográfico &quot;Cláusulas e funções&quot;:</strong> na imagem, o par <code>MAX</code>/<code>MIN</code> parece mostrar <code>SELECT MAX (valor) FROM produto;</code> duas vezes (o segundo deveria ser <code>MIN</code>); o infográfico de agrupamento traz o rótulo <code>HAVING32</code> (provável marca de nota de rodapé). O texto do infográfico é pequeno; a leitura pode ter imprecisões.</li>
+<li><strong>Referência:</strong> Ramakrishnan e Gehrke, <em>Sistemas de gerenciamento de banco de dados</em>, 3. ed., aparece como <strong>2008</strong> no capítulo de índices e <strong>2011</strong> no de consultas complexas.</li>
+<li><strong>Material não acessível:</strong> os conteúdos por <strong>QR code / link</strong> (vídeo da Dica do Professor sobre <code>COUNT</code>, vídeo da Dica &quot;Consultas complexas&quot;, vídeo da Dica &quot;Índices&quot;, vídeos e links do <em>Saiba mais</em>, documentação MySQL, audiodescrições) <strong>não foram lidos</strong>. Os livros do <em>Saiba mais</em> (Oracle 11g SQL, SQL Server 2012, p. 122–127 de consultas aninhadas e p. 298–303 de junções) também não foram acessados.</li>
+<li><strong>Atividade 2 (A2):</strong> conforme sua preferência, as questões e respostas <strong>não</strong> foram incluídas neste arquivo.</li>
+<li><strong>Índices (execução):</strong> os comandos de índice são específicos do PostgreSQL e <strong>não foram executados</strong> (não havia servidor PostgreSQL no ambiente); os resultados exibidos são os impressos no material.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões">6. Referências e conexões</h2>
+<h3 id="conexões-com-a-aula-01-complementação--conceitos-explicados-na-aula-01-aqui-apenas-ponteiros">Conexões com a Aula 01 <em>(complementação — conceitos explicados na Aula 01; aqui apenas ponteiros)</em></h3>
+<table>
+<thead>
+<tr>
+<th>Conceito desta aula</th>
+<th>Conexão com a Aula 01</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Banco relacional / SQL / chave primária e integridade</td>
+<td>Aula 01 <strong>§3.1</strong> (modelo relacional, ACID, normalização) e <strong>§3.8</strong> (SQL × NoSQL). Esta unidade aprofunda o lado relacional da comparação</td>
+</tr>
+<tr>
+<td><code>GROUP BY</code> + funções de agregação (resumir grupos de linhas)</td>
+<td>Aula 01 <strong>§3.4</strong> (consultas <em>scatter/gather</em> e <strong>MapReduce</strong>: <code>map</code> por nó + <code>reduce</code> para o resultado final) — ideia semelhante de agrupar e resumir, em contexto distribuído</td>
+</tr>
+<tr>
+<td>Agregações rápidas por coluna</td>
+<td>Aula 01 <strong>§3.4</strong> (layout <strong>colunar</strong> favorece operações sobre colunas) e <strong>§3.6</strong> (bancos colunares para consultas analíticas)</td>
+</tr>
+<tr>
+<td>Índices <em>hash</em> / <em>buckets</em> e B-tree</td>
+<td>Aula 01 <strong>§3.4</strong> (<code>hash(o) mod n</code>, hash consistente para sharding; árvores <strong>LSM</strong>). O <em>hash</em> do índice organiza <em>buckets</em> dentro de <strong>uma</strong> tabela; o <em>hash</em> de sharding distribui dados entre <strong>nós</strong> de um cluster — objetivos diferentes</td>
+</tr>
+<tr>
+<td>Busca por igualdade em índice <em>hash</em></td>
+<td>Aula 01 <strong>§3.6</strong> (chave/valor: acesso por chave, O(1))</td>
+</tr>
+<tr>
+<td><code>JOIN</code>s e custo</td>
+<td>Aula 01 <strong>§3.1</strong> (joins são caros em hardware) e <strong>§3.6</strong> (grafos: <em>joins</em> recursivos viram <strong>travessias</strong>)</td>
+</tr>
+<tr>
+<td><code>NULL</code> e esquema rígido</td>
+<td>Aula 01 <strong>§3.8</strong> (relacional com <em>schema</em> rígido × NoSQL sem <em>schema</em>)</td>
+</tr>
+<tr>
+<td>Trade-off do índice (acelera leitura, custa escrita e espaço)</td>
+<td>Aula 01 <strong>§3.2</strong> e <strong>§3.5</strong> (NoSQL troca garantias por escala) — mesma lógica de <em>trade-off</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="aplicação-profissional-complementação">Aplicação profissional <em>(complementação)</em></h3>
+<ul>
+<li><strong>Azure SQL / PostgreSQL gerenciado e Cosmos DB:</strong> entender índices, agregações e planos de execução (<code>EXPLAIN</code>) apoia decisões de arquitetura de dados em nuvem, relevante em soluções com Azure; o <em>Azure Cosmos DB</em> já foi mencionado na Aula 01 (§6).</li>
+<li><strong>Governança e relatórios:</strong> consultas com <code>GROUP BY</code>/<code>HAVING</code> são a base de indicadores e relatórios de demanda e portfólio (contagem por status, soma por área, média por período).</li>
+</ul>
+<h3 id="referências-acadêmicas-do-material">Referências acadêmicas (do material)</h3>
+<ul>
+<li>PAES, C. A. <em>Consultas em Banco de Dados</em>. SAGAH. Capítulo: <em>Funções de agregação e agrupamento de dados em SQL</em>.</li>
+<li>PICHETTI, R. F. <em>Banco de Dados</em>. SAGAH. Capítulo: <em>Consultas complexas em SQL</em>.</li>
+<li>ANDRADE, G. L. <em>Consultas em Banco de Dados</em>. SAGAH. Capítulo: <em>Índices em banco de dados</em>.</li>
+<li>Citadas nos capítulos (seleção): AGGREGATE Functions — <em>PostgreSQL 12.2 Documentation</em> (2020); AGREGAÇÃO — Dicio (2020); MANNINO, M. V. (2008); SELECT – GROUP BY – Transact-SQL, Microsoft Docs (2019); SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. (1999); ELMASRI, R.; NAVATHE, S. B. (2011); MANZANO, J. A. N. G. (2017); RAMAKRISHNAN, R.; GEHRKE, J. (2008/2011); BARBOSA, F. F. M.; FREITAS, P. H. C. (2018); HEUSER, C. A. (2009); JUBA, S.; VOLKOV, A. (2019); PRICE, J. (2009); SANTANA, R.; SILVA, R. <em>PostgreSQL BRIN índices como uma solução para Big Data</em> (InfoQ, 2019).</li>
+<li><strong>Leituras recomendadas pelo capítulo de Paes:</strong> AMADEU (2014); DATE (2004); GARCÍA-MOLINA; ULLMAN; WIDOM (2008); HEUSER (2009); MEDEIROS (2013); RAMAKRISHNAN; GEHRKE (2008); SETZER; SILVA (2005).</li>
+<li><strong>Sugestões do professor (conteúdos não acessados):</strong> <em>Modelagem e desenvolvimento de banco de dados</em>; <em>Oracle Database 11g SQL</em>; <em>Microsoft SQL Server 2012 – passo a passo</em>; vídeo <em>Funções agregadas</em>; livro de <em>consultas aninhadas</em> (p. 122–127) e de <em>consultas avançadas com SQL</em> (p. 298–303); documentação MySQL de funções de agregação; vídeo <em>Breve introdução sobre índices</em> (Heap, Clustered, Nonclustered); <em>Vinte e cinco dicas e boas práticas de banco de dados para desenvolvedores</em>; vídeo <em>Guia de otimização de consultas em PostgreSQL com casos reais</em>; <em>Indexes in PostgreSQL</em> (série de artigos em inglês); monografia <em>Armazenamento e manipulação de dados espaciais no PostgreSQL/PostGIS</em>; link citado no capítulo de Pichetti: https://qrgo.page.link/P115X.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="7-anexo-a--minha-dúvida-índice-em-linguagem-simples-pedido-da-dani-complementação-não-faz-parte-do-material-da-fmu">7. Anexo A — Minha dúvida: índice em linguagem simples <em>(pedido da Dani; complementação, não faz parte do material da FMU)</em></h2>
+<p><strong>Pedido original:</strong> explicar o índice de forma fácil, com uma tabela hipotética 5×5 (nome, idade, endereço, estudo, sexo), representar o índice por nome e criar uma representação visual.</p>
+<p><strong>Ideia em uma frase:</strong> o índice é um <strong>sumário ordenado</strong> (como o índice de um livro): em vez de ler a tabela inteira, você consulta uma lista curta e ordenada que diz <strong>em qual linha</strong> está o dado.</p>
+<p><strong>Tabela <code>pessoa</code> (5 linhas × 5 colunas, na ordem em que foi gravada):</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>nome</th>
+<th>idade</th>
+<th>endereço</th>
+<th>estudo</th>
+<th>sexo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Carla</td>
+<td>41</td>
+<td>Rua das Flores, 120</td>
+<td>Superior</td>
+<td>F</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bruno</td>
+<td>26</td>
+<td>Av. Brasil, 45</td>
+<td>Médio</td>
+<td>M</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ana</td>
+<td>34</td>
+<td>Rua Sete, 300</td>
+<td>Pós-graduação</td>
+<td>F</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Diego</td>
+<td>29</td>
+<td>Rua do Sol, 88</td>
+<td>Superior</td>
+<td>M</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Elisa</td>
+<td>52</td>
+<td>Praça Central, 10</td>
+<td>Fundamental</td>
+<td>F</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Índice sobre <code>nome</code></strong> (estrutura separada, <strong>ordenada A→Z</strong>, só com o nome e o ponteiro para a linha):</p>
+<table>
+<thead>
+<tr>
+<th>nome</th>
+<th>ponteiro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ana</td>
+<td>linha 3</td>
+</tr>
+<tr>
+<td>Bruno</td>
+<td>linha 2</td>
+</tr>
+<tr>
+<td>Carla</td>
+<td>linha 1</td>
+</tr>
+<tr>
+<td>Diego</td>
+<td>linha 4</td>
+</tr>
+<tr>
+<td>Elisa</td>
+<td>linha 5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Busca <code>WHERE nome = 'Diego'</code>:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Sem índice</th>
+<th>Com índice</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Como busca</td>
+<td>Lê a tabela linha a linha (1, 2, 3, 4...)</td>
+<td>Procura na lista ordenada: &quot;Diego → linha 4&quot; e vai direto à linha 4</td>
+</tr>
+<tr>
+<td>Em 5 linhas</td>
+<td>Diferença pequena</td>
+<td>Diferença pequena</td>
+</tr>
+<tr>
+<td>Em 1 milhão de linhas</td>
+<td>Pode ter de ler <strong>tudo</strong></td>
+<td>Ordem de <strong>~20 comparações</strong> (log₂ de 1 milhão) + 1 leitura da linha (ordem de grandeza; o B-tree real tem outros detalhes)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Por que a lista é ordenada?</strong> Porque ordenada dá para &quot;pular&quot; para a metade certa (como procurar um nome na agenda), em vez de conferir um por um. Com índice B-tree (padrão do PostgreSQL), isso também permite <strong>intervalos</strong> (<code>nome BETWEEN 'A' AND 'C'</code>); com <em>hash</em>, só igualdade (ver §3.7.4).</p>
+<p><strong>O custo (do material):</strong> o índice é <strong>uma estrutura a mais</strong>: ocupa espaço e, a cada novo registro na tabela, o índice também precisa ser atualizado (inserção mais lenta). Por isso se indexa a coluna que é muito consultada, e não todas.</p>
+<p><strong>Por que <code>nome</code> e não <code>sexo</code>?</strong> <code>sexo</code> só tem 2 valores (F/M): um índice recuperaria metade da tabela e quase não ajudaria (regra do material: bom índice quando recupera ~10% ou menos das linhas). <code>nome</code> tem valores variados → boa candidata.</p>
+<pre><code class="language-sql"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_pessoa_nome</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">pessoa</span><span class="w"> </span><span class="p">(</span><span class="n">nome</span><span class="p">);</span><span class="w">       </span><span class="c1">-- cria o índice (B-tree, padrão)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pessoa</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">nome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Diego'</span><span class="p">;</span><span class="w">           </span><span class="c1">-- consulta que pode usar o índice</span>
+<span class="k">EXPLAIN</span><span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">pessoa</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">nome</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Diego'</span><span class="p">;</span><span class="w">   </span><span class="c1">-- mostra se o índice foi usado</span>
+<span class="k">DROP</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_pessoa_nome</span><span class="p">;</span><span class="w">                          </span><span class="c1">-- exclui o índice</span>
+</pre></div>
+</code></pre>
+<blockquote>
+<p>Nota: em uma tabela de apenas 5 linhas o PostgreSQL pode ignorar o índice e ler a tabela direto (é mais barato); o ganho aparece em tabelas grandes.</p>
+</blockquote>
+<p><strong>Representação visual</strong> (arquivo <code>INDICE_POR_NOME_VISUAL.svg</code>: índice à esquerda, tabela à direita, setas do índice para as linhas e o caminho de &quot;Diego&quot; destacado):</p>
+<p><span class="ref-arquivo">Figura: Índice por nome</span></p>
+</section>
+<section class="bloco"><h2 id="8-anexo-b--minha-dúvida-diferença-entre-árvore-b-hash-agrupado-primário-e-secundário-pedido-da-dani-síntese-com-base-no-material-organizada-em-tabela">8. Anexo B — Minha dúvida: diferença entre Árvore B, hash, agrupado, primário e secundário <em>(pedido da Dani; síntese com base no material, organizada em tabela)</em></h2>
+<p>Os cinco termos aparecem juntos, mas respondem a perguntas diferentes: os dois primeiros dizem <strong>como o índice organiza e busca</strong> os dados (algoritmo); os três últimos dizem <strong>como o índice é classificado</strong> (onde fica guardado e sobre qual coluna foi criado).</p>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Categoria</th>
+<th>O que é</th>
+<th>Quando usar / quando se aplica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Árvore B (B-tree)</strong></td>
+<td>Algoritmo</td>
+<td>Estrutura hierárquica e ordenada, balanceada (todos os caminhos da raiz até a folha têm o mesmo comprimento). É o tipo <strong>padrão</strong> do PostgreSQL</td>
+<td>Uso geral: igualdade, <strong>intervalo</strong> (<code>idade &gt;= 30 AND idade &lt;= 80</code>) e dados em <strong>ordem</strong>. É o único que aceita índice único (<code>UNIQUE</code>) e ordenado (<code>ASC</code>/<code>DESC</code>, <code>NULLS FIRST</code>/<code>LAST</code>)</td>
+</tr>
+<tr>
+<td><strong>Hash</strong></td>
+<td>Algoritmo</td>
+<td>Aplica uma função <em>hash</em> à chave para achar direto o <em><strong>bucket</strong></em> onde o registro está</td>
+<td>Só <strong>igualdade</strong> (<code>matricula = 123</code>). Não serve para <code>&lt;</code>, <code>&gt;</code> ou intervalos</td>
+</tr>
+<tr>
+<td><strong>Agrupado (clustered)</strong></td>
+<td>Classificação</td>
+<td>Os registros da tabela estão <strong>na mesma ordem</strong> (ou parecida) das entradas do índice; caso contrário, é <strong>não agrupado</strong></td>
+<td>Na prática é raro: manter a tabela ordenada a cada atualização é muito custoso</td>
+</tr>
+<tr>
+<td><strong>Primário (ordenado)</strong></td>
+<td>Classificação</td>
+<td>Índice criado sobre a coluna da <strong>chave primária</strong>, com registros ordenados por ela</td>
+<td>Quando o acesso é pela chave primária (boa candidata: valor único e, em geral, numérico)</td>
+</tr>
+<tr>
+<td><strong>Secundário</strong></td>
+<td>Classificação</td>
+<td>Índice guardado <strong>separado</strong> da tabela; contempla os demais tipos de índice</td>
+<td>Caso do PostgreSQL: <strong>todos</strong> os índices são secundários, armazenados fora dos registros da tabela (a &quot;pilha&quot;/<em>heap</em>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Como diferenciar:</strong></p>
+<ul>
+<li>Se o texto fala em <strong>como o índice busca</strong> (hierarquia, <em>buckets</em>, tipo de consulta aceita), é Árvore B ou <em>hash</em>.</li>
+<li>Se fala em <strong>onde o índice fica guardado</strong> ou <strong>sobre qual coluna foi criado</strong>, é agrupado, primário ou secundário.</li>
+<li>Índice guardado <strong>fora</strong> da tabela é o oposto do agrupado e, no PostgreSQL, é o <strong>secundário</strong>.</li>
+</ul>
+<blockquote>
+<p><strong>Ressalva do material:</strong> a definição de índice primário e secundário &quot;não está bem delimitada na literatura&quot; (Ramakrishnan e Gehrke, 2008). A regra específica do PostgreSQL (todo índice é secundário e fica separado da tabela) é a referência segura.</p>
+</blockquote>
+
+</section>
+
+<div class="doc-nav"><a class="btn contorno" href="s1-d4-aula-01.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Aula 1</a><a class="btn cheio" href="s1-d4-aula-03.html">Aula 3 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d4.html">← Banco de Dados Não Relacional</a> · </span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

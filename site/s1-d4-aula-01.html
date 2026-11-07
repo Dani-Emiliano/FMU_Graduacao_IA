@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 1 · NoSQL: história, classificação, BASE e aplicabilidade · Banco de Dados Não Relacional</title>
+  <script>try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Página gerada por build_site.py. Edite o CONFIG do script ou os .md de origem. -->
+<div class="barra-leitura" aria-hidden="true"></div>
+
+<header class="topo">
+  <div class="container">
+    <a class="marca" href="index.html"><span class="logo">IA</span><span><strong>Graduação em IA</strong><small>FMU · Base de conhecimento</small></span></a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">Home</a>
+      <a href="index.html#semestres">Semestres</a>
+      <a class="btn-indice" href="index.html#indice" title="Índice de disciplinas por semestre"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span>Índice</span></a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero compacto">
+  <div class="container">
+    <nav class="trilha" aria-label="Você está em"><a href="index.html">Home</a> <span>›</span> <a href="semestre-1.html">Semestre 1</a> <span>›</span> <a href="s1-d4.html">Banco de Dados Não Relacional</a> <span>›</span> <span>Aula 1 · NoSQL: história, classificação, BASE e aplicabilidade</span></nav>
+    <span class="eyebrow">Aula 1 · Banco de Dados Não Relacional</span>
+    <h1>Aula 1 · NoSQL: história, classificação, BASE e aplicabilidade</h1>
+    <div class="meta">
+      <a class="chip" href="s1-d4.html"><svg class="ico" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg> Voltar à disciplina</a>
+    </div>
+  </div>
+</section>
+<div class="container leitura">
+  <details class="sumario" open>
+    <summary>Nesta página</summary>
+    <ol><li class="n1"><a href="#aula-01--nosql-história-classificação-base-e-aplicabilidade">AULA 01 — NoSQL: História, Classificação, BASE e Aplicabilidade</a></li><li class="n2"><a href="#1-identificação-e-objetivos">1. Identificação e objetivos</a></li><li class="n3"><a href="#objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</a></li><li class="n2"><a href="#2-resumo-e-contextualização">2. Resumo e contextualização</a></li><li class="n2"><a href="#3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</a></li><li class="n3"><a href="#31-ponto-de-partida-o-modelo-relacional-referência-para-a-comparação">3.1 Ponto de partida: o modelo relacional (referência para a comparação)</a></li><li class="n3"><a href="#32-o-que-é-nosql-e-origem-do-termo">3.2 O que é NoSQL e origem do termo</a></li><li class="n3"><a href="#33-linha-do-tempo-bordin--cap-1-e-quadro-1">3.3 Linha do tempo (Bordin — Cap. 1 e Quadro 1)</a></li><li class="n3"><a href="#34-evolução-das-tecnologias-nosql">3.4 Evolução das tecnologias NoSQL</a></li><li class="n3"><a href="#35-modelo-base--acid">3.5 Modelo BASE × ACID</a></li><li class="n3"><a href="#36-tipos-de-bancos-nosql">3.6 Tipos de bancos NoSQL</a></li><li class="n3"><a href="#37-principais-bancos-descritos-bordin--cap-1">3.7 Principais bancos descritos (Bordin — Cap. 1)</a></li><li class="n3"><a href="#38-sql--nosql-campos--tabela-1-fonte-aws">3.8 SQL × NoSQL (Campos — Tabela 1, fonte AWS)</a></li><li class="n3"><a href="#39-dados-informação-conhecimento-e-big-data-campos">3.9 Dados, informação, conhecimento e Big Data (Campos)</a></li><li class="n2"><a href="#4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</a></li><li class="n3"><a href="#41-casos-reais-citados-no-material">4.1 Casos reais citados no material</a></li><li class="n3"><a href="#42-exemplo-de-modelagem-do-infográfico-de-tipos">4.2 Exemplo de modelagem (do infográfico de tipos)</a></li><li class="n3"><a href="#43-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.3 Cenários de aplicação (complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</a></li><li class="n2"><a href="#5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</a></li><li class="n2"><a href="#6-referências-e-conexões">6. Referências e conexões</a></li><li class="n3"><a href="#conexões-com-conteúdos-anteriores-complementação">Conexões com conteúdos anteriores (complementação)</a></li><li class="n3"><a href="#aplicação-profissional-complementação">Aplicação profissional (complementação)</a></li><li class="n3"><a href="#referências-acadêmicas-do-material">Referências acadêmicas (do material)</a></li><li class="n2"><a href="#7-anexo--quadro-1-principais-bancos-nosql-bordin-cap-1">7. Anexo — Quadro 1: principais bancos NoSQL (Bordin, Cap. 1)</a></li></ol>
+  </details>
+  <article class="prosa">
+<div class="capitulo"><h1 id="aula-01--nosql-história-classificação-base-e-aplicabilidade">AULA 01 — NoSQL: História, Classificação, BASE e Aplicabilidade</h1></div>
+<section class="bloco"><h2 id="1-identificação-e-objetivos">1. Identificação e objetivos</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Informação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Disciplina</strong></td>
+<td>Banco de Dados Não Relacional (262GGR6387A)</td>
+</tr>
+<tr>
+<td><strong>Curso</strong></td>
+<td>Graduação em Inteligência Artificial — FMU</td>
+</tr>
+<tr>
+<td><strong>Aula / Unidade</strong></td>
+<td>Aula 01 (Unidade 1)</td>
+</tr>
+<tr>
+<td><strong>Tema</strong></td>
+<td>Origem, evolução, tipos, modelo BASE e aplicabilidade dos bancos NoSQL</td>
+</tr>
+<tr>
+<td><strong>Material acadêmico</strong></td>
+<td>Infográfico &quot;História dos bancos de dados não relacionais&quot;; capítulos <em>História dos bancos de dados não relacionais</em> e <em>Classificação dos bancos de dados não relacionais</em> (BORDIN, M. — <em>Banco de Dados Não Relacional</em>, SAGAH); capítulo <em>Analisar e compreender a utilização do banco de dados NoSQL</em> (CAMPOS, J. B. — <em>Administração de Banco de Dados</em>, SAGAH); Infográficos de classificação e de tipos; Dicas do Professor; Saiba mais</td>
+</tr>
+</tbody>
+</table>
+<h3 id="objetivos-de-aprendizagem-da-unidade">Objetivos de aprendizagem (da Unidade)</h3>
+<ul>
+<li>Descrever a origem, a evolução e os principais conceitos dos bancos NoSQL.</li>
+<li>Identificar os principais tipos e características dos bancos não relacionais.</li>
+<li>Explicar os princípios do modelo de consistência <strong>BASE</strong>.</li>
+<li>Diferenciar os modelos relacional (SQL) e não relacional (NoSQL).</li>
+<li>Demonstrar a aplicabilidade dos diferentes tipos de bancos NoSQL.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="2-resumo-e-contextualização">2. Resumo e contextualização</h2>
+<p>O crescimento da Internet, dos dispositivos móveis e das aplicações digitais fez explodir o <strong>volume</strong> de dados e, também, a sua <strong>variedade</strong> (formatos menos estruturados e mais distribuídos). Os bancos relacionais, até então dominantes, passaram a ter limitações para aplicações que exigem <strong>grande volume, alta escalabilidade e formatos diversos</strong>.</p>
+<p>Os bancos <strong>NoSQL</strong> surgiram como resposta. A ideia central da aula é um <strong>trade-off</strong>: para escalar horizontalmente e ser flexível, abre-se mão de algumas garantias do modelo relacional (como o ACID forte e os joins elaborados). Daí decorrem três blocos conceituais que organizam a aula:</p>
+<ol>
+<li><strong>Por que surgiram</strong> (limitações do relacional + escala da Internet).</li>
+<li><strong>Como funcionam</strong> (CAP, consistência eventual, sharding, layouts de armazenamento, BASE).</li>
+<li><strong>Qual usar</strong> (tipos: chave/valor, documentos, grafos, colunares — e onde cada um é aplicado).</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="3-conceitos-fundamentais-e-explicações">3. Conceitos fundamentais e explicações</h2>
+<h3 id="31-ponto-de-partida-o-modelo-relacional-referência-para-a-comparação">3.1 Ponto de partida: o modelo relacional (referência para a comparação)</h3>
+<ul>
+<li>Modelo desenvolvido por <strong>Codd em 1970</strong>; usa <strong>SQL</strong>; é o mais usado no mercado.</li>
+<li><strong>ACID</strong> (Pritchett, 2008):</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Propriedade</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong>tomicidade</td>
+<td>A transação executa completamente ou não executa</td>
+</tr>
+<tr>
+<td><strong>C</strong>onsistência</td>
+<td>A transação leva a um estado válido; em falha, volta ao último estado válido</td>
+</tr>
+<tr>
+<td><strong>I</strong>solamento</td>
+<td>Uma transação em andamento não é interferida por outras</td>
+</tr>
+<tr>
+<td><strong>D</strong>urabilidade</td>
+<td>Os dados permanecem corretos mesmo se o sistema falhar ou reiniciar</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Integridade referencial:</strong> chave estrangeira referencia chave primária de outra tabela (o registro referenciado existe).</li>
+<li><strong>Normalização:</strong> evita duplicação, divide os dados em tabelas por tipo de elemento.</li>
+</ul>
+<p><strong>Limitações apontadas (Leavitt, 2010):</strong></p>
+<ul>
+<li>Não foram construídos para aplicações <strong>distribuídas</strong>.</li>
+<li><strong>Joins</strong> custam caro em requisitos de hardware.</li>
+<li>Modelo de dados limitado: pouca flexibilidade quando a estrutura <strong>não é totalmente conhecida</strong>.</li>
+<li>Escalar <strong>horizontalmente</strong> é difícil; a escalabilidade <strong>vertical</strong> (mais hardware) é tecnicamente simples, porém a mais <strong>cara</strong>, podendo gerar <em>lock-in</em> em hardware proprietário.</li>
+</ul>
+<h3 id="32-o-que-é-nosql-e-origem-do-termo">3.2 O que é NoSQL e origem do termo</h3>
+<ul>
+<li>Meados da década de 90: com a popularização da Internet, os relacionais não acompanharam a escala das aplicações.</li>
+<li><strong>1998 — Carlo Strozzi</strong> cria o termo &quot;NoSQL&quot; para um banco relacional leve, open source, <strong>sem SQL</strong>.</li>
+<li><strong>2009 — Eric Evans e Johan Oskarsson</strong> usam o termo com o sentido atual (bancos não relacionais).</li>
+<li>Interpretações: &quot;não SQL&quot; (ausência da linguagem) ou <strong>&quot;Not Only SQL&quot;</strong>. Sadalage e Fowler (2019) recomendam usar apenas &quot;NoSQL&quot;, pois até Oracle e Postgres poderiam se enquadrar na leitura &quot;Not Only SQL&quot;.</li>
+<li><strong>Características gerais</strong> (Sadalage e Fowler, 2019): ausência de SQL (alguns têm linguagens parecidas); em geral <strong>open source</strong>; feitos para rodar em <strong>clusters</strong>; oferecem <strong>variações de consistência</strong>; <strong>sem esquema</strong> (novas colunas livremente).</li>
+<li>Uma classe heterogênea: agrupada pelo problema que resolve (grandes volumes via <strong>escalabilidade horizontal</strong>, tipos de dados diversos, muitas vezes sem esquema definido).</li>
+</ul>
+<h3 id="33-linha-do-tempo-bordin--cap-1-e-quadro-1">3.3 Linha do tempo (Bordin — Cap. 1 e Quadro 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Ano</th>
+<th>Marco</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1965</td>
+<td><strong>MultiValue</strong> (TRW) — um dos primeiros não relacionais; atributos com lista de valores</td>
+<td>Multivalor</td>
+</tr>
+<tr>
+<td>1970</td>
+<td>Modelo relacional (Codd) — contexto</td>
+<td>—</td>
+</tr>
+<tr>
+<td>1979</td>
+<td><strong>DBM</strong> (AT&amp;T; Ken Thompson) — precursor de chave/valor</td>
+<td>Chave/valor</td>
+</tr>
+<tr>
+<td>1989</td>
+<td><strong>Lotus Notes / Domino</strong></td>
+<td>Documentos</td>
+</tr>
+<tr>
+<td>1991</td>
+<td><strong>Berkeley DB</strong> (reescrita do DBM pela SleepyCat; hoje Oracle)</td>
+<td>Chave/valor</td>
+</tr>
+<tr>
+<td>1998</td>
+<td>Termo <strong>NoSQL</strong> (Strozzi)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2000</td>
+<td><strong>Neo4j</strong></td>
+<td>Grafos</td>
+</tr>
+<tr>
+<td>2004</td>
+<td><strong>Google BigTable</strong> (sobre o GFS)</td>
+<td>Colunar</td>
+</tr>
+<tr>
+<td>2005</td>
+<td><strong>CouchDB</strong></td>
+<td>Documentos</td>
+</tr>
+<tr>
+<td>2007</td>
+<td><strong>Amazon Dynamo</strong>; <strong>MongoDB</strong></td>
+<td>Chave/valor; Documentos</td>
+</tr>
+<tr>
+<td>2008</td>
+<td><strong>Cassandra</strong> (Facebook abre o código); Voldemort; Hypertable; Accumulo</td>
+<td>Colunar / Chave/valor</td>
+</tr>
+<tr>
+<td>2009</td>
+<td><strong>Redis</strong>; <strong>HBase</strong>; Riak; termo NoSQL ganha o sentido atual</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2011</td>
+<td><strong>Apache Druid</strong> (colunar, tempo real); <strong>Apache Giraph</strong> (grafos)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2016</td>
+<td><strong>Apache Kudu</strong> (variante do BigTable)</td>
+<td>Colunar</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fato-chave:</strong> os artigos do <strong>BigTable (Google)</strong> e do <strong>Dynamo (Amazon)</strong> impulsionaram o movimento e levaram à criação de diversos bancos NoSQL. O Google também inspirou <strong>Hadoop/HDFS</strong> (artigos sobre <strong>MapReduce</strong> e <strong>GFS</strong>), base do <em>big data</em>.</p>
+<h3 id="34-evolução-das-tecnologias-nosql">3.4 Evolução das tecnologias NoSQL</h3>
+<p><strong>Por que abrir mão de garantias?</strong> Lidar com muito dado de forma estável e a baixo custo significa que integridade garantida por transações e flexibilidade em índices/consultas nem sempre serão possíveis (Tiwari, 2011). Reduzir a complexidade pode ser favorável quando certas propriedades não são necessárias (Strauch, 2011). Exemplo do material: o Google processa <strong>20 petabytes</strong> do BigTable via MapReduce.</p>
+<p><strong>Vantagens:</strong> escalam <strong>horizontalmente</strong> com hardware comum (<em>commodity</em>), permitem <strong>sharding</strong> com esforço bem menor e sem o custo de bancos proprietários; muitas vezes eliminam ORMs, reduzindo a <strong>incompatibilidade de impedância</strong> (Sadalage e Fowler, 2019).</p>
+<h4 id="teorema-cap-eric-brewer">Teorema CAP (Eric Brewer)</h4>
+<p>Em sistemas distribuídos só é possível garantir <strong>duas das três</strong> propriedades:</p>
+<table>
+<thead>
+<tr>
+<th>Letra</th>
+<th>Propriedade</th>
+<th>Ideia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>C</strong></td>
+<td>Consistency</td>
+<td>Após uma operação, todos os leitores veem a atualização imediatamente</td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td>Availability</td>
+<td>O sistema permanece disponível mesmo após falha de nós/hardware/software</td>
+</tr>
+<tr>
+<td><strong>P</strong></td>
+<td>Partition tolerance</td>
+<td>O sistema continua operando mesmo com partições na rede (ilhas de nós); também lida com entrada/saída de nós</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Combinação</th>
+<th>Características</th>
+<th>Exemplos (Bordin)</th>
+<th>Quando faz sentido <em>(complementação)</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CA</strong></td>
+<td>Consistente e disponível; <strong>não</strong> tolera partição</td>
+<td>Vertica, Greenplum</td>
+<td>Ambientes sem partição de rede relevante (ver ponto de atenção 5.1)</td>
+</tr>
+<tr>
+<td><strong>CP</strong></td>
+<td>Consistente e tolerante a partição; <strong>menor disponibilidade</strong></td>
+<td>BigTable, Hypertable, HBase, MongoDB</td>
+<td>Quando o dado correto importa mais que responder sempre</td>
+</tr>
+<tr>
+<td><strong>AP</strong></td>
+<td>Sempre disponível e tolerante a partição; pode haver <strong>inconsistência</strong> (propriedades BASE)</td>
+<td>Voldemort, Tokyo Cabinet, CouchDB, Riak</td>
+<td>Quando indisponibilidade é inaceitável e dados levemente desatualizados são toleráveis</td>
+</tr>
+</tbody>
+</table>
+<p><strong>PACELC (complemento):</strong> em caso de <strong>P</strong>artição escolhe-se entre <strong>A</strong> e <strong>C</strong> (como no CAP); <strong>E</strong>lse (sistema funcionando normalmente) escolhe-se entre <strong>L</strong>atência e <strong>C</strong>onsistência (Golab, 2018). O próprio CAP é criticado (Kleppmann, 2015); Brewer (2012) reconhece que o modelo é mais flexível do que parece.</p>
+<h4 id="consistência-eventual">Consistência eventual</h4>
+<ul>
+<li>Se não houver novas atualizações em um dado, <strong>todas as leituras eventualmente retornarão o mesmo valor</strong>.</li>
+<li>Admite ler dado inconsistente, mas garante convergência no futuro. Vantagem: sistemas de larga escala que seguem operando com falhas (parte dos usuários vê dado desatualizado por um tempo).</li>
+<li>Propagação geralmente <strong>assíncrona</strong>. Para saber qual é a escrita mais nova: <em>timestamp/relógio</em> + regra <strong>last write wins</strong> (exige relógios sincronizados) ou <strong>Vector Clocks</strong>.</li>
+<li>Problema: o cliente pode não ver a própria atualização. Soluções: <strong>RYOW</strong> (<em>Read Your Own Writes</em>) ou <strong>consistência de sessão</strong> (cliente associado a um único servidor).</li>
+</ul>
+<h4 id="vector-clocks-e-protocolos-gossip">Vector Clocks e protocolos Gossip</h4>
+<ul>
+<li><strong>Vector Clocks:</strong> controlam a dependência entre eventos causais de processos diferentes, <strong>sem relógios sincronizados</strong>.</li>
+<li><strong>Gossip (epidêmicos):</strong> propagam estado entre nós; entregam só consistência eventual (cluster com <em>n</em> nós leva O(log n) rodadas), mas dão escalabilidade e evitam <strong>SPoF</strong> (ponto único de falha). Alternativa: <strong>antientropia</strong>.</li>
+</ul>
+<h4 id="sharding-e-hash-consistente">Sharding e hash consistente</h4>
+<ul>
+<li>Escalabilidade horizontal = clusterização + réplicas + <strong>sharding</strong> (dividir o conjunto de dados entre computadores do cluster; cada um cuida de uma parcela). Cache em memória ajuda, mas tem limites.</li>
+<li>Mapeamento simples: <code>partition = hash(o) mod n</code> (o = objeto, n = nº de nós). <strong>Problema:</strong> nós aparecem/desaparecem (falha de servidor, rede, banco), tornando dados indisponíveis.</li>
+<li><strong>Hash consistente:</strong> cada nó recebe um <strong>intervalo</strong> do hash num <strong>anel</strong>; se um nó sai, outros assumem seu intervalo; se entra, recebe parte de outro. Clientes calculam onde o dado está <strong>sem servidor de metadados</strong> (diferente do GFS).</li>
+<li><strong>Nós virtuais:</strong> cada nó real tem 1+ nós virtuais (conforme capacidade de hardware) → melhora o balanceamento.</li>
+<li><strong>Fator de replicação (r):</strong> <em>r</em> nós físicos ficam responsáveis por cada objeto → resolve a indisponibilidade na saída de um nó.</li>
+<li>Entrada/saída de nós dependem de comunicação entre os nós (anúncio de chegada; detecção periódica de saída).</li>
+</ul>
+<h4 id="armazenamento-de-dados-layouts--tiwari-2011">Armazenamento de dados (layouts — Tiwari, 2011)</h4>
+<table>
+<thead>
+<tr>
+<th>Layout</th>
+<th>Como serializa</th>
+<th>Favorece</th>
+<th>Custo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Baseado em linhas</strong></td>
+<td>Linhas inteiras ao fim da tabela</td>
+<td>Acesso a vários campos de um registro numa única operação de I/O</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Colunar</strong></td>
+<td>Por colunas</td>
+<td>Operações sobre colunas (análise de dados)</td>
+<td>Desempenho &quot;sofrível&quot; em operações sobre linhas</td>
+</tr>
+<tr>
+<td><strong>Colunar com grupos de localidade</strong></td>
+<td>Colunas agrupadas quando acessadas juntas</td>
+<td>Acesso conjunto de colunas relacionadas</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Árvores LSM</strong> (Log-Structured Merge)</td>
+<td>Usa memória e disco de forma eficiente: dados em <strong>Memtables</strong>, <strong>commit-logs</strong> em disco, descarga periódica em <strong>SSTables</strong></td>
+<td>Leitura e escrita eficientes, com alto desempenho e segurança</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consultas:</strong> variam de simples <em>lookups</em> de chave primária (chave/valor) a técnicas <strong>scatter/gather</strong> (consulta enviada a vários nós; resultados processados e devolvidos). Exemplo: <strong>MapReduce</strong> (Google, 2004) — função <code>map</code> nos nós + <code>reduce</code> para o resultado final. É o modelo que deu início ao movimento <em>big data</em> (Hadoop e Spark são frameworks atuais).</p>
+<h3 id="35-modelo-base--acid">3.5 Modelo BASE × ACID</h3>
+<p>Para garantir <strong>disponibilidade</strong> em sistema particionado surgiram os princípios <strong>BASE</strong> (alternativa ao ACID).</p>
+<ul>
+<li><strong>Basically Available</strong> (basic available): o sistema está sempre funcionando (suporte parcial a falhas, sem falha completa).</li>
+<li><strong>Soft state:</strong> o estado pode mudar com o tempo, mesmo sem novas entradas.</li>
+<li><strong>Eventual consistency:</strong> nem sempre consistente, mas <strong>eventualmente</strong> chegará a um estado conhecido.</li>
+</ul>
+<p><strong>Contexto:</strong> escalar verticalmente tem limite e gera <em>lock-in</em>; escalar horizontalmente obriga a abrir mão de garantias. Com dados particionados, é preciso garantir que a transação seja aplicada em todas as máquinas → <strong>2PC (Two-Phase Commit)</strong>: fase 1 pergunta se todos podem aplicar o commit; fase 2 aplica. <strong>Desvantagem:</strong> a disponibilidade do sistema vira o <strong>produto</strong> das disponibilidades individuais, reduzindo a disponibilidade total.</p>
+<table>
+<thead>
+<tr>
+<th>ACID</th>
+<th>BASE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consistência forte</td>
+<td>Consistência fraca</td>
+</tr>
+<tr>
+<td>Isolamento</td>
+<td>Foco em disponibilidade</td>
+</tr>
+<tr>
+<td>Concentra-se em <em>commit</em></td>
+<td>Melhor esforço</td>
+</tr>
+<tr>
+<td>Transações aninhadas</td>
+<td>Respostas aproximadas</td>
+</tr>
+<tr>
+<td>Disponibilidade</td>
+<td>Mais simples e mais rápido</td>
+</tr>
+<tr>
+<td>Conservador (pessimista)</td>
+<td>Agressivo (otimista)</td>
+</tr>
+<tr>
+<td>Evolução difícil</td>
+<td>Evolução mais fácil</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Adaptado de Brewer, 2000.)</em> Definição de Oliveira (2013, citado por Campos): BASE distribui os dados em diferentes repositórios, tornando-os sempre disponíveis, <strong>delega a consistência da transação para a aplicação</strong>, mas garante consistência em algum momento futuro.</p>
+<h3 id="36-tipos-de-bancos-nosql">3.6 Tipos de bancos NoSQL</h3>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Modelo / como funciona</th>
+<th>Pontos fortes</th>
+<th><strong>Quando usar</strong></th>
+<th>Exemplos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chave/valor</strong></td>
+<td>Map/dicionário: chave única → valor (binário/qualquer tipo). Interface básica: <code>set/put</code>, <code>get</code>, <code>delete</code>. Eficiência O(1). Omite joins e agregações</td>
+<td>Altíssima escalabilidade e velocidade</td>
+<td>Perfis, preferências, configurações, <strong>sessões</strong> (acesso por ID do usuário); <strong>cache</strong>; recomendação/anúncios em tempo real; blockchain; multimídia/objetos grandes</td>
+<td>Dynamo, Redis, Riak, Voldemort, Tokyo Cabinet, Memcached, ArangoDB, FoundationDB</td>
+</tr>
+<tr>
+<td><strong>Documentos</strong></td>
+<td>Pares chave/valor em <strong>documentos</strong> (JSON, BSON, XML, YAML). Documentos diferentes na mesma coleção; índices também em <strong>campos</strong> do documento. Filtros, agregações, projeções</td>
+<td>Esquema flexível</td>
+<td>Dados com esquema variável (perfis com campos customizados), integração/migração de dados, analytics em tempo real, logging, <strong>CMS</strong>, catálogos, IoT, apps móveis, back-ends de jogos, visão única de dados diversos</td>
+<td>MongoDB, CouchDB, Couchbase, CosmosDB, DocumentDB, RethinkDB, OrientDB, SimpleDB</td>
+</tr>
+<tr>
+<td><strong>Grafos</strong></td>
+<td>Teoria de grafos: entidades = <strong>nós/vértices</strong>; relacionamentos = <strong>arestas</strong> (que podem guardar informações)</td>
+<td>Busca rápida de conexões (armazenadas, não calculadas em tempo de execução); <em>joins</em> recursivos viram <strong>travessias</strong> eficientes</td>
+<td>Muitos relacionamentos: redes sociais, recomendação, <strong>detecção de fraude</strong>, conformidade regulatória (HIPAA, GDPR/LGPD), grafos de conhecimento, interações de genes/proteínas, cadeia de suprimentos</td>
+<td>Neo4j, Amazon Neptune, ArangoDB, JanusGraph, OrientDB, TerminusDB</td>
+</tr>
+<tr>
+<td><strong>Colunares</strong></td>
+<td>Armazenam por <strong>colunas</strong>; colunas acessadas juntas formam famílias</td>
+<td>Consultas analíticas (agregações) rápidas; reduz E/S; escala</td>
+<td>Enormes volumes com <strong>número variável de atributos</strong>, séries temporais, ingestão em tempo real, features para ML</td>
+<td>BigTable, Cassandra, HBase, Hypertable, Druid, Kudu, Scylla, ClickHouse, Accumulo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fique atento (material):</strong> a maioria dos autores trata só os quatro tipos acima, mas há quem cite também bancos de <strong>tuplas/triplas/RDF</strong>, <strong>multivalor</strong> e <strong>orientados a objetos</strong>. Há ainda os <strong>multimodelo</strong> (ArangoDB, OrientDB, FoundationDB — Quadro 1).</p>
+<h3 id="37-principais-bancos-descritos-bordin--cap-1">3.7 Principais bancos descritos (Bordin — Cap. 1)</h3>
+<table>
+<thead>
+<tr>
+<th>Banco</th>
+<th>Tipo</th>
+<th>Resumo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DBM</strong> (AT&amp;T, 1979)</td>
+<td>Chave/valor</td>
+<td>Biblioteca com número fixo de <em>buckets</em> + hashing. Origem do Berkeley DB; inspirou Tokyo/Kyoto Cabinet e <strong>WiredTiger</strong> (engine do MongoDB; orientado a colunas e linhas)</td>
+</tr>
+<tr>
+<td><strong>Neo4j</strong></td>
+<td>Grafos</td>
+<td>Open source, Java, <strong>ACID</strong>, linguagem de consulta (citada no material como &quot;CQL — Cypher&quot;), HTTP ou protocolo Bolt; versões <em>community</em> e <em>enterprise</em> (backup, alta disponibilidade)</td>
+</tr>
+<tr>
+<td><strong>Google BigTable</strong> (2004)</td>
+<td>Colunar</td>
+<td>Compressão, alta performance; depende do GFS (SSTables) e MapReduce</td>
+</tr>
+<tr>
+<td><strong>CouchDB</strong> (2005)</td>
+<td>Documentos</td>
+<td>Erlang; JSON; consultas MapReduce e API HTTP; ACID <strong>no nível do documento</strong>, consistência eventual, replicação</td>
+</tr>
+<tr>
+<td><strong>Amazon Dynamo</strong> (2007)</td>
+<td>Chave/valor</td>
+<td>Altamente disponível; abre mão do <strong>isolamento</strong>; base do S3 e DynamoDB; usa <strong>hash consistente</strong>, <strong>Vector Clocks</strong>, antientropia com <strong>Merkle tree</strong> e filiação via <strong>Gossip</strong></td>
+</tr>
+<tr>
+<td><strong>MongoDB</strong> (2007)</td>
+<td>Documentos</td>
+<td>BSON, C++, índices completos, replicação, <em>failover</em>, <strong>auto-sharding</strong>; transações atômicas por documento (multi-documento desde a v4.0); <strong>não recomendado</strong> para aplicações altamente transacionais ou que exijam SQL</td>
+</tr>
+<tr>
+<td><strong>Cassandra</strong> (2008)</td>
+<td>Colunar</td>
+<td>Distribuído, descentralizado, <strong>sem SPoF</strong>, peer-to-peer, multi-data center, escala linear (mil+ nós), CQL (similar a SQL). <em>Keyspace</em> ≈ database; <em>column family</em> ≈ tabela; <em>row key</em> ≈ chave primária</td>
+</tr>
+<tr>
+<td><strong>Redis</strong></td>
+<td>Chave/valor</td>
+<td>Em memória com persistência em disco; servidor <em>single-threaded</em>, operações atômicas, maioria O(1); cache, banco ou mensageria; replicação e sharding</td>
+</tr>
+<tr>
+<td><strong>HBase / Hypertable</strong></td>
+<td>Colunar</td>
+<td>Baseados no BigTable. HBase: Java, depende do HDFS, open source. Hypertable: C++, não open source</td>
+</tr>
+<tr>
+<td><strong>Apache Druid</strong></td>
+<td>Colunar</td>
+<td>Escrita de grandes volumes em tempo real + indexação para consultas em tempo real</td>
+</tr>
+<tr>
+<td><strong>Apache Kudu</strong></td>
+<td>Colunar</td>
+<td>Compatível com Hadoop; analítico; índices (lookup aleatório); modelo parecido com relacional</td>
+</tr>
+<tr>
+<td><strong>ScyllaDB</strong></td>
+<td>Colunar</td>
+<td>Compatível com Cassandra (Thrift e CQL), C++, maior <em>throughput</em> e menor latência</td>
+</tr>
+</tbody>
+</table>
+<p><em>(O Quadro 1 completo do material está na seção 7 — Anexo.)</em></p>
+<h3 id="38-sql--nosql-campos--tabela-1-fonte-aws">3.8 SQL × NoSQL (Campos — Tabela 1, fonte AWS)</h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>SQL (relacional)</th>
+<th>NoSQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Modelo de dados</strong></td>
+<td>Tabelas (linhas e colunas) normalizadas; <em>schema</em> rígido</td>
+<td>Normalmente sem <em>schema</em>; chave de partição, conjuntos de colunas ou documentos semiestruturados (JSON/XML)</td>
+</tr>
+<tr>
+<td><strong>ACID</strong></td>
+<td>Compatível com ACID</td>
+<td>Troca algumas propriedades ACID por modelo flexível que escala horizontalmente</td>
+</tr>
+<tr>
+<td><strong>Desempenho</strong></td>
+<td>Depende do subsistema de disco; exige otimizar consultas, índices e tabelas</td>
+<td>Função do tamanho do cluster, latência de rede e aplicação</td>
+</tr>
+<tr>
+<td><strong>Escala</strong></td>
+<td>Mais fácil <strong>vertical</strong> (hardware mais rápido)</td>
+<td><strong>Horizontal</strong>, com clusters de hardware de baixo custo</td>
+</tr>
+<tr>
+<td><strong>APIs</strong></td>
+<td>Consultas SQL</td>
+<td>APIs baseadas em objetos; busca por chave/colunas/documentos</td>
+</tr>
+<tr>
+<td><strong>Ferramentas</strong></td>
+<td>Rico conjunto para desenvolvimento orientado ao banco</td>
+<td>Ferramentas para gerenciar clusters e escalabilidade; a aplicação é a interface principal com os dados</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Características do NoSQL (Cavalcante, 2012, citado por Campos):</strong></p>
+<ul>
+<li><strong>Escalabilidade horizontal</strong> (ausência de bloqueios; <em>sharding</em> — possível no relacional, mas manual e complexo).</li>
+<li><strong>Ausência de esquema (schema-free):</strong> facilita escalabilidade e disponibilidade, mas <strong>sem garantia de integridade</strong> como no relacional.</li>
+<li><strong>Suporte nativo a replicação.</strong></li>
+<li><strong>API simples</strong> (foco em recuperar dados com eficiência).</li>
+<li><strong>Consistência eventual</strong> (base no CAP → BASE).</li>
+</ul>
+<p><strong>Técnicas de implementação (Campos):</strong> <strong>Map/Reduce</strong> · <strong>Consistent hashing</strong> · <strong>MVCC</strong> (controle de concorrência multiversão, sem locks; leitura e escrita simultâneas) · <strong>Vector clocks</strong>.</p>
+<h3 id="39-dados-informação-conhecimento-e-big-data-campos">3.9 Dados, informação, conhecimento e Big Data (Campos)</h3>
+<ul>
+<li><strong>Dado:</strong> forma bruta, sem semântica (&quot;Jorge&quot;). <strong>Informação:</strong> dado com significado (&quot;Jorge é aluno&quot;). <strong>Conhecimento:</strong> obtido pela extração, organização e cruzamento de informações. Conhecimento é ativo intangível das empresas.</li>
+<li><strong>Modelos de dados:</strong> hierárquico (árvore, uma raiz), em rede (extensão do hierárquico, links), <strong>relacional</strong> (tabelas; o mais aceito hoje), orientado a objetos (classes). <strong>SGBD</strong> = ferramentas para criar/alterar estrutura e manipular dados.</li>
+<li><strong>Big Data</strong> (Alecrim, 2013): conjuntos de dados tão amplos que exigem ferramentas especiais para encontrar, analisar e aproveitar informação em tempo hábil. Problema de <strong>volume e variedade</strong>. O NoSQL é infraestrutura de banco de dados do Big Data; <strong>Hadoop/MapReduce</strong> voltados à análise (Oliveira, 2013). Campos esclarece que <strong>não</strong> se trata do &quot;fim&quot; dos relacionais — muitas empresas continuarão usando-os.</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="4-exemplos-aplicações-e-material-prático">4. Exemplos, aplicações e material prático</h2>
+<h3 id="41-casos-reais-citados-no-material">4.1 Casos reais citados no material</h3>
+<table>
+<thead>
+<tr>
+<th>Empresa</th>
+<th>Tecnologia</th>
+<th>Uso (conforme o material)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Twitter</strong></td>
+<td>Redis (key-value)</td>
+<td>Cluster com +3 mil nós, 10 TB de dados, +10 milhões de consultas/s. Serviço <strong>Nighthawk</strong> (cache como serviço): analytics de anúncios/vídeo, mensagens diretas, tracking de conversas em mobile. Exigiu escalabilidade vertical e horizontal, elasticidade, baixa latência e alta disponibilidade</td>
+</tr>
+<tr>
+<td><strong>Twitter</strong></td>
+<td><strong>FlockDB</strong> (grafos, criado por eles)</td>
+<td>Relacionamentos entre usuários; picos de milhões de QPS, média de 30–40 mil QPS</td>
+</tr>
+<tr>
+<td><strong>Netflix</strong></td>
+<td>Cassandra (colunar)</td>
+<td>Metadados de mídia + histórico de visualização (séries temporais). +100 milhões de usuários, +140 milhões de horas/dia; remodelaram esquema, adicionaram compactação e cache</td>
+</tr>
+<tr>
+<td><strong>Netflix</strong></td>
+<td>Apache Druid (colunar)</td>
+<td>Ingestão de estatísticas de dispositivos para qualidade de serviço; particionado por <em>timestamp</em>; +2 milhões de eventos/s; consultas sobre +1,5 trilhão de linhas em milissegundos</td>
+</tr>
+<tr>
+<td><strong>Globo.com</strong></td>
+<td>Cassandra</td>
+<td>Streaming (Globosat Play, Globoplay): dados binários de vídeo servidos diretamente do banco</td>
+</tr>
+<tr>
+<td><strong>Uber</strong></td>
+<td>Cassandra</td>
+<td>Plataforma de ML <strong>Michelangelo</strong> (UberEATS): acesso a <em>features</em> para predições em tempo real (tempo de entrega, ranking, autocompletar)</td>
+</tr>
+<tr>
+<td><strong>Amazon</strong></td>
+<td>Dynamo → S3, DynamoDB</td>
+<td>Origem do modelo chave/valor altamente disponível</td>
+</tr>
+<tr>
+<td><strong>Google</strong></td>
+<td>BigTable + MapReduce</td>
+<td>20 PB processados via MapReduce</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-exemplo-de-modelagem-do-infográfico-de-tipos">4.2 Exemplo de modelagem (do infográfico de tipos)</h3>
+<ul>
+<li><strong>Chave/valor:</strong> <code>cliente:1 → produto1=2, produto2=3</code></li>
+<li><strong>Documento (JSON):</strong> pedido com <code>id</code>, <code>cliente {id, nome}</code> e lista de <code>produtos [{id, nome, quantidade}]</code> aninhados.</li>
+<li><strong>Grafo:</strong> <em>Stanley Kubrick</em> —<strong>Dirigiu</strong>→ <em>O Iluminado</em>; <em>Jack Nicholson</em> —<strong>Atuou</strong>→ <em>O Iluminado</em> e <em>Um estranho no ninho</em>.</li>
+<li><strong>Colunar:</strong> linhas <code>ID</code> com famílias de colunas e <strong>número variável de colunas</strong> por linha (ex.: usuário com <code>email, nome, tel</code>; outro com <code>email, nome, tel, tel2</code>; outro só com <code>nome</code>).</li>
+<li>Exemplo do cap. 2 (Bordin): grafo de <strong>pessoas × lugares</strong>, com arestas &quot;Morou&quot; e &quot;Viajou&quot;.</li>
+</ul>
+<h3 id="43-cenários-de-aplicação-complementação--exemplos-ilustrativos-elaborados-para-estudo-não-fazem-parte-do-material-da-fmu">4.3 Cenários de aplicação <em>(complementação — exemplos ilustrativos elaborados para estudo; não fazem parte do material da FMU)</em></h3>
+<blockquote>
+<p>Formato: &quot;Imagine que você tem este problema ___, será analisado por tal metodologia ___, porque ___&quot;.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Problema</th>
+<th>Tipo/metodologia</th>
+<th>Porque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Imagine que você tem <strong>milhões de sessões de login simultâneas</strong> e precisa recuperar cada uma pelo ID do usuário em milissegundos</td>
+<td><strong>Chave/valor (ex.: Redis)</strong></td>
+<td>Acesso por chave é O(1), tudo em memória e sem joins; adequado a sessões e cache</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Imagine que você tem <strong>um catálogo de produtos em que cada categoria tem atributos diferentes</strong> (um tem &quot;voltagem&quot;, outro &quot;tamanho&quot;)</td>
+<td><strong>Documentos (ex.: MongoDB)</strong></td>
+<td>Esquema flexível: cada documento pode ter campos diferentes sem <em>ALTER TABLE</em></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Imagine que você tem <strong>transações financeiras e quer detectar redes de contas suspeitas ligadas entre si</strong></td>
+<td><strong>Grafos (ex.: Neo4j)</strong></td>
+<td>Relacionamentos são armazenados; encontrar conexões vira travessia, não <em>join</em> recursivo caro</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Imagine que você tem <strong>bilhões de eventos de telemetria por dia, com consultas por período e por coluna</strong></td>
+<td><strong>Colunar (ex.: Cassandra/Druid)</strong></td>
+<td>Particionamento por tempo, escrita em alto volume e agregações por coluna</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Imagine que você tem <strong>um sistema de saldo bancário que não pode mostrar valor desatualizado</strong></td>
+<td><strong>Prefere ACID / sistema CP</strong></td>
+<td>Consistência forte vale mais que disponibilidade total; BASE (consistência eventual) seria arriscado</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Imagine que você tem <strong>um carrinho de compras que nunca pode ficar fora do ar, mesmo com falha de nós</strong></td>
+<td><strong>Sistema AP / BASE (estilo Dynamo)</strong></td>
+<td>Disponibilidade prioritária; divergências temporárias são reconciliadas depois (Vector Clocks, <em>last write wins</em>)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="bloco"><h2 id="5-pontos-de-atenção-inconsistências-e-limitações-do-material">5. Pontos de atenção (inconsistências e limitações do material)</h2>
+<blockquote>
+<p>Sinalizados conforme a regra de não alterar silenciosamente o conteúdo acadêmico.</p>
+</blockquote>
+<ol>
+<li><strong>CAP — qual combinação tem ACID?</strong> O Cap. 1 (Bordin) diz que sistemas <strong>CP</strong> &quot;possuem as propriedades ACID&quot; (e dá Vertica/Greenplum como CA). O Cap. 2 (Bordin) diz que sistemas <strong>CA</strong> possuem ACID e <strong>AP</strong>, BASE. Os dois textos divergem sobre CP/CA. Registrado como no material; vale confirmar com o professor.</li>
+<li><strong>Cap. 3 (Campos):</strong> a frase &quot;as características dos bancos de dados <em>relacionais</em> são:&quot; antecede a lista de características do <strong>NoSQL</strong> — aparente erro de redação. Também: &quot;Constância&quot; no lugar de &quot;Consistência&quot; (ACID); a <strong>Tabela 2</strong> está rotulada como &quot;Comparativo entre SQL e NoSQL&quot;, mas descreve <strong>tipos</strong> de NoSQL; &quot;bancos de dados de gráficos&quot; refere-se a <strong>grafos</strong>.</li>
+<li><strong>Sigla da linguagem do Neo4j:</strong> o material escreve &quot;CQL (Cypher Query Language / Linguagem de Consulta Contextual)&quot;. <em>Complementação:</em> na prática, a linguagem do Neo4j é conhecida como <strong>Cypher</strong>, e &quot;CQL&quot; costuma designar a linguagem do <strong>Cassandra</strong> (que o próprio material também chama de CQL). Mantida a grafia original; verificar na aula.</li>
+<li><strong>Material não acessível:</strong> os conteúdos por <strong>QR code/link</strong> (vídeos das <em>Dicas do Professor</em>, artigos do <em>Saiba mais</em>, audiodescrições) <strong>não foram lidos</strong>; por isso o conteúdo do vídeo sobre o Teorema CAP e o da Dica sobre BASE vs ACID não estão detalhados aqui. O texto do <strong>infográfico da linha do tempo</strong> é pequeno demais para leitura confiável: a linha do tempo da seção 3.3 foi montada com base no <strong>texto do capítulo</strong> e no Quadro 1.</li>
+<li><strong>Atividade 1 (A1):</strong> conforme sua preferência, as questões e respostas <strong>não</strong> foram incluídas neste arquivo.</li>
+</ol>
+</section>
+<section class="bloco"><h2 id="6-referências-e-conexões">6. Referências e conexões</h2>
+<h3 id="conexões-com-conteúdos-anteriores-complementação">Conexões com conteúdos anteriores <em>(complementação)</em></h3>
+<ul>
+<li><strong>Aquisição e Preparação de Dados — Aula 1 (dados abertos/conectados):</strong> bancos de <strong>grafos</strong> e de <strong>tuplas/triplas/RDF</strong> (citados aqui como tipos &quot;extras&quot;) dialogam com o modelo <strong>RDF/Linked Data</strong> estudado lá.</li>
+<li><strong>Aquisição e Preparação de Dados — Aulas 2 e 4 (ETL e AED):</strong> o <strong>esquema flexível</strong> do NoSQL muda o &quot;T&quot; do ETL (menos rigidez na carga, mais tratamento posterior); tipos colunar e de documentos são destinos comuns de dados semiestruturados antes da análise exploratória.</li>
+<li><strong>Machine learning:</strong> o material cita Cassandra servindo <em>features</em> em tempo real (Uber/Michelangelo) e grafos para ML/recomendação.</li>
+</ul>
+<h3 id="aplicação-profissional-complementação">Aplicação profissional <em>(complementação)</em></h3>
+<ul>
+<li>O <strong>CosmosDB (Microsoft/Azure)</strong> aparece no Quadro 1 como banco de <strong>documentos</strong> proprietário (2010); o <strong>DynamoDB</strong> e o <strong>DocumentDB</strong> (Amazon) também — referência direta para decisões de arquitetura em nuvem.</li>
+</ul>
+<h3 id="referências-acadêmicas-do-material">Referências acadêmicas (do material)</h3>
+<ul>
+<li>BORDIN, M. <em>Banco de Dados Não Relacional</em>. SAGAH. Capítulos: <em>História dos bancos de dados não relacionais</em>; <em>Classificação dos bancos de dados não relacionais</em>.</li>
+<li>CAMPOS, J. B. <em>Administração de Banco de Dados</em>. SAGAH. Capítulo: <em>Analisar e compreender a utilização do banco de dados NoSQL</em>.</li>
+<li>Citadas nos capítulos (seleção): CODD (1970); PRITCHETT (2008) <em>Base: an acid alternative</em>; GILBERT; LYNCH (2012); BREWER (2000; 2012); GOLAB (2018) <em>Proving PACELC</em>; KLEPPMANN (2015); BAILIS; GHODSI (2013); DECANDIA et al. (2007) <em>Dynamo</em>; CHANG et al. (2008) <em>Bigtable</em>; STRAUCH (2011) <em>NoSQL databases</em>; SADALAGE; FOWLER (2019); TIWARI (2011); HECHT; JABLONSKI (2011); ALECRIM (2013); OLIVEIRA (2013); CAVALCANTE/KOKAY (2012); AWS — <em>O que é NoSQL?</em>.</li>
+<li><strong>Sugestões do professor (links não acessados):</strong> <em>History repeats itself: sensible and nonsenSQL aspects of the NoSQL hoopla</em>; <em>A survey on NoSQL stores</em>; <em>Persisting big-data: the NoSQL landscape</em>; <em>Critérios para seleção de SGBD NoSQL</em>; <em>Mapeamentos conceituais entre os modelos relacional e NoSQL</em>; vídeo <em>Cassandra Serving Netflix @ Scale</em> (Vinay Chella, Netflix); entrevista com Eduardo Morelli (Infnet).</li>
+</ul>
+</section>
+<section class="bloco"><h2 id="7-anexo--quadro-1-principais-bancos-nosql-bordin-cap-1">7. Anexo — Quadro 1: principais bancos NoSQL (Bordin, Cap. 1)</h2>
+<table>
+<thead>
+<tr>
+<th>Banco</th>
+<th>Licença</th>
+<th>Tipo</th>
+<th>Ano</th>
+<th>Criado/Mantido por</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MultiValue (PICK)</td>
+<td>Proprietário</td>
+<td>Multivalor</td>
+<td>1965</td>
+<td>TRW</td>
+</tr>
+<tr>
+<td>DBM</td>
+<td>Proprietário</td>
+<td>Chave/valor</td>
+<td>1979</td>
+<td>AT&amp;T</td>
+</tr>
+<tr>
+<td>Lotus Domino</td>
+<td>Proprietário</td>
+<td>Documentos</td>
+<td>1989</td>
+<td>Lotus</td>
+</tr>
+<tr>
+<td>GDBM</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>1990</td>
+<td>GNU</td>
+</tr>
+<tr>
+<td>BerkeleyDB</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>1991</td>
+<td>Sleepycat/Oracle</td>
+</tr>
+<tr>
+<td>TDBM</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>1992</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Caché</td>
+<td>Proprietário</td>
+<td>Multivalor</td>
+<td>1997</td>
+<td>InterSystems</td>
+</tr>
+<tr>
+<td>Metakit</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>1997</td>
+<td>Jean-Claude Wippler</td>
+</tr>
+<tr>
+<td>Neo4j</td>
+<td>Open source</td>
+<td>Grafos</td>
+<td>2000</td>
+<td>Neo4j</td>
+</tr>
+<tr>
+<td>db4o</td>
+<td>Open source</td>
+<td>Objetos</td>
+<td>2000</td>
+<td>Actian</td>
+</tr>
+<tr>
+<td>Memcached</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2003</td>
+<td>Danga Interactive</td>
+</tr>
+<tr>
+<td>BigTable</td>
+<td>Proprietário</td>
+<td>Colunar</td>
+<td>2004</td>
+<td>Google</td>
+</tr>
+<tr>
+<td>Infogrid</td>
+<td>Open source</td>
+<td>Grafos</td>
+<td>2005</td>
+<td>—</td>
+</tr>
+<tr>
+<td>CouchDB</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>2005</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>Tokyo Cabinet</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2006</td>
+<td>FAL Labs</td>
+</tr>
+<tr>
+<td>Dynamo</td>
+<td>Proprietário</td>
+<td>Chave/valor</td>
+<td>2007</td>
+<td>Amazon</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>2007</td>
+<td>MongoDB Inc.</td>
+</tr>
+<tr>
+<td>Cassandra</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2008</td>
+<td>Facebook/Apache</td>
+</tr>
+<tr>
+<td>Project Voldemort</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2008</td>
+<td>LinkedIn/Microsoft</td>
+</tr>
+<tr>
+<td>Dynomite</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2008</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Hypertable</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2008</td>
+<td>Zevents Inc.</td>
+</tr>
+<tr>
+<td>Accumulo</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2008</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>Terrastore</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>2009</td>
+<td>Sergio Bossa</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2009</td>
+<td>Redis Labs</td>
+</tr>
+<tr>
+<td>Riak</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2009</td>
+<td>Basho Technologies</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2009</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>Vertexdb</td>
+<td>Open source</td>
+<td>Grafos</td>
+<td>2009</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ClickHouse</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2009</td>
+<td>Yandex</td>
+</tr>
+<tr>
+<td>RethinkDB</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>2009</td>
+<td>—</td>
+</tr>
+<tr>
+<td>OrientDB</td>
+<td>Open source</td>
+<td>Multimodelo</td>
+<td>2010</td>
+<td>OrientDB Ltd.</td>
+</tr>
+<tr>
+<td>Couchbase</td>
+<td>Open source</td>
+<td>Documentos</td>
+<td>2010</td>
+<td>Couchbase Inc.</td>
+</tr>
+<tr>
+<td>CosmosDB</td>
+<td>Proprietário</td>
+<td>Documentos</td>
+<td>2010</td>
+<td>Microsoft</td>
+</tr>
+<tr>
+<td>LDBM</td>
+<td>Open source</td>
+<td>Chave/valor</td>
+<td>2011</td>
+<td>—</td>
+</tr>
+<tr>
+<td>ArangoDB</td>
+<td>Open source</td>
+<td>Multimodelo</td>
+<td>2011</td>
+<td>ArangoDB GmbH</td>
+</tr>
+<tr>
+<td>Druid</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2011</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>DynamoDB</td>
+<td>Proprietário</td>
+<td>Chave/valor, documentos</td>
+<td>2012</td>
+<td>Amazon</td>
+</tr>
+<tr>
+<td>FoundationDB</td>
+<td>Open source</td>
+<td>Multimodelo</td>
+<td>2013</td>
+<td>Apple</td>
+</tr>
+<tr>
+<td>Scylla</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2014</td>
+<td>ScyllaDB Inc.</td>
+</tr>
+<tr>
+<td>Kudu</td>
+<td>Open source</td>
+<td>Colunar</td>
+<td>2016</td>
+<td>Cloudera/Apache</td>
+</tr>
+<tr>
+<td>TerminusDB</td>
+<td>Open source</td>
+<td>Grafos</td>
+<td>2018</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Neptune</td>
+<td>Proprietário</td>
+<td>Grafos</td>
+<td>2018</td>
+<td>Amazon</td>
+</tr>
+<tr>
+<td>DocumentDB</td>
+<td>Proprietário</td>
+<td>Documentos</td>
+<td>2019</td>
+<td>Amazon</td>
+</tr>
+</tbody>
+</table>
+<p><em>(Observação: no Cap. 2, o texto cita o ArangoDB como exemplo de chave/valor, documentos e grafos; no Quadro 1 acima ele consta como multimodelo. Registrado como na fonte.)</em></p>
+
+</section>
+
+<div class="doc-nav"><span></span><a class="btn cheio" href="s1-d4-aula-02.html">Aula 2 <svg class="ico" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>
+  </article>
+</div>
+
+<footer class="rodape">
+  <div class="container">
+    <span>Graduação em Inteligência Artificial · FMU</span>
+    <span><a href="s1-d4.html">← Banco de Dados Não Relacional</a> · </span>
+  </div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

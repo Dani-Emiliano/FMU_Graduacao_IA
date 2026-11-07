@@ -621,3 +621,8 @@ td.futuro { color: var(--texto-3); }
   .prosa .bloco > h2 { font-size: 1.2rem; }
     .prosa .bloco + .bloco::before { left: 23px; }
 }
+
+/* referências a arquivos não publicados (PDFs, imagens do material) */
+.arquivo.ref { cursor: default; }
+.arquivo.ref:hover { transform: none; border-color: var(--borda); }
+.ref-arquivo { color: var(--texto); font-style: italic; }
